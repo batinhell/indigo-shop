@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: 'Manrope', sans-serif;
+
+  --color-violet-50: #faf5ff;
+  --color-violet-100: #f3e8ff;
+  --color-violet-200: #e9d5ff;
+  --color-violet-300: #d8b4fe;
+  --color-violet-400: #c084fc;
+  --color-violet-500: #c925ff;
+  --color-violet-600: #a020c0;
+  --color-violet-700: #8b17a8;
+  --color-violet-800: #6b1280;
+  --color-violet-900: #4a0e5a;
+  --color-violet-950: #2d0938;
+}
+
