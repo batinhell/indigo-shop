@@ -11,6 +11,16 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/scss/variables" as *;\n'
+        }
+      }
+    }
+  },
+
   routeRules: {
     '/': { prerender: true }
   },

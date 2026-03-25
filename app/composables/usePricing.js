@@ -44,9 +44,25 @@ function getTier(quantity) {
   return '1-4'
 }
 
-function formatPrice(value) {
-  return value.toLocaleString('ru-RU') + ' ₽'
+export function calcUnitPrice(fabricLabel, size, quantity, hasFringe, doubleSided) {
+  const priceSize = SIZE_TO_PRICE_KEY[size]
+  if (!priceSize || !PRICE_TABLE[priceSize]) return 0
+
+  const fabricKey = getFabricPriceKey(fabricLabel, priceSize)
+  if (!PRICE_TABLE[priceSize][fabricKey]) return 0
+
+  const tier = getTier(quantity)
+  const basePrice = PRICE_TABLE[priceSize][fabricKey][tier]
+  const fringeAddition = hasFringe ? FRINGE_PRICE : 0
+  const doubleSidedAddition = doubleSided ? DOUBLE_SIDED_PRICE : 0
+  return basePrice + fringeAddition + doubleSidedAddition
 }
+
+export function calcDesignPrice(orderDesign) {
+  return orderDesign ? DESIGN_PRICE : 0
+}
+
+import { formatPrice } from '~/utils/format'
 
 export function usePricing({ fabricLabel, size, quantity, hasFringe, doubleSided, orderDesign }) {
   const breakdown = computed(() => {

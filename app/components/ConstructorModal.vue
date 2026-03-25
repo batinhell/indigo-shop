@@ -1,24 +1,8 @@
 <script setup>
+import { FABRICS, MOUNTINGS, SIZES, FABRIC_IMAGE_MAP, MOUNTING_IMAGE_MAP, ALLOWED_EXTENSIONS, RASTER_EXTENSIONS, MAX_UPLOAD_SIZE } from '~/constants/product'
+
 const isOpen = defineModel({ required: true })
-
-// Form state
-const fabrics = [
-  { label: 'Атлас', value: 'atlas' },
-  { label: 'Нейлон', value: 'nylon' },
-  { label: 'Флажная сетка', value: 'mesh' },
-  { label: 'Габардин', value: 'gabardine' },
-  { label: 'Купольный атлас', value: 'dome-atlas' }
-]
-
-const mountings = [
-  { label: 'Люверсы', value: 'grommets' },
-  { label: 'Под древко', value: 'pocket' }
-]
-
-const sizes = [
-  { label: '90×135 см', value: '90x135' },
-  { label: '60×90 см', value: '60x90' }
-]
+const emit = defineEmits(['pay', 'add-to-cart'])
 
 const selectedFabric = ref('mesh')
 const selectedMounting = ref('pocket')
@@ -31,16 +15,15 @@ const description = ref('')
 const uploadedFiles = ref([])
 const fileInput = ref(null)
 const isDragging = ref(false)
-
-const allowedExtensions = ['.tiff', '.tif', '.ai', '.cdr', '.jpg', '.jpeg', '.png']
-const rasterExtensions = ['.jpg', '.jpeg', '.png']
+const dragCounter = ref(0)
 
 function hasRasterFile(files) {
-  return files.some(f => rasterExtensions.some(ext => f.name.toLowerCase().endsWith(ext)))
+  return files.some(f => RASTER_EXTENSIONS.some(ext => f.name.toLowerCase().endsWith(ext)))
 }
 
 function isAllowedFile(file) {
-  return allowedExtensions.some(ext => file.name.toLowerCase().endsWith(ext))
+  if (file.size > MAX_UPLOAD_SIZE) return false
+  return ALLOWED_EXTENSIONS.some(ext => file.name.toLowerCase().endsWith(ext))
 }
 
 function onFileSelect(e) {
@@ -61,18 +44,16 @@ function removeFile(index) {
   }
 }
 
-let dragCounter = 0
-
 function onDragEnter(e) {
   e.preventDefault()
-  dragCounter++
+  dragCounter.value++
   isDragging.value = true
 }
 
 function onDragLeave(e) {
   e.preventDefault()
-  dragCounter--
-  if (dragCounter === 0) {
+  dragCounter.value--
+  if (dragCounter.value === 0) {
     isDragging.value = false
   }
 }
@@ -83,7 +64,7 @@ function onDragOver(e) {
 
 function onDrop(e) {
   e.preventDefault()
-  dragCounter = 0
+  dragCounter.value = 0
   isDragging.value = false
   const files = Array.from(e.dataTransfer?.files || []).filter(isAllowedFile)
   uploadedFiles.value = [...uploadedFiles.value, ...files]
@@ -92,8 +73,8 @@ function onDrop(e) {
   }
 }
 
-const fabricLabel = computed(() => fabrics.find(f => f.value === selectedFabric.value)?.label ?? '')
-const sizeLabel = computed(() => sizes.find(s => s.value === selectedSize.value)?.label ?? '')
+const fabricLabel = computed(() => FABRICS.find(f => f.value === selectedFabric.value)?.label ?? '')
+const sizeLabel = computed(() => SIZES.find(s => s.value === selectedSize.value)?.label ?? '')
 
 const { breakdown, basePriceFormatted, fringePriceFormatted, doubleSidedPriceFormatted, designPriceFormatted, totalFormatted } = usePricing({
   fabricLabel,
@@ -104,25 +85,11 @@ const { breakdown, basePriceFormatted, fringePriceFormatted, doubleSidedPriceFor
   orderDesign
 })
 
-// Маппинг значений формы → имена файлов иллюстраций
-const fabricImageMap = {
-  atlas: 'satin',
-  nylon: 'polyester',
-  mesh: 'mesh',
-  gabardine: 'dense_polyester',
-  'dome-atlas': 'satin'
-}
-
-const mountingImageMap = {
-  grommets: 'grommets',
-  pocket: 'sleeve'
-}
-
 const imageModules = import.meta.glob('~/assets/images/*.png', { eager: true, import: 'default' })
 
 const productImage = computed(() => {
-  const fabric = fabricImageMap[selectedFabric.value] || 'mesh'
-  const mounting = mountingImageMap[selectedMounting.value] || 'sleeve'
+  const fabric = FABRIC_IMAGE_MAP[selectedFabric.value] || 'mesh'
+  const mounting = MOUNTING_IMAGE_MAP[selectedMounting.value] || 'sleeve'
   const size = selectedSize.value
   const sided = doubleSided.value ? 'double' : 'single'
   const fringe = hasFringe.value ? '_fringe' : ''
@@ -130,6 +97,32 @@ const productImage = computed(() => {
   const key = Object.keys(imageModules).find(k => k.endsWith(`/${filename}`))
   return key ? imageModules[key] : ''
 })
+
+function getCurrentItem() {
+  return {
+    fabric: selectedFabric.value,
+    fabricLabel: fabricLabel.value,
+    mounting: selectedMounting.value,
+    size: selectedSize.value,
+    sizeLabel: sizeLabel.value,
+    quantity: quantity.value,
+    hasFringe: hasFringe.value,
+    doubleSided: doubleSided.value,
+    orderDesign: orderDesign.value,
+    unitPrice: breakdown.value?.unitPrice ?? 0,
+    designPrice: breakdown.value?.designPrice ?? 0,
+    description: description.value,
+    uploadedFiles: uploadedFiles.value
+  }
+}
+
+function onPay() {
+  emit('pay', getCurrentItem())
+}
+
+function onAddToCart() {
+  emit('add-to-cart', getCurrentItem())
+}
 </script>
 
 <template>
@@ -144,22 +137,22 @@ const productImage = computed(() => {
           <div class="fields-grid">
             <div class="field-row">
               <label class="field-label">Ткань</label>
-              <AppSelect v-model="selectedFabric" :items="fabrics" />
+              <AppSelect v-model="selectedFabric" :items="FABRICS" />
             </div>
 
             <div class="field-row">
               <label class="field-label">Тип крепления</label>
-              <AppSelect v-model="selectedMounting" :items="mountings" />
+              <AppSelect v-model="selectedMounting" :items="MOUNTINGS" />
             </div>
 
             <div class="field-row">
               <label class="field-label">Количество</label>
-              <AppInput v-model.number="quantity" type="number" :min="1" :max="10000" suffix="шт" />
+              <QuantityInput v-model="quantity" :min="1" :max="10000" />
             </div>
 
             <div class="field-row">
               <label class="field-label">Размер</label>
-              <AppSelect v-model="selectedSize" :items="sizes" />
+              <AppSelect v-model="selectedSize" :items="SIZES" />
             </div>
 
             <div class="field-row field-row--options">
@@ -267,18 +260,14 @@ const productImage = computed(() => {
         :design-price="designPriceFormatted"
         :total-price="totalFormatted"
         class="modal-grid__card"
+        @pay="onPay"
+        @add-to-cart="onAddToCart"
       />
     </div>
   </BaseModal>
 </template>
 
 <style lang="scss" scoped>
-$color-base: #04121b;
-$color-base-secondary: rgba($color-base, 0.64);
-$color-input-bg: #f4f5f6;
-$radius-card: 2rem;
-$radius-control: 0.75rem;
-
 .modal-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -295,7 +284,7 @@ $radius-control: 0.75rem;
 .form-column {
   grid-column: span 2;
   background: white;
-  border-radius: $radius-card;
+  border-radius: $radius-main;
   padding: 2rem 1.5rem 1.5rem;
 }
 
@@ -377,7 +366,7 @@ $radius-control: 0.75rem;
     gap: 0.125rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #c925ff;
+    color: $color-primary;
     text-decoration: underline;
   }
 
@@ -393,12 +382,6 @@ $radius-control: 0.75rem;
   display: flex;
   gap: 0.625rem;
   align-items: center;
-
-  &__label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: $color-base;
-  }
 }
 
 .description-field {
@@ -416,8 +399,8 @@ $radius-control: 0.75rem;
     transition: border-color 0.15s, background-color 0.15s;
 
     &--drag {
-      border-color: #c925ff;
-      background: rgba(#c925ff, 0.04);
+      border-color: $color-primary;
+      background: rgba($color-primary, 0.04);
     }
   }
 
@@ -461,7 +444,7 @@ $radius-control: 0.75rem;
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
-    background: #c925ff;
+    background: $color-primary;
     border-radius: 0.5rem;
     color: white;
     font-family: 'Manrope', sans-serif;
@@ -520,14 +503,14 @@ $radius-control: 0.75rem;
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1.34;
-    color: #c925ff;
+    color: $color-primary;
   }
 
   &__file-remove {
     display: flex;
     align-items: center;
     cursor: pointer;
-    color: #c925ff;
+    color: $color-primary;
     opacity: 0.6;
     transition: opacity 0.15s;
 
