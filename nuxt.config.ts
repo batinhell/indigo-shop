@@ -9,6 +9,15 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  devServer: {
+    host: '0.0.0.0',
+    port: 3000
+  },
+
+  nitro: {
+    preset: 'node-server'
+  },
+
   css: ['~/assets/css/main.css'],
 
   vite: {
