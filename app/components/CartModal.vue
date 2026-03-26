@@ -52,10 +52,10 @@ function confirmEdit(itemId, config) {
 function pluralItems(n) {
   const mod100 = n % 100
   const mod10 = n % 10
-  if (mod100 >= 11 && mod100 <= 19) return 'товаров'
-  if (mod10 === 1) return 'товар'
-  if (mod10 >= 2 && mod10 <= 4) return 'товара'
-  return 'товаров'
+  if (mod100 >= 11 && mod100 <= 19) return 'тиражей'
+  if (mod10 === 1) return 'тираж'
+  if (mod10 >= 2 && mod10 <= 4) return 'тиража'
+  return 'тиражей'
 }
 
 function onPay() {
@@ -76,8 +76,17 @@ function onPay() {
     <div class="modal-content">
       <!-- Left Column -->
       <div class="left-column">
+        <!-- Empty state -->
+        <div v-if="cartItems.length === 0" class="card card--top">
+          <div class="card__inner empty-state">
+            <p class="empty-state__title">Корзина пуста</p>
+            <p class="empty-state__subtitle">Воспользуйтесь каталогом, чтобы найти всё что нужно</p>
+            <button class="empty-state__btn" type="button" @click="emit('continue-shopping')">Начать покупки</button>
+          </div>
+        </div>
+
         <!-- Products Section -->
-        <div class="card card--top">
+        <div v-else class="card card--top">
           <div class="card__inner">
             <p class="section-title">Товары</p>
 
@@ -87,7 +96,7 @@ function onPay() {
                 <AppCheckbox v-model="allSelected" />
                 <span class="items-header__count">{{ cartItems.length }} {{ pluralItems(cartItems.length) }}</span>
               </div>
-              <button class="items-header__delete" aria-label="Удалить выбранные товары" @click="deleteSelected">
+              <button class="items-header__delete" aria-label="Удалить выбранные тиражи" @click="deleteSelected">
                 <svg class="items-header__delete-icon" viewBox="0 0 16 16" fill="none">
                   <path d="M2 7H14L13.4744 11.7301C13.3067 13.24 13.2228 13.995 12.8745 14.5647C12.5677 15.0666 12.1201 15.4672 11.5874 15.7168C10.9826 16 10.223 16 8.70379 16H7.29621C5.77697 16 5.01735 16 4.41263 15.7168C3.87993 15.4672 3.43233 15.0666 3.12552 14.5647C2.77722 13.995 2.69333 13.24 2.52556 11.7301L2 7Z" fill="currentColor" fill-opacity="0.64" />
                   <path d="M1 3.5C1 2.67157 1.67157 2 2.5 2C3.32843 2 3.97177 1.24281 4.53657 0.636766C4.90168 0.244995 5.42223 0 6 0H10C10.5778 0 11.0983 0.244995 11.4634 0.636766C12.0282 1.24281 12.6716 2 13.5 2C14.3284 2 15 2.67157 15 3.5C15 4.32843 14.3284 5 13.5 5H2.5C1.67157 5 1 4.32843 1 3.5Z" fill="currentColor" fill-opacity="0.64" />
@@ -106,8 +115,7 @@ function onPay() {
                 @start-edit="startEdit(item.id)"
                 @cancel-edit="cancelEdit"
                 @confirm-edit="(config) => confirmEdit(item.id, config)"
-                @increment="updateQuantity(item.id, item.quantity + 1)"
-                @decrement="updateQuantity(item.id, item.quantity - 1)"
+                @update-quantity="(qty) => updateQuantity(item.id, qty)"
               />
             </div>
           </div>
@@ -131,6 +139,49 @@ function onPay() {
 </template>
 
 <style lang="scss" scoped>
+.empty-state {
+  &__title {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.75rem;
+    letter-spacing: -0.02em;
+    color: $color-base;
+    text-box: cap alphabetic;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    letter-spacing: -0.01em;
+    color: $color-base-secondary;
+  }
+
+  &__btn {
+    align-self: flex-start;
+    height: 2.5rem;
+    padding: 0 1.125rem;
+    background: $color-primary-light;
+    border-radius: $radius-control;
+    color: $color-primary;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-feature-settings: 'lnum' 1, 'pnum' 1;
+
+    &:hover {
+      background: #f6e0ff;
+    }
+
+    &:active {
+      background: #f2d6ff;
+    }
+  }
+}
+
 .back-link {
   display: flex;
   align-items: center;

@@ -74,6 +74,7 @@ function onDrop(e) {
 }
 
 const fabricLabel = computed(() => FABRICS.find(f => f.value === selectedFabric.value)?.label ?? '')
+const fabricGenitive = computed(() => FABRICS.find(f => f.value === selectedFabric.value)?.genitive ?? '')
 const sizeLabel = computed(() => SIZES.find(s => s.value === selectedSize.value)?.label ?? '')
 
 const { breakdown, basePriceFormatted, fringePriceFormatted, doubleSidedPriceFormatted, designPriceFormatted, totalFormatted } = usePricing({
@@ -102,6 +103,7 @@ function getCurrentItem() {
   return {
     fabric: selectedFabric.value,
     fabricLabel: fabricLabel.value,
+    fabricGenitive: fabricGenitive.value,
     mounting: selectedMounting.value,
     size: selectedSize.value,
     sizeLabel: sizeLabel.value,
@@ -201,7 +203,7 @@ function onAddToCart() {
               <textarea
                 v-model="description"
                 class="description-field__textarea"
-                placeholder="Сообщение для менеджера, который будет оформлять ваш заказ"
+                placeholder="Сообщение для менеджера,&#10;который будет оформлять ваш заказ"
               />
 
               <div class="file-upload">
@@ -249,6 +251,7 @@ function onAddToCart() {
       <ProductCard
         :image="productImage"
         :fabric-label="fabricLabel"
+        :fabric-genitive="fabricGenitive"
         :size-label="sizeLabel"
         :quantity="quantity"
         :has-fringe="hasFringe"
@@ -293,6 +296,7 @@ function onAddToCart() {
   font-weight: 700;
   color: $color-base;
   line-height: 1.6;
+  text-box: cap alphabetic;
 }
 
 .params-section {

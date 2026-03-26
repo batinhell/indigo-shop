@@ -10,7 +10,7 @@ const props = defineProps({
 
 const emit = defineEmits([
   'toggle', 'start-edit', 'cancel-edit', 'confirm-edit',
-  'increment', 'decrement'
+  'update-quantity'
 ])
 
 const editDraft = ref(null)
@@ -132,18 +132,7 @@ const previewPrice = computed(() => {
           </div>
         </div>
         <div class="item-row__bottom">
-          <div class="quantity-control">
-            <button class="quantity-control__btn" aria-label="Уменьшить количество" @click="emit('decrement')">
-              <svg class="quantity-control__icon" viewBox="0 0 16 16" fill="none"><path d="M13.8225 7.95007L1.82251 7.95007" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
-            </button>
-            <div class="quantity-control__value">
-              <span>{{ item.quantity }}</span>
-              <span class="quantity-control__unit">шт</span>
-            </div>
-            <button class="quantity-control__btn" aria-label="Увеличить количество" @click="emit('increment')">
-              <svg class="quantity-control__icon" viewBox="0 0 16 16" fill="none"><path d="M7.82251 1.95007V13.9501M13.8225 7.95007L1.82251 7.95007" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
-            </button>
-          </div>
+          <QuantityInput :model-value="item.quantity" @update:model-value="qty => emit('update-quantity', qty)" />
           <div class="item-row__price">
             <template v-if="editing && previewPrice">
               <p class="item-row__total">{{ formatPriceRaw(previewPrice.total) }} &#8381;</p>
@@ -403,48 +392,4 @@ const previewPrice = computed(() => {
   &--confirm { background: #dbffde; }
 }
 
-// -- Quantity control --
-
-.quantity-control {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 9.6875rem;
-  height: 2.5rem;
-  background: $color-input-bg;
-  border-radius: $radius-control;
-  padding: 0 0.875rem;
-
-  &__btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #81888d;
-    transition: color 0.15s;
-
-    &:hover { color: $color-base; }
-  }
-
-  &__icon {
-    width: 1rem;
-    height: 1rem;
-    display: block;
-  }
-
-  &__value {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.2;
-    color: $color-base;
-    font-feature-settings: 'lnum' 1, 'pnum' 1;
-  }
-
-  &__unit {
-    color: $color-base;
-  }
-}
 </style>

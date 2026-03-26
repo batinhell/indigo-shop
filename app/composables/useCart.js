@@ -1,5 +1,5 @@
 import { calcUnitPrice, calcDesignPrice } from './usePricing'
-import { FABRIC_IMAGE_MAP, MOUNTING_IMAGE_MAP, getFabricLabel, getSizeLabel } from '~/constants/product'
+import { FABRIC_IMAGE_MAP, MOUNTING_IMAGE_MAP, getFabricLabel, getFabricGenitive, getSizeLabel } from '~/constants/product'
 
 const imageModules = import.meta.glob('~/assets/images/*.png', { eager: true, import: 'default' })
 
@@ -31,14 +31,15 @@ function generateId() {
 export function useCart() {
   const items = useState('cart-items', () => [])
 
-  function addItem({ fabric, fabricLabel, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description }) {
+  function addItem({ fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description }) {
     const image = resolveImage(fabric, mounting, size, doubleSided, hasFringe)
     const itemDescription = buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign })
     const customerComment = description?.trim() ?? ''
+    const genitive = fabricGenitive || getFabricGenitive(fabric)
 
     const item = {
       id: generateId(),
-      name: `Флаг из ${fabricLabel.toLowerCase()}`,
+      name: `Флаг из ${genitive}`,
       description: itemDescription,
       customerComment,
       image,
@@ -94,6 +95,7 @@ export function useCart() {
 
       const image = resolveImage(config.fabric, config.mounting, config.size, config.doubleSided, config.hasFringe)
       const fabricLabel = getFabricLabel(config.fabric)
+      const fabricGenitive = getFabricGenitive(config.fabric)
       const sizeLabel = getSizeLabel(config.size)
       const description = buildDescription({
         fabricLabel,
@@ -109,7 +111,7 @@ export function useCart() {
 
       return {
         ...item,
-        name: `Флаг из ${fabricLabel.toLowerCase()}`,
+        name: `Флаг из ${fabricGenitive}`,
         description,
         image,
         unitPrice,

@@ -110,8 +110,8 @@ function onOrderMore() {
             </p>
           </div>
 
-          <!-- Working hours info -->
-          <div class="modal-section">
+          <!-- Working hours info (only on weekends) -->
+          <div v-if="status === 'weekend'" class="modal-section">
             <p class="modal-text modal-text--secondary">
               Мы работаем с 9 до 18:00,
               <br>

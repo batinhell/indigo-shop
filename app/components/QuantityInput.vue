@@ -19,6 +19,9 @@ const props = defineProps({
 const canDecrement = computed(() => model.value > props.min)
 const canIncrement = computed(() => model.value < props.max)
 
+const isEditing = ref(false)
+const editValue = ref('')
+
 function decrement() {
   if (canDecrement.value) {
     model.value = model.value - 1
@@ -28,6 +31,19 @@ function decrement() {
 function increment() {
   if (canIncrement.value) {
     model.value = model.value + 1
+  }
+}
+
+function startEdit() {
+  isEditing.value = true
+  editValue.value = String(model.value)
+}
+
+function commitEdit() {
+  isEditing.value = false
+  const parsed = parseInt(editValue.value, 10)
+  if (!Number.isNaN(parsed)) {
+    model.value = Math.min(props.max, Math.max(props.min, parsed))
   }
 }
 </script>
@@ -45,7 +61,18 @@ function increment() {
         <path d="M1 1h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
       </svg>
     </button>
-    <span class="qty-input__value">
+    <input
+      v-if="isEditing"
+      v-model="editValue"
+      class="qty-input__input"
+      type="text"
+      inputmode="numeric"
+      @blur="commitEdit"
+      @keydown.enter="$event.target.blur()"
+      @keydown.escape="isEditing = false"
+      @vue:mounted="$event.el.focus(); $event.el.select()"
+    >
+    <span v-else class="qty-input__value" @click="startEdit">
       {{ model }} {{ suffix }}
     </span>
     <button
@@ -67,6 +94,7 @@ function increment() {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 9.6875rem;
   height: 2.5rem;
   padding: 0.125rem;
   background: $color-input-bg;
@@ -104,6 +132,19 @@ function increment() {
     font-weight: 600;
     color: $color-base;
     white-space: nowrap;
+    font-feature-settings: 'lnum' 1, 'pnum' 1;
+    cursor: text;
+  }
+
+  &__input {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color-base;
+    background: transparent;
+    border: none;
+    outline: none;
     font-feature-settings: 'lnum' 1, 'pnum' 1;
   }
 }

@@ -8,6 +8,10 @@ defineProps({
     type: String,
     default: ''
   },
+  fabricGenitive: {
+    type: String,
+    default: ''
+  },
   sizeLabel: {
     type: String,
     default: ''
@@ -56,14 +60,14 @@ defineEmits(['pay', 'add-to-cart'])
 <template>
   <div class="product-card">
     <div class="product-card__image">
-      <img v-if="image" :src="image" :alt="`Флаг из ${fabricLabel}, ${sizeLabel}`" class="product-card__image-img">
+      <img v-if="image" :src="image" :alt="`Флаг из ${fabricGenitive}, ${sizeLabel}`" class="product-card__image-img">
       <UIcon v-else name="i-lucide-flag" class="product-card__image-placeholder" />
     </div>
 
     <div class="product-card__body">
       <div class="product-card__prices">
         <div class="price-row">
-          <span class="price-row__label">Флаг из {{ fabricLabel }}</span>
+          <span class="price-row__label">Флаг из {{ fabricGenitive }}</span>
           <div class="price-row__value">
             <span class="price-row__qty">{{ quantity }}</span>
             <span class="price-row__sep">&times;</span>

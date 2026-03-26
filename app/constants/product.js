@@ -1,9 +1,9 @@
 export const FABRICS = [
-  { label: 'Атлас', value: 'atlas' },
-  { label: 'Нейлон', value: 'nylon' },
-  { label: 'Флажная сетка', value: 'mesh' },
-  { label: 'Габардин', value: 'gabardine' },
-  { label: 'Купольный атлас', value: 'dome-atlas' }
+  { label: 'Атлас', genitive: 'атласа', value: 'atlas' },
+  { label: 'Нейлон', genitive: 'нейлона', value: 'nylon' },
+  { label: 'Флажная сетка', genitive: 'флажной сетки', value: 'mesh' },
+  { label: 'Габардин', genitive: 'габардина', value: 'gabardine' },
+  { label: 'Купольный атлас', genitive: 'купольного атласа', value: 'dome-atlas' }
 ]
 
 export const MOUNTINGS = [
@@ -37,6 +37,10 @@ export const RASTER_EXTENSIONS = ['.jpg', '.jpeg', '.png']
 
 export function getFabricLabel(value) {
   return FABRICS.find(f => f.value === value)?.label ?? ''
+}
+
+export function getFabricGenitive(value) {
+  return FABRICS.find(f => f.value === value)?.genitive ?? ''
 }
 
 export function getSizeLabel(value) {

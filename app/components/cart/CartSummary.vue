@@ -20,7 +20,7 @@ const promoCode = ref('')
 
       <div class="summary-rows">
         <div class="summary-row">
-          <span class="summary-row__label">Товары ({{ totalItems }} шт)</span>
+          <span class="summary-row__label">Тиражи ({{ totalItems }} шт)</span>
           <span class="summary-row__value">{{ formatPriceRaw(totalPrice) }} &#8381;</span>
         </div>
         <div class="summary-row">
