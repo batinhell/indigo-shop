@@ -1,0 +1,326 @@
+<script setup>
+import alert16 from '~/assets/icons/system/alert-16.svg'
+import arrowRight16 from '~/assets/icons/system/arrow-right-16.svg'
+import arrowRight24 from '~/assets/icons/system/arrow-right-24.svg'
+import basket12 from '~/assets/icons/system/basket-12.svg'
+import basket16 from '~/assets/icons/system/basket-16.svg'
+import basket24 from '~/assets/icons/system/basket-24.svg'
+import binky16 from '~/assets/icons/system/binky-16.svg'
+import calendar16 from '~/assets/icons/system/calendar-16.svg'
+import check12 from '~/assets/icons/system/check-12.svg'
+import cross12 from '~/assets/icons/system/cross-12.svg'
+import hide16 from '~/assets/icons/system/hide-16.svg'
+import mir32x62 from '~/assets/icons/system/mir-32x62.svg'
+import puzzle16 from '~/assets/icons/system/puzzle-16.svg'
+import refresh16 from '~/assets/icons/system/refresh-16.svg'
+import ruble12 from '~/assets/icons/system/ruble-12.svg'
+import ruble16 from '~/assets/icons/system/ruble-16.svg'
+import show16 from '~/assets/icons/system/show-16.svg'
+
+const ICONS = {
+  'account': {
+    kind: 'path',
+    viewBox: '0 0 16 16',
+    paths: [
+      {
+        d: 'M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM12.8 10.8571C12.8 12.1826 10.651 13.6 8 13.6C5.34903 13.6 3.2 12.1826 3.2 10.8571C3.2 9.53166 5.34903 8.8 8 8.8C10.651 8.8 12.8 9.53166 12.8 10.8571ZM8 7.2C9.32548 7.2 10.4 6.12548 10.4 4.8C10.4 3.47452 9.32548 2.4 8 2.4C6.67452 2.4 5.6 3.47452 5.6 4.8C5.6 6.12548 6.67452 7.2 8 7.2Z',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd'
+      }
+    ]
+  },
+  'favorite': {
+    kind: 'path',
+    viewBox: '0 0 16 14.4',
+    paths: [
+      {
+        d: 'M8 1.86954C9.2 0 10.6955 0 11.6 0C14.0301 0 16 1.6 16 4.8C16 10 8.4 14.4 8 14.4C7.6 14.4 0 10 0 4.8C0 1.86954 1.96995 0 4.4 0C5.30455 0 6.8 0 8 1.86954Z'
+      }
+    ]
+  },
+  'orders': {
+    kind: 'path',
+    viewBox: '0 0 14.9544 13.459',
+    paths: [
+      {
+        d: 'M1.49544 0C0.669533 0 0 0.669532 0 1.49544V10.4681C0 12.1199 1.33907 13.459 2.99089 13.459H10.4681V1.49544C10.4681 0.669533 9.79857 0 8.97266 0H1.49544ZM8.22493 2.99089H2.24316V4.48633H8.22493V2.99089ZM2.24316 5.98177H6.72949V7.47721H2.24316V5.98177Z',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd'
+      },
+      {
+        d: 'M13.459 4.48633C14.2849 4.48633 14.9544 5.15586 14.9544 5.98177V10.4681C14.9544 12.1199 13.6154 13.459 11.9635 13.459V5.23405C11.9635 4.82109 12.2983 4.48633 12.7113 4.48633H13.459Z'
+      }
+    ]
+  },
+  'tg': {
+    kind: 'path',
+    viewBox: '0 0 17.3621 14.3975',
+    paths: [
+      {
+        d: 'M10.5241 2.19C8.96407 2.84 5.85407 4.18 1.19407 6.21C0.434071 6.51 0.0440712 6.81 0.00407119 7.09C-0.0558014 7.57896 0.551485 7.76919 1.37879 8.02835L1.38407 8.03C1.49407 8.07 1.61407 8.1 1.73407 8.14C2.55407 8.41 3.65407 8.72 4.22407 8.73C4.74407 8.74 5.32407 8.53 5.96407 8.09C10.3241 5.15 12.5741 3.66 12.7141 3.63L12.72 3.62882C12.8195 3.60887 12.9558 3.58156 13.0441 3.66C13.1341 3.74 13.1241 3.9 13.1141 3.94C13.0541 4.2 10.6641 6.42 9.42407 7.57C9.03407 7.93 8.76407 8.18 8.70407 8.24C8.57407 8.37 8.45407 8.49 8.32407 8.61C7.56407 9.34 6.99407 9.89 8.35407 10.79C9.00407 11.22 9.53407 11.58 10.0541 11.93C10.6241 12.32 11.1941 12.7 11.9241 13.19C12.1141 13.31 12.2941 13.44 12.4641 13.56L12.4731 13.5665C13.1296 14.0339 13.7274 14.4597 14.4541 14.39C14.8841 14.35 15.3241 13.95 15.5441 12.75C16.0741 9.92 17.1141 3.78 17.3541 1.25C17.3741 1.03 17.3541 0.74 17.3241 0.62C17.3041 0.5 17.2541 0.320001 17.0941 0.190001C16.9041 0.0300005 16.6041 0 16.4741 0C15.8741 0.01 14.9441 0.33 10.5041 2.18L10.5241 2.19Z'
+      }
+    ]
+  },
+  'vk': {
+    kind: 'path',
+    viewBox: '0 0 21.35 13.32',
+    paths: [
+      {
+        d: 'M0 0C0.17 8.32 4.33 13.32 11.63 13.32H12.04V8.56C14.72 8.83 16.75 10.79 17.56 13.32H21.35C20.31 9.53 17.58 7.44 15.87 6.64C17.58 5.65 19.98 3.25 20.55 0H17.11C16.36 2.64 14.15 5.04 12.04 5.27V0H8.6V9.23C6.47 8.7 3.77 6.11 3.65 0H0Z'
+      }
+    ]
+  },
+  'basket': {
+    kind: 'image',
+    srcBySize: {
+      12: basket12,
+      16: basket16,
+      24: basket24
+    }
+  },
+  'arrow-right': {
+    kind: 'image',
+    srcBySize: {
+      16: arrowRight16,
+      24: arrowRight24
+    }
+  },
+  'ruble': {
+    kind: 'image',
+    srcBySize: {
+      12: ruble12,
+      16: ruble16
+    }
+  },
+  'cart': {
+    kind: 'path',
+    viewBox: '0 0 15.1904 15.1886',
+    paths: [
+      {
+        d: 'M4.17193 10.5183L1.58142 2.08329C1.58142 2.08329 0.989952 2.02713 0.659995 2.01835C-0.0139601 2.00256 -0.338652 0.235182 0.507302 0.187795C0.763545 0.173754 2.90476 0 2.90476 0L3.74194 3.39961L15.1904 4.01389L13.8021 10.2023L4.17193 10.5183ZM4.37377 11.5292C6.72735 11.5292 6.78526 15.1254 4.53699 15.1254C1.86925 15.1306 2.06407 11.5292 4.37377 11.5292ZM12.3173 11.5941C14.6709 11.5941 14.7306 15.1886 12.4805 15.1886C9.8128 15.1886 10.0094 11.5941 12.3173 11.5941Z',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd'
+      }
+    ]
+  },
+  'check': {
+    kind: 'image',
+    srcBySize: {
+      12: check12
+    }
+  },
+  'cross': {
+    kind: 'image',
+    srcBySize: {
+      12: cross12
+    }
+  },
+  'refresh': {
+    kind: 'image',
+    srcBySize: {
+      16: refresh16
+    }
+  },
+  'show': {
+    kind: 'image',
+    srcBySize: {
+      16: show16
+    }
+  },
+  'hide': {
+    kind: 'image',
+    srcBySize: {
+      16: hide16
+    }
+  },
+  'alert': {
+    kind: 'image',
+    srcBySize: {
+      16: alert16
+    }
+  },
+  'chevron': {
+    kind: 'path',
+    viewBox: '0 0 16 16',
+    paths: [
+      {
+        d: 'M4.47 6.47a.75.75 0 0 1 1.06 0L8 8.94l2.47-2.47a.75.75 0 1 1 1.06 1.06L8.53 10.53a.75.75 0 0 1-1.06 0L4.47 7.53a.75.75 0 0 1 0-1.06Z'
+      }
+    ]
+  },
+  'puzzle': {
+    kind: 'image',
+    srcBySize: {
+      16: puzzle16
+    }
+  },
+  'binky': {
+    kind: 'image',
+    srcBySize: {
+      16: binky16
+    }
+  },
+  'calendar': {
+    kind: 'image',
+    srcBySize: {
+      16: calendar16
+    }
+  },
+  'mir': {
+    kind: 'image',
+    srcBySize: {
+      32: mir32x62
+    }
+  },
+  'delivery-dot': {
+    kind: 'dot',
+    color: '#c3c6c8'
+  },
+  'pickup-dot': {
+    kind: 'dot',
+    color: '#c3c6c8'
+  },
+  'order-dot': {
+    kind: 'dot',
+    color: '#c3c6c8'
+  }
+}
+
+const props = defineProps({
+  name: {
+    type: String,
+    required: true
+  },
+  size: {
+    type: [Number, String],
+    default: undefined
+  },
+  decorative: {
+    type: Boolean,
+    default: true
+  },
+  title: {
+    type: String,
+    default: ''
+  }
+})
+
+const icon = computed(() => ICONS[props.name] || ICONS.account)
+
+const parsedNumericSize = computed(() => {
+  if (typeof props.size === 'number') return props.size
+  if (typeof props.size !== 'string') return undefined
+
+  const normalized = props.size.trim()
+  if (!normalized) return undefined
+
+  const value = Number.parseFloat(normalized)
+  return Number.isFinite(value) ? value : undefined
+})
+
+const sizeStyle = computed(() => {
+  if (props.size === undefined || props.size === null || props.size === '') return undefined
+  let raw = ''
+
+  if (typeof props.size === 'number') {
+    raw = `${props.size}px`
+  } else {
+    const normalized = props.size.trim()
+    raw = /^\d+(\.\d+)?$/.test(normalized) ? `${normalized}px` : normalized
+  }
+
+  return {
+    width: raw,
+    height: raw
+  }
+})
+
+const ariaLabel = computed(() => {
+  if (props.decorative) return undefined
+  return props.title || props.name
+})
+
+function resolveImageSrc(definition, requestedSize) {
+  const entries = Object.entries(definition.srcBySize)
+    .map(([size, src]) => ({ size: Number(size), src }))
+    .filter(({ size }) => Number.isFinite(size))
+
+  if (entries.length === 0) return ''
+  if (requestedSize === undefined) {
+    const default16 = entries.find(({ size }) => size === 16)
+    return (default16 || entries[0]).src
+  }
+
+  const exact = entries.find(({ size }) => size === requestedSize)
+  if (exact) return exact.src
+
+  return entries
+    .slice()
+    .sort((a, b) => Math.abs(a.size - requestedSize) - Math.abs(b.size - requestedSize))[0]
+    .src
+}
+
+const imageSrc = computed(() => {
+  if (icon.value.kind !== 'image') return ''
+  return resolveImageSrc(icon.value, parsedNumericSize.value)
+})
+</script>
+
+<template>
+  <span
+    class="app-icon"
+    :style="sizeStyle"
+    :aria-hidden="decorative"
+    :role="decorative ? undefined : 'img'"
+    :aria-label="ariaLabel"
+  >
+    <svg
+      v-if="icon.kind === 'path'"
+      :viewBox="icon.viewBox"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      class="app-icon__svg"
+    >
+      <path
+        v-for="(path, index) in icon.paths"
+        :key="index"
+        :d="path.d"
+        :fill-rule="path.fillRule"
+        :clip-rule="path.clipRule"
+        fill="currentColor"
+      />
+    </svg>
+
+    <img
+      v-else-if="icon.kind === 'image'"
+      :src="imageSrc"
+      alt=""
+      class="app-icon__image"
+    >
+
+    <span
+      v-else
+      class="app-icon__dot"
+      :style="{ backgroundColor: icon.color }"
+    />
+  </span>
+</template>
+
+<style scoped>
+.app-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.app-icon__svg,
+.app-icon__image,
+.app-icon__dot {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.app-icon__dot {
+  border-radius: 62.4375rem;
+}
+</style>
