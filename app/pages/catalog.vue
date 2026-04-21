@@ -1,8 +1,9 @@
 <script setup>
-import denseImage from '~/assets/images/dense_polyester_grommets_60x90_single.png'
-import meshImage from '~/assets/images/mesh_sleeve_90x135_double.png'
-import polyesterImage from '~/assets/images/polyester_grommets_90x135_double.png'
-import satinImage from '~/assets/images/satin_sleeve_60x90_single.png'
+import catalogSliderImage1 from '~/assets/images/catalog_slider_1.png'
+import catalogSliderImage2 from '~/assets/images/catalog_slider_2.png'
+import catalogSliderImage3 from '~/assets/images/catalog_slider_3.png'
+import catalogSliderImage4 from '~/assets/images/catalog_slider_4.png'
+import catalogSliderImage5 from '~/assets/images/catalog_slider_5.png'
 
 const title = 'Каталог — Indigo'
 const description = 'Каталог флагов: популярные форматы, материалы и готовые конфигурации.'
@@ -54,11 +55,25 @@ const categoryItems = [
   }
 ]
 
+const catalogSliderImages = [
+  catalogSliderImage1,
+  catalogSliderImage2,
+  catalogSliderImage3,
+  catalogSliderImage4,
+  catalogSliderImage5
+]
+
+function getProductImages(offset) {
+  return catalogSliderImages.map((_, index) => {
+    return catalogSliderImages[(index + offset) % catalogSliderImages.length]
+  })
+}
+
 const products = [
   {
     id: 1,
     category: 'artists',
-    image: meshImage,
+    images: getProductImages(0),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 8 888 ₽',
     oldPrice: '9999 ₽',
@@ -68,7 +83,7 @@ const products = [
   {
     id: 2,
     category: 'wedding',
-    image: satinImage,
+    images: getProductImages(1),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 7 550 ₽',
     oldPrice: '8999 ₽',
@@ -78,7 +93,7 @@ const products = [
   {
     id: 3,
     category: 'albums',
-    image: polyesterImage,
+    images: getProductImages(2),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 9 240 ₽',
     oldPrice: '10999 ₽',
@@ -88,7 +103,7 @@ const products = [
   {
     id: 4,
     category: 'textile',
-    image: denseImage,
+    images: getProductImages(3),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 6 990 ₽',
     oldPrice: '7999 ₽',
@@ -98,7 +113,7 @@ const products = [
   {
     id: 5,
     category: 'retail',
-    image: meshImage,
+    images: getProductImages(4),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 10 900 ₽',
     oldPrice: '12999 ₽',
@@ -108,7 +123,7 @@ const products = [
   {
     id: 6,
     category: 'gifts',
-    image: satinImage,
+    images: getProductImages(0),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 5 490 ₽',
     oldPrice: '6499 ₽',
@@ -118,7 +133,7 @@ const products = [
   {
     id: 7,
     category: 'corporate',
-    image: polyesterImage,
+    images: getProductImages(1),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 11 990 ₽',
     oldPrice: '14999 ₽',
@@ -128,7 +143,7 @@ const products = [
   {
     id: 8,
     category: 'events',
-    image: denseImage,
+    images: getProductImages(2),
     title: 'Название товара в две-три строки, две-три строки',
     price: 'от 4 990 ₽',
     oldPrice: '5799 ₽',
@@ -208,20 +223,21 @@ useSeoMeta({
         </div>
 
         <div
-          :id="`category-grid-${category.id}`"
           v-show="!collapsedCategories[category.id]"
+          :id="`category-grid-${category.id}`"
           class="catalog-page__grid"
           aria-label="Товары"
         >
           <CatalogProductCard
             v-for="item in category.products"
             :key="item.id"
-            :image="item.image"
+            :images="item.images"
             :title="item.title"
             :price="item.price"
             :old-price="item.oldPrice"
             :discount="item.discount"
             :badge-text="item.badgeText"
+            :show-badge="Boolean(item.discount || item.badgeText)"
           />
         </div>
       </section>

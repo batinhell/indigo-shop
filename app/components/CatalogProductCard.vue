@@ -1,8 +1,14 @@
 <script setup>
-defineProps({
+import { useThrottleFn } from '@vueuse/core'
+
+const props = defineProps({
   image: {
     type: String,
     default: ''
+  },
+  images: {
+    type: Array,
+    default: () => []
   },
   title: {
     type: String,
@@ -43,18 +49,74 @@ defineProps({
 })
 
 defineEmits(['select', 'toggle-favorite'])
+
+const imageSectionCount = 5
+const activeImageIndex = ref(0)
+
+const productImages = computed(() => {
+  const images = props.images.filter(Boolean)
+
+  if (images.length > 0) {
+    return images.slice(0, imageSectionCount)
+  }
+
+  return props.image ? [props.image] : []
+})
+
+const activeImage = computed(() => productImages.value[activeImageIndex.value] || '')
+const hasImageSlider = computed(() => productImages.value.length > 1)
+
+watch(productImages, (images) => {
+  if (activeImageIndex.value < images.length) {
+    return
+  }
+
+  activeImageIndex.value = 0
+})
+
+function setActiveImage(index) {
+  activeImageIndex.value = Math.min(index, productImages.value.length - 1)
+}
+
+const throttledHandleMediaMouseMove = useThrottleFn((event) => {
+  if (!hasImageSlider.value) {
+    return
+  }
+
+  const { left, width } = event.currentTarget.getBoundingClientRect()
+
+  if (width <= 0) {
+    return
+  }
+
+  const cursorOffset = Math.min(Math.max(event.clientX - left, 0), width - 1)
+  const sectionIndex = Math.floor((cursorOffset / width) * imageSectionCount)
+
+  setActiveImage(sectionIndex)
+}, 80)
+
+function resetActiveImage() {
+  activeImageIndex.value = 0
+}
 </script>
 
 <template>
   <article class="catalog-product-card">
-    <div class="catalog-product-card__media">
+    <div
+      class="catalog-product-card__media"
+      @mousemove="throttledHandleMediaMouseMove"
+      @mouseleave="resetActiveImage"
+    >
       <img
-        v-if="image"
-        :src="image"
+        v-if="activeImage"
+        :src="activeImage"
         :alt="title"
         class="catalog-product-card__image"
       >
-      <div v-else class="catalog-product-card__image catalog-product-card__image--empty">
+      <div
+        v-else
+        class="catalog-product-card__image catalog-product-card__image--empty"
+      >
         <UIcon name="i-lucide-image" />
       </div>
 
@@ -73,12 +135,16 @@ defineEmits(['select', 'toggle-favorite'])
             :text="badgeText"
           />
 
-          <div class="catalog-product-card__dots" aria-hidden="true">
-            <span class="catalog-product-card__dot catalog-product-card__dot--active" />
-            <span class="catalog-product-card__dot" />
-            <span class="catalog-product-card__dot" />
-            <span class="catalog-product-card__dot" />
-            <span class="catalog-product-card__dot" />
+          <div
+            class="catalog-product-card__dots"
+            aria-hidden="true"
+          >
+            <span
+              v-for="(sliderImage, index) in productImages"
+              :key="`${sliderImage}-${index}`"
+              class="catalog-product-card__dot"
+              :class="{ 'catalog-product-card__dot--active': index === activeImageIndex }"
+            />
           </div>
         </div>
       </div>
@@ -141,6 +207,7 @@ defineEmits(['select', 'toggle-favorite'])
 
 .catalog-product-card__media {
   border-radius: 1.5rem;
+  cursor: pointer;
   height: 16.25rem;
   overflow: hidden;
   position: relative;

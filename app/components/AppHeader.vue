@@ -4,6 +4,7 @@ import headerLogoBg2 from '~/assets/icons/header-logo-bg-2.svg'
 import headerLogoBg3 from '~/assets/icons/header-logo-bg-3.svg'
 import headerLogoBg4 from '~/assets/icons/header-logo-bg-4.svg'
 import headerLogoText from '~/assets/icons/header-logo-text.svg'
+import { authClient } from '~/utils/auth-client.js'
 
 const navLinks = [
   { label: 'Каталог', to: '/catalog' },
@@ -13,7 +14,19 @@ const navLinks = [
   { label: 'Доставка', to: '/delivery' }
 ]
 
-const actionItems = [
+const session = authClient.useSession()
+
+const isSessionPending = computed(() => session.value?.isPending ?? true)
+const sessionUser = computed(() => session.value?.data?.user ?? null)
+const accountLabel = computed(() => {
+  if (!sessionUser.value) {
+    return 'Войти'
+  }
+
+  return sessionUser.value.name
+})
+
+const baseActionItems = [
   {
     key: 'favorites',
     label: 'Избранное',
@@ -37,17 +50,53 @@ const actionItems = [
     iconClass: 'header-action__icon_cart',
     counter: '99+',
     kind: 'secondary'
-  },
-  {
-    key: 'account',
-    label: 'Войти',
-    icon: 'account',
-    iconClass: 'header-action__icon_account',
-    counter: '',
-    kind: 'secondary'
   }
 ]
 
+const accountAction = computed(() => ({
+  key: 'account',
+  label: accountLabel.value,
+  icon: 'account',
+  iconClass: 'header-action__icon_account',
+  counter: '',
+  kind: 'secondary',
+  isAuthenticated: Boolean(sessionUser.value)
+}))
+
+const actionItems = computed(() => [
+  ...baseActionItems,
+  ...(!sessionUser.value && !isSessionPending.value ? [accountAction.value] : [])
+])
+
+const isAuthEntryOpen = ref(false)
+const isSignOutPending = ref(false)
+
+function onActionClick(item) {
+  if (item.key === 'account' && !item.isAuthenticated) {
+    isAuthEntryOpen.value = true
+  }
+}
+
+function refreshSession() {
+  session.value?.refetch?.()
+}
+
+async function signOut() {
+  if (isSignOutPending.value) {
+    return
+  }
+
+  isSignOutPending.value = true
+
+  try {
+    await authClient.signOut()
+    await session.value?.refetch?.()
+  } catch (error) {
+    console.error('Sign out failed:', error)
+  } finally {
+    isSignOutPending.value = false
+  }
+}
 </script>
 
 <template>
@@ -122,6 +171,7 @@ const actionItems = [
             type="button"
             class="header-action"
             :class="`header-action--${item.kind}`"
+            @click="onActionClick(item)"
           >
             <span class="header-action__icon-wrap">
               <AppIcon
@@ -138,9 +188,46 @@ const actionItems = [
             </span>
             <span class="header-action__label">{{ item.label }}</span>
           </button>
+
+          <div
+            v-if="sessionUser"
+            class="header-account-authorized"
+          >
+            <div class="header-account-authorized__top">
+              <span class="header-account-authorized__icon-wrap">
+                <AppIcon
+                  name="header-account-authorized"
+                  class="header-account-authorized__icon"
+                />
+              </span>
+
+              <button
+                type="button"
+                class="header-account-authorized__sign-out"
+                :disabled="isSignOutPending"
+                :aria-label="isSignOutPending ? 'Выходим' : 'Выйти'"
+                @click="signOut"
+              >
+                <AppIcon
+                  name="header-sign-out-authorized"
+                  class="header-account-authorized__sign-out-icon"
+                />
+              </button>
+            </div>
+
+            <span class="header-account-authorized__label">
+              {{ accountLabel }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
+
+    <AuthEntryModal
+      v-model="isAuthEntryOpen"
+      @complete-login="refreshSession"
+      @complete-registration="refreshSession"
+    />
   </header>
 </template>
 
@@ -377,10 +464,92 @@ const actionItems = [
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1rem;
+  max-width: 6.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-account-authorized {
+  align-items: stretch;
+  background: rgba(227, 143, 255, 0.1);
+  border-radius: 0.5rem;
+  display: flex;
+  flex: 0 0 5.75rem;
+  flex-direction: column;
+  gap: 0.125rem;
+  height: 2.875rem;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0.125rem 0.25rem 0;
+  width: 5.75rem;
+}
+
+.header-account-authorized__top {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-account-authorized__icon-wrap {
+  align-items: center;
+  background: #de7aff;
+  border-radius: 0.5rem;
+  display: flex;
+  height: 1.5rem;
+  justify-content: center;
+  padding: 0.25rem;
+  width: 1.5rem;
+}
+
+.header-account-authorized__icon {
+  display: block;
+  height: 1rem;
+  width: 1rem;
+}
+
+.header-account-authorized__sign-out {
+  align-items: center;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: flex;
+  height: 1.25rem;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.15s, opacity 0.15s;
+  width: 1.25rem;
+}
+
+.header-account-authorized__sign-out:hover:not(:disabled) {
+  background: rgba(222, 122, 255, 0.12);
+}
+
+.header-account-authorized__sign-out:disabled {
+  cursor: wait;
+  opacity: 0.54;
+}
+
+.header-account-authorized__sign-out-icon {
+  display: block;
+  height: 0.672rem;
+  width: 0.656rem;
+}
+
+.header-account-authorized__label {
+  color: #de7aff;
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .header__nav-link:focus-visible,
 .header-action:focus-visible,
+.header-account-authorized__sign-out:focus-visible,
 .header__logo:focus-visible {
   outline: 2px solid rgba(201, 37, 255, 0.45);
   outline-offset: 0.125rem;
@@ -439,6 +608,22 @@ const actionItems = [
   }
 
   .header-action__label {
+    display: none;
+  }
+
+  .header-account-authorized {
+    flex-basis: 2rem;
+    height: 1.75rem;
+    padding-bottom: 0.125rem;
+    width: 2rem;
+  }
+
+  .header-account-authorized__top {
+    justify-content: center;
+  }
+
+  .header-account-authorized__sign-out,
+  .header-account-authorized__label {
     display: none;
   }
 }

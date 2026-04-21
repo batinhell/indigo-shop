@@ -14,13 +14,15 @@ const props = defineProps({
 <template>
   <div class="product-badge">
     <div class="product-badge-item product-badge-item--discount">
-      <div class="product-badge-item__main">{{ props.discount }}</div>
-      <div class="product-badge-item__bottom" />
+      <span class="product-badge-item__text">
+        {{ props.discount }}
+      </span>
     </div>
 
     <div class="product-badge-item product-badge-item--label">
-      <div class="product-badge-item__main">{{ props.text }}</div>
-      <div class="product-badge-item__bottom" />
+      <span class="product-badge-item__text">
+        {{ props.text }}
+      </span>
     </div>
   </div>
 </template>
@@ -36,33 +38,42 @@ const props = defineProps({
 }
 
 .product-badge-item {
+  align-items: center;
   display: inline-flex;
-  flex-direction: column;
-  gap: 0;
-  overflow: visible;
+  height: 1.25rem;
+  justify-content: center;
+  padding: 0 0.3125rem;
+  position: relative;
   width: fit-content;
 }
 
-.product-badge-item__main {
-  align-items: center;
+.product-badge-item::before,
+.product-badge-item::after {
   background: #0abd5d;
-  border-radius: 0.125rem 0.125rem 0.4375rem 0.4375rem;
+  border-radius: 0.25rem;
+  content: '';
+  height: 50%;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.product-badge-item::before {
+  top: 0;
+}
+
+.product-badge-item::after {
+  bottom: 0;
+}
+
+.product-badge-item__text {
   color: #e1ffed;
-  display: inline-flex;
   font-feature-settings: 'lnum' 1, 'pnum' 1;
   font-size: 0.75rem;
   font-weight: 600;
-  justify-content: center;
-  line-height: 1.1;
-  min-height: 1.0625rem;
-  padding: 0.125rem 0.3125rem 0.0625rem;
+  line-height: 1rem;
+  position: relative;
   white-space: nowrap;
-}
-
-.product-badge-item__bottom {
-  background: #0abd5d;
-  border-radius: 0.4375rem 0.4375rem 0.125rem 0.125rem;
-  height: 0.1875rem;
-  width: 100%;
+  z-index: 1;
 }
 </style>

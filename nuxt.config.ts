@@ -9,37 +9,6 @@ export default defineNuxtConfig({
     enabled: true
   },
 
-  devServer: {
-    host: '0.0.0.0',
-    port: 3000
-  },
-
-  nitro: {
-    preset: 'node-server'
-  },
-
-  css: ['~/assets/css/main.css'],
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "~/assets/scss/variables" as *;\n'
-        }
-      }
-    }
-  },
-
-  routeRules: {
-    '/': { prerender: true }
-  },
-
-  compatibilityDate: '2025-01-15',
-
-  future: {
-    compatibilityVersion: 4
-  },
-
   app: {
     head: {
       htmlAttrs: { lang: 'ru' },
@@ -50,6 +19,57 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', href: '/favicon.ico' }
       ]
+    }
+  },
+
+  css: ['~/assets/css/main.css'],
+
+  runtimeConfig: {
+    notificore: {
+      apiKey: '',
+      apiBaseUrl: 'https://one-api.notificore.ru',
+      sender: '',
+      otpTemplateId: '',
+      codeDigits: 5,
+      codeLifetime: 300,
+      codeMaxTries: 3
+    },
+    dadata: {
+      apiKey: '',
+      suggestUrl: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party'
+    },
+    betterAuth: {
+      url: '',
+      secret: ''
+    }
+  },
+
+  routeRules: {
+    '/': { prerender: true }
+  },
+
+  devServer: {
+    host: '0.0.0.0',
+    port: 3000
+  },
+
+  future: {
+    compatibilityVersion: 4
+  },
+
+  compatibilityDate: '2025-01-15',
+
+  nitro: {
+    preset: 'node-server'
+  },
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/scss/variables" as *;\n'
+        }
+      }
     }
   },
 

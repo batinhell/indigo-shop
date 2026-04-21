@@ -9,6 +9,8 @@ import binky16 from '~/assets/icons/system/binky-16.svg'
 import calendar16 from '~/assets/icons/system/calendar-16.svg'
 import check12 from '~/assets/icons/system/check-12.svg'
 import cross12 from '~/assets/icons/system/cross-12.svg'
+import headerAccountAuthorized16 from '~/assets/icons/header-account-authorized.svg'
+import headerSignOutAuthorized16 from '~/assets/icons/header-sign-out-authorized.svg'
 import hide16 from '~/assets/icons/system/hide-16.svg'
 import mir32x62 from '~/assets/icons/system/mir-32x62.svg'
 import puzzle16 from '~/assets/icons/system/puzzle-16.svg'
@@ -28,6 +30,18 @@ const ICONS = {
         clipRule: 'evenodd'
       }
     ]
+  },
+  'header-account-authorized': {
+    kind: 'image',
+    srcBySize: {
+      16: headerAccountAuthorized16
+    }
+  },
+  'header-sign-out-authorized': {
+    kind: 'image',
+    srcBySize: {
+      16: headerSignOutAuthorized16
+    }
   },
   'favorite': {
     kind: 'path',
@@ -132,6 +146,78 @@ const ICONS = {
     srcBySize: {
       16: hide16
     }
+  },
+  'close': {
+    kind: 'path',
+    viewBox: '0 0 16 16',
+    paths: [
+      {
+        d: 'M3.46967 3.46967C3.76256 3.17678 4.23744 3.17678 4.53033 3.46967L8 6.93934L11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967C12.8232 3.76256 12.8232 4.23744 12.5303 4.53033L9.06066 8L12.5303 11.4697C12.8232 11.7626 12.8232 12.2374 12.5303 12.5303C12.2374 12.8232 11.7626 12.8232 11.4697 12.5303L8 9.06066L4.53033 12.5303C4.23744 12.8232 3.76256 12.8232 3.46967 12.5303C3.17678 12.2374 3.17678 11.7626 3.46967 11.4697L6.93934 8L3.46967 4.53033C3.17678 4.23744 3.17678 3.76256 3.46967 3.46967Z',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd'
+      }
+    ]
+  },
+  'reset': {
+    kind: 'path',
+    viewBox: '0 0 16 16',
+    paths: [
+      {
+        d: 'M12.49 3.51C11.34 2.36 9.75 1.65 8 1.65C4.49 1.65 1.65 4.49 1.65 8C1.65 11.51 4.49 14.35 8 14.35C11 14.35 13.52 12.27 14.18 9.47',
+        stroke: 'currentColor',
+        strokeWidth: '1.5',
+        strokeLinecap: 'round'
+      },
+      {
+        d: 'M12.08 1.8H12.8C13.13 1.8 13.4 2.07 13.4 2.4V3.12',
+        stroke: 'currentColor',
+        strokeWidth: '1.5',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      }
+    ]
+  },
+  'arrow-right-line': {
+    kind: 'path',
+    viewBox: '0 0 24 24',
+    paths: [
+      {
+        d: 'M5 12H19M13 6L19 12L13 18',
+        stroke: 'currentColor',
+        strokeWidth: '2',
+        strokeLinecap: 'round',
+        strokeLinejoin: 'round'
+      }
+    ]
+  },
+  'alert-circle': {
+    kind: 'path',
+    viewBox: '0 0 16 16',
+    paths: [
+      {
+        d: 'M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z'
+      },
+      {
+        d: 'M7.25 3.75H8.75V8.25H7.25V3.75ZM8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z',
+        fill: 'white'
+      }
+    ]
+  },
+  'password-eye': {
+    kind: 'path',
+    viewBox: '0 0 16 12',
+    paths: [
+      {
+        d: 'M8 12C12.4183 12 16 8.31371 16 6C16 3.68629 12.4183 0 8 0C3.58172 0 0 3.68629 0 6C0 8.31371 3.58172 12 8 12ZM8 10C10.2091 10 12 8.20914 12 6C12 3.79086 10.2091 2 8 2C5.79086 2 4 3.79086 4 6C4 8.20914 5.79086 10 8 10Z',
+        fillRule: 'evenodd',
+        clipRule: 'evenodd',
+        fillOpacity: '0.64'
+      },
+      {
+        d: 'M10 6C10 7.10457 9.10457 8 8 8C6.89543 8 6 7.10457 6 6C6.5 6 8 6 8 6C8 6 8 4.5 8 4C9.10457 4 10 4.89543 10 6Z',
+        fillOpacity: '0.64'
+      }
+    ]
   },
   'alert': {
     kind: 'image',
@@ -287,7 +373,12 @@ const imageSrc = computed(() => {
         :d="path.d"
         :fill-rule="path.fillRule"
         :clip-rule="path.clipRule"
-        fill="currentColor"
+        :fill="path.fill || (path.stroke ? 'none' : 'currentColor')"
+        :fill-opacity="path.fillOpacity"
+        :stroke="path.stroke"
+        :stroke-width="path.strokeWidth"
+        :stroke-linecap="path.strokeLinecap"
+        :stroke-linejoin="path.strokeLinejoin"
       />
     </svg>
 
