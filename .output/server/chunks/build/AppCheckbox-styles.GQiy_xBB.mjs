@@ -1,0 +1,8 @@
+const AppCheckbox_vue_vue_type_style_index_0_scoped_5c83338d_lang = '.app-checkbox[data-v-5c83338d]{align-items:center;cursor:pointer;display:flex;gap:.625rem;-webkit-user-select:none;-moz-user-select:none;user-select:none}.app-checkbox__input[data-v-5c83338d]{height:0;opacity:0;pointer-events:none;position:absolute;width:0}.app-checkbox__box[data-v-5c83338d]{align-items:center;border:2px solid rgba(4,18,27,.24);border-radius:.25rem;box-sizing:border-box;display:flex;flex-shrink:0;height:1rem;justify-content:center;transition:background-color .15s,border-color .15s;width:1rem}.app-checkbox__icon[data-v-5c83338d]{color:#fff;height:1rem;width:1rem}.app-checkbox__label[data-v-5c83338d]{color:#04121b;font-feature-settings:"lnum" 1,"pnum" 1;font-size:1rem;font-weight:600;line-height:1.5rem}.app-checkbox:hover .app-checkbox__box[data-v-5c83338d]{border-color:#04121b5c}.app-checkbox--checked .app-checkbox__box[data-v-5c83338d]{background:#c925ff;border-color:#c925ff}.app-checkbox--checked:hover .app-checkbox__box[data-v-5c83338d]{background:#e38fff;border-color:#e38fff}.app-checkbox--disabled[data-v-5c83338d]{cursor:not-allowed;pointer-events:none}.app-checkbox--disabled .app-checkbox__box[data-v-5c83338d]{border-color:#04121b1f}.app-checkbox--disabled .app-checkbox__label[data-v-5c83338d]{color:#04121b3d}.app-checkbox--disabled.app-checkbox--checked .app-checkbox__box[data-v-5c83338d]{background:#04121b1f;border-color:#04121b1f}';
+
+const AppCheckboxStyles_GQiy_xBB = [
+  AppCheckbox_vue_vue_type_style_index_0_scoped_5c83338d_lang
+];
+
+export { AppCheckboxStyles_GQiy_xBB as default };
+//# sourceMappingURL=AppCheckbox-styles.GQiy_xBB.mjs.map

@@ -1,0 +1,8 @@
+const cookiePolicy_vue_vue_type_style_index_0_scoped_8d047e3e_lang = ".cookie-page[data-v-8d047e3e]{padding-top:0}.cookie-page__container[data-v-8d047e3e]{margin:0 auto;max-width:1106px;width:calc(100% - 32px)}.cookie-page__breadcrumbs[data-v-8d047e3e]{margin-bottom:1.5rem}.cookie-page__card[data-v-8d047e3e]{background:#fff;border-radius:2rem;box-shadow:0 0 24px #c925ff1a;padding:4rem 5.875rem}.cookie-page__title[data-v-8d047e3e]{color:#04121b;font-size:2rem;font-weight:800;line-height:2.25rem;margin:0}.cookie-page__text[data-v-8d047e3e]{color:#04121b;font-size:.875rem;font-weight:600;line-height:1.125rem;margin:1.5rem 0 0}@media(max-width:1120px){.cookie-page__card[data-v-8d047e3e]{padding:3rem}}@media(max-width:720px){.cookie-page[data-v-8d047e3e]{padding-top:0}.cookie-page__container[data-v-8d047e3e]{width:calc(100% - 24px)}.cookie-page__card[data-v-8d047e3e]{border-radius:1.5rem;padding:2rem 1.25rem}.cookie-page__title[data-v-8d047e3e]{font-size:1.75rem;line-height:2rem}}";
+
+const cookiePolicyStyles_ReKfthYg = [
+  cookiePolicy_vue_vue_type_style_index_0_scoped_8d047e3e_lang
+];
+
+export { cookiePolicyStyles_ReKfthYg as default };
+//# sourceMappingURL=cookie-policy-styles.ReKfthYg.mjs.map
