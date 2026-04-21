@@ -523,7 +523,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-B-Coxgk-.mjs')
+    component: () => import('./index-BEwC-9WL.mjs')
   },
   {
     name: "catalog",
