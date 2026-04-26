@@ -22,14 +22,15 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
         Имя и фамилия
       </label>
 
-      <input
+      <AppInput
         id="auth-entry-name"
         v-model="fullName"
         class="auth-entry__input auth-entry__input--compact"
         type="text"
         placeholder="Иван Иванов"
         autocomplete="name"
-      >
+        @input="flow.onFullNameInput"
+      />
     </div>
 
     <div class="auth-entry__registration-phone">
@@ -41,16 +42,16 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
           Номер телефона
         </label>
 
-        <input
+        <AppInput
           id="auth-entry-phone"
-          :value="registrationPhone"
+          v-model="registrationPhone"
           class="auth-entry__input auth-entry__input--compact auth-entry__input--phone"
           type="tel"
           placeholder="+7(999)-999-99-99"
           autocomplete="tel"
           inputmode="tel"
           @input="flow.onRegistrationPhoneInput"
-        >
+        />
       </div>
 
       <button
@@ -64,7 +65,7 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
     </div>
 
     <p class="auth-entry__hint">
-      После продолжения заполните почту и пароль для завершения регистрации
+      Отправим вам смс с кодом подтверждения, после того как ознакомитесь с Политиками
     </p>
 
     <p
@@ -98,13 +99,17 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
     >
       <span class="auth-entry__checkbox-text">
         Я ознакомлен и согласен
-        <NuxtLink
-          to="/privacy-policy"
-          class="auth-entry__link"
-          @click.stop
-        >
-          с Политикой обработки персональных данных
-        </NuxtLink>
+        <span class="auth-entry__checkbox-link-line">
+          <NuxtLink
+            to="/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="auth-entry__link"
+            @click.stop
+          >
+            с Политикой обработки персональных данных
+          </NuxtLink>
+        </span>
       </span>
     </AppCheckbox>
 
@@ -114,13 +119,17 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
     >
       <span class="auth-entry__checkbox-text">
         Я ознакомлен и согласен
-        <NuxtLink
-          to="/user-agreement"
-          class="auth-entry__link"
-          @click.stop
-        >
-          с Пользовательским соглашением
-        </NuxtLink>
+        <span class="auth-entry__checkbox-link-line">
+          <NuxtLink
+            to="/user-agreement"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="auth-entry__link"
+            @click.stop
+          >
+            с Пользовательским соглашением
+          </NuxtLink>
+        </span>
       </span>
     </AppCheckbox>
   </div>
@@ -163,47 +172,43 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
 
 .auth-entry__input {
   width: 100%;
-  height: 3.25rem;
-  padding: 0 0.875rem;
-  color: $color-base;
-  background: $color-input-bg;
-  border: 0.125rem solid transparent;
-  border-radius: $radius-control;
-  outline: none;
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  font-feature-settings: 'lnum' 1, 'pnum' 1;
 
-  .auth-entry__field--invalid & {
-    padding-right: 2.5rem;
-    color: #2e0509;
-    background: #ffebed;
+  :deep(.app-input) {
+    height: 3.25rem;
   }
 
-  &::placeholder {
-    color: $color-base-secondary;
-  }
-
-  &:focus {
-    border-color: transparent;
+  :deep(.app-input__field) {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
   }
 }
 
 .auth-entry__input--compact {
-  height: 2.5rem;
-  font-size: 1rem;
-  line-height: 1.2;
+  :deep(.app-input) {
+    height: 2.5rem;
+  }
 
-  &::placeholder {
-    color: $color-base-secondary;
+  :deep(.app-input__field) {
+    font-size: 1rem;
+    line-height: 1.2;
   }
 }
 
 .auth-entry__input--phone {
-  width: 100%;
-  min-width: 0;
+  width: fit-content;
+  min-width: auto;
+
+  :deep(.app-input) {
+    width: fit-content;
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+
+  :deep(.app-input__field) {
+    flex: 0 0 auto;
+    width: 15.5ch;
+    font-feature-settings: 'lnum' 1, 'tnum' 1;
+  }
 }
 
 .auth-entry__registration-phone {
@@ -214,8 +219,7 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
 }
 
 .auth-entry__phone-field {
-  flex: 1 1 auto;
-  min-width: 0;
+  width: fit-content;
 }
 
 .auth-entry__hint {
@@ -266,6 +270,10 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
   font-weight: 600;
   line-height: 1.5rem;
   font-feature-settings: 'lnum' 1, 'pnum' 1;
+}
+
+.auth-entry__checkbox-link-line {
+  display: block;
 }
 
 .auth-entry__link {

@@ -1,9 +1,9 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { useSlots, toRef, computed, unref, mergeProps, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, createVNode, Fragment, resolveDynamicComponent, isRef, toValue, getCurrentInstance, onServerPrefetch, ref, inject, defineComponent, shallowRef, h, resolveComponent, useModel, mergeModels, watch, hasInjectionContext, nextTick, provide, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, Suspense, createApp, renderList, useId, withModifiers, shallowReactive, onErrorCaptured, reactive, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, isShallow, isReactive, toRaw } from 'vue';
-import { C as serialize, D as defu, E as parseQuery, F as klona, G as hasProtocol, A as joinURL, H as parseURL, I as encodePath, J as decodePath, K as defuFn, L as isEqual, M as withQuery, N as isScriptProtocol, O as getContext, c as createError$1, P as withTrailingSlash, Q as withoutTrailingSlash, R as sanitizeStatusCode, $ as $fetch$1, S as baseURL, T as createHooks, U as isPhoneLike, V as getIdentifierError, W as getRegistrationEmailError, b as normalizePhoneDigits, X as formatAuthPhone, Y as formatCompactPhone, Z as formatPhone, _ as unmaskPhoneToEmail, a0 as executeAsync } from '../nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { useSlots, toRef, computed, unref, mergeProps, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, createVNode, Fragment, resolveDynamicComponent, isRef, toValue, getCurrentInstance, onServerPrefetch, ref, inject, defineComponent, shallowRef, h, resolveComponent, useModel, mergeModels, useAttrs, watch, hasInjectionContext, nextTick, provide, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, Suspense, createApp, renderList, useId, withModifiers, shallowReactive, onErrorCaptured, reactive, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, isShallow, isReactive, toRaw } from 'vue';
+import { G as serialize, H as defu, I as parseQuery, J as klona, K as hasProtocol, E as joinURL, L as parseURL, M as encodePath, N as decodePath, O as defuFn, P as isEqual, Q as withQuery, R as isScriptProtocol, S as getContext, c as createError$1, T as withTrailingSlash, U as withoutTrailingSlash, V as sanitizeStatusCode, $ as $fetch$1, W as baseURL, X as createHooks, Y as isPhoneLike, Z as getIdentifierError, _ as getRegistrationEmailError, b as normalizePhoneDigits, a0 as formatAuthPhone, a1 as formatCompactPhone, a2 as formatPhone, a3 as unmaskPhoneToEmail, a4 as executeAsync } from '../nitro/nitro.mjs';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
-import { ssrRenderComponent, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderVNode, ssrRenderAttrs, ssrIncludeBooleanAttr, ssrLooseContain, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrRenderDynamicModel, ssrRenderSuspense } from 'vue/server-renderer';
+import { ssrRenderComponent, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderVNode, ssrRenderAttrs, ssrIncludeBooleanAttr, ssrLooseContain, ssrGetDynamicModelProps, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrRenderSuspense, ssrRenderDynamicModel } from 'vue/server-renderer';
 import { useForwardPropsEmits, DialogRoot, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, DialogTrigger, DialogPortal, DialogOverlay, useForwardProps, Primitive, Slot, createContext, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
 import { reactivePick, createReusableTemplate, reactiveOmit, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
@@ -523,42 +523,42 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-BEwC-9WL.mjs')
+    component: () => import('./index-DbVXWAn-.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-D7IZ7cQS.mjs')
+    component: () => import('./catalog-zBIzbJEp.mjs')
   },
   {
     name: "payment",
     path: "/payment",
-    component: () => import('./payment-DOhkDX_m.mjs')
+    component: () => import('./payment-CrfrzLBF.mjs')
   },
   {
     name: "delivery",
     path: "/delivery",
-    component: () => import('./delivery-DcrZpN-H.mjs')
+    component: () => import('./delivery-DtEvxTLj.mjs')
   },
   {
     name: "cookie-policy",
     path: "/cookie-policy",
-    component: () => import('./cookie-policy-Dw0-iCra.mjs')
+    component: () => import('./cookie-policy-B16kTOYU.mjs')
   },
   {
     name: "privacy-policy",
     path: "/privacy-policy",
-    component: () => import('./privacy-policy-4L8pKGpL.mjs')
+    component: () => import('./privacy-policy-J45CIRsw.mjs')
   },
   {
     name: "user-agreement",
     path: "/user-agreement",
-    component: () => import('./user-agreement-CY84enmM.mjs')
+    component: () => import('./user-agreement-BEnZ5BqX.mjs')
   },
   {
     name: "legal-information",
     path: "/legal-information",
-    component: () => import('./legal-information-C7E504Uk.mjs')
+    component: () => import('./legal-information-CkuquYpS.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -2167,7 +2167,7 @@ const NuxtIconSvg = /* @__PURE__ */ defineComponent({
     }, slots);
   }
 });
-const __nuxt_component_0$2 = defineComponent({
+const __nuxt_component_0$3 = defineComponent({
   name: "NuxtIcon",
   props: {
     name: {
@@ -2216,9 +2216,9 @@ const __nuxt_component_0$2 = defineComponent({
 });
 const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: __nuxt_component_0$2
+  default: __nuxt_component_0$3
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$r = {
+const _sfc_main$t = {
   __name: "UIcon",
   __ssrInlineRender: true,
   props: {
@@ -2231,7 +2231,7 @@ const _sfc_main$r = {
     const props = __props;
     const iconProps = useForwardProps(reactivePick(props, "name", "mode", "size", "customize"));
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_Icon = __nuxt_component_0$2;
+      const _component_Icon = __nuxt_component_0$3;
       if (typeof __props.name === "string") {
         _push(ssrRenderComponent(_component_Icon, mergeProps(unref(iconProps), _attrs), null, _parent));
       } else {
@@ -2240,11 +2240,11 @@ const _sfc_main$r = {
     };
   }
 };
-const _sfc_setup$r = _sfc_main$r.setup;
-_sfc_main$r.setup = (props, ctx) => {
+const _sfc_setup$t = _sfc_main$t.setup;
+_sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
-  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
+  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
 const ImageComponent = "img";
 const avatarGroupInjectionKey = /* @__PURE__ */ Symbol("nuxt-ui.avatar-group");
@@ -2323,7 +2323,7 @@ const theme$8 = {
     "position": "top-right"
   }
 };
-const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UChip",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -2408,11 +2408,11 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$q = _sfc_main$q.setup;
-_sfc_main$q.setup = (props, ctx) => {
+const _sfc_setup$s = _sfc_main$s.setup;
+_sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
-  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
+  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
 const theme$7 = {
   "slots": {
@@ -2456,7 +2456,7 @@ const theme$7 = {
     "size": "md"
   }
 };
-const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UAvatar",
   __ssrInlineRender: true,
   props: {
@@ -2507,7 +2507,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       error.value = true;
     }
     return (_ctx, _push, _parent, _attrs) => {
-      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$q : unref(Primitive)), mergeProps({
+      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$s : unref(Primitive)), mergeProps({
         as: as.value.root
       }, props.chip ? typeof props.chip === "object" ? { inset: true, ...props.chip } : { inset: true } : {}, {
         "data-slot": "root",
@@ -2533,7 +2533,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   if (_push3) {
                     ssrRenderSlot(_ctx.$slots, "default", {}, () => {
                       if (__props.icon) {
-                        _push3(ssrRenderComponent(_sfc_main$r, {
+                        _push3(ssrRenderComponent(_sfc_main$t, {
                           name: __props.icon,
                           "data-slot": "icon",
                           class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -2545,7 +2545,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   } else {
                     return [
                       renderSlot(_ctx.$slots, "default", {}, () => [
-                        __props.icon ? (openBlock(), createBlock(_sfc_main$r, {
+                        __props.icon ? (openBlock(), createBlock(_sfc_main$t, {
                           key: 0,
                           name: __props.icon,
                           "data-slot": "icon",
@@ -2577,7 +2577,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
               }), null, 16, ["src", "alt", "width", "height", "class"])) : (openBlock(), createBlock(unref(Slot), mergeProps({ key: 1 }, _ctx.$attrs), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "default", {}, () => [
-                    __props.icon ? (openBlock(), createBlock(_sfc_main$r, {
+                    __props.icon ? (openBlock(), createBlock(_sfc_main$t, {
                       key: 0,
                       name: __props.icon,
                       "data-slot": "icon",
@@ -2599,11 +2599,11 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$p = _sfc_main$p.setup;
-_sfc_main$p.setup = (props, ctx) => {
+const _sfc_setup$r = _sfc_main$r.setup;
+_sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
-  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
+  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
 function useComponentIcons(componentProps) {
   const appConfig2 = useAppConfig();
@@ -2973,7 +2973,7 @@ function defineNuxtLink(options) {
     }
   });
 }
-const __nuxt_component_0$1 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+const __nuxt_component_0$2 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
 function applyTrailingSlashBehavior(to, trailingSlash) {
   const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
   const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
@@ -2982,7 +2982,7 @@ function applyTrailingSlashBehavior(to, trailingSlash) {
   }
   return normalizeFn(to, true);
 }
-const _sfc_main$o = {
+const _sfc_main$q = {
   __name: "ULinkBase",
   __ssrInlineRender: true,
   props: {
@@ -3046,11 +3046,11 @@ const _sfc_main$o = {
     };
   }
 };
-const _sfc_setup$o = _sfc_main$o.setup;
-_sfc_main$o.setup = (props, ctx) => {
+const _sfc_setup$q = _sfc_main$q.setup;
+_sfc_main$q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
-  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
+  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
 };
 const theme$6 = {
   "base": "focus-visible:outline-primary",
@@ -3074,7 +3074,7 @@ const theme$6 = {
     }
   ]
 };
-const _sfc_main$n = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "ULink",
   __ssrInlineRender: true,
   props: {
@@ -3151,7 +3151,7 @@ const _sfc_main$n = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       return ui.value({ class: props.class, active, disabled: props.disabled });
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$1;
+      const _component_NuxtLink = __nuxt_component_0$2;
       _push(ssrRenderComponent(_component_NuxtLink, mergeProps(unref(nuxtLinkProps), {
         to: to.value,
         custom: ""
@@ -3173,7 +3173,7 @@ const _sfc_main$n = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
               }, null, _push2, _parent2, _scopeId);
             } else {
-              _push2(ssrRenderComponent(_sfc_main$o, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$q, mergeProps({
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -3217,7 +3217,7 @@ const _sfc_main$n = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 target: rest.target,
                 isExternal: rest.isExternal,
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
-              })) : (openBlock(), createBlock(_sfc_main$o, mergeProps({ key: 1 }, {
+              })) : (openBlock(), createBlock(_sfc_main$q, mergeProps({ key: 1 }, {
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -3246,11 +3246,11 @@ const _sfc_main$n = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$n = _sfc_main$n.setup;
-_sfc_main$n.setup = (props, ctx) => {
+const _sfc_setup$p = _sfc_main$p.setup;
+_sfc_main$p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
-  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
+  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
 };
 const theme$5 = {
   "slots": {
@@ -3603,7 +3603,7 @@ const theme$5 = {
     "size": "md"
   }
 };
-const _sfc_main$m = {
+const _sfc_main$o = {
   __name: "UButton",
   __ssrInlineRender: true,
   props: {
@@ -3702,13 +3702,13 @@ const _sfc_main$m = {
       fieldGroup: orientation.value
     }));
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$n, mergeProps({
+      _push(ssrRenderComponent(_sfc_main$p, mergeProps({
         type: __props.type,
         disabled: __props.disabled || isLoading.value
       }, unref(omit)(unref(linkProps), ["type", "disabled", "onClick"]), { custom: "" }, _attrs), {
         default: withCtx(({ active, ...slotProps }, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_sfc_main$o, mergeProps(slotProps, {
+            _push2(ssrRenderComponent(_sfc_main$q, mergeProps(slotProps, {
               "data-slot": "base",
               class: ui.value.base({
                 class: [unref(uiProp)?.base, props.class],
@@ -3722,13 +3722,13 @@ const _sfc_main$m = {
                 if (_push3) {
                   ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
                     if (unref(isLeading) && unref(leadingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$r, {
+                      _push3(ssrRenderComponent(_sfc_main$t, {
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
                       }, null, _parent3, _scopeId2));
                     } else if (!!__props.avatar) {
-                      _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                      _push3(ssrRenderComponent(_sfc_main$r, mergeProps({
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
                         "data-slot": "leadingAvatar",
@@ -3747,7 +3747,7 @@ const _sfc_main$m = {
                   }, _push3, _parent3, _scopeId2);
                   ssrRenderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => {
                     if (unref(isTrailing) && unref(trailingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$r, {
+                      _push3(ssrRenderComponent(_sfc_main$t, {
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
                         class: ui.value.trailingIcon({ class: unref(uiProp)?.trailingIcon, active })
@@ -3759,12 +3759,12 @@ const _sfc_main$m = {
                 } else {
                   return [
                     renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$r, {
+                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
                         key: 0,
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                         key: 1,
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
@@ -3780,7 +3780,7 @@ const _sfc_main$m = {
                       }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                     ]),
                     renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$r, {
+                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
                         key: 0,
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
@@ -3794,7 +3794,7 @@ const _sfc_main$m = {
             }, _parent2, _scopeId));
           } else {
             return [
-              createVNode(_sfc_main$o, mergeProps(slotProps, {
+              createVNode(_sfc_main$q, mergeProps(slotProps, {
                 "data-slot": "base",
                 class: ui.value.base({
                   class: [unref(uiProp)?.base, props.class],
@@ -3806,12 +3806,12 @@ const _sfc_main$m = {
               }), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$r, {
+                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
                       key: 0,
                       name: unref(leadingIconName),
                       "data-slot": "leadingIcon",
                       class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                       key: 1,
                       size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                     }, __props.avatar, {
@@ -3827,7 +3827,7 @@ const _sfc_main$m = {
                     }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                   ]),
                   renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$r, {
+                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
                       key: 0,
                       name: unref(trailingIconName),
                       "data-slot": "trailingIcon",
@@ -3845,11 +3845,11 @@ const _sfc_main$m = {
     };
   }
 };
-const _sfc_setup$m = _sfc_main$m.setup;
-_sfc_main$m.setup = (props, ctx) => {
+const _sfc_setup$o = _sfc_main$o.setup;
+_sfc_main$o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
-  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
+  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
 };
 const theme$4 = {
   "slots": {
@@ -4109,7 +4109,7 @@ const theme$4 = {
     "size": "md"
   }
 };
-const _sfc_main$l = {
+const _sfc_main$n = {
   __name: "UProgress",
   __ssrInlineRender: true,
   props: {
@@ -4321,11 +4321,11 @@ const _sfc_main$l = {
     };
   }
 };
-const _sfc_setup$l = _sfc_main$l.setup;
-_sfc_main$l.setup = (props, ctx) => {
+const _sfc_setup$n = _sfc_main$n.setup;
+_sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
-  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
+  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
 const theme$3 = {
   "slots": {
@@ -4391,7 +4391,7 @@ const theme$3 = {
     "color": "primary"
   }
 };
-const _sfc_main$k = {
+const _sfc_main$m = {
   __name: "UToast",
   __ssrInlineRender: true,
   props: {
@@ -4446,14 +4446,14 @@ const _sfc_main$k = {
           if (_push2) {
             ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
               if (__props.avatar) {
-                _push2(ssrRenderComponent(_sfc_main$p, mergeProps({
+                _push2(ssrRenderComponent(_sfc_main$r, mergeProps({
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
                 }), null, _parent2, _scopeId));
               } else if (__props.icon) {
-                _push2(ssrRenderComponent(_sfc_main$r, {
+                _push2(ssrRenderComponent(_sfc_main$t, {
                   name: __props.icon,
                   "data-slot": "icon",
                   class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -4539,13 +4539,13 @@ const _sfc_main$k = {
                   }, {
                     default: withCtx((_, _push3, _parent3, _scopeId2) => {
                       if (_push3) {
-                        _push3(ssrRenderComponent(_sfc_main$m, mergeProps({
+                        _push3(ssrRenderComponent(_sfc_main$o, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, _parent3, _scopeId2));
                       } else {
                         return [
-                          createVNode(_sfc_main$m, mergeProps({
+                          createVNode(_sfc_main$o, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -4577,13 +4577,13 @@ const _sfc_main$k = {
                     }, {
                       default: withCtx((_, _push3, _parent3, _scopeId2) => {
                         if (_push3) {
-                          _push3(ssrRenderComponent(_sfc_main$m, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$o, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, _parent3, _scopeId2));
                         } else {
                           return [
-                            createVNode(_sfc_main$m, mergeProps({
+                            createVNode(_sfc_main$o, mergeProps({
                               size: "xs",
                               color: __props.color
                             }, { ref_for: true }, action), null, 16, ["color"])
@@ -4604,7 +4604,7 @@ const _sfc_main$k = {
                     if (_push3) {
                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                         if (__props.close) {
-                          _push3(ssrRenderComponent(_sfc_main$m, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$o, mergeProps({
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
                             variant: "link",
@@ -4622,7 +4622,7 @@ const _sfc_main$k = {
                     } else {
                       return [
                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                          __props.close ? (openBlock(), createBlock(_sfc_main$m, mergeProps({
+                          __props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                             key: 0,
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
@@ -4648,7 +4648,7 @@ const _sfc_main$k = {
               _push2(`<!---->`);
             }
             if (__props.progress && open && remaining > 0 && duration) {
-              _push2(ssrRenderComponent(_sfc_main$l, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$n, mergeProps({
                 "model-value": remaining / duration * 100,
                 color: __props.color
               }, typeof __props.progress === "object" ? __props.progress : {}, {
@@ -4662,13 +4662,13 @@ const _sfc_main$k = {
           } else {
             return [
               renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                __props.avatar ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                __props.avatar ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                   key: 0,
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
-                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$r, {
+                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$t, {
                   key: 1,
                   name: __props.icon,
                   "data-slot": "icon",
@@ -4722,7 +4722,7 @@ const _sfc_main$k = {
                         }, ["stop"])
                       }, {
                         default: withCtx(() => [
-                          createVNode(_sfc_main$m, mergeProps({
+                          createVNode(_sfc_main$o, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -4748,7 +4748,7 @@ const _sfc_main$k = {
                       }, ["stop"])
                     }, {
                       default: withCtx(() => [
-                        createVNode(_sfc_main$m, mergeProps({
+                        createVNode(_sfc_main$o, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, 16, ["color"])
@@ -4763,7 +4763,7 @@ const _sfc_main$k = {
                 }, {
                   default: withCtx(() => [
                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                      __props.close ? (openBlock(), createBlock(_sfc_main$m, mergeProps({
+                      __props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                         key: 0,
                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                         color: "neutral",
@@ -4780,7 +4780,7 @@ const _sfc_main$k = {
                   _: 3
                 })) : createCommentVNode("", true)
               ], 2)) : createCommentVNode("", true),
-              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$l, mergeProps({
+              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$n, mergeProps({
                 key: 1,
                 "model-value": remaining / duration * 100,
                 color: __props.color
@@ -4797,11 +4797,11 @@ const _sfc_main$k = {
     };
   }
 };
-const _sfc_setup$k = _sfc_main$k.setup;
-_sfc_main$k.setup = (props, ctx) => {
+const _sfc_setup$m = _sfc_main$m.setup;
+_sfc_main$m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
-  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
 };
 const theme$2 = {
   "slots": {
@@ -4881,7 +4881,7 @@ const theme$2 = {
 const __default__$1 = {
   name: "Toaster"
 };
-const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__$1, {
+const _sfc_main$l = /* @__PURE__ */ Object.assign(__default__$1, {
   __ssrInlineRender: true,
   props: {
     position: { type: null, required: false },
@@ -4944,7 +4944,7 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__$1, {
             ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
             _push2(`<!--[-->`);
             ssrRenderList(unref(toasts), (toast, index2) => {
-              _push2(ssrRenderComponent(_sfc_main$k, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$m, mergeProps({
                 key: toast.id,
                 ref_for: true,
                 ref_key: "refs",
@@ -5012,7 +5012,7 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__$1, {
             return [
               renderSlot(_ctx.$slots, "default"),
               (openBlock(true), createBlock(Fragment, null, renderList(unref(toasts), (toast, index2) => {
-                return openBlock(), createBlock(_sfc_main$k, mergeProps({
+                return openBlock(), createBlock(_sfc_main$m, mergeProps({
                   key: toast.id,
                   ref_for: true,
                   ref_key: "refs",
@@ -5064,13 +5064,13 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__$1, {
     };
   }
 });
-const _sfc_setup$j = _sfc_main$j.setup;
-_sfc_main$j.setup = (props, ctx) => {
+const _sfc_setup$l = _sfc_main$l.setup;
+_sfc_main$l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
-  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
+  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
 };
-const UToaster = Object.assign(_sfc_main$j, { __name: "UToaster" });
+const UToaster = Object.assign(_sfc_main$l, { __name: "UToaster" });
 function _useOverlay() {
   const overlays = shallowReactive([]);
   const create = (component, _options) => {
@@ -5155,7 +5155,7 @@ function _useOverlay() {
   };
 }
 const useOverlay = /* @__PURE__ */ createSharedComposable(_useOverlay);
-const _sfc_main$i = {
+const _sfc_main$k = {
   __name: "UOverlayProvider",
   __ssrInlineRender: true,
   setup(__props) {
@@ -5184,16 +5184,16 @@ const _sfc_main$i = {
     };
   }
 };
-const _sfc_setup$i = _sfc_main$i.setup;
-_sfc_main$i.setup = (props, ctx) => {
+const _sfc_setup$k = _sfc_main$k.setup;
+_sfc_main$k.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
-  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
+  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
 };
 const __default__ = {
   name: "App"
 };
-const _sfc_main$h = /* @__PURE__ */ Object.assign(__default__, {
+const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__, {
   __ssrInlineRender: true,
   props: {
     tooltip: { type: Object, required: false },
@@ -5240,7 +5240,7 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign(__default__, {
                   } else {
                     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
                   }
-                  _push3(ssrRenderComponent(_sfc_main$i, null, null, _parent3, _scopeId2));
+                  _push3(ssrRenderComponent(_sfc_main$k, null, null, _parent3, _scopeId2));
                 } else {
                   return [
                     __props.toaster !== null ? (openBlock(), createBlock(UToaster, mergeProps({ key: 0 }, toasterProps.value), {
@@ -5249,7 +5249,7 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign(__default__, {
                       ]),
                       _: 3
                     }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                    createVNode(_sfc_main$i)
+                    createVNode(_sfc_main$k)
                   ];
                 }
               }),
@@ -5265,7 +5265,7 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign(__default__, {
                     ]),
                     _: 3
                   }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                  createVNode(_sfc_main$i)
+                  createVNode(_sfc_main$k)
                 ]),
                 _: 3
               }, 16)
@@ -5277,13 +5277,13 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign(__default__, {
     };
   }
 });
-const _sfc_setup$h = _sfc_main$h.setup;
-_sfc_main$h.setup = (props, ctx) => {
+const _sfc_setup$j = _sfc_main$j.setup;
+_sfc_main$j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/App.vue");
-  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
+  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
-const __nuxt_component_0 = Object.assign(_sfc_main$h, { __name: "UApp" });
+const __nuxt_component_0$1 = Object.assign(_sfc_main$j, { __name: "UApp" });
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -5291,7 +5291,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$g = {
+const _sfc_main$i = {
   __name: "DevGridOverlay",
   __ssrInlineRender: true,
   props: {
@@ -5347,13 +5347,13 @@ const _sfc_main$g = {
     };
   }
 };
-const _sfc_setup$g = _sfc_main$g.setup;
-_sfc_main$g.setup = (props, ctx) => {
+const _sfc_setup$i = _sfc_main$i.setup;
+_sfc_main$i.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/DevGridOverlay.vue");
-  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
+  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
-const __nuxt_component_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-e31d3a8a"]]);
+const __nuxt_component_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-e31d3a8a"]]);
 const alert16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M8%2016C12.4183%2016%2016%2012.4183%2016%208C16%203.58172%2012.4183%200%208%200C3.58172%200%200%203.58172%200%208C0%2012.4183%203.58172%2016%208%2016ZM7%207.5V4H9V7.5H7ZM9.25%2011C9.25%2011.6904%208.69036%2012.25%208%2012.25C7.30964%2012.25%206.75%2011.6904%206.75%2011C6.75%2010.3096%207.30964%209.75%208%209.75C8.69036%209.75%209.25%2010.3096%209.25%2011Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
 const arrowRight16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2013.4142%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M6%200.292893C6.39052%20-0.0976311%207.02369%20-0.0976311%207.41421%200.292893L13.4142%206.29289L12%207.70711L7.70711%203.41421V13H5.70711V3.41421L1.41421%207.70711L0%206.29289L6%200.292893Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
 const arrowRight24 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2015.4141%2014.8755'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Union'%20d='M6.88672%200.291507C7.36328%20-0.0971695%208.05078%20-0.0971683%208.52734%200.291507L8.62598%200.380374L15.4141%207.16846L14%208.58252L8.70703%203.28955V14.8755H6.70703V3.28955L1.41406%208.58252L0%207.16846L6.78809%200.380374L6.88672%200.291507Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
@@ -5369,11 +5369,11 @@ const headerSignOutAuthorized16 = "data:image/svg+xml,%3csvg%20preserveAspectRat
 const hide16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2014.6108'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.36569%200.234315C1.6781%20-0.0781048%202.18464%20-0.0781048%202.49706%200.234315L15.5078%2013.2451C15.8202%2013.5575%2015.8202%2014.064%2015.5078%2014.3764C15.1954%2014.6889%2014.6889%2014.6889%2014.3764%2014.3764L12.873%2012.873C11.6128%2013.7678%209.9822%2014.4%208%2014.4C2.78172%2014.4%200%2010.0183%200%208C0%206.74838%201.06978%204.58784%203.12704%203.12704L1.36569%201.36569C1.05327%201.05327%201.05327%200.546734%201.36569%200.234315ZM5.17157%205.17157C4.44772%205.89543%204%206.89543%204%208C4%2010.2091%205.79086%2012%208%2012C9.10457%2012%2010.1046%2011.5523%2010.8284%2010.8284L9.69706%209.69706C9.24697%2010.1471%208.63652%2010.4%208%2010.4C7.36348%2010.4%206.75303%2010.1471%206.30294%209.69706C5.85286%209.24697%205.6%208.63652%205.6%208C5.6%207.36348%205.85286%206.75303%206.30294%206.30294L5.17157%205.17157ZM6.12973%201.79836L8.34614%204.01477C10.2791%204.18045%2011.8195%205.72086%2011.9852%207.65386L15.0075%2010.6761C15.6643%209.68737%2016%208.70109%2016%208C16%205.98172%2013.2183%201.6%208%201.6C7.33701%201.6%206.71335%201.67073%206.12973%201.79836Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
 const mir32x62 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2061.8148%2016.8825'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Vector'%3e%3cpath%20d='M0%200.00250663H5.8C6.33%200.00250663%207.91%20-0.167493%208.61%202.29251C9.14%203.87251%209.84%206.33251%2010.89%2010.0225H11.24C12.29%206.15251%2013.17%203.52251%2013.52%202.29251C14.24%20-0.167493%2015.99%200.00250663%2016.7%200.00250663H22.15V16.8725H16.53V6.86251H16.18L13.19%2016.8825H8.97L5.98%206.86251H5.45V16.8825H0M24.43%200.00250663H30.05V10.0225H30.58L34.27%201.76251C34.97%200.182507%2036.56%200.00250663%2036.56%200.00250663H41.83V16.8725H36.21V6.86251H35.86L32.17%2015.1225C31.47%2016.7025%2029.71%2016.8825%2029.71%2016.8825H24.44M49.39%2011.7825V16.8825H44.12V8.09251H61.34C60.64%2010.2025%2058.18%2011.7825%2055.36%2011.7825'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20d='M61.68%207.03251C62.39%203.87251%2060.28%200.00250663%2055.71%200.00250663H43.76C44.11%203.69251%2047.27%207.03251%2050.61%207.03251'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3c/g%3e%3c/svg%3e";
 const puzzle16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2015'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20d='M5.6987%203.2574C5.5995%203.00645%205.50414%202.7657%205.38793%202.52142C5.32566%202.39052%205.26865%202.25333%205.20759%202.12167C5.08421%201.81448%205.10684%201.39485%205.23363%201.0906C5.41822%200.647653%205.76246%200.336019%206.20164%200.160362C6.76427%20-0.0630875%207.39054%20-0.0526621%207.9457%200.189395C8.3575%200.37343%208.69531%200.693228%208.86055%201.12315C8.98789%201.45445%208.99156%201.8716%208.84125%202.19525C8.67852%202.54554%208.51344%202.90152%208.37687%203.26461C9.32445%203.27269%2010.2908%203.26247%2011.2395%203.25884L12.0366%203.25564C12.1907%203.25498%2012.3565%203.24671%2012.5091%203.26357C12.8607%203.30243%2012.8024%203.68615%2012.8023%203.9411L12.8021%204.66736L12.8029%207.10031C13.0921%206.99951%2013.3369%206.87034%2013.615%206.74485C13.71%206.70201%2013.8309%206.6361%2013.9248%206.60165C14.2763%206.47506%2014.6629%206.49805%2014.9974%206.66543C15.4205%206.87617%2015.7271%207.25446%2015.8764%207.70693C15.9073%207.79923%2015.9314%207.89367%2015.9487%207.98963C15.9596%208.04851%2015.9826%208.20302%2016%208.24742V8.70118C15.9634%208.79992%2015.9387%209.01403%2015.9077%209.13155C15.6831%209.98227%2014.8351%2010.6592%2013.9576%2010.3522C13.8427%2010.3119%2013.7362%2010.2518%2013.6246%2010.1996L13.0773%209.94638C12.9969%209.90867%2012.8512%209.86395%2012.7898%209.83069C12.7942%2010.1405%2012.7909%2010.4592%2012.792%2010.7701L12.7981%2013.0811L12.8002%2014.1382C12.8005%2014.2333%2012.8005%2014.3288%2012.8017%2014.4253C12.8047%2014.637%2012.8247%2014.8703%2012.5928%2014.9677C12.5702%2014.9771%2012.4954%2014.99%2012.4701%2014.9916C12.3056%2015.0025%2012.1359%2014.9982%2011.9711%2014.9982L11.4954%2014.9981L11.0198%2014.998L9.35492%2014.9982C9.05852%2014.9983%208.76133%2014.9999%208.46547%2014.9974C8.25898%2014.9957%208.06828%2014.9453%207.92273%2014.7926C7.67253%2014.5301%207.71543%2014.2397%207.84727%2013.9313C7.94078%2013.7125%208.03797%2013.4902%208.13711%2013.2729C8.185%2013.1611%208.25016%2013.035%208.28414%2012.9211C8.36836%2012.639%208.26867%2012.3492%208.07539%2012.1397C7.84156%2011.8861%207.42566%2011.7671%207.09238%2011.7605C6.73984%2011.7535%206.30291%2011.8501%206.04051%2012.1035C5.8779%2012.2605%205.76977%2012.4772%205.76555%2012.7067C5.76203%2012.8985%205.8317%2013.023%205.9068%2013.1913L6.13804%2013.7059C6.30582%2014.0773%206.48762%2014.4557%206.14816%2014.7999C6.04705%2014.9024%205.9096%2014.9707%205.76817%2014.9853C5.5609%2015.0067%205.326%2014.9985%205.11603%2014.9984L3.96061%2014.9981L1.53094%2014.998C1.15924%2014.998%200.787102%2014.998%200.41548%2014.9994C0.303859%2014.9998%200.169111%2014.975%200.091282%2014.8882C0.0332213%2014.8235%200.0350815%2014.7887%200%2014.7276V9.74015C0.00979687%209.72265%200.043071%209.62613%200.050991%209.6021C0.10498%209.43844%200.226653%209.30835%200.382817%209.23785C0.48833%209.19091%200.604539%209.17468%200.718557%209.19099C1.05528%209.23801%201.63473%209.59112%201.97684%209.72065C2.16398%209.79322%202.3722%209.78415%202.55256%209.69551C3.37148%209.30166%203.40452%207.79724%202.6568%207.30386C2.30315%207.0705%202.03616%207.19319%201.69314%207.35191C1.46061%207.45948%200.95893%207.72221%200.717674%207.75571C0.621356%207.7686%200.523401%207.75801%200.431884%207.72483C0.266488%207.66627%200.132827%207.53969%200.0634802%207.37594C0.0399255%207.31921%200.0224379%207.2471%200%207.1995V3.51652C0.0491797%203.41957%200.0908422%203.31723%200.20283%203.28164C0.364929%203.23014%200.894148%203.25427%201.1013%203.25442L2.44405%203.2548L4.57613%203.2547C4.92859%203.25471%205.35159%203.24438%205.6987%203.2574Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3c/svg%3e";
-const refresh16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2014%2014'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Vector'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.3336%202.84883L10.7947%205.34531L9.29702%205.6215L8.53556%201.49857C8.49706%201.29009%208.54734%201.07502%208.67428%200.905166C8.80123%200.735312%208.99334%200.626081%209.20431%200.603791L13.3923%200.161318L13.5525%201.67468L11.5521%201.88602C11.6061%201.93395%2011.6592%201.98271%2011.7116%202.03228C13.0295%203.27946%2013.8531%205.04683%2013.8531%207.0052C13.8531%2010.7873%2010.7849%2013.8533%206.99999%2013.8533C3.21511%2013.8533%200.146847%2010.7873%200.146847%207.0052C0.146847%204.13004%201.91977%201.67049%204.4299%200.655167L5.00132%202.06578C3.04651%202.85649%201.66977%204.7711%201.66977%207.0052C1.66977%209.94684%204.05619%2012.3315%206.99999%2012.3315C9.9438%2012.3315%2012.3302%209.94684%2012.3302%207.0052C12.3302%205.4819%2011.6913%204.10896%2010.6644%203.13721C10.5582%203.03665%2010.4478%202.94043%2010.3336%202.84883Z'%20fill='var(--fill-0,%20white)'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M13.523%200L13.714%201.80514L11.8879%201.99807C13.1899%203.26735%2014%205.04244%2014%207.0052C14%2010.8683%2010.866%2014%207%2014C3.13396%2014%200%2010.8683%200%207.0052C0%204.06824%201.81113%201.55617%204.37479%200.519189L4.51094%200.464119L5.19253%202.14671L5.05645%202.20175C3.15523%202.97078%201.81663%204.83282%201.81663%207.0052C1.81663%209.86586%204.13735%2012.1848%207%2012.1848C9.86266%2012.1848%2012.1834%209.86586%2012.1834%207.0052C12.1834%205.52381%2011.5622%204.18889%2010.5634%203.24371C10.5604%203.24081%2010.5573%203.23792%2010.5542%203.23503L10.9657%205.46294L9.17926%205.79239L8.39115%201.52518C8.34523%201.27653%208.40519%201.02%208.55662%200.817399C8.70804%200.614797%208.9372%200.484494%209.18887%200.457903L13.523%200ZM13.2618%200.322633L9.21976%200.749676C9.04949%200.767665%208.89444%200.855824%208.79196%200.992928C8.68949%201.13004%208.6489%201.30365%208.67998%201.47195L9.4148%205.4506L10.6236%205.22767L10.1175%202.48739L10.4255%202.73444C10.5429%202.82855%2010.6563%202.9274%2010.7654%203.03071C11.8203%204.02903%2012.4771%205.43999%2012.4771%207.0052C12.4771%2010.0278%2010.0249%2012.4782%207%2012.4782C3.97505%2012.4782%201.52292%2010.0278%201.52292%207.0052C1.52292%204.76129%202.87452%202.83134%204.81087%201.98668L4.34948%200.847711C1.96485%201.87398%200.293706%204.24387%200.293706%207.0052C0.293706%2010.7063%203.29626%2013.7066%207%2013.7066C10.7037%2013.7066%2013.7063%2010.7063%2013.7063%207.0052C13.7063%205.08877%2012.9005%203.35941%2011.6106%202.13878C11.5594%202.09026%2011.5073%202.04254%2011.4545%201.99564L11.2063%201.77505L13.391%201.54422L13.2618%200.322633Z'%20fill='var(--fill-0,%20white)'/%3e%3c/g%3e%3c/svg%3e";
+const refresh16 = "data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20transform='translate(1%201)'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.3336%202.84883L10.7947%205.34531L9.29702%205.6215L8.53556%201.49857C8.49706%201.29009%208.54734%201.07502%208.67428%200.905166C8.80123%200.735312%208.99334%200.626081%209.20431%200.603791L13.3923%200.161318L13.5525%201.67468L11.5521%201.88602C11.6061%201.93395%2011.6592%201.98271%2011.7116%202.03228C13.0295%203.27946%2013.8531%205.04683%2013.8531%207.0052C13.8531%2010.7873%2010.7849%2013.8533%206.99999%2013.8533C3.21511%2013.8533%200.146847%2010.7873%200.146847%207.0052C0.146847%204.13004%201.91977%201.67049%204.4299%200.655167L5.00132%202.06578C3.04651%202.85649%201.66977%204.7711%201.66977%207.0052C1.66977%209.94684%204.05619%2012.3315%206.99999%2012.3315C9.9438%2012.3315%2012.3302%209.94684%2012.3302%207.0052C12.3302%205.4819%2011.6913%204.10896%2010.6644%203.13721C10.5582%203.03665%2010.4478%202.94043%2010.3336%202.84883Z'%20fill='%2330010B'%20/%3e%3c/g%3e%3c/svg%3e";
 const ruble12 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%208.40127%209.78573'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M4.81572%206.10578H4.54888L1.45945%206.02573V6.01761L0.17286%205.98397L0%204.26929L1.44437%204.27857L1.41652%201.78777L1.25991%200.0475655C1.25991%200.0475655%202.90497%200%204.78091%200C9.82053%200%209.37968%206.10578%204.81572%206.10578ZM4.68926%201.77036C4.4874%201.77036%203.4572%201.78197%203.4572%201.78197L3.54189%204.26929L5.42014%204.25769C6.11506%203.80524%207.02345%201.77036%204.68926%201.77036ZM6.74966%208.49914L3.46648%208.43533V9.78573L1.49425%209.75208L1.48149%208.39705L0.413007%208.37733L0.265671%206.91672L7.01185%206.88539L6.74966%208.49914Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
 const ruble16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2011.2017%2013.0476'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M6.42095%208.14105H6.06518L1.94593%208.03431V8.02348L0.23048%207.97863L0%205.69239L1.92582%205.70476L1.8887%202.38369L1.67987%200.0634206C1.67987%200.0634206%203.8733%200%206.37455%200C13.094%200%2012.5062%208.14105%206.42095%208.14105ZM6.25235%202.36049C5.9832%202.36049%204.6096%202.37595%204.6096%202.37595L4.72252%205.69239L7.22686%205.67692C8.15342%205.07365%209.3646%202.36049%206.25235%202.36049ZM8.99955%2011.3322L4.62197%2011.2471V13.0476L1.99234%2013.0028L1.97532%2011.1961L0.550676%2011.1698L0.354228%209.22229L9.34913%209.18053L8.99955%2011.3322Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
 const show16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2012'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Icon'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M8%2012C12.4183%2012%2016%208.31371%2016%206C16%203.68629%2012.4183%200%208%200C3.58172%200%200%203.68629%200%206C0%208.31371%203.58172%2012%208%2012ZM8%2010C10.2091%2010%2012%208.20914%2012%206C12%203.79086%2010.2091%202%208%202C5.79086%202%204%203.79086%204%206C4%208.20914%205.79086%2010%208%2010Z'%20fill='var(--fill-0,%20white)'/%3e%3cpath%20d='M10%206C10%207.10457%209.10457%208%208%208C6.89543%208%206%207.10457%206%206C6.5%206%208%206%208%206C8%206%208%204.5%208%204C9.10457%204%2010%204.89543%2010%206Z'%20fill='white'/%3e%3c/g%3e%3c/svg%3e";
-const _sfc_main$f = {
+const _sfc_main$h = {
   __name: "AppIcon",
   __ssrInlineRender: true,
   props: {
@@ -5539,17 +5539,10 @@ const _sfc_main$f = {
         viewBox: "0 0 16 16",
         paths: [
           {
-            d: "M12.49 3.51C11.34 2.36 9.75 1.65 8 1.65C4.49 1.65 1.65 4.49 1.65 8C1.65 11.51 4.49 14.35 8 14.35C11 14.35 13.52 12.27 14.18 9.47",
-            stroke: "currentColor",
-            strokeWidth: "1.5",
-            strokeLinecap: "round"
-          },
-          {
-            d: "M12.08 1.8H12.8C13.13 1.8 13.4 2.07 13.4 2.4V3.12",
-            stroke: "currentColor",
-            strokeWidth: "1.5",
-            strokeLinecap: "round",
-            strokeLinejoin: "round"
+            d: "M10.3336 2.84883L10.7947 5.34531L9.29702 5.6215L8.53556 1.49857C8.49706 1.29009 8.54734 1.07502 8.67428 0.905166C8.80123 0.735312 8.99334 0.626081 9.20431 0.603791L13.3923 0.161318L13.5525 1.67468L11.5521 1.88602C11.6061 1.93395 11.6592 1.98271 11.7116 2.03228C13.0295 3.27946 13.8531 5.04683 13.8531 7.0052C13.8531 10.7873 10.7849 13.8533 6.99999 13.8533C3.21511 13.8533 0.146847 10.7873 0.146847 7.0052C0.146847 4.13004 1.91977 1.67049 4.4299 0.655167L5.00132 2.06578C3.04651 2.85649 1.66977 4.7711 1.66977 7.0052C1.66977 9.94684 4.05619 12.3315 6.99999 12.3315C9.9438 12.3315 12.3302 9.94684 12.3302 7.0052C12.3302 5.4819 11.6913 4.10896 10.6644 3.13721C10.5582 3.03665 10.4478 2.94043 10.3336 2.84883Z",
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            transform: "translate(1 1)"
           }
         ]
       },
@@ -5576,6 +5569,34 @@ const _sfc_main$f = {
           {
             d: "M7.25 3.75H8.75V8.25H7.25V3.75ZM8 12C8.41421 12 8.75 11.6642 8.75 11.25C8.75 10.8358 8.41421 10.5 8 10.5C7.58579 10.5 7.25 10.8358 7.25 11.25C7.25 11.6642 7.58579 12 8 12Z",
             fill: "white"
+          }
+        ]
+      },
+      "password-show": {
+        kind: "path",
+        viewBox: "0 0 16 12",
+        paths: [
+          {
+            d: "M8 12C12.4183 12 16 8.31371 16 6C16 3.68629 12.4183 0 8 0C3.58172 0 0 3.68629 0 6C0 8.31371 3.58172 12 8 12ZM8 10C10.2091 10 12 8.20914 12 6C12 3.79086 10.2091 2 8 2C5.79086 2 4 3.79086 4 6C4 8.20914 5.79086 10 8 10Z",
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            fillOpacity: "0.64"
+          },
+          {
+            d: "M10 6C10 7.10457 9.10457 8 8 8C6.89543 8 6 7.10457 6 6C6.5 6 8 6 8 6C8 6 8 4.5 8 4C9.10457 4 10 4.89543 10 6Z",
+            fillOpacity: "0.64"
+          }
+        ]
+      },
+      "password-hide": {
+        kind: "path",
+        viewBox: "0 0 16 14.4",
+        paths: [
+          {
+            d: "M1.36569 0.234315C1.6781 -0.0781048 2.18464 -0.0781048 2.49706 0.234315L15.5078 13.2451C15.8202 13.5575 15.8202 14.064 15.5078 14.3764C15.1954 14.6889 14.6889 14.6889 14.3764 14.3764L12.873 12.873C11.6128 13.7678 9.9822 14.4 8 14.4C2.78172 14.4 0 10.0183 0 8C0 6.74838 1.06978 4.58784 3.12704 3.12704L1.36569 1.36569C1.05327 1.05327 1.05327 0.546734 1.36569 0.234315ZM5.17157 5.17157C4.44772 5.89543 4 6.89543 4 8C4 10.2091 5.79086 12 8 12C9.10457 12 10.1046 11.5523 10.8284 10.8284L9.69706 9.69706C9.24697 10.1471 8.63652 10.4 8 10.4C7.36348 10.4 6.75303 10.1471 6.30294 9.69706C5.85286 9.24697 5.6 8.63652 5.6 8C5.6 7.36348 5.85286 6.75303 6.30294 6.30294L5.17157 5.17157ZM6.12973 1.79836L8.34614 4.01477C10.2791 4.18045 11.8195 5.72086 11.9852 7.65386L15.0075 10.6761C15.6643 9.68737 16 8.70109 16 8C16 5.98172 13.2183 1.6 8 1.6C7.33701 1.6 6.71335 1.67073 6.12973 1.79836Z",
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            fillOpacity: "0.64"
           }
         ]
       },
@@ -5697,29 +5718,29 @@ const _sfc_main$f = {
         "aria-hidden": __props.decorative,
         role: __props.decorative ? void 0 : "img",
         "aria-label": unref(ariaLabel)
-      }, _attrs))} data-v-985d4b39>`);
+      }, _attrs))} data-v-3c325e2e>`);
       if (unref(icon).kind === "path") {
-        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-985d4b39><!--[-->`);
+        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-3c325e2e><!--[-->`);
         ssrRenderList(unref(icon).paths, (path, index2) => {
-          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)} data-v-985d4b39></path>`);
+          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-3c325e2e></path>`);
         });
         _push(`<!--]--></svg>`);
       } else if (unref(icon).kind === "image") {
-        _push(`<img${ssrRenderAttr("src", unref(imageSrc))} alt="" class="app-icon__image" data-v-985d4b39>`);
+        _push(`<img${ssrRenderAttr("src", unref(imageSrc))} alt="" class="app-icon__image" data-v-3c325e2e>`);
       } else {
-        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-985d4b39></span>`);
+        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-3c325e2e></span>`);
       }
       _push(`</span>`);
     };
   }
 };
-const _sfc_setup$f = _sfc_main$f.setup;
-_sfc_main$f.setup = (props, ctx) => {
+const _sfc_setup$h = _sfc_main$h.setup;
+_sfc_main$h.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
-  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
 };
-const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-985d4b39"]]);
+const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["__scopeId", "data-v-3c325e2e"]]);
 function pointerDownOutside(e, options = {}) {
   const originalEvent = e.detail.originalEvent;
   const target = originalEvent.target;
@@ -5793,7 +5814,7 @@ const theme$1 = {
     }
   ]
 };
-const _sfc_main$e = {
+const _sfc_main$g = {
   __name: "UModal",
   __ssrInlineRender: true,
   props: {
@@ -5992,7 +6013,7 @@ const _sfc_main$e = {
                                     if (_push5) {
                                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                                         if (props.close) {
-                                          _push5(ssrRenderComponent(_sfc_main$m, mergeProps({
+                                          _push5(ssrRenderComponent(_sfc_main$o, mergeProps({
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
                                             variant: "ghost",
@@ -6008,7 +6029,7 @@ const _sfc_main$e = {
                                     } else {
                                       return [
                                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                          props.close ? (openBlock(), createBlock(_sfc_main$m, mergeProps({
+                                          props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                                             key: 0,
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
@@ -6113,7 +6134,7 @@ const _sfc_main$e = {
                                 }, {
                                   default: withCtx(() => [
                                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                      props.close ? (openBlock(), createBlock(_sfc_main$m, mergeProps({
+                                      props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                                         key: 0,
                                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                         color: "neutral",
@@ -6223,7 +6244,7 @@ const _sfc_main$e = {
                               }, {
                                 default: withCtx(() => [
                                   renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                    props.close ? (openBlock(), createBlock(_sfc_main$m, mergeProps({
+                                    props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                                       key: 0,
                                       icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                       color: "neutral",
@@ -6413,7 +6434,7 @@ const _sfc_main$e = {
                             }, {
                               default: withCtx(() => [
                                 renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                  props.close ? (openBlock(), createBlock(_sfc_main$m, mergeProps({
+                                  props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                                     key: 0,
                                     icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                     color: "neutral",
@@ -6490,13 +6511,13 @@ const _sfc_main$e = {
     };
   }
 };
-const _sfc_setup$e = _sfc_main$e.setup;
-_sfc_main$e.setup = (props, ctx) => {
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
-  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
-const _sfc_main$d = {
+const _sfc_main$f = {
   __name: "AuthSuccessView",
   __ssrInlineRender: true,
   emits: ["close"],
@@ -6516,14 +6537,14 @@ const _sfc_main$d = {
     };
   }
 };
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthSuccessView.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-4777aa4f"]]);
-const _sfc_main$c = {
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-4777aa4f"]]);
+const _sfc_main$e = {
   __name: "AuthEntryForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6538,9 +6559,9 @@ const _sfc_main$c = {
       const _component_AppIcon = __nuxt_component_1$2;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
-      }, _attrs))} data-v-3750e938><label class="auth-entry__label" for="auth-entry-identifier" data-v-3750e938> Почта или телефон </label><span class="auth-entry__input-row" data-v-3750e938><span class="auth-entry__input-box" data-v-3750e938><input id="auth-entry-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-error" : void 0)} data-v-3750e938>`);
+      }, _attrs))} data-v-99cf9303><label class="auth-entry__label" for="auth-entry-identifier" data-v-99cf9303> Почта или телефон </label><span class="auth-entry__input-row" data-v-99cf9303><span class="auth-entry__input-box" data-v-99cf9303><input id="auth-entry-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-error" : void 0)} data-v-99cf9303>`);
       if (unref(visibleError)) {
-        _push(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-3750e938>`);
+        _push(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-99cf9303>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "reset",
           size: 16,
@@ -6552,7 +6573,7 @@ const _sfc_main$c = {
       }
       _push(`</span>`);
       if (unref(hasIdentifier)) {
-        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Продолжить")} data-v-3750e938>`);
+        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Получить код")} data-v-99cf9303>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "arrow-right-line",
           size: 24,
@@ -6564,7 +6585,7 @@ const _sfc_main$c = {
       }
       _push(`</span>`);
       if (unref(visibleError) || unref(entryRequestError)) {
-        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-3750e938>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
+        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-99cf9303>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
@@ -6572,14 +6593,14 @@ const _sfc_main$c = {
     };
   }
 };
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-3750e938"]]);
-const _sfc_main$b = {
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-99cf9303"]]);
+const _sfc_main$d = {
   __name: "AuthLoginForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6595,41 +6616,189 @@ const _sfc_main$b = {
     const isLoginRequestPending = flow.isLoginRequestPending;
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppIcon = __nuxt_component_1$2;
-      _push(`<!--[--><div class="auth-entry__login-fields" data-v-4255afb3><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-4255afb3><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-4255afb3> Email или телефон </label><input id="auth-entry-login-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-login-error" : void 0)} data-v-4255afb3>`);
+      _push(`<!--[--><div class="auth-entry__login-fields" data-v-06d05867><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-06d05867><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-06d05867> Email или телефон </label><input id="auth-entry-login-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-login-error" : void 0)} data-v-06d05867>`);
       if (unref(visibleError)) {
-        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-4255afb3>${ssrInterpolate(unref(visibleError))}</p>`);
+        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-06d05867>${ssrInterpolate(unref(visibleError))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-4255afb3><label class="auth-entry__label" for="auth-entry-login-password" data-v-4255afb3> Пароль </label><span class="auth-entry__password-box" data-v-4255afb3><input id="auth-entry-login-password"${ssrRenderDynamicModel(unref(passwordInputType), unref(password), null)} class="auth-entry__input auth-entry__input--compact auth-entry__input--password"${ssrRenderAttr("type", unref(passwordInputType))} placeholder="Введите пароль" autocomplete="current-password"${ssrRenderAttr("aria-invalid", Boolean(unref(visibleLoginPasswordError)))}${ssrRenderAttr("aria-describedby", unref(visibleLoginPasswordError) ? "auth-entry-login-password-error" : void 0)} data-v-4255afb3><button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-4255afb3>`);
+      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-06d05867><label class="auth-entry__label" for="auth-entry-login-password" data-v-06d05867> Пароль </label><span class="auth-entry__password-box" data-v-06d05867><input id="auth-entry-login-password"${ssrRenderDynamicModel(unref(passwordInputType), unref(password), null)} class="auth-entry__input auth-entry__input--compact auth-entry__input--password"${ssrRenderAttr("type", unref(passwordInputType))} placeholder="Введите пароль" autocomplete="current-password"${ssrRenderAttr("aria-invalid", Boolean(unref(visibleLoginPasswordError)))}${ssrRenderAttr("aria-describedby", unref(visibleLoginPasswordError) ? "auth-entry-login-password-error" : void 0)} data-v-06d05867><button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-06d05867>`);
       _push(ssrRenderComponent(_component_AppIcon, {
-        name: "password-eye",
+        name: unref(isPasswordVisible) ? "password-hide" : "password-show",
         size: 16,
         class: "auth-entry__password-toggle-icon"
       }, null, _parent));
       _push(`</button></span>`);
       if (unref(visibleLoginPasswordError)) {
-        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-4255afb3>${ssrInterpolate(unref(visibleLoginPasswordError))}</p>`);
+        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-06d05867>${ssrInterpolate(unref(visibleLoginPasswordError))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<button type="button" class="auth-entry__forgot-password" data-v-4255afb3> Забыли пароль? </button></div></div>`);
+      _push(`<button type="button" class="auth-entry__forgot-password" data-v-06d05867> Забыли пароль? </button></div></div>`);
       if (unref(loginRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-4255afb3>${ssrInterpolate(unref(loginRequestError))}</p>`);
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-06d05867>${ssrInterpolate(unref(loginRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="auth-entry__login-actions" data-v-4255afb3><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-4255afb3>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
+      _push(`<div class="auth-entry__login-actions" data-v-06d05867><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-06d05867>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
     };
   }
 };
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+};
+const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-06d05867"]]);
+const _sfc_main$c = {
+  __name: "AuthPasswordRecoveryForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const passwordRecoveryEmail = flow.passwordRecoveryEmail;
+    const visiblePasswordRecoveryEmailError = flow.visiblePasswordRecoveryEmailError;
+    const passwordRecoveryRequestError = flow.passwordRecoveryRequestError;
+    const passwordRecoveryRequestMessage = flow.passwordRecoveryRequestMessage;
+    const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-94c41901><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-94c41901><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-94c41901> Email </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="email" placeholder="Введите email" autocomplete="email" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-94c41901>`);
+      if (unref(visiblePasswordRecoveryEmailError)) {
+        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-94c41901>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div>`);
+      if (unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage)) {
+        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-94c41901>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<div class="auth-entry__recovery-actions" data-v-94c41901><button type="button" class="auth-entry__secondary-button" data-v-94c41901> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-94c41901>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Отправить")}</button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+};
+const __nuxt_component_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-94c41901"]]);
+const _sfc_main$b = /* @__PURE__ */ Object.assign({
+  inheritAttrs: false
+}, {
+  __name: "AppInput",
+  __ssrInlineRender: true,
+  props: /* @__PURE__ */ mergeModels({
+    type: {
+      type: String,
+      default: "text"
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    description: {
+      type: String,
+      default: ""
+    },
+    icon: {
+      type: String,
+      default: null
+    },
+    suffix: {
+      type: String,
+      default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    min: {
+      type: Number,
+      default: void 0
+    },
+    max: {
+      type: Number,
+      default: void 0
+    },
+    mask: {
+      type: String,
+      default: null
+    }
+  }, {
+    "modelValue": { default: "" },
+    "modelModifiers": {}
+  }),
+  emits: ["update:modelValue"],
+  setup(__props) {
+    const model = useModel(__props, "modelValue");
+    const inputRef = ref(null);
+    const attrs = useAttrs();
+    const wrapperAttributes = computed(() => ({
+      class: attrs.class,
+      style: attrs.style
+    }));
+    const inputAttributes = computed(() => {
+      const {
+        class: _class,
+        style: _style,
+        ...rest
+      } = attrs;
+      return rest;
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UIcon = _sfc_main$t;
+      let _temp0;
+      _push(`<div${ssrRenderAttrs(mergeProps({
+        class: ["app-input-wrapper", unref(wrapperAttributes).class],
+        style: unref(wrapperAttributes).style
+      }, _attrs))} data-v-218afdd4><div class="${ssrRenderClass([
+        "app-input",
+        { "app-input--disabled": __props.disabled }
+      ])}" data-v-218afdd4>`);
+      if (__props.icon) {
+        _push(ssrRenderComponent(_component_UIcon, {
+          name: __props.icon,
+          class: "app-input__icon"
+        }, null, _parent));
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<input${ssrRenderAttrs((_temp0 = mergeProps({
+        ref_key: "inputRef",
+        ref: inputRef,
+        type: __props.type,
+        placeholder: __props.placeholder,
+        disabled: __props.disabled,
+        min: __props.min,
+        max: __props.max,
+        class: "app-input__field"
+      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-218afdd4>`);
+      ssrRenderSlot(_ctx.$slots, "suffix", {}, null, _push, _parent);
+      if (__props.suffix) {
+        _push(`<span class="app-input__suffix" data-v-218afdd4>${ssrInterpolate(__props.suffix)}</span>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div>`);
+      if (__props.description) {
+        _push(`<p class="app-input-description" data-v-218afdd4>${ssrInterpolate(__props.description)}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div>`);
+    };
+  }
+});
 const _sfc_setup$b = _sfc_main$b.setup;
 _sfc_main$b.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
   return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
 };
-const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-4255afb3"]]);
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-218afdd4"]]);
 const _sfc_main$a = {
   __name: "AppCheckbox",
   __ssrInlineRender: true,
@@ -6696,17 +6865,41 @@ const _sfc_main$9 = {
     const isPersonalDataAccepted = flow.isPersonalDataAccepted;
     const isUserAgreementAccepted = flow.isUserAgreementAccepted;
     return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
       const _component_AppCheckbox = __nuxt_component_1;
-      const _component_NuxtLink = __nuxt_component_0$1;
-      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-68307a03><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-68307a03><label class="auth-entry__label" for="auth-entry-name" data-v-68307a03> Имя и фамилия </label><input id="auth-entry-name"${ssrRenderAttr("value", unref(fullName))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="Иван Иванов" autocomplete="name" data-v-68307a03></div><div class="auth-entry__registration-phone" data-v-68307a03><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-68307a03><label class="auth-entry__label" for="auth-entry-phone" data-v-68307a03> Номер телефона </label><input id="auth-entry-phone"${ssrRenderAttr("value", unref(registrationPhone))} class="auth-entry__input auth-entry__input--compact auth-entry__input--phone" type="tel" placeholder="+7(999)-999-99-99" autocomplete="tel" inputmode="tel" data-v-68307a03></div><button type="button" class="auth-entry__code-button"${ssrIncludeBooleanAttr(!unref(canRequestCode) || unref(isCodeRequestPending)) ? " disabled" : ""} data-v-68307a03>${ssrInterpolate(unref(codeButtonText))}</button></div><p class="auth-entry__hint" data-v-68307a03> После продолжения заполните почту и пароль для завершения регистрации </p>`);
+      const _component_NuxtLink = __nuxt_component_0$2;
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-name" data-v-e0a4769e> Имя и фамилия </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-name",
+        modelValue: unref(fullName),
+        "onUpdate:modelValue": ($event) => isRef(fullName) ? fullName.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact",
+        type: "text",
+        placeholder: "Иван Иванов",
+        autocomplete: "name",
+        onInput: unref(flow).onFullNameInput
+      }, null, _parent));
+      _push(`</div><div class="auth-entry__registration-phone" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-phone" data-v-e0a4769e> Номер телефона </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-phone",
+        modelValue: unref(registrationPhone),
+        "onUpdate:modelValue": ($event) => isRef(registrationPhone) ? registrationPhone.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact auth-entry__input--phone",
+        type: "tel",
+        placeholder: "+7(999)-999-99-99",
+        autocomplete: "tel",
+        inputmode: "tel",
+        onInput: unref(flow).onRegistrationPhoneInput
+      }, null, _parent));
+      _push(`</div><button type="button" class="auth-entry__code-button"${ssrIncludeBooleanAttr(!unref(canRequestCode) || unref(isCodeRequestPending)) ? " disabled" : ""} data-v-e0a4769e>${ssrInterpolate(unref(codeButtonText))}</button></div><p class="auth-entry__hint" data-v-e0a4769e> Отправим вам смс с кодом подтверждения, после того как ознакомитесь с Политиками </p>`);
       if (unref(codeRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-68307a03>${ssrInterpolate(unref(codeRequestError))}</p>`);
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-e0a4769e>${ssrInterpolate(unref(codeRequestError))}</p>`);
       } else if (unref(isCodeRequestSent)) {
-        _push(`<p class="auth-entry__request-status" data-v-68307a03> Код отправлен </p>`);
+        _push(`<p class="auth-entry__request-status" data-v-e0a4769e> Код отправлен </p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="auth-entry__checkboxes" data-v-68307a03>`);
+      _push(`</div><div class="auth-entry__checkboxes" data-v-e0a4769e>`);
       _push(ssrRenderComponent(_component_AppCheckbox, {
         modelValue: unref(isLegalRepresentative),
         "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
@@ -6714,7 +6907,7 @@ const _sfc_main$9 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-68307a03${_scopeId}> Я представитель юрлица или ИП </span>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я представитель юрлица или ИП </span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
@@ -6730,9 +6923,11 @@ const _sfc_main$9 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-68307a03${_scopeId}> Я ознакомлен и согласен `);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-e0a4769e${_scopeId}>`);
             _push2(ssrRenderComponent(_component_NuxtLink, {
               to: "/privacy-policy",
+              target: "_blank",
+              rel: "noopener noreferrer",
               class: "auth-entry__link",
               onClick: () => {
               }
@@ -6748,22 +6943,26 @@ const _sfc_main$9 = {
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</span>`);
+            _push2(`</span></span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, [
                 createTextVNode(" Я ознакомлен и согласен "),
-                createVNode(_component_NuxtLink, {
-                  to: "/privacy-policy",
-                  class: "auth-entry__link",
-                  onClick: withModifiers(() => {
-                  }, ["stop"])
-                }, {
-                  default: withCtx(() => [
-                    createTextVNode(" с Политикой обработки персональных данных ")
-                  ]),
-                  _: 1
-                }, 8, ["onClick"])
+                createVNode("span", { class: "auth-entry__checkbox-link-line" }, [
+                  createVNode(_component_NuxtLink, {
+                    to: "/privacy-policy",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    class: "auth-entry__link",
+                    onClick: withModifiers(() => {
+                    }, ["stop"])
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(" с Политикой обработки персональных данных ")
+                    ]),
+                    _: 1
+                  }, 8, ["onClick"])
+                ])
               ])
             ];
           }
@@ -6777,9 +6976,11 @@ const _sfc_main$9 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-68307a03${_scopeId}> Я ознакомлен и согласен `);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-e0a4769e${_scopeId}>`);
             _push2(ssrRenderComponent(_component_NuxtLink, {
               to: "/user-agreement",
+              target: "_blank",
+              rel: "noopener noreferrer",
               class: "auth-entry__link",
               onClick: () => {
               }
@@ -6795,22 +6996,26 @@ const _sfc_main$9 = {
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</span>`);
+            _push2(`</span></span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, [
                 createTextVNode(" Я ознакомлен и согласен "),
-                createVNode(_component_NuxtLink, {
-                  to: "/user-agreement",
-                  class: "auth-entry__link",
-                  onClick: withModifiers(() => {
-                  }, ["stop"])
-                }, {
-                  default: withCtx(() => [
-                    createTextVNode(" с Пользовательским соглашением ")
-                  ]),
-                  _: 1
-                }, 8, ["onClick"])
+                createVNode("span", { class: "auth-entry__checkbox-link-line" }, [
+                  createVNode(_component_NuxtLink, {
+                    to: "/user-agreement",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    class: "auth-entry__link",
+                    onClick: withModifiers(() => {
+                    }, ["stop"])
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(" с Пользовательским соглашением ")
+                    ]),
+                    _: 1
+                  }, 8, ["onClick"])
+                ])
               ])
             ];
           }
@@ -6827,7 +7032,7 @@ _sfc_main$9.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterStartForm.vue");
   return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
-const __nuxt_component_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-68307a03"]]);
+const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e0a4769e"]]);
 const _sfc_main$8 = {
   __name: "AuthRegisterCompleteForm",
   __ssrInlineRender: true,
@@ -6845,7 +7050,7 @@ const _sfc_main$8 = {
     const resendButtonText = flow.resendButtonText;
     const codeRequestError = flow.codeRequestError;
     const codeVerifyError = flow.codeVerifyError;
-    const isCodeVerifyPending = flow.isCodeVerifyPending;
+    flow.isCodeVerifyPending;
     const registrationEmail = flow.registrationEmail;
     const visibleRegistrationEmailError = flow.visibleRegistrationEmailError;
     const password = flow.password;
@@ -6864,27 +7069,59 @@ const _sfc_main$8 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
       const _component_AppIcon = __nuxt_component_1$2;
       const _component_AppCheckbox = __nuxt_component_1;
-      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-238d3af8><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-238d3af8><label class="auth-entry__label" for="auth-entry-code-name" data-v-238d3af8> Имя и фамилия </label><input id="auth-entry-code-name"${ssrRenderAttr("value", unref(fullName))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="Иван Иванов" autocomplete="name" data-v-238d3af8></div><div class="auth-entry__code-fields" data-v-238d3af8>`);
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-89a51056><label class="auth-entry__label" for="auth-entry-code-name" data-v-89a51056> Имя и фамилия </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-code-name",
+        modelValue: unref(fullName),
+        "onUpdate:modelValue": ($event) => isRef(fullName) ? fullName.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact",
+        type: "text",
+        placeholder: "Иван Иванов",
+        autocomplete: "name",
+        onInput: unref(flow).onFullNameInput
+      }, null, _parent));
+      _push(`</div><div class="auth-entry__code-fields" data-v-89a51056>`);
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-238d3af8><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-238d3af8><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-238d3af8> Номер телефона </label><input id="auth-entry-confirmed-phone"${ssrRenderAttr("value", unref(registrationPhone))} class="auth-entry__input auth-entry__input--compact auth-entry__input--phone auth-entry__input--confirmed" type="tel" autocomplete="tel" readonly data-v-238d3af8></div><div class="auth-entry__confirmed-badge" data-v-238d3af8> Подтверждён </div></div>`);
+        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-89a51056><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-89a51056> Номер телефона </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-confirmed-phone",
+          modelValue: unref(registrationPhone),
+          "onUpdate:modelValue": ($event) => isRef(registrationPhone) ? registrationPhone.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact auth-entry__input--phone auth-entry__input--confirmed",
+          type: "tel",
+          autocomplete: "tel",
+          readonly: ""
+        }, null, _parent));
+        _push(`</div><div class="auth-entry__confirmed-badge" data-v-89a51056> Подтверждён </div></div>`);
       } else {
-        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-238d3af8><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-238d3af8><label class="auth-entry__label" for="auth-entry-code-phone" data-v-238d3af8> Номер телефона </label><input id="auth-entry-code-phone"${ssrRenderAttr("value", unref(registrationPhone))} class="auth-entry__input auth-entry__input--compact auth-entry__input--phone" type="tel" placeholder="+7(999)-999-99-99" autocomplete="tel" inputmode="tel" readonly data-v-238d3af8></div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-238d3af8><label class="auth-entry__label" for="auth-entry-sms-code" data-v-238d3af8> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-238d3af8><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-238d3af8>`);
+        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-89a51056><label class="auth-entry__label" for="auth-entry-code-phone" data-v-89a51056> Номер телефона </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-code-phone",
+          modelValue: unref(registrationPhone),
+          "onUpdate:modelValue": ($event) => isRef(registrationPhone) ? registrationPhone.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact auth-entry__input--phone",
+          type: "tel",
+          placeholder: "+7(999)-999-99-99",
+          autocomplete: "tel",
+          inputmode: "tel",
+          readonly: ""
+        }, null, _parent));
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-89a51056><label class="auth-entry__label" for="auth-entry-sms-code" data-v-89a51056> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-89a51056><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-89a51056>`);
         if (unref(isSmsCodeInvalid)) {
           _push(ssrRenderComponent(_component_AppIcon, {
-            name: "alert-circle",
+            name: "reset",
             size: 16,
             class: "auth-entry__sms-code-error-icon"
           }, null, _parent));
         } else {
           _push(`<!---->`);
         }
-        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-238d3af8>${ssrInterpolate(unref(resendButtonText))}</button>`);
+        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-89a51056>${ssrInterpolate(unref(resendButtonText))}</button>`);
         if (unref(codeRequestError) || unref(codeVerifyError)) {
-          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-238d3af8>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
-        } else if (unref(isCodeVerifyPending)) {
-          _push(`<p class="auth-entry__request-status" data-v-238d3af8> Проверяем код </p>`);
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-89a51056>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -6892,21 +7129,68 @@ const _sfc_main$8 = {
       }
       _push(`</div>`);
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<div class="auth-entry__profile-fields" data-v-238d3af8><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-238d3af8><label class="auth-entry__label" for="auth-entry-email" data-v-238d3af8> Электронная почта </label><input id="auth-entry-email"${ssrRenderAttr("value", unref(registrationEmail))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="mail@example.com" autocomplete="email" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visibleRegistrationEmailError)))}${ssrRenderAttr("aria-describedby", unref(visibleRegistrationEmailError) ? "auth-entry-email-error" : void 0)} data-v-238d3af8>`);
+        _push(`<div class="auth-entry__profile-fields" data-v-89a51056><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-89a51056><label class="auth-entry__label" for="auth-entry-email" data-v-89a51056> Электронная почта </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-email",
+          modelValue: unref(registrationEmail),
+          "onUpdate:modelValue": ($event) => isRef(registrationEmail) ? registrationEmail.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact",
+          type: "text",
+          placeholder: "mail@example.com",
+          autocomplete: "email",
+          inputmode: "email",
+          "aria-invalid": Boolean(unref(visibleRegistrationEmailError)),
+          "aria-describedby": unref(visibleRegistrationEmailError) ? "auth-entry-email-error" : void 0,
+          onInput: unref(flow).onRegistrationEmailInput
+        }, null, _parent));
         if (unref(visibleRegistrationEmailError)) {
-          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-238d3af8>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
+          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-89a51056>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-238d3af8><label class="auth-entry__label" for="auth-entry-password" data-v-238d3af8> Пароль </label><span class="auth-entry__password-box" data-v-238d3af8><input id="auth-entry-password"${ssrRenderDynamicModel(unref(passwordInputType), unref(password), null)} class="auth-entry__input auth-entry__input--compact auth-entry__input--password"${ssrRenderAttr("type", unref(passwordInputType))} placeholder="Введите пароль" autocomplete="new-password"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordError) ? "auth-entry-password-error" : void 0)} data-v-238d3af8><button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-238d3af8>`);
-        _push(ssrRenderComponent(_component_AppIcon, {
-          name: "password-eye",
-          size: 16,
-          class: "auth-entry__password-toggle-icon"
-        }, null, _parent));
-        _push(`</button></span>`);
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-89a51056><label class="auth-entry__label" for="auth-entry-password" data-v-89a51056> Пароль </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-password",
+          modelValue: unref(password),
+          "onUpdate:modelValue": ($event) => isRef(password) ? password.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact auth-entry__input--password",
+          type: unref(passwordInputType),
+          placeholder: "Введите пароль",
+          autocomplete: "new-password",
+          "aria-invalid": Boolean(unref(visiblePasswordError)),
+          "aria-describedby": unref(visiblePasswordError) ? "auth-entry-password-error" : void 0,
+          onInput: unref(flow).onPasswordInput
+        }, {
+          suffix: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-89a51056${_scopeId}>`);
+              _push2(ssrRenderComponent(_component_AppIcon, {
+                name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+                size: 16,
+                class: "auth-entry__password-toggle-icon"
+              }, null, _parent2, _scopeId));
+              _push2(`</button>`);
+            } else {
+              return [
+                createVNode("button", {
+                  type: "button",
+                  class: "auth-entry__password-toggle",
+                  "aria-label": unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль",
+                  onClick: ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
+                }, [
+                  createVNode(_component_AppIcon, {
+                    name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+                    size: 16,
+                    class: "auth-entry__password-toggle-icon"
+                  }, null, 8, ["name"])
+                ], 8, ["aria-label", "onClick"])
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
         if (unref(visiblePasswordError)) {
-          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-238d3af8>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
+          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-89a51056>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -6914,7 +7198,7 @@ const _sfc_main$8 = {
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-238d3af8>`);
+      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-89a51056>`);
       _push(ssrRenderComponent(_component_AppCheckbox, {
         modelValue: unref(isLegalRepresentative),
         "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
@@ -6922,7 +7206,7 @@ const _sfc_main$8 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-238d3af8${_scopeId}> Я представитель юрлица или ИП </span>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-89a51056${_scopeId}> Я представитель юрлица или ИП </span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
@@ -6933,12 +7217,12 @@ const _sfc_main$8 = {
       }, _parent));
       _push(`</div>`);
       if (unref(registrationRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-238d3af8>${ssrInterpolate(unref(registrationRequestError))}</p>`);
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-89a51056>${ssrInterpolate(unref(registrationRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-238d3af8>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
+        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-89a51056>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
       } else {
         _push(`<!---->`);
       }
@@ -6952,7 +7236,7 @@ _sfc_main$8.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterCompleteForm.vue");
   return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
-const __nuxt_component_6 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-238d3af8"]]), { __name: "AuthRegisterCompleteForm" });
+const __nuxt_component_7 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-89a51056"]]), { __name: "AuthRegisterCompleteForm" });
 const _sfc_main$7 = {
   __name: "AuthLegalForm",
   __ssrInlineRender: true,
@@ -6969,24 +7253,24 @@ const _sfc_main$7 = {
     const organizationSaveError = flow.organizationSaveError;
     return (_ctx, _push, _parent, _attrs) => {
       if (unref(step) === "legal-details") {
-        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__field auth-entry__field--legal-inn" }, _attrs))} data-v-f2dab6d2><label class="auth-entry__label" for="auth-entry-organization-inn" data-v-f2dab6d2> ИНН </label><input id="auth-entry-organization-inn"${ssrRenderAttr("value", unref(organizationInn))} class="auth-entry__input" type="text" placeholder="Введите ИНН компании" autocomplete="off" inputmode="numeric" maxlength="12" data-v-f2dab6d2>`);
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__field auth-entry__field--legal-inn" }, _attrs))} data-v-0c732cca><label class="auth-entry__label" for="auth-entry-organization-inn" data-v-0c732cca> ИНН </label><input id="auth-entry-organization-inn"${ssrRenderAttr("value", unref(organizationInn))} class="auth-entry__input" type="text" placeholder="Введите ИНН компании" autocomplete="off" inputmode="numeric" maxlength="12" data-v-0c732cca>`);
         if (unref(shouldShowOrganizationSuggestions)) {
-          _push(`<div class="auth-entry__organization-options" data-v-f2dab6d2>`);
+          _push(`<div class="auth-entry__organization-options" data-v-0c732cca>`);
           if (unref(isOrganizationSuggestPending)) {
-            _push(`<p class="auth-entry__organization-status" data-v-f2dab6d2> Ищем организацию </p>`);
+            _push(`<p class="auth-entry__organization-status" data-v-0c732cca> Ищем организацию </p>`);
           } else if (unref(organizationSuggestError)) {
-            _push(`<p class="auth-entry__organization-status auth-entry__organization-status--error" data-v-f2dab6d2>${ssrInterpolate(unref(organizationSuggestError))}</p>`);
+            _push(`<p class="auth-entry__organization-status auth-entry__organization-status--error" data-v-0c732cca>${ssrInterpolate(unref(organizationSuggestError))}</p>`);
           } else {
             _push(`<!--[-->`);
             ssrRenderList(unref(organizationSuggestions), (suggestion) => {
-              _push(`<button type="button" class="auth-entry__organization-option" data-v-f2dab6d2><span class="auth-entry__organization-name" data-v-f2dab6d2>${ssrInterpolate(suggestion.name)}</span>`);
+              _push(`<button type="button" class="auth-entry__organization-option" data-v-0c732cca><span class="auth-entry__organization-name" data-v-0c732cca>${ssrInterpolate(suggestion.name)}</span>`);
               if (suggestion.inn) {
-                _push(`<span class="auth-entry__organization-inn" data-v-f2dab6d2><span class="auth-entry__organization-inn-prefix" data-v-f2dab6d2>ИНН</span> ${ssrInterpolate(suggestion.inn)}</span>`);
+                _push(`<span class="auth-entry__organization-inn" data-v-0c732cca><span class="auth-entry__organization-inn-prefix" data-v-0c732cca>ИНН</span> ${ssrInterpolate(suggestion.inn)}</span>`);
               } else {
                 _push(`<!---->`);
               }
               if (suggestion.address) {
-                _push(`<span class="auth-entry__organization-address" data-v-f2dab6d2>${ssrInterpolate(suggestion.address)}</span>`);
+                _push(`<span class="auth-entry__organization-address" data-v-0c732cca>${ssrInterpolate(suggestion.address)}</span>`);
               } else {
                 _push(`<!---->`);
               }
@@ -7000,16 +7284,16 @@ const _sfc_main$7 = {
         }
         _push(`</div>`);
       } else if (unref(step) === "legal-confirmation") {
-        _push(`<div${ssrRenderAttrs(_attrs)} data-v-f2dab6d2>`);
+        _push(`<div${ssrRenderAttrs(_attrs)} data-v-0c732cca>`);
         if (unref(selectedOrganization)) {
-          _push(`<div class="auth-entry__organization-confirm-card" data-v-f2dab6d2><p class="auth-entry__organization-confirm-name" data-v-f2dab6d2>${ssrInterpolate(unref(selectedOrganization).name)}</p>`);
+          _push(`<div class="auth-entry__organization-confirm-card" data-v-0c732cca><p class="auth-entry__organization-confirm-name" data-v-0c732cca>${ssrInterpolate(unref(selectedOrganization).name)}</p>`);
           if (unref(selectedOrganization).inn) {
-            _push(`<p class="auth-entry__organization-confirm-meta" data-v-f2dab6d2> ИНН ${ssrInterpolate(unref(selectedOrganization).inn)}</p>`);
+            _push(`<p class="auth-entry__organization-confirm-meta" data-v-0c732cca> ИНН ${ssrInterpolate(unref(selectedOrganization).inn)}</p>`);
           } else {
             _push(`<!---->`);
           }
           if (unref(selectedOrganization).address) {
-            _push(`<p class="auth-entry__organization-confirm-meta" data-v-f2dab6d2>${ssrInterpolate(unref(selectedOrganization).address)}</p>`);
+            _push(`<p class="auth-entry__organization-confirm-meta" data-v-0c732cca>${ssrInterpolate(unref(selectedOrganization).address)}</p>`);
           } else {
             _push(`<!---->`);
           }
@@ -7017,9 +7301,9 @@ const _sfc_main$7 = {
         } else {
           _push(`<!---->`);
         }
-        _push(`<button type="submit" class="auth-entry__organization-confirm-button"${ssrIncludeBooleanAttr(unref(isOrganizationSavePending)) ? " disabled" : ""} data-v-f2dab6d2>${ssrInterpolate(unref(isOrganizationSavePending) ? "Добавляем" : "Добавить организацию")}</button>`);
+        _push(`<button type="submit" class="auth-entry__organization-confirm-button"${ssrIncludeBooleanAttr(unref(isOrganizationSavePending)) ? " disabled" : ""} data-v-0c732cca>${ssrInterpolate(unref(isOrganizationSavePending) ? "Добавляем" : "Добавить организацию")}</button>`);
         if (unref(organizationSaveError)) {
-          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-f2dab6d2>${ssrInterpolate(unref(organizationSaveError))}</p>`);
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-0c732cca>${ssrInterpolate(unref(organizationSaveError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -7036,7 +7320,7 @@ _sfc_main$7.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLegalForm.vue");
   return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
-const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-f2dab6d2"]]);
+const __nuxt_component_8 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0c732cca"]]);
 const authClient = createAuthClient({
   basePath: "/api/auth",
   plugins: [
@@ -7058,11 +7342,15 @@ function useAuthEntryFlow({
   const isSubmitted = ref(false);
   const isLoginSubmitted = ref(false);
   const isRegistrationSubmitted = ref(false);
-  const isRegistrationEmailTouched = ref(false);
   const fullName = ref("");
   const registrationEmail = ref("");
   const registrationPhone = ref("");
   const password = ref("");
+  const passwordRecoveryEmail = ref("");
+  const isPasswordRecoverySubmitted = ref(false);
+  const isPasswordRecoveryRequestPending = ref(false);
+  const passwordRecoveryRequestError = ref("");
+  const passwordRecoveryRequestMessage = ref("");
   const organizationInn = ref("");
   const isPasswordVisible = ref(false);
   const smsCode = ref("");
@@ -7102,10 +7390,12 @@ function useAuthEntryFlow({
   const identifierError = computed(() => getIdentifierError(identifier.value));
   const visibleError = computed(() => isFieldTouched.value || isSubmitted.value ? identifierError.value : "");
   const registrationEmailError = computed(() => getRegistrationEmailError(registrationEmail.value));
-  const visibleRegistrationEmailError = computed(() => isRegistrationEmailTouched.value || isRegistrationSubmitted.value ? registrationEmailError.value : "");
+  const visibleRegistrationEmailError = computed(() => isRegistrationSubmitted.value ? registrationEmailError.value : "");
   const passwordError = computed(() => getPasswordError(password.value));
   const visibleLoginPasswordError = computed(() => isLoginSubmitted.value ? passwordError.value : "");
   const visiblePasswordError = computed(() => isRegistrationSubmitted.value ? passwordError.value : "");
+  const passwordRecoveryEmailError = computed(() => getRegistrationEmailError(passwordRecoveryEmail.value));
+  const visiblePasswordRecoveryEmailError = computed(() => isPasswordRecoverySubmitted.value ? passwordRecoveryEmailError.value : "");
   const inputMode = computed(() => isPhoneMode.value ? "tel" : "email");
   const canRequestCode = computed(() => normalizePhoneDigits(registrationPhone.value).length === 11 && isPersonalDataAccepted.value && isUserAgreementAccepted.value);
   const canResendCode = computed(() => resendSeconds.value === 0 && !isCodeRequestPending.value && !isCodeVerifyPending.value);
@@ -7117,11 +7407,11 @@ function useAuthEntryFlow({
   const passwordInputType = computed(() => isPasswordVisible.value ? "text" : "password");
   const codeButtonText = computed(() => {
     if (isCodeRequestPending.value) {
-      return "Отправляем";
+      return "Получить код";
     }
-    return "Продолжить";
+    return "Получить код";
   });
-  const resendCountdownText = computed(() => `Отправить повторно через ${resendSeconds.value}`);
+  const resendCountdownText = computed(() => `Получить повторно можно через ${resendSeconds.value} ${getSecondsWord(resendSeconds.value)}`);
   const resendButtonText = computed(() => {
     if (isCodeRequestPending.value) {
       return "Отправляем код";
@@ -7129,13 +7419,17 @@ function useAuthEntryFlow({
     return canResendCode.value ? "Отправить повторно" : resendCountdownText.value;
   });
   const successTitle = computed(() => successMode.value === "login" ? "Готово, вы вошли!" : "Ура, зарегистрировались!");
-  const successDescription = computed(() => successMode.value === "login" ? "Теперь у вас есть доступ к личному кабинету, избранному и отслеживанию заказов." : "Теперь у вас есть доступ к личному кабинету, избранному и отслеживанию заказов.");
+  const successDescription = "Теперь у вас есть доступ к личному кабинету, избранному, отслеживанию заказов и безналичной оплате.";
+  const passwordRecoveryDescription = "Введите email, указанный при регистрации, и мы отправим ссылку для восстановления пароля";
   const modalTitle = computed(() => {
     if (step.value === "entry") {
       return "Вход или регистрация";
     }
     if (step.value === "login") {
       return "Вход";
+    }
+    if (step.value === "password-recovery") {
+      return "Восстановление пароля";
     }
     return "Регистрация";
   });
@@ -7144,6 +7438,21 @@ function useAuthEntryFlow({
       return "Введите пароль";
     }
     return value.length >= MIN_PASSWORD_LENGTH ? "" : `Минимум ${MIN_PASSWORD_LENGTH} символов`;
+  }
+  function getSecondsWord(value) {
+    const absoluteValue = Math.abs(value);
+    const lastTwo = absoluteValue % 100;
+    if (lastTwo >= 11 && lastTwo <= 14) {
+      return "секунд";
+    }
+    const lastDigit = absoluteValue % 10;
+    if (lastDigit === 1) {
+      return "секунду";
+    }
+    if (lastDigit >= 2 && lastDigit <= 4) {
+      return "секунды";
+    }
+    return "секунд";
   }
   function onIdentifierInput(event) {
     const value = event.target.value;
@@ -7175,18 +7484,24 @@ function useAuthEntryFlow({
     isCodeRequestSent.value = false;
     smsCode.value = "";
   }
+  function onFullNameInput(event) {
+    const rawValue = String(event?.target?.value ?? "");
+    fullName.value = rawValue.replace(/[^\p{L}\s]/gu, "").replace(/\s{2,}/g, " ").replace(/^\s+/, "");
+  }
   function onRegistrationEmailInput() {
     isRegistrationSubmitted.value = false;
     registrationRequestError.value = "";
-  }
-  function onRegistrationEmailBlur() {
-    isRegistrationEmailTouched.value = true;
   }
   function onPasswordInput() {
     isLoginSubmitted.value = false;
     isRegistrationSubmitted.value = false;
     loginRequestError.value = "";
     registrationRequestError.value = "";
+  }
+  function onPasswordRecoveryEmailInput() {
+    isPasswordRecoverySubmitted.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
   }
   function onSmsCodeInput(event) {
     smsCode.value = event.target.value.replace(/\D/g, "").slice(0, SMS_CODE_LENGTH);
@@ -7252,11 +7567,15 @@ function useAuthEntryFlow({
     isSubmitted.value = false;
     isLoginSubmitted.value = false;
     isRegistrationSubmitted.value = false;
-    isRegistrationEmailTouched.value = false;
     fullName.value = "";
     registrationEmail.value = "";
     registrationPhone.value = "";
     password.value = "";
+    passwordRecoveryEmail.value = "";
+    isPasswordRecoverySubmitted.value = false;
+    isPasswordRecoveryRequestPending.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
     organizationInn.value = "";
     organizationSuggestions.value = [];
     selectedOrganization.value = null;
@@ -7302,6 +7621,9 @@ function useAuthEntryFlow({
     isSubmitted.value = true;
     isFieldTouched.value = true;
     entryRequestError.value = "";
+    if (!identifier.value.trim()) {
+      return;
+    }
     if (identifierError.value) {
       return;
     }
@@ -7356,6 +7678,10 @@ function useAuthEntryFlow({
       completeLogin();
       return;
     }
+    if (step.value === "password-recovery") {
+      requestPasswordRecovery();
+      return;
+    }
     if (step.value === "registration") {
       requestCode();
       return;
@@ -7376,10 +7702,13 @@ function useAuthEntryFlow({
     }
   }
   function getAuthErrorMessage(error, fallbackMessage = "Не удалось зарегистрироваться") {
-    const message = error?.message || error?.statusText || "";
-    if (message === "User already exists. Use another email.") {
-      return "Пользователь с такой почтой уже есть. Проверьте пароль или используйте другую почту.";
-    }
+    const message = [
+      error?.message,
+      error?.statusText,
+      error?.data?.message,
+      error?.error?.message,
+      error?.cause?.message
+    ].find((value) => typeof value === "string" && value.trim()) || "";
     if (message === "Invalid email or password") {
       return "Неверная почта или пароль";
     }
@@ -7397,6 +7726,53 @@ function useAuthEntryFlow({
     }
     return message || fallbackMessage;
   }
+  function startPasswordRecovery() {
+    passwordRecoveryEmail.value = isPhoneLike(identifier.value) ? "" : identifier.value.trim();
+    isPasswordRecoverySubmitted.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    step.value = "password-recovery";
+    nextTick(() => {
+      (void 0).getElementById("auth-entry-password-recovery-email")?.focus();
+    });
+  }
+  function backToLoginFromPasswordRecovery() {
+    isPasswordRecoverySubmitted.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    step.value = "login";
+    nextTick(() => {
+      (void 0).getElementById("auth-entry-login-password")?.focus();
+    });
+  }
+  async function requestPasswordRecovery() {
+    if (isPasswordRecoveryRequestPending.value) {
+      return;
+    }
+    isPasswordRecoverySubmitted.value = true;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    if (passwordRecoveryEmailError.value) {
+      return;
+    }
+    isPasswordRecoveryRequestPending.value = true;
+    try {
+      if (typeof authClient.forgetPassword === "function") {
+        const result = await authClient.forgetPassword({
+          email: passwordRecoveryEmail.value.trim()
+        });
+        if (result?.error) {
+          passwordRecoveryRequestError.value = getAuthErrorMessage(result.error, "Не удалось отправить ссылку");
+          return;
+        }
+      }
+      passwordRecoveryRequestMessage.value = "Если аккаунт с таким email существует, мы отправим ссылку для восстановления пароля.";
+    } catch (error) {
+      passwordRecoveryRequestError.value = getAuthErrorMessage(error, "Не удалось отправить ссылку");
+    } finally {
+      isPasswordRecoveryRequestPending.value = false;
+    }
+  }
   async function completeLogin() {
     if (isLoginRequestPending.value) {
       return;
@@ -7405,6 +7781,9 @@ function useAuthEntryFlow({
     isSubmitted.value = true;
     isFieldTouched.value = true;
     loginRequestError.value = "";
+    if (!identifier.value.trim()) {
+      return;
+    }
     if (identifierError.value) {
       return;
     }
@@ -7443,7 +7822,6 @@ function useAuthEntryFlow({
       return;
     }
     isRegistrationSubmitted.value = true;
-    isRegistrationEmailTouched.value = true;
     registrationRequestError.value = "";
     if (registrationEmailError.value) {
       return;
@@ -7688,11 +8066,15 @@ function useAuthEntryFlow({
     isSubmitted,
     isLoginSubmitted,
     isRegistrationSubmitted,
-    isRegistrationEmailTouched,
     fullName,
     registrationEmail,
     registrationPhone,
     password,
+    passwordRecoveryEmail,
+    isPasswordRecoverySubmitted,
+    isPasswordRecoveryRequestPending,
+    passwordRecoveryRequestError,
+    passwordRecoveryRequestMessage,
     organizationInn,
     isPasswordVisible,
     smsCode,
@@ -7735,6 +8117,8 @@ function useAuthEntryFlow({
     passwordError,
     visibleLoginPasswordError,
     visiblePasswordError,
+    passwordRecoveryEmailError,
+    visiblePasswordRecoveryEmailError,
     inputMode,
     canRequestCode,
     canResendCode,
@@ -7749,16 +8133,18 @@ function useAuthEntryFlow({
     resendButtonText,
     successTitle,
     successDescription,
+    passwordRecoveryDescription,
     modalTitle,
     // methods
     getPasswordError,
     onIdentifierInput,
     onIdentifierBlur,
     resetIdentifier,
+    onFullNameInput,
     onRegistrationPhoneInput,
     onRegistrationEmailInput,
-    onRegistrationEmailBlur,
     onPasswordInput,
+    onPasswordRecoveryEmailInput,
     onSmsCodeInput,
     onOrganizationInnInput,
     onOrganizationInnFocus,
@@ -7773,6 +8159,9 @@ function useAuthEntryFlow({
     startRegistration,
     onFormSubmit,
     getAuthErrorMessage,
+    startPasswordRecovery,
+    backToLoginFromPasswordRecovery,
+    requestPasswordRecovery,
     completeLogin,
     completeRegistration,
     getRequestErrorMessage,
@@ -7806,6 +8195,7 @@ const _sfc_main$6 = {
     const step = flow.step;
     const modalTitle = flow.modalTitle;
     const isLegalRegistrationStep = flow.isLegalRegistrationStep;
+    const passwordRecoveryDescription = flow.passwordRecoveryDescription;
     const onFormSubmit = flow.onFormSubmit;
     const stopResendTimer = flow.stopResendTimer;
     const stopOrganizationSuggestTimer = flow.stopOrganizationSuggestTimer;
@@ -7831,14 +8221,15 @@ const _sfc_main$6 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UModal = _sfc_main$e;
+      const _component_UModal = _sfc_main$g;
       const _component_AuthSuccessView = __nuxt_component_1$1;
       const _component_AppIcon = __nuxt_component_1$2;
       const _component_AuthEntryForm = __nuxt_component_3;
       const _component_AuthLoginForm = __nuxt_component_4$1;
-      const _component_AuthRegisterStartForm = __nuxt_component_5$1;
-      const _component_AuthRegisterCompleteForm = __nuxt_component_6;
-      const _component_AuthLegalForm = __nuxt_component_7;
+      const _component_AuthPasswordRecoveryForm = __nuxt_component_5$1;
+      const _component_AuthRegisterStartForm = __nuxt_component_6;
+      const _component_AuthRegisterCompleteForm = __nuxt_component_7;
+      const _component_AuthLegalForm = __nuxt_component_8;
       _push(ssrRenderComponent(_component_UModal, mergeProps({
         open: isOpen.value,
         "onUpdate:open": ($event) => isOpen.value = $event,
@@ -7854,23 +8245,26 @@ const _sfc_main$6 = {
           if (_push2) {
             _push2(`<form class="${ssrRenderClass([{
               "auth-entry--login": unref(step) === "login",
+              "auth-entry--password-recovery": unref(step) === "password-recovery",
               "auth-entry--registration": unref(step) === "registration" || unref(step) === "code",
               "auth-entry--legal-details": unref(step) === "legal-details",
               "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
               "auth-entry--success": unref(step) === "success"
-            }, "auth-entry"])}" data-v-4ce3c8f6${_scopeId}>`);
+            }, "auth-entry"])}" data-v-69eed2aa${_scopeId}>`);
             if (unref(step) === "success") {
               _push2(ssrRenderComponent(_component_AuthSuccessView, {
                 onClose: ($event) => isOpen.value = false
               }, null, _parent2, _scopeId));
             } else {
-              _push2(`<!--[--><header class="auth-entry__header" data-v-4ce3c8f6${_scopeId}><div class="auth-entry__title-block" data-v-4ce3c8f6${_scopeId}><h2 class="auth-entry__title" data-v-4ce3c8f6${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
+              _push2(`<!--[--><header class="auth-entry__header" data-v-69eed2aa${_scopeId}><div class="auth-entry__title-block" data-v-69eed2aa${_scopeId}><h2 class="auth-entry__title" data-v-69eed2aa${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
               if (unref(isLegalRegistrationStep)) {
-                _push2(`<p class="auth-entry__subtitle" data-v-4ce3c8f6${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-69eed2aa${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
+              } else if (unref(step) === "password-recovery") {
+                _push2(`<p class="auth-entry__subtitle" data-v-69eed2aa${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-4ce3c8f6${_scopeId}>`);
+              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-69eed2aa${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: "close",
                 size: 16,
@@ -7881,6 +8275,8 @@ const _sfc_main$6 = {
                 _push2(ssrRenderComponent(_component_AuthEntryForm, null, null, _parent2, _scopeId));
               } else if (unref(step) === "login") {
                 _push2(ssrRenderComponent(_component_AuthLoginForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "password-recovery") {
+                _push2(ssrRenderComponent(_component_AuthPasswordRecoveryForm, null, null, _parent2, _scopeId));
               } else if (unref(step) === "registration") {
                 _push2(ssrRenderComponent(_component_AuthRegisterStartForm, null, null, _parent2, _scopeId));
               } else if (unref(step) === "code") {
@@ -7898,6 +8294,7 @@ const _sfc_main$6 = {
               createVNode("form", {
                 class: ["auth-entry", {
                   "auth-entry--login": unref(step) === "login",
+                  "auth-entry--password-recovery": unref(step) === "password-recovery",
                   "auth-entry--registration": unref(step) === "registration" || unref(step) === "code",
                   "auth-entry--legal-details": unref(step) === "legal-details",
                   "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
@@ -7915,7 +8312,10 @@ const _sfc_main$6 = {
                       unref(isLegalRegistrationStep) ? (openBlock(), createBlock("p", {
                         key: 0,
                         class: "auth-entry__subtitle"
-                      }, " Укажите ИНН организации или ИП, остальные данные заполнятся автоматически ")) : createCommentVNode("", true)
+                      }, " Укажите ИНН организации или ИП, остальные данные заполнятся автоматически ")) : unref(step) === "password-recovery" ? (openBlock(), createBlock("p", {
+                        key: 1,
+                        class: "auth-entry__subtitle"
+                      }, toDisplayString(unref(passwordRecoveryDescription)), 1)) : createCommentVNode("", true)
                     ]),
                     createVNode("button", {
                       type: "button",
@@ -7930,7 +8330,7 @@ const _sfc_main$6 = {
                       })
                     ], 8, ["onClick"])
                   ]),
-                  unref(step) === "entry" ? (openBlock(), createBlock(_component_AuthEntryForm, { key: 0 })) : unref(step) === "login" ? (openBlock(), createBlock(_component_AuthLoginForm, { key: 1 })) : unref(step) === "registration" ? (openBlock(), createBlock(_component_AuthRegisterStartForm, { key: 2 })) : unref(step) === "code" ? (openBlock(), createBlock(_component_AuthRegisterCompleteForm, { key: 3 })) : unref(step) === "legal-details" || unref(step) === "legal-confirmation" ? (openBlock(), createBlock(_component_AuthLegalForm, { key: 4 })) : createCommentVNode("", true)
+                  unref(step) === "entry" ? (openBlock(), createBlock(_component_AuthEntryForm, { key: 0 })) : unref(step) === "login" ? (openBlock(), createBlock(_component_AuthLoginForm, { key: 1 })) : unref(step) === "password-recovery" ? (openBlock(), createBlock(_component_AuthPasswordRecoveryForm, { key: 2 })) : unref(step) === "registration" ? (openBlock(), createBlock(_component_AuthRegisterStartForm, { key: 3 })) : unref(step) === "code" ? (openBlock(), createBlock(_component_AuthRegisterCompleteForm, { key: 4 })) : unref(step) === "legal-details" || unref(step) === "legal-confirmation" ? (openBlock(), createBlock(_component_AuthLegalForm, { key: 5 })) : createCommentVNode("", true)
                 ], 64))
               ], 42, ["onSubmit"])
             ];
@@ -7947,7 +8347,7 @@ _sfc_main$6.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
   return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
-const __nuxt_component_2$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-4ce3c8f6"]]), { __name: "AuthEntryModal" });
+const __nuxt_component_2$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-69eed2aa"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
@@ -8018,7 +8418,7 @@ const _sfc_main$5 = {
       session.value?.refetch?.();
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$1;
+      const _component_NuxtLink = __nuxt_component_0$2;
       const _component_AppIcon = __nuxt_component_1$2;
       const _component_AuthEntryModal = __nuxt_component_2$1;
       _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-2c22b602><div class="header__container" data-v-2c22b602><div class="header__inner" data-v-2c22b602>`);
@@ -8291,7 +8691,7 @@ const _sfc_main$3 = {
       { label: "Политика конфиденциальности", to: "/privacy-policy" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$1;
+      const _component_NuxtLink = __nuxt_component_0$2;
       const _component_AppIcon = __nuxt_component_1$2;
       _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-3309272d><div class="footer__container" data-v-3309272d><div class="footer__card" data-v-3309272d><div class="footer__top" data-v-3309272d><div class="footer__column" data-v-3309272d><h3 class="footer__title" data-v-3309272d> Каталог </h3><!--[-->`);
       ssrRenderList(catalogLinks, (item) => {
@@ -8406,7 +8806,7 @@ const _sfc_main$2 = {
       twitterCard: "summary_large_image"
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UApp = __nuxt_component_0;
+      const _component_UApp = __nuxt_component_0$1;
       const _component_DevGridOverlay = __nuxt_component_1$3;
       const _component_AppHeader = __nuxt_component_2;
       const _component_UMain = _sfc_main$4;
@@ -8555,5 +8955,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { _export_sfc as _, __nuxt_component_0$1 as a, _sfc_main$e as b, _sfc_main$r as c, __nuxt_component_1 as d, entry_default as default, useState as e, fetchDefaults as f, useAsyncData as g, useRequestFetch as h, _sfc_main$m as i, __nuxt_component_1$2 as j, useSeoMeta as k, useHead as u };
+export { _export_sfc as _, __nuxt_component_0$2 as a, _sfc_main$g as b, _sfc_main$t as c, __nuxt_component_1 as d, entry_default as default, __nuxt_component_0 as e, useState as f, fetchDefaults as g, useAsyncData as h, useRequestFetch as i, _sfc_main$o as j, __nuxt_component_1$2 as k, useSeoMeta as l, useHead as u };
 //# sourceMappingURL=server.mjs.map

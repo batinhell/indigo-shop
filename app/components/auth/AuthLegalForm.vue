@@ -169,7 +169,7 @@ const organizationSaveError = flow.organizationSaveError
   }
 
   &:focus {
-    border-color: transparent;
+    border-color: #de7aff;
   }
 }
 
@@ -197,12 +197,16 @@ const organizationSaveError = flow.organizationSaveError
 
   &:hover,
   &:focus-visible {
-    background: rgba($color-primary, 0.08);
+    background: rgba($color-base, 0.04);
   }
 
   &:focus-visible {
     outline: none;
   }
+}
+
+.auth-entry__organization-confirm-card + .auth-entry__organization-confirm-button {
+  margin-top: 2rem;
 }
 
 .auth-entry__organization-name {

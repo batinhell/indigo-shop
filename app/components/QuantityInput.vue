@@ -98,8 +98,15 @@ function commitEdit() {
   height: 2.5rem;
   padding: 0.125rem;
   background: $color-input-bg;
+  border: 2px solid transparent;
   border-radius: $radius-control;
   overflow: hidden;
+  transition: border-color 0.15s, background-color 0.15s;
+
+  &:focus-within {
+    border-color: #de7aff;
+    background: white;
+  }
 
   &__btn {
     display: flex;

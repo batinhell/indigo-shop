@@ -78,7 +78,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
           @click="isPasswordVisible = !isPasswordVisible"
         >
           <AppIcon
-            name="password-eye"
+            :name="isPasswordVisible ? 'password-hide' : 'password-show'"
             :size="16"
             class="auth-entry__password-toggle-icon"
           />
@@ -96,6 +96,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
       <button
         type="button"
         class="auth-entry__forgot-password"
+        @click="flow.startPasswordRecovery"
       >
         Забыли пароль?
       </button>
@@ -182,7 +183,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
   }
 
   &:focus {
-    border-color: transparent;
+    border-color: #de7aff;
   }
 }
 

@@ -1,4 +1,4 @@
-export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+export const EMAIL_PATTERN = /^[A-Za-z0-9._%+-]+@[A-Za-z.-]+\.[A-Za-z]{2,}$/
 
 export function normalizePhoneDigits(value) {
   let digits = String(value ?? '').replace(/\D/g, '')
@@ -129,7 +129,7 @@ export function normalizeAuthIdentifier(value) {
   return {
     type: 'email',
     value: email,
-    isValid: EMAIL_PATTERN.test(email)
+    isValid: isValidEmail(email)
   }
 }
 
@@ -137,7 +137,7 @@ export function getIdentifierError(value) {
   const trimmed = String(value ?? '').trim()
 
   if (!trimmed) {
-    return 'Введите почту или телефон'
+    return ''
   }
 
   const identifier = normalizeAuthIdentifier(trimmed)
@@ -148,9 +148,40 @@ export function getIdentifierError(value) {
 export function getRegistrationEmailError(value) {
   const trimmed = String(value ?? '').trim()
 
-  if (!trimmed) {
-    return 'Введите электронную почту'
+  return isValidEmail(trimmed) ? '' : 'Не похоже на почту :('
+}
+
+function isValidEmail(value) {
+  const email = String(value ?? '').trim()
+
+  if (!EMAIL_PATTERN.test(email)) {
+    return false
   }
 
-  return EMAIL_PATTERN.test(trimmed) ? '' : 'Не похоже на почту :('
+  const [localPart, domainPart] = email.split('@')
+
+  if (!localPart || !domainPart) {
+    return false
+  }
+
+  if (localPart.startsWith('.') || localPart.endsWith('.') || localPart.includes('..')) {
+    return false
+  }
+
+  const domainLabels = domainPart.split('.')
+  if (domainLabels.length < 2) {
+    return false
+  }
+
+  return domainLabels.every((label, index) => {
+    if (!label || label.startsWith('-') || label.endsWith('-')) {
+      return false
+    }
+
+    if (index === domainLabels.length - 1) {
+      return /^[A-Za-z]{2,}$/.test(label)
+    }
+
+    return /^[A-Za-z-]+$/.test(label)
+  })
 }

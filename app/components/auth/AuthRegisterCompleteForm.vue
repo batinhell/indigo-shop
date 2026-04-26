@@ -44,14 +44,15 @@ watch(isPhoneConfirmed, (confirmed) => {
         Имя и фамилия
       </label>
 
-      <input
+      <AppInput
         id="auth-entry-code-name"
         v-model="fullName"
         class="auth-entry__input auth-entry__input--compact"
         type="text"
         placeholder="Иван Иванов"
         autocomplete="name"
-      >
+        @input="flow.onFullNameInput"
+      />
     </div>
 
     <div class="auth-entry__code-fields">
@@ -67,14 +68,14 @@ watch(isPhoneConfirmed, (confirmed) => {
             Номер телефона
           </label>
 
-          <input
+          <AppInput
             id="auth-entry-confirmed-phone"
-            :value="registrationPhone"
+            v-model="registrationPhone"
             class="auth-entry__input auth-entry__input--compact auth-entry__input--phone auth-entry__input--confirmed"
             type="tel"
             autocomplete="tel"
             readonly
-          >
+          />
         </div>
 
         <div class="auth-entry__confirmed-badge">
@@ -92,16 +93,16 @@ watch(isPhoneConfirmed, (confirmed) => {
               Номер телефона
             </label>
 
-            <input
+            <AppInput
               id="auth-entry-code-phone"
-              :value="registrationPhone"
+              v-model="registrationPhone"
               class="auth-entry__input auth-entry__input--compact auth-entry__input--phone"
               type="tel"
               placeholder="+7(999)-999-99-99"
               autocomplete="tel"
               inputmode="tel"
               readonly
-            >
+            />
           </div>
 
           <div
@@ -131,7 +132,7 @@ watch(isPhoneConfirmed, (confirmed) => {
 
               <AppIcon
                 v-if="isSmsCodeInvalid"
-                name="alert-circle"
+                name="reset"
                 :size="16"
                 class="auth-entry__sms-code-error-icon"
               />
@@ -155,13 +156,6 @@ watch(isPhoneConfirmed, (confirmed) => {
         >
           {{ codeRequestError || codeVerifyError }}
         </p>
-
-        <p
-          v-else-if="isCodeVerifyPending"
-          class="auth-entry__request-status"
-        >
-          Проверяем код
-        </p>
       </template>
     </div>
 
@@ -181,7 +175,7 @@ watch(isPhoneConfirmed, (confirmed) => {
             Электронная почта
           </label>
 
-          <input
+          <AppInput
             id="auth-entry-email"
             v-model="registrationEmail"
             class="auth-entry__input auth-entry__input--compact"
@@ -192,8 +186,7 @@ watch(isPhoneConfirmed, (confirmed) => {
             :aria-invalid="Boolean(visibleRegistrationEmailError)"
             :aria-describedby="visibleRegistrationEmailError ? 'auth-entry-email-error' : undefined"
             @input="flow.onRegistrationEmailInput"
-            @blur="flow.onRegistrationEmailBlur"
-          >
+          />
 
           <p
             v-if="visibleRegistrationEmailError"
@@ -215,32 +208,32 @@ watch(isPhoneConfirmed, (confirmed) => {
             Пароль
           </label>
 
-          <span class="auth-entry__password-box">
-            <input
-              id="auth-entry-password"
-              v-model="password"
-              class="auth-entry__input auth-entry__input--compact auth-entry__input--password"
-              :type="passwordInputType"
-              placeholder="Введите пароль"
-              autocomplete="new-password"
-              :aria-invalid="Boolean(visiblePasswordError)"
-              :aria-describedby="visiblePasswordError ? 'auth-entry-password-error' : undefined"
-              @input="flow.onPasswordInput"
-            >
-
-            <button
-              type="button"
-              class="auth-entry__password-toggle"
-              :aria-label="isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'"
-              @click="isPasswordVisible = !isPasswordVisible"
-            >
-              <AppIcon
-                name="password-eye"
-                :size="16"
-                class="auth-entry__password-toggle-icon"
-              />
-            </button>
-          </span>
+          <AppInput
+            id="auth-entry-password"
+            v-model="password"
+            class="auth-entry__input auth-entry__input--compact auth-entry__input--password"
+            :type="passwordInputType"
+            placeholder="Введите пароль"
+            autocomplete="new-password"
+            :aria-invalid="Boolean(visiblePasswordError)"
+            :aria-describedby="visiblePasswordError ? 'auth-entry-password-error' : undefined"
+            @input="flow.onPasswordInput"
+          >
+            <template #suffix>
+              <button
+                type="button"
+                class="auth-entry__password-toggle"
+                :aria-label="isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'"
+                @click="isPasswordVisible = !isPasswordVisible"
+              >
+                <AppIcon
+                  :name="isPasswordVisible ? 'password-hide' : 'password-show'"
+                  :size="16"
+                  class="auth-entry__password-toggle-icon"
+                />
+              </button>
+            </template>
+          </AppInput>
 
           <p
             v-if="visiblePasswordError"
@@ -321,56 +314,53 @@ watch(isPhoneConfirmed, (confirmed) => {
 
 .auth-entry__input {
   width: 100%;
-  height: 3.25rem;
-  padding: 0 0.875rem;
-  color: $color-base;
-  background: $color-input-bg;
-  border: 0.125rem solid transparent;
-  border-radius: $radius-control;
-  outline: none;
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  font-feature-settings: 'lnum' 1, 'pnum' 1;
 
-  .auth-entry__field--invalid & {
-    padding-right: 2.5rem;
-    color: #2e0509;
-    background: #ffebed;
+  :deep(.app-input) {
+    height: 3.25rem;
   }
 
-  &::placeholder {
-    color: $color-base-secondary;
-  }
-
-  &:focus {
-    border-color: transparent;
+  :deep(.app-input__field) {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
   }
 }
 
 .auth-entry__input--compact {
-  height: 2.5rem;
-  font-size: 1rem;
-  line-height: 1.2;
+  :deep(.app-input) {
+    height: 2.5rem;
+  }
 
-  &::placeholder {
-    color: $color-base-secondary;
+  :deep(.app-input__field) {
+    font-size: 1rem;
+    line-height: 1.2;
   }
 }
 
 .auth-entry__input--phone {
-  width: 100%;
-  min-width: 0;
+  width: fit-content;
+  min-width: auto;
+
+  :deep(.app-input) {
+    width: fit-content;
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+
+  :deep(.app-input__field) {
+    flex: 0 0 auto;
+    width: 15.5ch;
+    font-feature-settings: 'lnum' 1, 'tnum' 1;
+  }
 }
 
 .auth-entry__input--confirmed {
-  color: #062108;
-  background: #dbffde;
-  border-color: transparent;
-
-  &:focus {
+  :deep(.app-input) {
+    background: #dbffde;
     border-color: transparent;
+  }
+
+  :deep(.app-input__field) {
+    color: #062108;
   }
 }
 
@@ -390,8 +380,7 @@ watch(isPhoneConfirmed, (confirmed) => {
 }
 
 .auth-entry__phone-field {
-  flex: 1 1 auto;
-  min-width: 0;
+  width: fit-content;
 }
 
 .auth-entry__phone-field--confirmed .auth-entry__label {
@@ -447,7 +436,7 @@ watch(isPhoneConfirmed, (confirmed) => {
   right: 0.875rem;
   width: 1rem;
   height: 1rem;
-  color: #e12e3c;
+  color: #30010b;
   pointer-events: none;
   transform: translateY(-50%);
 }
@@ -515,20 +504,7 @@ watch(isPhoneConfirmed, (confirmed) => {
   width: min(16.6875rem, 100%);
 }
 
-.auth-entry__password-box {
-  position: relative;
-  display: flex;
-  width: 100%;
-}
-
-.auth-entry__input--password {
-  padding-right: 2.5rem;
-}
-
 .auth-entry__password-toggle {
-  position: absolute;
-  top: 50%;
-  right: 0.875rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -537,7 +513,6 @@ watch(isPhoneConfirmed, (confirmed) => {
   color: #04121b;
   border-radius: 0.375rem;
   cursor: pointer;
-  transform: translateY(-50%);
   transition: color 0.15s, background-color 0.15s;
 
   &:hover {

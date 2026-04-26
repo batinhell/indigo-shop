@@ -72,7 +72,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: 'Notificore verify failed',
       message: upstreamStatus === 422
         ? 'Неверный код из СМС'
-        : 'Не удалось проверить код подтверждения'
+        : 'Код не подошел :( Проверьте его или получите повторно через 60 секунд'
     })
   }
 })

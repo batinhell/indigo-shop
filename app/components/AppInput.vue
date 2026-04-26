@@ -1,6 +1,11 @@
 <script setup>
+defineOptions({
+  inheritAttrs: false
+})
+
 const model = defineModel({ default: '' })
 const inputRef = ref(null)
+const attrs = useAttrs()
 let maskInstance = null
 
 const props = defineProps({
@@ -42,6 +47,21 @@ const props = defineProps({
   }
 })
 
+const wrapperAttributes = computed(() => ({
+  class: attrs.class,
+  style: attrs.style
+}))
+
+const inputAttributes = computed(() => {
+  const {
+    class: _class,
+    style: _style,
+    ...rest
+  } = attrs
+
+  return rest
+})
+
 onMounted(async () => {
   if (inputRef.value && props.mask) {
     const { MaskInput } = await import('maska')
@@ -55,7 +75,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="app-input-wrapper">
+  <div
+    class="app-input-wrapper"
+    :class="wrapperAttributes.class"
+    :style="wrapperAttributes.style"
+  >
     <div
       :class="[
         'app-input',
@@ -72,7 +96,9 @@ onBeforeUnmount(() => {
         :min="min"
         :max="max"
         class="app-input__field"
+        v-bind="inputAttributes"
       >
+      <slot name="suffix" />
       <span v-if="suffix" class="app-input__suffix">{{ suffix }}</span>
     </div>
     <p v-if="description" class="app-input-description">
@@ -107,7 +133,7 @@ $color-input-bg: #f4f5f6;
 
   &:focus-within {
     background: white;
-    border-color: #c925ff;
+    border-color: #de7aff;
   }
 
   &__icon {

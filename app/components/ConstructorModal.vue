@@ -402,6 +402,11 @@ function onAddToCart() {
     border: 2px solid transparent;
     transition: border-color 0.15s, background-color 0.15s;
 
+    &:focus-within {
+      border-color: #de7aff;
+      background: white;
+    }
+
     &--drag {
       border-color: $color-primary;
       background: rgba($color-primary, 0.04);

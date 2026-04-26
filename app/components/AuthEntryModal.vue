@@ -15,6 +15,9 @@ provide('authFlow', flow)
 const step = flow.step
 const modalTitle = flow.modalTitle
 const isLegalRegistrationStep = flow.isLegalRegistrationStep
+const passwordRecoveryDescription = flow.passwordRecoveryDescription
+const passwordRecoverySentDescription = flow.passwordRecoverySentDescription
+const passwordRecoverySentHint = flow.passwordRecoverySentHint
 const onFormSubmit = flow.onFormSubmit
 const stopResendTimer = flow.stopResendTimer
 const stopOrganizationSuggestTimer = flow.stopOrganizationSuggestTimer
@@ -64,6 +67,8 @@ onBeforeUnmount(() => {
         class="auth-entry"
         :class="{
           'auth-entry--login': step === 'login',
+          'auth-entry--password-recovery': step === 'password-recovery',
+          'auth-entry--password-recovery-sent': step === 'password-recovery-sent',
           'auth-entry--registration': step === 'registration' || step === 'code',
           'auth-entry--legal-details': step === 'legal-details',
           'auth-entry--legal-confirmation': step === 'legal-confirmation',
@@ -89,6 +94,27 @@ onBeforeUnmount(() => {
               >
                 Укажите ИНН организации или ИП, остальные данные заполнятся автоматически
               </p>
+
+              <p
+                v-else-if="step === 'password-recovery'"
+                class="auth-entry__subtitle"
+              >
+                {{ passwordRecoveryDescription }}
+              </p>
+
+              <p
+                v-else-if="step === 'password-recovery-sent'"
+                class="auth-entry__subtitle"
+              >
+                <template
+                  v-for="line in passwordRecoverySentDescription.split('\n')"
+                  :key="line"
+                >
+                  {{ line }}<br>
+                </template>
+                <br>
+                {{ passwordRecoverySentHint }}
+              </p>
             </div>
 
             <button
@@ -107,6 +133,11 @@ onBeforeUnmount(() => {
 
           <AuthEntryForm v-if="step === 'entry'" />
           <AuthLoginForm v-else-if="step === 'login'" />
+          <AuthPasswordRecoveryForm v-else-if="step === 'password-recovery'" />
+          <AuthPasswordRecoverySentView
+            v-else-if="step === 'password-recovery-sent'"
+            @close="isOpen = false"
+          />
           <AuthRegisterStartForm v-else-if="step === 'registration'" />
           <AuthRegisterCompleteForm v-else-if="step === 'code'" />
           <AuthLegalForm v-else-if="step === 'legal-details' || step === 'legal-confirmation'" />
@@ -138,6 +169,16 @@ onBeforeUnmount(() => {
   min-height: 29.3125rem;
   gap: 0;
   padding-bottom: 2rem;
+}
+
+.auth-entry--password-recovery {
+  min-height: 25.1875rem;
+  padding-bottom: 3.5rem;
+}
+
+.auth-entry--password-recovery-sent {
+  min-height: 19.75rem;
+  padding-bottom: 3.5rem;
 }
 
 .auth-entry--legal-details {
@@ -216,6 +257,14 @@ onBeforeUnmount(() => {
 
 .auth-entry--login .auth-entry__header {
   margin-bottom: 2rem;
+}
+
+.auth-entry--password-recovery .auth-entry__header {
+  margin-bottom: 0;
+}
+
+.auth-entry--password-recovery-sent .auth-entry__header {
+  margin-bottom: 1.25rem;
 }
 
 @media (max-width: 420px) {

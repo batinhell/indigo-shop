@@ -21,11 +21,15 @@ export function useAuthEntryFlow({
   const isSubmitted = ref(false)
   const isLoginSubmitted = ref(false)
   const isRegistrationSubmitted = ref(false)
-  const isRegistrationEmailTouched = ref(false)
   const fullName = ref('')
   const registrationEmail = ref('')
   const registrationPhone = ref('')
   const password = ref('')
+  const passwordRecoveryEmail = ref('')
+  const isPasswordRecoverySubmitted = ref(false)
+  const isPasswordRecoveryRequestPending = ref(false)
+  const passwordRecoveryRequestError = ref('')
+  const passwordRecoveryRequestMessage = ref('')
   const organizationInn = ref('')
   const isPasswordVisible = ref(false)
   const smsCode = ref('')
@@ -71,7 +75,7 @@ export function useAuthEntryFlow({
   ))
   const registrationEmailError = computed(() => getRegistrationEmailError(registrationEmail.value))
   const visibleRegistrationEmailError = computed(() => (
-    (isRegistrationEmailTouched.value || isRegistrationSubmitted.value) ? registrationEmailError.value : ''
+    isRegistrationSubmitted.value ? registrationEmailError.value : ''
   ))
   const passwordError = computed(() => getPasswordError(password.value))
   const visibleLoginPasswordError = computed(() => (
@@ -79,6 +83,10 @@ export function useAuthEntryFlow({
   ))
   const visiblePasswordError = computed(() => (
     isRegistrationSubmitted.value ? passwordError.value : ''
+  ))
+  const passwordRecoveryIdentifierError = computed(() => getIdentifierError(passwordRecoveryEmail.value))
+  const visiblePasswordRecoveryEmailError = computed(() => (
+    isPasswordRecoverySubmitted.value ? passwordRecoveryIdentifierError.value : ''
   ))
   const inputMode = computed(() => (isPhoneMode.value ? 'tel' : 'email'))
   const canRequestCode = computed(() => (
@@ -108,12 +116,12 @@ export function useAuthEntryFlow({
   const passwordInputType = computed(() => (isPasswordVisible.value ? 'text' : 'password'))
   const codeButtonText = computed(() => {
     if (isCodeRequestPending.value) {
-      return 'Отправляем'
+      return 'Получить код'
     }
-    return 'Продолжить'
+    return 'Получить код'
   })
   const resendCountdownText = computed(() => (
-    `Отправить повторно через ${resendSeconds.value}`
+    `Получить повторно можно через ${resendSeconds.value} ${getSecondsWord(resendSeconds.value)}`
   ))
   const resendButtonText = computed(() => {
     if (isCodeRequestPending.value) {
@@ -124,10 +132,22 @@ export function useAuthEntryFlow({
   const successTitle = computed(() => (
     successMode.value === 'login' ? 'Готово, вы вошли!' : 'Ура, зарегистрировались!'
   ))
-  const successDescription = computed(() => (
-    successMode.value === 'login'
-      ? 'Теперь у вас есть доступ к личному кабинету, избранному и отслеживанию заказов.'
-      : 'Теперь у вас есть доступ к личному кабинету, избранному и отслеживанию заказов.'
+  const successDescription = 'Теперь у вас есть доступ к личному кабинету, избранному, отслеживанию заказов и безналичной оплате.'
+  const passwordRecoveryDescription = 'Введите адрес электронной почты или\u00A0телефон, мы отправим вам инструкцию по\u00A0восстановлению пароля.'
+  const isPasswordRecoveryPhone = computed(() => isPhoneLike(passwordRecoveryEmail.value))
+  const passwordRecoverySentDescription = computed(() => {
+    const destination = passwordRecoveryEmail.value.trim() || (isPasswordRecoveryPhone.value ? '+7 (000) 000 00 00' : 'Почта@домен.ру')
+
+    if (isPasswordRecoveryPhone.value) {
+      return 'Мы отправили СМС\nсо ссылкой для сброса пароля.'
+    }
+
+    return `Мы отправили письмо со ссылкой для\u00A0сброса пароля на почту ${destination}.`
+  })
+  const passwordRecoverySentHint = computed(() => (
+    isPasswordRecoveryPhone.value
+      ? 'Если вы его не получили, повторите попытку через 10 минут или напишите нам\u00A0адрес почты'
+      : 'Если вы его не получили, проверьте папку Спам или напишите нам адрес почты'
   ))
   const modalTitle = computed(() => {
     if (step.value === 'entry') {
@@ -135,6 +155,12 @@ export function useAuthEntryFlow({
     }
     if (step.value === 'login') {
       return 'Вход'
+    }
+    if (step.value === 'password-recovery') {
+      return 'Восстановление пароля'
+    }
+    if (step.value === 'password-recovery-sent') {
+      return isPasswordRecoveryPhone.value ? 'Проверьте телефон' : 'Проверьте почту'
     }
     return 'Регистрация'
   })
@@ -144,6 +170,25 @@ export function useAuthEntryFlow({
       return 'Введите пароль'
     }
     return value.length >= MIN_PASSWORD_LENGTH ? '' : `Минимум ${MIN_PASSWORD_LENGTH} символов`
+  }
+
+  function getSecondsWord(value) {
+    const absoluteValue = Math.abs(value)
+    const lastTwo = absoluteValue % 100
+
+    if (lastTwo >= 11 && lastTwo <= 14) {
+      return 'секунд'
+    }
+
+    const lastDigit = absoluteValue % 10
+
+    if (lastDigit === 1) {
+      return 'секунду'
+    }
+    if (lastDigit >= 2 && lastDigit <= 4) {
+      return 'секунды'
+    }
+    return 'секунд'
   }
 
   function onIdentifierInput(event) {
@@ -181,13 +226,17 @@ export function useAuthEntryFlow({
     smsCode.value = ''
   }
 
+  function onFullNameInput(event) {
+    const rawValue = String(event?.target?.value ?? '')
+    fullName.value = rawValue
+      .replace(/[^\p{L}\s]/gu, '')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/^\s+/, '')
+  }
+
   function onRegistrationEmailInput() {
     isRegistrationSubmitted.value = false
     registrationRequestError.value = ''
-  }
-
-  function onRegistrationEmailBlur() {
-    isRegistrationEmailTouched.value = true
   }
 
   function onPasswordInput() {
@@ -195,6 +244,19 @@ export function useAuthEntryFlow({
     isRegistrationSubmitted.value = false
     loginRequestError.value = ''
     registrationRequestError.value = ''
+  }
+
+  function onPasswordRecoveryEmailInput(event) {
+    const value = event.target.value
+    isPasswordRecoverySubmitted.value = false
+    passwordRecoveryRequestError.value = ''
+    passwordRecoveryRequestMessage.value = ''
+
+    if (isPhoneLike(value)) {
+      passwordRecoveryEmail.value = formatPhone(value)
+      return
+    }
+    passwordRecoveryEmail.value = isPhoneLike(passwordRecoveryEmail.value) ? unmaskPhoneToEmail(value) : value
   }
 
   function onSmsCodeInput(event) {
@@ -281,11 +343,15 @@ export function useAuthEntryFlow({
     isSubmitted.value = false
     isLoginSubmitted.value = false
     isRegistrationSubmitted.value = false
-    isRegistrationEmailTouched.value = false
     fullName.value = ''
     registrationEmail.value = ''
     registrationPhone.value = ''
     password.value = ''
+    passwordRecoveryEmail.value = ''
+    isPasswordRecoverySubmitted.value = false
+    isPasswordRecoveryRequestPending.value = false
+    passwordRecoveryRequestError.value = ''
+    passwordRecoveryRequestMessage.value = ''
     organizationInn.value = ''
     organizationSuggestions.value = []
     selectedOrganization.value = null
@@ -334,6 +400,10 @@ export function useAuthEntryFlow({
     isSubmitted.value = true
     isFieldTouched.value = true
     entryRequestError.value = ''
+
+    if (!identifier.value.trim()) {
+      return
+    }
 
     if (identifierError.value) {
       return
@@ -398,6 +468,10 @@ export function useAuthEntryFlow({
       completeLogin()
       return
     }
+    if (step.value === 'password-recovery') {
+      requestPasswordRecovery()
+      return
+    }
     if (step.value === 'registration') {
       requestCode()
       return
@@ -419,11 +493,14 @@ export function useAuthEntryFlow({
   }
 
   function getAuthErrorMessage(error, fallbackMessage = 'Не удалось зарегистрироваться') {
-    const message = error?.message || error?.statusText || ''
+    const message = [
+      error?.message,
+      error?.statusText,
+      error?.data?.message,
+      error?.error?.message,
+      error?.cause?.message
+    ].find(value => typeof value === 'string' && value.trim()) || ''
 
-    if (message === 'User already exists. Use another email.') {
-      return 'Пользователь с такой почтой уже есть. Проверьте пароль или используйте другую почту.'
-    }
     if (message === 'Invalid email or password') {
       return 'Неверная почта или пароль'
     }
@@ -442,6 +519,65 @@ export function useAuthEntryFlow({
     return message || fallbackMessage
   }
 
+  function startPasswordRecovery() {
+    passwordRecoveryEmail.value = isPhoneLike(identifier.value) ? '' : identifier.value.trim()
+    isPasswordRecoverySubmitted.value = false
+    passwordRecoveryRequestError.value = ''
+    passwordRecoveryRequestMessage.value = ''
+    step.value = 'password-recovery'
+
+    nextTick(() => {
+      document.getElementById('auth-entry-password-recovery-email')?.focus()
+    })
+  }
+
+  function backToLoginFromPasswordRecovery() {
+    isPasswordRecoverySubmitted.value = false
+    passwordRecoveryRequestError.value = ''
+    passwordRecoveryRequestMessage.value = ''
+    step.value = 'login'
+
+    nextTick(() => {
+      document.getElementById('auth-entry-login-password')?.focus()
+    })
+  }
+
+  async function requestPasswordRecovery() {
+    if (isPasswordRecoveryRequestPending.value) {
+      return
+    }
+
+    isPasswordRecoverySubmitted.value = true
+    passwordRecoveryRequestError.value = ''
+    passwordRecoveryRequestMessage.value = ''
+
+    if (passwordRecoveryIdentifierError.value) {
+      return
+    }
+
+    isPasswordRecoveryRequestPending.value = true
+
+    try {
+      if (!isPhoneLike(passwordRecoveryEmail.value) && typeof authClient.forgetPassword === 'function') {
+        const result = await authClient.forgetPassword({
+          email: passwordRecoveryEmail.value.trim()
+        })
+
+        if (result?.error) {
+          passwordRecoveryRequestError.value = getAuthErrorMessage(result.error, 'Не удалось отправить ссылку')
+          return
+        }
+      }
+
+      passwordRecoveryRequestMessage.value = ''
+      step.value = 'password-recovery-sent'
+    } catch (error) {
+      passwordRecoveryRequestError.value = getAuthErrorMessage(error, 'Не удалось отправить ссылку')
+    } finally {
+      isPasswordRecoveryRequestPending.value = false
+    }
+  }
+
   async function completeLogin() {
     if (isLoginRequestPending.value) {
       return
@@ -451,6 +587,10 @@ export function useAuthEntryFlow({
     isSubmitted.value = true
     isFieldTouched.value = true
     loginRequestError.value = ''
+
+    if (!identifier.value.trim()) {
+      return
+    }
 
     if (identifierError.value) {
       return
@@ -500,7 +640,6 @@ export function useAuthEntryFlow({
     }
 
     isRegistrationSubmitted.value = true
-    isRegistrationEmailTouched.value = true
     registrationRequestError.value = ''
 
     if (registrationEmailError.value) {
@@ -794,11 +933,15 @@ export function useAuthEntryFlow({
     isSubmitted,
     isLoginSubmitted,
     isRegistrationSubmitted,
-    isRegistrationEmailTouched,
     fullName,
     registrationEmail,
     registrationPhone,
     password,
+    passwordRecoveryEmail,
+    isPasswordRecoverySubmitted,
+    isPasswordRecoveryRequestPending,
+    passwordRecoveryRequestError,
+    passwordRecoveryRequestMessage,
     organizationInn,
     isPasswordVisible,
     smsCode,
@@ -843,6 +986,8 @@ export function useAuthEntryFlow({
     passwordError,
     visibleLoginPasswordError,
     visiblePasswordError,
+    passwordRecoveryEmailError: passwordRecoveryIdentifierError,
+    visiblePasswordRecoveryEmailError,
     inputMode,
     canRequestCode,
     canResendCode,
@@ -857,6 +1002,10 @@ export function useAuthEntryFlow({
     resendButtonText,
     successTitle,
     successDescription,
+    passwordRecoveryDescription,
+    isPasswordRecoveryPhone,
+    passwordRecoverySentDescription,
+    passwordRecoverySentHint,
     modalTitle,
 
     // methods
@@ -864,10 +1013,11 @@ export function useAuthEntryFlow({
     onIdentifierInput,
     onIdentifierBlur,
     resetIdentifier,
+    onFullNameInput,
     onRegistrationPhoneInput,
     onRegistrationEmailInput,
-    onRegistrationEmailBlur,
     onPasswordInput,
+    onPasswordRecoveryEmailInput,
     onSmsCodeInput,
     onOrganizationInnInput,
     onOrganizationInnFocus,
@@ -882,6 +1032,9 @@ export function useAuthEntryFlow({
     startRegistration,
     onFormSubmit,
     getAuthErrorMessage,
+    startPasswordRecovery,
+    backToLoginFromPasswordRecovery,
+    requestPasswordRecovery,
     completeLogin,
     completeRegistration,
     getRequestErrorMessage,

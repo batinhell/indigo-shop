@@ -57,7 +57,7 @@ const entryRequestError = flow.entryRequestError
         type="submit"
         class="auth-entry__submit"
         :disabled="isEntryRequestPending"
-        :aria-label="isEntryRequestPending ? 'Проверяем' : 'Продолжить'"
+        :aria-label="isEntryRequestPending ? 'Проверяем' : 'Получить код'"
       >
         <AppIcon
           name="arrow-right-line"
@@ -136,7 +136,7 @@ const entryRequestError = flow.entryRequestError
   }
 
   &:focus {
-    border-color: transparent;
+    border-color: #de7aff;
   }
 }
 

@@ -126,7 +126,7 @@ $color-dropdown-bg: #f6f6f6;
     border-radius: 0.75rem;
     box-sizing: border-box;
     cursor: pointer;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, background-color 0.15s;
   }
 
   &__value {
@@ -196,8 +196,14 @@ $color-dropdown-bg: #f6f6f6;
 
   // Open state
   &--open &__trigger {
-    border-color: #c925ff;
+    border-color: #de7aff;
     background: white;
+  }
+
+  &__trigger:focus-visible {
+    background: white;
+    border-color: #de7aff;
+    outline: none;
   }
 
   &--open &__chevron {
