@@ -1,4 +1,4 @@
-import { _ as _export_sfc, u as useHead, a as __nuxt_component_0$2 } from './server.mjs';
+import { _ as _export_sfc, u as useHead, a as __nuxt_component_0$3 } from './server.mjs';
 import { mergeProps, withCtx, createTextVNode, toDisplayString, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrInterpolate, ssrRenderComponent } from 'vue/server-renderer';
 import '../nitro/nitro.mjs';
@@ -74,7 +74,7 @@ const _sfc_main = {
       ]
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "antialiased bg-white dark:bg-[#020420] dark:text-white font-sans grid min-h-screen overflow-hidden place-content-center text-[#020420] tracking-wide" }, _attrs))} data-v-204d37bf><div class="max-w-520px text-center" data-v-204d37bf><h1 class="font-semibold leading-none mb-4 sm:text-[110px] tabular-nums text-[80px]" data-v-204d37bf>${ssrInterpolate(__props.status)}</h1><h2 class="font-semibold mb-2 sm:text-3xl text-2xl" data-v-204d37bf>${ssrInterpolate(__props.statusText)}</h2><p class="mb-4 px-2 text-[#64748B] text-md" data-v-204d37bf>${ssrInterpolate(__props.description)}</p><div class="flex items-center justify-center w-full" data-v-204d37bf>`);
       _push(ssrRenderComponent(_component_NuxtLink, {
         to: "/",

@@ -1,23 +1,30 @@
 <script setup>
-import alert16 from '~/assets/icons/system/alert-16.svg'
-import arrowRight16 from '~/assets/icons/system/arrow-right-16.svg'
-import arrowRight24 from '~/assets/icons/system/arrow-right-24.svg'
-import basket12 from '~/assets/icons/system/basket-12.svg'
-import basket16 from '~/assets/icons/system/basket-16.svg'
-import basket24 from '~/assets/icons/system/basket-24.svg'
-import binky16 from '~/assets/icons/system/binky-16.svg'
-import calendar16 from '~/assets/icons/system/calendar-16.svg'
-import check12 from '~/assets/icons/system/check-12.svg'
-import cross12 from '~/assets/icons/system/cross-12.svg'
-import headerAccountAuthorized16 from '~/assets/icons/header-account-authorized.svg'
-import headerSignOutAuthorized16 from '~/assets/icons/header-sign-out-authorized.svg'
-import hide16 from '~/assets/icons/system/hide-16.svg'
-import mir32x62 from '~/assets/icons/system/mir-32x62.svg'
-import puzzle16 from '~/assets/icons/system/puzzle-16.svg'
-import refresh16 from '~/assets/icons/system/refresh-16.svg'
-import ruble12 from '~/assets/icons/system/ruble-12.svg'
-import ruble16 from '~/assets/icons/system/ruble-16.svg'
-import show16 from '~/assets/icons/system/show-16.svg'
+import alert16 from '~/assets/icons/system/alert-16.svg?raw'
+import arrowRight16 from '~/assets/icons/system/arrow-right-16.svg?raw'
+import arrowRight24 from '~/assets/icons/system/arrow-right-24.svg?raw'
+import basket12 from '~/assets/icons/system/basket-12.svg?raw'
+import basket16 from '~/assets/icons/system/basket-16.svg?raw'
+import basket24 from '~/assets/icons/system/basket-24.svg?raw'
+import binky16 from '~/assets/icons/system/binky-16.svg?raw'
+import calendar16 from '~/assets/icons/system/calendar-16.svg?raw'
+import check12 from '~/assets/icons/system/check-12.svg?raw'
+import cross12 from '~/assets/icons/system/cross-12.svg?raw'
+import headerAccountAuthorized16 from '~/assets/icons/header-account-authorized.svg?raw'
+import headerSignOutAuthorized16 from '~/assets/icons/header-sign-out-authorized.svg?raw'
+import hide16 from '~/assets/icons/system/hide-16.svg?raw'
+import mir32x62 from '~/assets/icons/system/mir-32x62.svg?raw'
+import profileCheck10 from '~/assets/icons/profile/check-10.svg?raw'
+import profileEdit12 from '~/assets/icons/profile/edit-12.svg?raw'
+import profilePlus10 from '~/assets/icons/profile/plus-10.svg?raw'
+import profileTrash12 from '~/assets/icons/profile/trash-12.svg?raw'
+import puzzle16 from '~/assets/icons/system/puzzle-16.svg?raw'
+import refresh16 from '~/assets/icons/system/refresh-16.svg?raw'
+import ruble12 from '~/assets/icons/system/ruble-12.svg?raw'
+import ruble16 from '~/assets/icons/system/ruble-16.svg?raw'
+import show16 from '~/assets/icons/system/show-16.svg?raw'
+import termLow12 from '~/assets/icons/system/term-low-12.svg?raw'
+import termMedium12 from '~/assets/icons/system/term-medium-12.svg?raw'
+import termShort12 from '~/assets/icons/system/term-short-12.svg?raw'
 
 const ICONS = {
   'account': {
@@ -32,14 +39,14 @@ const ICONS = {
     ]
   },
   'header-account-authorized': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: headerAccountAuthorized16
     }
   },
   'header-sign-out-authorized': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: headerSignOutAuthorized16
     }
   },
@@ -85,23 +92,23 @@ const ICONS = {
     ]
   },
   'basket': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       12: basket12,
       16: basket16,
       24: basket24
     }
   },
   'arrow-right': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: arrowRight16,
       24: arrowRight24
     }
   },
   'ruble': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       12: ruble12,
       16: ruble16
     }
@@ -118,32 +125,32 @@ const ICONS = {
     ]
   },
   'check': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       12: check12
     }
   },
   'cross': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       12: cross12
     }
   },
   'refresh': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: refresh16
     }
   },
   'show': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: show16
     }
   },
   'hide': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: hide16
     }
   },
@@ -241,8 +248,8 @@ const ICONS = {
     ]
   },
   'alert': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: alert16
     }
   },
@@ -256,27 +263,69 @@ const ICONS = {
     ]
   },
   'puzzle': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: puzzle16
     }
   },
   'binky': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: binky16
     }
   },
   'calendar': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       16: calendar16
     }
   },
+  'term-short': {
+    kind: 'svg',
+    svgBySize: {
+      12: termShort12
+    }
+  },
+  'term-medium': {
+    kind: 'svg',
+    svgBySize: {
+      12: termMedium12
+    }
+  },
+  'term-low': {
+    kind: 'svg',
+    svgBySize: {
+      12: termLow12
+    }
+  },
   'mir': {
-    kind: 'image',
-    srcBySize: {
+    kind: 'svg',
+    svgBySize: {
       32: mir32x62
+    }
+  },
+  'profile-edit': {
+    kind: 'svg',
+    svgBySize: {
+      12: profileEdit12
+    }
+  },
+  'profile-check': {
+    kind: 'svg',
+    svgBySize: {
+      10: profileCheck10
+    }
+  },
+  'profile-plus': {
+    kind: 'svg',
+    svgBySize: {
+      10: profilePlus10
+    }
+  },
+  'profile-trash': {
+    kind: 'svg',
+    svgBySize: {
+      12: profileTrash12
     }
   },
   'delivery-dot': {
@@ -299,6 +348,14 @@ const props = defineProps({
     required: true
   },
   size: {
+    type: [Number, String],
+    default: undefined
+  },
+  width: {
+    type: [Number, String],
+    default: undefined
+  },
+  height: {
     type: [Number, String],
     default: undefined
   },
@@ -325,16 +382,29 @@ const parsedNumericSize = computed(() => {
   return Number.isFinite(value) ? value : undefined
 })
 
-const sizeStyle = computed(() => {
-  if (props.size === undefined || props.size === null || props.size === '') return undefined
-  let raw = ''
+function normalizeCssSize(value) {
+  if (value === undefined || value === null || value === '') return undefined
+  if (typeof value === 'number') return `${value}px`
 
-  if (typeof props.size === 'number') {
-    raw = `${props.size}px`
-  } else {
-    const normalized = props.size.trim()
-    raw = /^\d+(\.\d+)?$/.test(normalized) ? `${normalized}px` : normalized
+  const normalized = value.trim()
+  if (!normalized) return undefined
+
+  return /^\d+(\.\d+)?$/.test(normalized) ? `${normalized}px` : normalized
+}
+
+const sizeStyle = computed(() => {
+  const width = normalizeCssSize(props.width)
+  const height = normalizeCssSize(props.height)
+
+  if (width || height) {
+    return {
+      width: width || height,
+      height: height || width
+    }
   }
+
+  const raw = normalizeCssSize(props.size)
+  if (!raw) return undefined
 
   return {
     width: raw,
@@ -347,29 +417,29 @@ const ariaLabel = computed(() => {
   return props.title || props.name
 })
 
-function resolveImageSrc(definition, requestedSize) {
-  const entries = Object.entries(definition.srcBySize)
-    .map(([size, src]) => ({ size: Number(size), src }))
+function resolveVariantBySize(variants, requestedSize) {
+  const entries = Object.entries(variants)
+    .map(([size, value]) => ({ size: Number(size), value }))
     .filter(({ size }) => Number.isFinite(size))
 
   if (entries.length === 0) return ''
   if (requestedSize === undefined) {
     const default16 = entries.find(({ size }) => size === 16)
-    return (default16 || entries[0]).src
+    return (default16 || entries[0]).value
   }
 
   const exact = entries.find(({ size }) => size === requestedSize)
-  if (exact) return exact.src
+  if (exact) return exact.value
 
   return entries
     .slice()
     .sort((a, b) => Math.abs(a.size - requestedSize) - Math.abs(b.size - requestedSize))[0]
-    .src
+    .value
 }
 
-const imageSrc = computed(() => {
-  if (icon.value.kind !== 'image') return ''
-  return resolveImageSrc(icon.value, parsedNumericSize.value)
+const svgMarkup = computed(() => {
+  if (icon.value.kind !== 'svg') return ''
+  return resolveVariantBySize(icon.value.svgBySize, parsedNumericSize.value)
 })
 </script>
 
@@ -404,12 +474,11 @@ const imageSrc = computed(() => {
       />
     </svg>
 
-    <img
-      v-else-if="icon.kind === 'image'"
-      :src="imageSrc"
-      alt=""
-      class="app-icon__image"
-    >
+    <span
+      v-else-if="icon.kind === 'svg'"
+      class="app-icon__raw"
+      v-html="svgMarkup"
+    />
 
     <span
       v-else
@@ -426,8 +495,19 @@ const imageSrc = computed(() => {
 }
 
 .app-icon__svg,
-.app-icon__image,
 .app-icon__dot {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.app-icon__raw {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.app-icon__raw :deep(svg) {
   display: block;
   height: 100%;
   width: 100%;

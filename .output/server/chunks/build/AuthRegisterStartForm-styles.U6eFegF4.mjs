@@ -1,4 +1,4 @@
-import { B as publicAssetsURL } from '../nitro/nitro.mjs';
+import { D as publicAssetsURL } from '../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@pinia/nuxt'
   ],
 
   devtools: {
@@ -27,16 +28,32 @@ export default defineNuxtConfig({
   runtimeConfig: {
     notificore: {
       apiKey: '',
-      apiBaseUrl: 'https://one-api.notificore.ru',
+      apiBaseUrl: 'https://api.notificore.ru',
+      oneApiBaseUrl: 'https://one-api.notificore.ru',
       sender: '',
       otpTemplateId: '',
-      codeDigits: 5,
-      codeLifetime: 300,
-      codeMaxTries: 3
+      emailApiKey: '',
+      emailApiBaseUrl: 'https://one-api.notificore.ru',
+      emailFrom: '',
+      confirmationEmailTemplateId: '',
+      codeDigits: 4,
+      codeLifetime: 60,
+      codeMaxTries: 3,
+      emailTimeout: 20000
     },
     dadata: {
       apiKey: '',
       suggestUrl: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party'
+    },
+    vtbPayment: {
+      baseUrl: 'https://vtb.rbsuat.com/payment/rest/',
+      token: '',
+      userName: '',
+      password: '',
+      returnUrl: '',
+      failUrl: '',
+      callbackUrl: '',
+      qrTtlSeconds: 900
     },
     betterAuth: {
       url: '',

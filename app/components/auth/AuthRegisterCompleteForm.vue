@@ -13,7 +13,6 @@ const canResendCode = flow.canResendCode
 const resendButtonText = flow.resendButtonText
 const codeRequestError = flow.codeRequestError
 const codeVerifyError = flow.codeVerifyError
-const isCodeVerifyPending = flow.isCodeVerifyPending
 const registrationEmail = flow.registrationEmail
 const visibleRegistrationEmailError = flow.visibleRegistrationEmailError
 const password = flow.password
@@ -410,15 +409,27 @@ watch(isPhoneConfirmed, (confirmed) => {
 }
 
 .auth-entry__input--sms-code {
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0.875rem;
   color: $color-base;
-  background: #fff;
-  border-color: #de7aff;
+  background: #f4f5f6;
+  border: 2px solid transparent;
+  border-radius: 0.75rem;
+  outline: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
 
   &::placeholder {
     color: $color-base-secondary;
   }
 
   &:focus {
+    background: #fff;
     border-color: #de7aff;
   }
 

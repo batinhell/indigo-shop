@@ -8,6 +8,7 @@ import {
   normalizePhoneDigits,
   unmaskPhoneToEmail
 } from '~~/shared/utils/auth-identifier.js'
+import { getRussianSecondsWord } from '~~/shared/utils/time.js'
 import { authClient } from '~/utils/auth-client.js'
 
 export function useAuthEntryFlow({
@@ -30,6 +31,7 @@ export function useAuthEntryFlow({
   const isPasswordRecoveryRequestPending = ref(false)
   const passwordRecoveryRequestError = ref('')
   const passwordRecoveryRequestMessage = ref('')
+  const passwordRecoveryCodeError = ref('')
   const organizationInn = ref('')
   const isPasswordVisible = ref(false)
   const smsCode = ref('')
@@ -59,7 +61,7 @@ export function useAuthEntryFlow({
   const isOrganizationSavePending = ref(false)
   const organizationSaveError = ref('')
 
-  const SMS_CODE_LENGTH = 5
+  const SMS_CODE_LENGTH = 4
   const MIN_PASSWORD_LENGTH = 8
   const ORGANIZATION_SUGGEST_DELAY = 350
 
@@ -97,6 +99,7 @@ export function useAuthEntryFlow({
   const canResendCode = computed(() => (
     resendSeconds.value === 0
     && !isCodeRequestPending.value
+    && !isPasswordRecoveryRequestPending.value
     && !isCodeVerifyPending.value
   ))
   const isSmsCodeConfirmed = computed(() => isPhoneConfirmed.value)
@@ -121,10 +124,10 @@ export function useAuthEntryFlow({
     return 'Получить код'
   })
   const resendCountdownText = computed(() => (
-    `Получить повторно можно через ${resendSeconds.value} ${getSecondsWord(resendSeconds.value)}`
+    `Получить повторно можно через ${resendSeconds.value} ${getRussianSecondsWord(resendSeconds.value)}`
   ))
   const resendButtonText = computed(() => {
-    if (isCodeRequestPending.value) {
+    if (isCodeRequestPending.value || isPasswordRecoveryRequestPending.value) {
       return 'Отправляем код'
     }
     return canResendCode.value ? 'Отправить повторно' : resendCountdownText.value
@@ -139,16 +142,17 @@ export function useAuthEntryFlow({
     const destination = passwordRecoveryEmail.value.trim() || (isPasswordRecoveryPhone.value ? '+7 (000) 000 00 00' : 'Почта@домен.ру')
 
     if (isPasswordRecoveryPhone.value) {
-      return 'Мы отправили СМС\nсо ссылкой для сброса пароля.'
+      return 'Мы отправили СМС\nс кодом для сброса пароля'
     }
 
     return `Мы отправили письмо со ссылкой для\u00A0сброса пароля на почту ${destination}.`
   })
   const passwordRecoverySentHint = computed(() => (
     isPasswordRecoveryPhone.value
-      ? 'Если вы его не получили, повторите попытку через 10 минут или напишите нам\u00A0адрес почты'
+      ? 'Если вы его не получили, повторите попытку через 10 минут или напишите нам'
       : 'Если вы его не получили, проверьте папку Спам или напишите нам адрес почты'
   ))
+  const passwordRecoveryPhone = computed(() => formatCompactPhone(passwordRecoveryEmail.value))
   const modalTitle = computed(() => {
     if (step.value === 'entry') {
       return 'Вход или регистрация'
@@ -170,25 +174,6 @@ export function useAuthEntryFlow({
       return 'Введите пароль'
     }
     return value.length >= MIN_PASSWORD_LENGTH ? '' : `Минимум ${MIN_PASSWORD_LENGTH} символов`
-  }
-
-  function getSecondsWord(value) {
-    const absoluteValue = Math.abs(value)
-    const lastTwo = absoluteValue % 100
-
-    if (lastTwo >= 11 && lastTwo <= 14) {
-      return 'секунд'
-    }
-
-    const lastDigit = absoluteValue % 10
-
-    if (lastDigit === 1) {
-      return 'секунду'
-    }
-    if (lastDigit >= 2 && lastDigit <= 4) {
-      return 'секунды'
-    }
-    return 'секунд'
   }
 
   function onIdentifierInput(event) {
@@ -251,6 +236,7 @@ export function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = false
     passwordRecoveryRequestError.value = ''
     passwordRecoveryRequestMessage.value = ''
+    passwordRecoveryCodeError.value = ''
 
     if (isPhoneLike(value)) {
       passwordRecoveryEmail.value = formatPhone(value)
@@ -262,6 +248,7 @@ export function useAuthEntryFlow({
   function onSmsCodeInput(event) {
     smsCode.value = event.target.value.replace(/\D/g, '').slice(0, SMS_CODE_LENGTH)
     codeVerifyError.value = ''
+    passwordRecoveryCodeError.value = ''
     registrationRequestError.value = ''
   }
 
@@ -472,6 +459,10 @@ export function useAuthEntryFlow({
       requestPasswordRecovery()
       return
     }
+    if (step.value === 'password-recovery-sent' && isPasswordRecoveryPhone.value) {
+      verifyCode()
+      return
+    }
     if (step.value === 'registration') {
       requestCode()
       return
@@ -524,6 +515,7 @@ export function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = false
     passwordRecoveryRequestError.value = ''
     passwordRecoveryRequestMessage.value = ''
+    passwordRecoveryCodeError.value = ''
     step.value = 'password-recovery'
 
     nextTick(() => {
@@ -535,6 +527,7 @@ export function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = false
     passwordRecoveryRequestError.value = ''
     passwordRecoveryRequestMessage.value = ''
+    passwordRecoveryCodeError.value = ''
     step.value = 'login'
 
     nextTick(() => {
@@ -550,15 +543,55 @@ export function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = true
     passwordRecoveryRequestError.value = ''
     passwordRecoveryRequestMessage.value = ''
+    passwordRecoveryCodeError.value = ''
+    codeAuthenticationId.value = ''
+    codeVerifyError.value = ''
 
     if (passwordRecoveryIdentifierError.value) {
       return
     }
 
+    const isPhoneRecovery = isPhoneLike(passwordRecoveryEmail.value)
+
+    if (isPhoneRecovery) {
+      isPasswordRecoveryRequestPending.value = true
+      passwordRecoveryRequestMessage.value = ''
+      codeAuthenticationId.value = ''
+      codeVerifyError.value = ''
+      smsCode.value = ''
+      isPhoneConfirmed.value = false
+      startResendTimer()
+      step.value = 'password-recovery-sent'
+
+      nextTick(() => {
+        document.getElementById('auth-entry-password-recovery-sms-code')?.focus()
+      })
+
+      try {
+        const result = await $fetch('/api/auth/password-recovery/request-code', {
+          method: 'POST',
+          timeout: 40000,
+          body: {
+            phone: passwordRecoveryEmail.value.trim()
+          }
+        })
+
+        codeAuthenticationId.value = result.authenticationId || ''
+        return
+      } catch (error) {
+        stopResendTimer()
+        resendSeconds.value = 0
+        passwordRecoveryRequestError.value = getAuthErrorMessage(error, 'Не удалось отправить код')
+        return
+      } finally {
+        isPasswordRecoveryRequestPending.value = false
+      }
+    }
+
     isPasswordRecoveryRequestPending.value = true
 
     try {
-      if (!isPhoneLike(passwordRecoveryEmail.value) && typeof authClient.forgetPassword === 'function') {
+      if (typeof authClient.forgetPassword === 'function') {
         const result = await authClient.forgetPassword({
           email: passwordRecoveryEmail.value.trim()
         })
@@ -918,8 +951,14 @@ export function useAuthEntryFlow({
       })
 
       isPhoneConfirmed.value = true
+      if (step.value === 'password-recovery-sent') {
+        passwordRecoveryCodeError.value = ''
+      }
     } catch (error) {
       codeVerifyError.value = getVerifyErrorMessage(error)
+      if (step.value === 'password-recovery-sent') {
+        passwordRecoveryCodeError.value = codeVerifyError.value
+      }
     } finally {
       isCodeVerifyPending.value = false
     }
@@ -942,6 +981,7 @@ export function useAuthEntryFlow({
     isPasswordRecoveryRequestPending,
     passwordRecoveryRequestError,
     passwordRecoveryRequestMessage,
+    passwordRecoveryCodeError,
     organizationInn,
     isPasswordVisible,
     smsCode,
@@ -1006,6 +1046,7 @@ export function useAuthEntryFlow({
     isPasswordRecoveryPhone,
     passwordRecoverySentDescription,
     passwordRecoverySentHint,
+    passwordRecoveryPhone,
     modalTitle,
 
     // methods

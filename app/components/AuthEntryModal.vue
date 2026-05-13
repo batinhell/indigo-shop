@@ -18,6 +18,7 @@ const isLegalRegistrationStep = flow.isLegalRegistrationStep
 const passwordRecoveryDescription = flow.passwordRecoveryDescription
 const passwordRecoverySentDescription = flow.passwordRecoverySentDescription
 const passwordRecoverySentHint = flow.passwordRecoverySentHint
+const isPasswordRecoveryPhone = flow.isPasswordRecoveryPhone
 const onFormSubmit = flow.onFormSubmit
 const stopResendTimer = flow.stopResendTimer
 const stopOrganizationSuggestTimer = flow.stopOrganizationSuggestTimer
@@ -114,6 +115,16 @@ onBeforeUnmount(() => {
                 </template>
                 <br>
                 {{ passwordRecoverySentHint }}
+                <template v-if="isPasswordRecoveryPhone">
+                  <a
+                    class="auth-entry__subtitle-link"
+                    href="mailto:Info@indigo-mail.ru"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    на Info@indigo-mail.ru
+                  </a>
+                </template>
               </p>
             </div>
 
@@ -223,6 +234,13 @@ onBeforeUnmount(() => {
   line-height: 1.125rem;
   letter-spacing: 0;
   font-feature-settings: 'lnum' 1, 'pnum' 1;
+}
+
+.auth-entry__subtitle-link {
+  color: #de7aff;
+  text-decoration: underline;
+  text-decoration-thickness: 0.0625rem;
+  text-underline-offset: 0.125rem;
 }
 
 .auth-entry__close {

@@ -61,33 +61,39 @@ const organizations_post = defineEventHandler(async (event) => {
     type: normalizeNullableString(organization.type),
     address: normalizeNullableString(organization.address),
     dadataPayload: JSON.stringify(organization),
+    isActive: true,
     updatedAt: now
   };
   const database = useDatabase();
-  await database.insertInto("userOrganization").values({
-    ...payload,
-    createdAt: now
-  }).onDuplicateKeyUpdate({
-    name: payload.name,
-    kpp: payload.kpp,
-    ogrn: payload.ogrn,
-    type: payload.type,
-    address: payload.address,
-    dadataPayload: payload.dadataPayload,
-    updatedAt: now
-  }).execute();
-  const savedOrganization = await database.selectFrom("userOrganization").select([
-    "id",
-    "userId",
-    "name",
-    "inn",
-    "kpp",
-    "ogrn",
-    "type",
-    "address",
-    "createdAt",
-    "updatedAt"
-  ]).where("userId", "=", session.user.id).where("inn", "=", inn).executeTakeFirst();
+  const savedOrganization = await database.transaction().execute(async (trx) => {
+    await trx.updateTable("userOrganization").set({ isActive: false }).where("userId", "=", session.user.id).execute();
+    await trx.insertInto("userOrganization").values({
+      ...payload,
+      createdAt: now
+    }).onDuplicateKeyUpdate({
+      name: payload.name,
+      kpp: payload.kpp,
+      ogrn: payload.ogrn,
+      type: payload.type,
+      address: payload.address,
+      dadataPayload: payload.dadataPayload,
+      isActive: true,
+      updatedAt: now
+    }).execute();
+    return trx.selectFrom("userOrganization").select([
+      "id",
+      "userId",
+      "name",
+      "inn",
+      "kpp",
+      "ogrn",
+      "type",
+      "address",
+      "isActive",
+      "createdAt",
+      "updatedAt"
+    ]).where("userId", "=", session.user.id).where("inn", "=", inn).executeTakeFirst();
+  });
   return {
     organization: savedOrganization
   };

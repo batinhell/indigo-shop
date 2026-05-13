@@ -1,4 +1,4 @@
-import { d as defineEventHandler, q as defineCachedFunction } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, x as defineCachedFunction } from '../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

@@ -1,5 +1,5 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { useSlots, toRef, computed, unref, mergeProps, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, createVNode, Fragment, resolveDynamicComponent, isRef, toValue, getCurrentInstance, onServerPrefetch, ref, inject, defineComponent, shallowRef, h, resolveComponent, useModel, mergeModels, useAttrs, watch, hasInjectionContext, nextTick, provide, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, Suspense, createApp, renderList, useId, withModifiers, shallowReactive, onErrorCaptured, reactive, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, isShallow, isReactive, toRaw } from 'vue';
-import { G as serialize, H as defu, I as parseQuery, J as klona, K as hasProtocol, E as joinURL, L as parseURL, M as encodePath, N as decodePath, O as defuFn, P as isEqual, Q as withQuery, R as isScriptProtocol, S as getContext, c as createError$1, T as withTrailingSlash, U as withoutTrailingSlash, V as sanitizeStatusCode, $ as $fetch$1, W as baseURL, X as createHooks, Y as isPhoneLike, Z as getIdentifierError, _ as getRegistrationEmailError, b as normalizePhoneDigits, a0 as formatAuthPhone, a1 as formatCompactPhone, a2 as formatPhone, a3 as unmaskPhoneToEmail, a4 as executeAsync } from '../nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { useSlots, toRef, computed, unref, mergeProps, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, createVNode, Fragment, resolveDynamicComponent, isRef, ref, inject, toValue, getCurrentInstance, onServerPrefetch, defineComponent, shallowRef, h, resolveComponent, useModel, mergeModels, useAttrs, watch, hasInjectionContext, provide, nextTick, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, Suspense, createApp, renderList, useId, withModifiers, shallowReactive, onErrorCaptured, reactive, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, isShallow, isReactive, toRaw } from 'vue';
+import { I as serialize, J as defu, j as getRequestHeaders, K as hasProtocol, L as isScriptProtocol, G as joinURL, M as parseQuery, N as klona, O as withQuery, P as sanitizeStatusCode, Q as parseURL, R as encodePath, S as decodePath, T as defuFn, U as isEqual, V as getContext, c as createError$1, W as withTrailingSlash, X as withoutTrailingSlash, $ as $fetch$1, Y as baseURL, Z as createHooks, _ as isPhoneLike, a0 as getIdentifierError, a1 as getRegistrationEmailError, b as normalizePhoneDigits, q as formatAuthPhone, a2 as formatCompactPhone, a3 as formatPhone, a4 as unmaskPhoneToEmail, a5 as executeAsync } from '../nitro/nitro.mjs';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
@@ -523,17 +523,23 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-DbVXWAn-.mjs')
+    component: () => import('./index-CBtEAMnI.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-zBIzbJEp.mjs')
+    component: () => import('./catalog-QBxsDupZ.mjs')
   },
   {
     name: "payment",
     path: "/payment",
     component: () => import('./payment-CrfrzLBF.mjs')
+  },
+  {
+    name: "profile",
+    path: "/profile",
+    meta: { "middleware": ["auth"] },
+    component: () => import('./profile-DZdmrubS.mjs')
   },
   {
     name: "delivery",
@@ -677,7 +683,9 @@ const globalMiddleware = [
   validate,
   manifest_45route_45rule
 ];
-const namedMiddleware = {};
+const namedMiddleware = {
+  auth: () => import('./auth-Xvf1exZq.mjs')
+};
 const plugin = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
   enforce: "pre",
@@ -1311,6 +1319,22 @@ function useState(...args) {
 function useRequestEvent(nuxtApp) {
   nuxtApp ||= useNuxtApp();
   return nuxtApp.ssrContext?.event;
+}
+function useRequestHeaders(include) {
+  const event = useRequestEvent();
+  const _headers = event ? getRequestHeaders(event) : {};
+  if (!include || !event) {
+    return _headers;
+  }
+  const headers = /* @__PURE__ */ Object.create(null);
+  for (const _key of include) {
+    const key = _key.toLowerCase();
+    const header = _headers[key];
+    if (header) {
+      headers[key] = header;
+    }
+  }
+  return headers;
 }
 function useRequestFetch() {
   return useRequestEvent()?.$fetch || globalThis.$fetch;
@@ -2167,7 +2191,7 @@ const NuxtIconSvg = /* @__PURE__ */ defineComponent({
     }, slots);
   }
 });
-const __nuxt_component_0$3 = defineComponent({
+const __nuxt_component_0$4 = defineComponent({
   name: "NuxtIcon",
   props: {
     name: {
@@ -2216,9 +2240,9 @@ const __nuxt_component_0$3 = defineComponent({
 });
 const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: __nuxt_component_0$3
+  default: __nuxt_component_0$4
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$t = {
+const _sfc_main$u = {
   __name: "UIcon",
   __ssrInlineRender: true,
   props: {
@@ -2231,7 +2255,7 @@ const _sfc_main$t = {
     const props = __props;
     const iconProps = useForwardProps(reactivePick(props, "name", "mode", "size", "customize"));
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_Icon = __nuxt_component_0$3;
+      const _component_Icon = __nuxt_component_0$4;
       if (typeof __props.name === "string") {
         _push(ssrRenderComponent(_component_Icon, mergeProps(unref(iconProps), _attrs), null, _parent));
       } else {
@@ -2240,11 +2264,11 @@ const _sfc_main$t = {
     };
   }
 };
-const _sfc_setup$t = _sfc_main$t.setup;
-_sfc_main$t.setup = (props, ctx) => {
+const _sfc_setup$u = _sfc_main$u.setup;
+_sfc_main$u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
-  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
+  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
 };
 const ImageComponent = "img";
 const avatarGroupInjectionKey = /* @__PURE__ */ Symbol("nuxt-ui.avatar-group");
@@ -2323,7 +2347,7 @@ const theme$8 = {
     "position": "top-right"
   }
 };
-const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$t = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UChip",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -2408,11 +2432,11 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$s = _sfc_main$s.setup;
-_sfc_main$s.setup = (props, ctx) => {
+const _sfc_setup$t = _sfc_main$t.setup;
+_sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
-  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
+  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
 const theme$7 = {
   "slots": {
@@ -2456,7 +2480,7 @@ const theme$7 = {
     "size": "md"
   }
 };
-const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UAvatar",
   __ssrInlineRender: true,
   props: {
@@ -2507,7 +2531,7 @@ const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       error.value = true;
     }
     return (_ctx, _push, _parent, _attrs) => {
-      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$s : unref(Primitive)), mergeProps({
+      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$t : unref(Primitive)), mergeProps({
         as: as.value.root
       }, props.chip ? typeof props.chip === "object" ? { inset: true, ...props.chip } : { inset: true } : {}, {
         "data-slot": "root",
@@ -2533,7 +2557,7 @@ const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   if (_push3) {
                     ssrRenderSlot(_ctx.$slots, "default", {}, () => {
                       if (__props.icon) {
-                        _push3(ssrRenderComponent(_sfc_main$t, {
+                        _push3(ssrRenderComponent(_sfc_main$u, {
                           name: __props.icon,
                           "data-slot": "icon",
                           class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -2545,7 +2569,7 @@ const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   } else {
                     return [
                       renderSlot(_ctx.$slots, "default", {}, () => [
-                        __props.icon ? (openBlock(), createBlock(_sfc_main$t, {
+                        __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
                           key: 0,
                           name: __props.icon,
                           "data-slot": "icon",
@@ -2577,7 +2601,7 @@ const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
               }), null, 16, ["src", "alt", "width", "height", "class"])) : (openBlock(), createBlock(unref(Slot), mergeProps({ key: 1 }, _ctx.$attrs), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "default", {}, () => [
-                    __props.icon ? (openBlock(), createBlock(_sfc_main$t, {
+                    __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
                       key: 0,
                       name: __props.icon,
                       "data-slot": "icon",
@@ -2599,11 +2623,11 @@ const _sfc_main$r = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$r = _sfc_main$r.setup;
-_sfc_main$r.setup = (props, ctx) => {
+const _sfc_setup$s = _sfc_main$s.setup;
+_sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
-  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
+  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
 function useComponentIcons(componentProps) {
   const appConfig2 = useAppConfig();
@@ -2973,7 +2997,7 @@ function defineNuxtLink(options) {
     }
   });
 }
-const __nuxt_component_0$2 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+const __nuxt_component_0$3 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
 function applyTrailingSlashBehavior(to, trailingSlash) {
   const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
   const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
@@ -2982,7 +3006,7 @@ function applyTrailingSlashBehavior(to, trailingSlash) {
   }
   return normalizeFn(to, true);
 }
-const _sfc_main$q = {
+const _sfc_main$r = {
   __name: "ULinkBase",
   __ssrInlineRender: true,
   props: {
@@ -3046,11 +3070,11 @@ const _sfc_main$q = {
     };
   }
 };
-const _sfc_setup$q = _sfc_main$q.setup;
-_sfc_main$q.setup = (props, ctx) => {
+const _sfc_setup$r = _sfc_main$r.setup;
+_sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
-  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
+  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
 const theme$6 = {
   "base": "focus-visible:outline-primary",
@@ -3074,7 +3098,7 @@ const theme$6 = {
     }
   ]
 };
-const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "ULink",
   __ssrInlineRender: true,
   props: {
@@ -3151,7 +3175,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       return ui.value({ class: props.class, active, disabled: props.disabled });
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(ssrRenderComponent(_component_NuxtLink, mergeProps(unref(nuxtLinkProps), {
         to: to.value,
         custom: ""
@@ -3173,7 +3197,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
               }, null, _push2, _parent2, _scopeId);
             } else {
-              _push2(ssrRenderComponent(_sfc_main$q, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$r, mergeProps({
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -3217,7 +3241,7 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 target: rest.target,
                 isExternal: rest.isExternal,
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
-              })) : (openBlock(), createBlock(_sfc_main$q, mergeProps({ key: 1 }, {
+              })) : (openBlock(), createBlock(_sfc_main$r, mergeProps({ key: 1 }, {
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -3246,11 +3270,11 @@ const _sfc_main$p = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$p = _sfc_main$p.setup;
-_sfc_main$p.setup = (props, ctx) => {
+const _sfc_setup$q = _sfc_main$q.setup;
+_sfc_main$q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
-  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
+  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
 };
 const theme$5 = {
   "slots": {
@@ -3603,7 +3627,7 @@ const theme$5 = {
     "size": "md"
   }
 };
-const _sfc_main$o = {
+const _sfc_main$p = {
   __name: "UButton",
   __ssrInlineRender: true,
   props: {
@@ -3702,13 +3726,13 @@ const _sfc_main$o = {
       fieldGroup: orientation.value
     }));
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$p, mergeProps({
+      _push(ssrRenderComponent(_sfc_main$q, mergeProps({
         type: __props.type,
         disabled: __props.disabled || isLoading.value
       }, unref(omit)(unref(linkProps), ["type", "disabled", "onClick"]), { custom: "" }, _attrs), {
         default: withCtx(({ active, ...slotProps }, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_sfc_main$q, mergeProps(slotProps, {
+            _push2(ssrRenderComponent(_sfc_main$r, mergeProps(slotProps, {
               "data-slot": "base",
               class: ui.value.base({
                 class: [unref(uiProp)?.base, props.class],
@@ -3722,13 +3746,13 @@ const _sfc_main$o = {
                 if (_push3) {
                   ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
                     if (unref(isLeading) && unref(leadingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$t, {
+                      _push3(ssrRenderComponent(_sfc_main$u, {
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
                       }, null, _parent3, _scopeId2));
                     } else if (!!__props.avatar) {
-                      _push3(ssrRenderComponent(_sfc_main$r, mergeProps({
+                      _push3(ssrRenderComponent(_sfc_main$s, mergeProps({
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
                         "data-slot": "leadingAvatar",
@@ -3747,7 +3771,7 @@ const _sfc_main$o = {
                   }, _push3, _parent3, _scopeId2);
                   ssrRenderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => {
                     if (unref(isTrailing) && unref(trailingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$t, {
+                      _push3(ssrRenderComponent(_sfc_main$u, {
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
                         class: ui.value.trailingIcon({ class: unref(uiProp)?.trailingIcon, active })
@@ -3759,12 +3783,12 @@ const _sfc_main$o = {
                 } else {
                   return [
                     renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
+                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                         key: 0,
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
+                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
                         key: 1,
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
@@ -3780,7 +3804,7 @@ const _sfc_main$o = {
                       }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                     ]),
                     renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
+                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                         key: 0,
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
@@ -3794,7 +3818,7 @@ const _sfc_main$o = {
             }, _parent2, _scopeId));
           } else {
             return [
-              createVNode(_sfc_main$q, mergeProps(slotProps, {
+              createVNode(_sfc_main$r, mergeProps(slotProps, {
                 "data-slot": "base",
                 class: ui.value.base({
                   class: [unref(uiProp)?.base, props.class],
@@ -3806,12 +3830,12 @@ const _sfc_main$o = {
               }), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
+                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                       key: 0,
                       name: unref(leadingIconName),
                       "data-slot": "leadingIcon",
                       class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
+                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
                       key: 1,
                       size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                     }, __props.avatar, {
@@ -3827,7 +3851,7 @@ const _sfc_main$o = {
                     }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                   ]),
                   renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$t, {
+                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                       key: 0,
                       name: unref(trailingIconName),
                       "data-slot": "trailingIcon",
@@ -3845,11 +3869,11 @@ const _sfc_main$o = {
     };
   }
 };
-const _sfc_setup$o = _sfc_main$o.setup;
-_sfc_main$o.setup = (props, ctx) => {
+const _sfc_setup$p = _sfc_main$p.setup;
+_sfc_main$p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
-  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
+  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
 };
 const theme$4 = {
   "slots": {
@@ -4109,7 +4133,7 @@ const theme$4 = {
     "size": "md"
   }
 };
-const _sfc_main$n = {
+const _sfc_main$o = {
   __name: "UProgress",
   __ssrInlineRender: true,
   props: {
@@ -4321,11 +4345,11 @@ const _sfc_main$n = {
     };
   }
 };
-const _sfc_setup$n = _sfc_main$n.setup;
-_sfc_main$n.setup = (props, ctx) => {
+const _sfc_setup$o = _sfc_main$o.setup;
+_sfc_main$o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
-  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
+  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
 };
 const theme$3 = {
   "slots": {
@@ -4391,7 +4415,7 @@ const theme$3 = {
     "color": "primary"
   }
 };
-const _sfc_main$m = {
+const _sfc_main$n = {
   __name: "UToast",
   __ssrInlineRender: true,
   props: {
@@ -4446,14 +4470,14 @@ const _sfc_main$m = {
           if (_push2) {
             ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
               if (__props.avatar) {
-                _push2(ssrRenderComponent(_sfc_main$r, mergeProps({
+                _push2(ssrRenderComponent(_sfc_main$s, mergeProps({
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
                 }), null, _parent2, _scopeId));
               } else if (__props.icon) {
-                _push2(ssrRenderComponent(_sfc_main$t, {
+                _push2(ssrRenderComponent(_sfc_main$u, {
                   name: __props.icon,
                   "data-slot": "icon",
                   class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -4539,13 +4563,13 @@ const _sfc_main$m = {
                   }, {
                     default: withCtx((_, _push3, _parent3, _scopeId2) => {
                       if (_push3) {
-                        _push3(ssrRenderComponent(_sfc_main$o, mergeProps({
+                        _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, _parent3, _scopeId2));
                       } else {
                         return [
-                          createVNode(_sfc_main$o, mergeProps({
+                          createVNode(_sfc_main$p, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -4577,13 +4601,13 @@ const _sfc_main$m = {
                     }, {
                       default: withCtx((_, _push3, _parent3, _scopeId2) => {
                         if (_push3) {
-                          _push3(ssrRenderComponent(_sfc_main$o, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, _parent3, _scopeId2));
                         } else {
                           return [
-                            createVNode(_sfc_main$o, mergeProps({
+                            createVNode(_sfc_main$p, mergeProps({
                               size: "xs",
                               color: __props.color
                             }, { ref_for: true }, action), null, 16, ["color"])
@@ -4604,7 +4628,7 @@ const _sfc_main$m = {
                     if (_push3) {
                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                         if (__props.close) {
-                          _push3(ssrRenderComponent(_sfc_main$o, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
                             variant: "link",
@@ -4622,7 +4646,7 @@ const _sfc_main$m = {
                     } else {
                       return [
                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                          __props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+                          __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                             key: 0,
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
@@ -4648,7 +4672,7 @@ const _sfc_main$m = {
               _push2(`<!---->`);
             }
             if (__props.progress && open && remaining > 0 && duration) {
-              _push2(ssrRenderComponent(_sfc_main$n, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$o, mergeProps({
                 "model-value": remaining / duration * 100,
                 color: __props.color
               }, typeof __props.progress === "object" ? __props.progress : {}, {
@@ -4662,13 +4686,13 @@ const _sfc_main$m = {
           } else {
             return [
               renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                __props.avatar ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
+                __props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
                   key: 0,
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
-                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$t, {
+                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
                   key: 1,
                   name: __props.icon,
                   "data-slot": "icon",
@@ -4722,7 +4746,7 @@ const _sfc_main$m = {
                         }, ["stop"])
                       }, {
                         default: withCtx(() => [
-                          createVNode(_sfc_main$o, mergeProps({
+                          createVNode(_sfc_main$p, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -4748,7 +4772,7 @@ const _sfc_main$m = {
                       }, ["stop"])
                     }, {
                       default: withCtx(() => [
-                        createVNode(_sfc_main$o, mergeProps({
+                        createVNode(_sfc_main$p, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, 16, ["color"])
@@ -4763,7 +4787,7 @@ const _sfc_main$m = {
                 }, {
                   default: withCtx(() => [
                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                      __props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+                      __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                         key: 0,
                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                         color: "neutral",
@@ -4780,7 +4804,7 @@ const _sfc_main$m = {
                   _: 3
                 })) : createCommentVNode("", true)
               ], 2)) : createCommentVNode("", true),
-              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$n, mergeProps({
+              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                 key: 1,
                 "model-value": remaining / duration * 100,
                 color: __props.color
@@ -4797,11 +4821,11 @@ const _sfc_main$m = {
     };
   }
 };
-const _sfc_setup$m = _sfc_main$m.setup;
-_sfc_main$m.setup = (props, ctx) => {
+const _sfc_setup$n = _sfc_main$n.setup;
+_sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
-  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
+  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
 const theme$2 = {
   "slots": {
@@ -4881,7 +4905,7 @@ const theme$2 = {
 const __default__$1 = {
   name: "Toaster"
 };
-const _sfc_main$l = /* @__PURE__ */ Object.assign(__default__$1, {
+const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
   __ssrInlineRender: true,
   props: {
     position: { type: null, required: false },
@@ -4944,7 +4968,7 @@ const _sfc_main$l = /* @__PURE__ */ Object.assign(__default__$1, {
             ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
             _push2(`<!--[-->`);
             ssrRenderList(unref(toasts), (toast, index2) => {
-              _push2(ssrRenderComponent(_sfc_main$m, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$n, mergeProps({
                 key: toast.id,
                 ref_for: true,
                 ref_key: "refs",
@@ -5012,7 +5036,7 @@ const _sfc_main$l = /* @__PURE__ */ Object.assign(__default__$1, {
             return [
               renderSlot(_ctx.$slots, "default"),
               (openBlock(true), createBlock(Fragment, null, renderList(unref(toasts), (toast, index2) => {
-                return openBlock(), createBlock(_sfc_main$m, mergeProps({
+                return openBlock(), createBlock(_sfc_main$n, mergeProps({
                   key: toast.id,
                   ref_for: true,
                   ref_key: "refs",
@@ -5064,13 +5088,13 @@ const _sfc_main$l = /* @__PURE__ */ Object.assign(__default__$1, {
     };
   }
 });
-const _sfc_setup$l = _sfc_main$l.setup;
-_sfc_main$l.setup = (props, ctx) => {
+const _sfc_setup$m = _sfc_main$m.setup;
+_sfc_main$m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
-  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
+  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
 };
-const UToaster = Object.assign(_sfc_main$l, { __name: "UToaster" });
+const UToaster = Object.assign(_sfc_main$m, { __name: "UToaster" });
 function _useOverlay() {
   const overlays = shallowReactive([]);
   const create = (component, _options) => {
@@ -5155,7 +5179,7 @@ function _useOverlay() {
   };
 }
 const useOverlay = /* @__PURE__ */ createSharedComposable(_useOverlay);
-const _sfc_main$k = {
+const _sfc_main$l = {
   __name: "UOverlayProvider",
   __ssrInlineRender: true,
   setup(__props) {
@@ -5184,16 +5208,16 @@ const _sfc_main$k = {
     };
   }
 };
-const _sfc_setup$k = _sfc_main$k.setup;
-_sfc_main$k.setup = (props, ctx) => {
+const _sfc_setup$l = _sfc_main$l.setup;
+_sfc_main$l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
-  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
 };
 const __default__ = {
   name: "App"
 };
-const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__, {
+const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
   __ssrInlineRender: true,
   props: {
     tooltip: { type: Object, required: false },
@@ -5240,7 +5264,7 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__, {
                   } else {
                     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
                   }
-                  _push3(ssrRenderComponent(_sfc_main$k, null, null, _parent3, _scopeId2));
+                  _push3(ssrRenderComponent(_sfc_main$l, null, null, _parent3, _scopeId2));
                 } else {
                   return [
                     __props.toaster !== null ? (openBlock(), createBlock(UToaster, mergeProps({ key: 0 }, toasterProps.value), {
@@ -5249,7 +5273,7 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__, {
                       ]),
                       _: 3
                     }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                    createVNode(_sfc_main$k)
+                    createVNode(_sfc_main$l)
                   ];
                 }
               }),
@@ -5265,7 +5289,7 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__, {
                     ]),
                     _: 3
                   }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                  createVNode(_sfc_main$k)
+                  createVNode(_sfc_main$l)
                 ]),
                 _: 3
               }, 16)
@@ -5277,13 +5301,13 @@ const _sfc_main$j = /* @__PURE__ */ Object.assign(__default__, {
     };
   }
 });
-const _sfc_setup$j = _sfc_main$j.setup;
-_sfc_main$j.setup = (props, ctx) => {
+const _sfc_setup$k = _sfc_main$k.setup;
+_sfc_main$k.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/App.vue");
-  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
+  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
 };
-const __nuxt_component_0$1 = Object.assign(_sfc_main$j, { __name: "UApp" });
+const __nuxt_component_0$2 = Object.assign(_sfc_main$k, { __name: "UApp" });
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -5291,7 +5315,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$i = {
+const _sfc_main$j = {
   __name: "DevGridOverlay",
   __ssrInlineRender: true,
   props: {
@@ -5347,33 +5371,37 @@ const _sfc_main$i = {
     };
   }
 };
-const _sfc_setup$i = _sfc_main$i.setup;
-_sfc_main$i.setup = (props, ctx) => {
+const _sfc_setup$j = _sfc_main$j.setup;
+_sfc_main$j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/DevGridOverlay.vue");
-  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
+  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
-const __nuxt_component_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-e31d3a8a"]]);
-const alert16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M8%2016C12.4183%2016%2016%2012.4183%2016%208C16%203.58172%2012.4183%200%208%200C3.58172%200%200%203.58172%200%208C0%2012.4183%203.58172%2016%208%2016ZM7%207.5V4H9V7.5H7ZM9.25%2011C9.25%2011.6904%208.69036%2012.25%208%2012.25C7.30964%2012.25%206.75%2011.6904%206.75%2011C6.75%2010.3096%207.30964%209.75%208%209.75C8.69036%209.75%209.25%2010.3096%209.25%2011Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const arrowRight16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2013.4142%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M6%200.292893C6.39052%20-0.0976311%207.02369%20-0.0976311%207.41421%200.292893L13.4142%206.29289L12%207.70711L7.70711%203.41421V13H5.70711V3.41421L1.41421%207.70711L0%206.29289L6%200.292893Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const arrowRight24 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2015.4141%2014.8755'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Union'%20d='M6.88672%200.291507C7.36328%20-0.0971695%208.05078%20-0.0971683%208.52734%200.291507L8.62598%200.380374L15.4141%207.16846L14%208.58252L8.70703%203.28955V14.8755H6.70703V3.28955L1.41406%208.58252L0%207.16846L6.78809%200.380374L6.88672%200.291507Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const basket12 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2012.0001%209.54027'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.8382%204.9785L10.1984%209.45709L1.84262%209.54026L1.12605%205.17811L0.0166349%204.19538L0%203.41995L12.0001%203.40331L11.9259%204.37837L10.8382%204.9785ZM4.31992%205.70659C4.31992%204.88892%203.25402%204.89276%203.25914%205.6554C3.25914%205.88957%203.27321%207.8384%203.27577%208.05337C3.27577%208.79042%204.32632%208.76739%204.3212%207.99707C4.31992%207.78977%204.32248%205.97786%204.31992%205.70659ZM6.54514%205.70659C6.54514%204.88892%205.47924%204.89276%205.48436%205.6554C5.48436%205.88957%205.49843%207.8384%205.50099%208.05337C5.50099%208.79042%206.55154%208.76739%206.54642%207.99707C6.54514%207.78977%206.5477%205.97786%206.54514%205.70659ZM8.77036%205.70659C8.77036%204.88892%207.70446%204.89276%207.70958%205.6554C7.70958%205.88957%207.72365%207.8384%207.72621%208.05337C7.72621%208.79042%208.77676%208.76739%208.77164%207.99707C8.77036%207.78977%208.77292%205.97786%208.77036%205.70659ZM6.50931%201.05781C5.90534%200.460237%206.70125%20-0.370222%207.28475%200.204317L9.84395%202.73664L8.18047%202.73408L6.50931%201.05781ZM3.74282%202.74048H2.09726C2.79208%202.04438%204.48627%200.35403%204.62191%200.215833C5.21692%20-0.388137%206.04994%200.407773%205.48052%200.983592L3.74282%202.74048Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const basket16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016.0001%2012.7204'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M14.4509%206.638L13.5979%2012.6095L2.45683%2012.7204L1.50139%206.90415L0.0221799%205.59384L0%204.55993L16.0001%204.53775L15.9011%205.83782L14.4509%206.638ZM5.7599%207.60878C5.7599%206.51857%204.33869%206.52368%204.34551%207.54054C4.34551%207.85276%204.36428%2010.4512%204.36769%2010.7378C4.36769%2011.7206%205.76843%2011.6898%205.7616%2010.6628C5.7599%2010.3864%205.76331%207.97048%205.7599%207.60878ZM8.72686%207.60878C8.72686%206.51857%207.30565%206.52368%207.31248%207.54054C7.31248%207.85276%207.33124%2010.4512%207.33465%2010.7378C7.33465%2011.7206%208.73539%2011.6898%208.72856%2010.6628C8.72686%2010.3864%208.73027%207.97048%208.72686%207.60878ZM11.6938%207.60878C11.6938%206.51857%2010.2726%206.52368%2010.2794%207.54054C10.2794%207.85276%2010.2982%2010.4512%2010.3016%2010.7378C10.3016%2011.7206%2011.7023%2011.6898%2011.6955%2010.6628C11.6938%2010.3864%2011.6972%207.97048%2011.6938%207.60878ZM8.67909%201.41041C7.87379%200.613649%208.93501%20-0.493629%209.713%200.272423L13.1253%203.64886L10.9073%203.64544L8.67909%201.41041ZM4.99043%203.65397H2.79635C3.72278%202.72584%205.98169%200.47204%206.16254%200.287778C6.95589%20-0.517516%208.06659%200.543697%207.30736%201.31146L4.99043%203.65397Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const basket24 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2024.0001%2019.0805'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M21.6764%209.95699L20.3968%2018.9142L3.68524%2019.0805L2.25209%2010.3562L0.0332698%208.39077L0%206.83989L24.0001%206.80662L23.8517%208.75673L21.6764%209.95699ZM8.63985%2011.4132C8.63985%209.77785%206.50804%209.78553%206.51827%2011.3108C6.51827%2011.7791%206.54642%2015.6768%206.55154%2016.1067C6.55154%2017.5808%208.65264%2017.5348%208.6424%2015.9941C8.63984%2015.5795%208.64496%2011.9557%208.63985%2011.4132ZM13.0903%2011.4132C13.0903%209.77785%2010.9585%209.78553%2010.9687%2011.3108C10.9687%2011.7791%2010.9969%2015.6768%2011.002%2016.1067C11.002%2017.5808%2013.1031%2017.5348%2013.0928%2015.9941C13.0903%2015.5795%2013.0954%2011.9557%2013.0903%2011.4132ZM17.5407%2011.4132C17.5407%209.77785%2015.4089%209.78553%2015.4192%2011.3108C15.4192%2011.7791%2015.4473%2015.6768%2015.4524%2016.1067C15.4524%2017.5808%2017.5535%2017.5348%2017.5433%2015.9941C17.5407%2015.5795%2017.5458%2011.9557%2017.5407%2011.4132ZM13.0186%202.11562C11.8107%200.920473%2013.4025%20-0.740444%2014.5695%200.408635L19.6879%205.47328L16.3609%205.46816L13.0186%202.11562ZM7.48565%205.48096H4.19452C5.58416%204.08876%208.97254%200.70806%209.24382%200.431666C10.4338%20-0.776274%2012.0999%200.815546%2010.961%201.96718L7.48565%205.48096Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const binky16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%209.48148%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%2097'%3e%3cpath%20id='Ellipse%201'%20d='M4.74132%209.6301C6.29585%209.63016%207.55577%2010.89%207.55577%2012.4446C7.55571%2013.999%206.29581%2015.2589%204.74132%2015.259C3.18678%2015.259%201.92692%2013.9991%201.92687%2012.4446C1.92687%2010.89%203.18674%209.6301%204.74132%209.6301Z'%20stroke='var(--stroke-0,%20%23DE7AFF)'%20stroke-width='1.48148'/%3e%3cpath%20id='Rectangle%2055'%20d='M0%208.29639H9.48148C9.48148%209.27823%208.68554%2010.0742%207.7037%2010.0742H1.77778C0.79594%2010.0742%200%209.27823%200%208.29639Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20id='Rectangle%2057'%20d='M2.96387%207.5L2.96387%201.57407L6.51942%201.57407L6.51942%207.5L2.96387%207.5Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20id='Rectangle%2056'%20d='M1.77825%202.96296C1.77825%201.32656%203.10481%200%204.74121%200C6.37761%200%207.70417%201.32656%207.70417%202.96296C7.70417%204.59936%206.37761%205.92593%204.74121%205.92593C3.10481%205.92593%201.77825%204.59936%201.77825%202.96296Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3c/g%3e%3c/svg%3e";
-const calendar16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Vector'%3e%3cpath%20d='M2.5%201C2.5%200.447715%202.94772%200%203.5%200C4.05228%200%204.5%200.447715%204.5%201V3C4.5%203.55228%204.05228%204%203.5%204C2.94772%204%202.5%203.55228%202.5%203V1Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20d='M11.5%201C11.5%200.447715%2011.9477%200%2012.5%200C13.0523%200%2013.5%200.447715%2013.5%201V3C13.5%203.55228%2013.0523%204%2012.5%204C11.9477%204%2011.5%203.55228%2011.5%203V1Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.75%203C1.75%203.9665%202.5335%204.75%203.5%204.75C4.4665%204.75%205.25%203.9665%205.25%203V2H10.75V3C10.75%203.9665%2011.5335%204.75%2012.5%204.75C13.4665%204.75%2014.25%203.9665%2014.25%203V2H15C15.5523%202%2016%202.44772%2016%203V15C16%2015.5523%2015.5523%2016%2015%2016H1C0.447715%2016%202.41598e-08%2015.5523%200%2015V3C1.93278e-07%202.44772%200.447715%202%201%202H1.75V3ZM1%206V15H15V7C15%206.44772%2014.5523%206%2014%206H1Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20d='M6.5%207.25C6.5%207.11193%206.61193%207%206.75%207H9.25C9.38807%207%209.5%207.11193%209.5%207.25V9.75C9.5%209.88807%209.38807%2010%209.25%2010H6.75C6.61193%2010%206.5%209.88807%206.5%209.75V7.25Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20d='M11%207.25C11%207.11193%2011.1119%207%2011.25%207H13.75C13.8881%207%2014%207.11193%2014%207.25V9.75C14%209.88807%2013.8881%2010%2013.75%2010H11.25C11.1119%2010%2011%209.88807%2011%209.75V7.25Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20d='M2%2011.25C2%2011.1119%202.11193%2011%202.25%2011H4.75C4.88807%2011%205%2011.1119%205%2011.25V13.75C5%2013.8881%204.88807%2014%204.75%2014H2.25C2.11193%2014%202%2013.8881%202%2013.75V11.25Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20d='M6.5%2011.25C6.5%2011.1119%206.61193%2011%206.75%2011H9.25C9.38807%2011%209.5%2011.1119%209.5%2011.25V13.75C9.5%2013.8881%209.38807%2014%209.25%2014H6.75C6.61193%2014%206.5%2013.8881%206.5%2013.75V11.25Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3cpath%20d='M11%2011.25C11%2011.1119%2011.1119%2011%2011.25%2011H13.75C13.8881%2011%2014%2011.1119%2014%2011.25V13.75C14%2013.8881%2013.8881%2014%2013.75%2014H11.25C11.1119%2014%2011%2013.8881%2011%2013.75V11.25Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3c/g%3e%3c/svg%3e";
-const check12 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%209.75%207.55261'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M9.75%201.19779L4.65061%207.22434C4.47618%207.43048%204.22054%207.55034%203.95051%207.55258C3.68048%207.55481%203.42289%207.43921%203.24507%207.23598L0%203.52734L1.39552%202.30626L3.93105%205.204L8.33443%200L9.75%201.19779Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const cross12 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%208.56066%208.56066'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M4.28033%205.34099L7.5%208.56066L8.56066%207.5L5.34099%204.28033L8.56066%201.06066L7.5%200L4.28033%203.21967L1.06066%200L0%201.06066L3.21967%204.28033L0%207.5L1.06066%208.56066L4.28033%205.34099Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const headerAccountAuthorized16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M16%208C16%2012.4183%2012.4183%2016%208%2016C3.58172%2016%200%2012.4183%200%208C0%203.58172%203.58172%200%208%200C12.4183%200%2016%203.58172%2016%208ZM12.8%2010.8571C12.8%2012.1826%2010.651%2013.6%208%2013.6C5.34903%2013.6%203.2%2012.1826%203.2%2010.8571C3.2%209.53166%205.34903%208.8%208%208.8C10.651%208.8%2012.8%209.53166%2012.8%2010.8571ZM8%207.2C9.32548%207.2%2010.4%206.12548%2010.4%204.8C10.4%203.47452%209.32548%202.4%208%202.4C6.67452%202.4%205.6%203.47452%205.6%204.8C5.6%206.12548%206.67452%207.2%208%207.2Z'%20fill='var(--fill-0,%20%23FCF4FF)'/%3e%3c/svg%3e";
-const headerSignOutAuthorized16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2010.5%2010.7463'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Ellipse%202'%20d='M5.25%200V4.49634M2.25%202.14218C1.32938%202.96616%200.75%204.16359%200.75%205.49634C0.75%207.98162%202.76472%209.99634%205.25%209.99634C7.73528%209.99634%209.75%207.98162%209.75%205.49634C9.75%204.16359%209.17062%202.96616%208.25%202.14218'%20stroke='var(--stroke-0,%20%23DE7AFF)'%20stroke-width='1.5'/%3e%3c/svg%3e";
-const hide16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2014.6108'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M1.36569%200.234315C1.6781%20-0.0781048%202.18464%20-0.0781048%202.49706%200.234315L15.5078%2013.2451C15.8202%2013.5575%2015.8202%2014.064%2015.5078%2014.3764C15.1954%2014.6889%2014.6889%2014.6889%2014.3764%2014.3764L12.873%2012.873C11.6128%2013.7678%209.9822%2014.4%208%2014.4C2.78172%2014.4%200%2010.0183%200%208C0%206.74838%201.06978%204.58784%203.12704%203.12704L1.36569%201.36569C1.05327%201.05327%201.05327%200.546734%201.36569%200.234315ZM5.17157%205.17157C4.44772%205.89543%204%206.89543%204%208C4%2010.2091%205.79086%2012%208%2012C9.10457%2012%2010.1046%2011.5523%2010.8284%2010.8284L9.69706%209.69706C9.24697%2010.1471%208.63652%2010.4%208%2010.4C7.36348%2010.4%206.75303%2010.1471%206.30294%209.69706C5.85286%209.24697%205.6%208.63652%205.6%208C5.6%207.36348%205.85286%206.75303%206.30294%206.30294L5.17157%205.17157ZM6.12973%201.79836L8.34614%204.01477C10.2791%204.18045%2011.8195%205.72086%2011.9852%207.65386L15.0075%2010.6761C15.6643%209.68737%2016%208.70109%2016%208C16%205.98172%2013.2183%201.6%208%201.6C7.33701%201.6%206.71335%201.67073%206.12973%201.79836Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const mir32x62 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2061.8148%2016.8825'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Vector'%3e%3cpath%20d='M0%200.00250663H5.8C6.33%200.00250663%207.91%20-0.167493%208.61%202.29251C9.14%203.87251%209.84%206.33251%2010.89%2010.0225H11.24C12.29%206.15251%2013.17%203.52251%2013.52%202.29251C14.24%20-0.167493%2015.99%200.00250663%2016.7%200.00250663H22.15V16.8725H16.53V6.86251H16.18L13.19%2016.8825H8.97L5.98%206.86251H5.45V16.8825H0M24.43%200.00250663H30.05V10.0225H30.58L34.27%201.76251C34.97%200.182507%2036.56%200.00250663%2036.56%200.00250663H41.83V16.8725H36.21V6.86251H35.86L32.17%2015.1225C31.47%2016.7025%2029.71%2016.8825%2029.71%2016.8825H24.44M49.39%2011.7825V16.8825H44.12V8.09251H61.34C60.64%2010.2025%2058.18%2011.7825%2055.36%2011.7825'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20d='M61.68%207.03251C62.39%203.87251%2060.28%200.00250663%2055.71%200.00250663H43.76C44.11%203.69251%2047.27%207.03251%2050.61%207.03251'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3c/g%3e%3c/svg%3e";
-const puzzle16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2015'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20d='M5.6987%203.2574C5.5995%203.00645%205.50414%202.7657%205.38793%202.52142C5.32566%202.39052%205.26865%202.25333%205.20759%202.12167C5.08421%201.81448%205.10684%201.39485%205.23363%201.0906C5.41822%200.647653%205.76246%200.336019%206.20164%200.160362C6.76427%20-0.0630875%207.39054%20-0.0526621%207.9457%200.189395C8.3575%200.37343%208.69531%200.693228%208.86055%201.12315C8.98789%201.45445%208.99156%201.8716%208.84125%202.19525C8.67852%202.54554%208.51344%202.90152%208.37687%203.26461C9.32445%203.27269%2010.2908%203.26247%2011.2395%203.25884L12.0366%203.25564C12.1907%203.25498%2012.3565%203.24671%2012.5091%203.26357C12.8607%203.30243%2012.8024%203.68615%2012.8023%203.9411L12.8021%204.66736L12.8029%207.10031C13.0921%206.99951%2013.3369%206.87034%2013.615%206.74485C13.71%206.70201%2013.8309%206.6361%2013.9248%206.60165C14.2763%206.47506%2014.6629%206.49805%2014.9974%206.66543C15.4205%206.87617%2015.7271%207.25446%2015.8764%207.70693C15.9073%207.79923%2015.9314%207.89367%2015.9487%207.98963C15.9596%208.04851%2015.9826%208.20302%2016%208.24742V8.70118C15.9634%208.79992%2015.9387%209.01403%2015.9077%209.13155C15.6831%209.98227%2014.8351%2010.6592%2013.9576%2010.3522C13.8427%2010.3119%2013.7362%2010.2518%2013.6246%2010.1996L13.0773%209.94638C12.9969%209.90867%2012.8512%209.86395%2012.7898%209.83069C12.7942%2010.1405%2012.7909%2010.4592%2012.792%2010.7701L12.7981%2013.0811L12.8002%2014.1382C12.8005%2014.2333%2012.8005%2014.3288%2012.8017%2014.4253C12.8047%2014.637%2012.8247%2014.8703%2012.5928%2014.9677C12.5702%2014.9771%2012.4954%2014.99%2012.4701%2014.9916C12.3056%2015.0025%2012.1359%2014.9982%2011.9711%2014.9982L11.4954%2014.9981L11.0198%2014.998L9.35492%2014.9982C9.05852%2014.9983%208.76133%2014.9999%208.46547%2014.9974C8.25898%2014.9957%208.06828%2014.9453%207.92273%2014.7926C7.67253%2014.5301%207.71543%2014.2397%207.84727%2013.9313C7.94078%2013.7125%208.03797%2013.4902%208.13711%2013.2729C8.185%2013.1611%208.25016%2013.035%208.28414%2012.9211C8.36836%2012.639%208.26867%2012.3492%208.07539%2012.1397C7.84156%2011.8861%207.42566%2011.7671%207.09238%2011.7605C6.73984%2011.7535%206.30291%2011.8501%206.04051%2012.1035C5.8779%2012.2605%205.76977%2012.4772%205.76555%2012.7067C5.76203%2012.8985%205.8317%2013.023%205.9068%2013.1913L6.13804%2013.7059C6.30582%2014.0773%206.48762%2014.4557%206.14816%2014.7999C6.04705%2014.9024%205.9096%2014.9707%205.76817%2014.9853C5.5609%2015.0067%205.326%2014.9985%205.11603%2014.9984L3.96061%2014.9981L1.53094%2014.998C1.15924%2014.998%200.787102%2014.998%200.41548%2014.9994C0.303859%2014.9998%200.169111%2014.975%200.091282%2014.8882C0.0332213%2014.8235%200.0350815%2014.7887%200%2014.7276V9.74015C0.00979687%209.72265%200.043071%209.62613%200.050991%209.6021C0.10498%209.43844%200.226653%209.30835%200.382817%209.23785C0.48833%209.19091%200.604539%209.17468%200.718557%209.19099C1.05528%209.23801%201.63473%209.59112%201.97684%209.72065C2.16398%209.79322%202.3722%209.78415%202.55256%209.69551C3.37148%209.30166%203.40452%207.79724%202.6568%207.30386C2.30315%207.0705%202.03616%207.19319%201.69314%207.35191C1.46061%207.45948%200.95893%207.72221%200.717674%207.75571C0.621356%207.7686%200.523401%207.75801%200.431884%207.72483C0.266488%207.66627%200.132827%207.53969%200.0634802%207.37594C0.0399255%207.31921%200.0224379%207.2471%200%207.1995V3.51652C0.0491797%203.41957%200.0908422%203.31723%200.20283%203.28164C0.364929%203.23014%200.894148%203.25427%201.1013%203.25442L2.44405%203.2548L4.57613%203.2547C4.92859%203.25471%205.35159%203.24438%205.6987%203.2574Z'%20fill='var(--fill-0,%20%23DE7AFF)'/%3e%3c/svg%3e";
-const refresh16 = "data:image/svg+xml,%3csvg%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20transform='translate(1%201)'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.3336%202.84883L10.7947%205.34531L9.29702%205.6215L8.53556%201.49857C8.49706%201.29009%208.54734%201.07502%208.67428%200.905166C8.80123%200.735312%208.99334%200.626081%209.20431%200.603791L13.3923%200.161318L13.5525%201.67468L11.5521%201.88602C11.6061%201.93395%2011.6592%201.98271%2011.7116%202.03228C13.0295%203.27946%2013.8531%205.04683%2013.8531%207.0052C13.8531%2010.7873%2010.7849%2013.8533%206.99999%2013.8533C3.21511%2013.8533%200.146847%2010.7873%200.146847%207.0052C0.146847%204.13004%201.91977%201.67049%204.4299%200.655167L5.00132%202.06578C3.04651%202.85649%201.66977%204.7711%201.66977%207.0052C1.66977%209.94684%204.05619%2012.3315%206.99999%2012.3315C9.9438%2012.3315%2012.3302%209.94684%2012.3302%207.0052C12.3302%205.4819%2011.6913%204.10896%2010.6644%203.13721C10.5582%203.03665%2010.4478%202.94043%2010.3336%202.84883Z'%20fill='%2330010B'%20/%3e%3c/g%3e%3c/svg%3e";
-const ruble12 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%208.40127%209.78573'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M4.81572%206.10578H4.54888L1.45945%206.02573V6.01761L0.17286%205.98397L0%204.26929L1.44437%204.27857L1.41652%201.78777L1.25991%200.0475655C1.25991%200.0475655%202.90497%200%204.78091%200C9.82053%200%209.37968%206.10578%204.81572%206.10578ZM4.68926%201.77036C4.4874%201.77036%203.4572%201.78197%203.4572%201.78197L3.54189%204.26929L5.42014%204.25769C6.11506%203.80524%207.02345%201.77036%204.68926%201.77036ZM6.74966%208.49914L3.46648%208.43533V9.78573L1.49425%209.75208L1.48149%208.39705L0.413007%208.37733L0.265671%206.91672L7.01185%206.88539L6.74966%208.49914Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const ruble16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2011.2017%2013.0476'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M6.42095%208.14105H6.06518L1.94593%208.03431V8.02348L0.23048%207.97863L0%205.69239L1.92582%205.70476L1.8887%202.38369L1.67987%200.0634206C1.67987%200.0634206%203.8733%200%206.37455%200C13.094%200%2012.5062%208.14105%206.42095%208.14105ZM6.25235%202.36049C5.9832%202.36049%204.6096%202.37595%204.6096%202.37595L4.72252%205.69239L7.22686%205.67692C8.15342%205.07365%209.3646%202.36049%206.25235%202.36049ZM8.99955%2011.3322L4.62197%2011.2471V13.0476L1.99234%2013.0028L1.97532%2011.1961L0.550676%2011.1698L0.354228%209.22229L9.34913%209.18053L8.99955%2011.3322Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
-const show16 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2012'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Icon'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M8%2012C12.4183%2012%2016%208.31371%2016%206C16%203.68629%2012.4183%200%208%200C3.58172%200%200%203.68629%200%206C0%208.31371%203.58172%2012%208%2012ZM8%2010C10.2091%2010%2012%208.20914%2012%206C12%203.79086%2010.2091%202%208%202C5.79086%202%204%203.79086%204%206C4%208.20914%205.79086%2010%208%2010Z'%20fill='var(--fill-0,%20white)'/%3e%3cpath%20d='M10%206C10%207.10457%209.10457%208%208%208C6.89543%208%206%207.10457%206%206C6.5%206%208%206%208%206C8%206%208%204.5%208%204C9.10457%204%2010%204.89543%2010%206Z'%20fill='white'/%3e%3c/g%3e%3c/svg%3e";
-const _sfc_main$h = {
+const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e31d3a8a"]]);
+const alert16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 7.5V4H9V7.5H7ZM9.25 11C9.25 11.6904 8.69036 12.25 8 12.25C7.30964 12.25 6.75 11.6904 6.75 11C6.75 10.3096 7.30964 9.75 8 9.75C8.69036 9.75 9.25 10.3096 9.25 11Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const arrowRight16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 13.4142 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M6 0.292893C6.39052 -0.0976311 7.02369 -0.0976311 7.41421 0.292893L13.4142 6.29289L12 7.70711L7.70711 3.41421V13H5.70711V3.41421L1.41421 7.70711L0 6.29289L6 0.292893Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const arrowRight24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15.4141 14.8755" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Union" d="M6.88672 0.291507C7.36328 -0.0971695 8.05078 -0.0971683 8.52734 0.291507L8.62598 0.380374L15.4141 7.16846L14 8.58252L8.70703 3.28955V14.8755H6.70703V3.28955L1.41406 8.58252L0 7.16846L6.78809 0.380374L6.88672 0.291507Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const basket12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12.0001 9.54027" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M10.8382 4.9785L10.1984 9.45709L1.84262 9.54026L1.12605 5.17811L0.0166349 4.19538L0 3.41995L12.0001 3.40331L11.9259 4.37837L10.8382 4.9785ZM4.31992 5.70659C4.31992 4.88892 3.25402 4.89276 3.25914 5.6554C3.25914 5.88957 3.27321 7.8384 3.27577 8.05337C3.27577 8.79042 4.32632 8.76739 4.3212 7.99707C4.31992 7.78977 4.32248 5.97786 4.31992 5.70659ZM6.54514 5.70659C6.54514 4.88892 5.47924 4.89276 5.48436 5.6554C5.48436 5.88957 5.49843 7.8384 5.50099 8.05337C5.50099 8.79042 6.55154 8.76739 6.54642 7.99707C6.54514 7.78977 6.5477 5.97786 6.54514 5.70659ZM8.77036 5.70659C8.77036 4.88892 7.70446 4.89276 7.70958 5.6554C7.70958 5.88957 7.72365 7.8384 7.72621 8.05337C7.72621 8.79042 8.77676 8.76739 8.77164 7.99707C8.77036 7.78977 8.77292 5.97786 8.77036 5.70659ZM6.50931 1.05781C5.90534 0.460237 6.70125 -0.370222 7.28475 0.204317L9.84395 2.73664L8.18047 2.73408L6.50931 1.05781ZM3.74282 2.74048H2.09726C2.79208 2.04438 4.48627 0.35403 4.62191 0.215833C5.21692 -0.388137 6.04994 0.407773 5.48052 0.983592L3.74282 2.74048Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const basket16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16.0001 12.7204" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M14.4509 6.638L13.5979 12.6095L2.45683 12.7204L1.50139 6.90415L0.0221799 5.59384L0 4.55993L16.0001 4.53775L15.9011 5.83782L14.4509 6.638ZM5.7599 7.60878C5.7599 6.51857 4.33869 6.52368 4.34551 7.54054C4.34551 7.85276 4.36428 10.4512 4.36769 10.7378C4.36769 11.7206 5.76843 11.6898 5.7616 10.6628C5.7599 10.3864 5.76331 7.97048 5.7599 7.60878ZM8.72686 7.60878C8.72686 6.51857 7.30565 6.52368 7.31248 7.54054C7.31248 7.85276 7.33124 10.4512 7.33465 10.7378C7.33465 11.7206 8.73539 11.6898 8.72856 10.6628C8.72686 10.3864 8.73027 7.97048 8.72686 7.60878ZM11.6938 7.60878C11.6938 6.51857 10.2726 6.52368 10.2794 7.54054C10.2794 7.85276 10.2982 10.4512 10.3016 10.7378C10.3016 11.7206 11.7023 11.6898 11.6955 10.6628C11.6938 10.3864 11.6972 7.97048 11.6938 7.60878ZM8.67909 1.41041C7.87379 0.613649 8.93501 -0.493629 9.713 0.272423L13.1253 3.64886L10.9073 3.64544L8.67909 1.41041ZM4.99043 3.65397H2.79635C3.72278 2.72584 5.98169 0.47204 6.16254 0.287778C6.95589 -0.517516 8.06659 0.543697 7.30736 1.31146L4.99043 3.65397Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const basket24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24.0001 19.0805" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M21.6764 9.95699L20.3968 18.9142L3.68524 19.0805L2.25209 10.3562L0.0332698 8.39077L0 6.83989L24.0001 6.80662L23.8517 8.75673L21.6764 9.95699ZM8.63985 11.4132C8.63985 9.77785 6.50804 9.78553 6.51827 11.3108C6.51827 11.7791 6.54642 15.6768 6.55154 16.1067C6.55154 17.5808 8.65264 17.5348 8.6424 15.9941C8.63984 15.5795 8.64496 11.9557 8.63985 11.4132ZM13.0903 11.4132C13.0903 9.77785 10.9585 9.78553 10.9687 11.3108C10.9687 11.7791 10.9969 15.6768 11.002 16.1067C11.002 17.5808 13.1031 17.5348 13.0928 15.9941C13.0903 15.5795 13.0954 11.9557 13.0903 11.4132ZM17.5407 11.4132C17.5407 9.77785 15.4089 9.78553 15.4192 11.3108C15.4192 11.7791 15.4473 15.6768 15.4524 16.1067C15.4524 17.5808 17.5535 17.5348 17.5433 15.9941C17.5407 15.5795 17.5458 11.9557 17.5407 11.4132ZM13.0186 2.11562C11.8107 0.920473 13.4025 -0.740444 14.5695 0.408635L19.6879 5.47328L16.3609 5.46816L13.0186 2.11562ZM7.48565 5.48096H4.19452C5.58416 4.08876 8.97254 0.70806 9.24382 0.431666C10.4338 -0.776274 12.0999 0.815546 10.961 1.96718L7.48565 5.48096Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const binky16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 9.48148 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Group 97">\n<path id="Ellipse 1" d="M4.74132 9.6301C6.29585 9.63016 7.55577 10.89 7.55577 12.4446C7.55571 13.999 6.29581 15.2589 4.74132 15.259C3.18678 15.259 1.92692 13.9991 1.92687 12.4446C1.92687 10.89 3.18674 9.6301 4.74132 9.6301Z" stroke="var(--stroke-0, #DE7AFF)" stroke-width="1.48148"/>\n<path id="Rectangle 55" d="M0 8.29639H9.48148C9.48148 9.27823 8.68554 10.0742 7.7037 10.0742H1.77778C0.79594 10.0742 0 9.27823 0 8.29639Z" fill="var(--fill-0, #DE7AFF)"/>\n<path id="Rectangle 57" d="M2.96387 7.5L2.96387 1.57407L6.51942 1.57407L6.51942 7.5L2.96387 7.5Z" fill="var(--fill-0, #DE7AFF)"/>\n<path id="Rectangle 56" d="M1.77825 2.96296C1.77825 1.32656 3.10481 0 4.74121 0C6.37761 0 7.70417 1.32656 7.70417 2.96296C7.70417 4.59936 6.37761 5.92593 4.74121 5.92593C3.10481 5.92593 1.77825 4.59936 1.77825 2.96296Z" fill="var(--fill-0, #DE7AFF)"/>\n</g>\n</svg>\n';
+const calendar16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Vector">\n<path d="M2.5 1C2.5 0.447715 2.94772 0 3.5 0C4.05228 0 4.5 0.447715 4.5 1V3C4.5 3.55228 4.05228 4 3.5 4C2.94772 4 2.5 3.55228 2.5 3V1Z" fill="var(--fill-0, #DE7AFF)"/>\n<path d="M11.5 1C11.5 0.447715 11.9477 0 12.5 0C13.0523 0 13.5 0.447715 13.5 1V3C13.5 3.55228 13.0523 4 12.5 4C11.9477 4 11.5 3.55228 11.5 3V1Z" fill="var(--fill-0, #DE7AFF)"/>\n<path fill-rule="evenodd" clip-rule="evenodd" d="M1.75 3C1.75 3.9665 2.5335 4.75 3.5 4.75C4.4665 4.75 5.25 3.9665 5.25 3V2H10.75V3C10.75 3.9665 11.5335 4.75 12.5 4.75C13.4665 4.75 14.25 3.9665 14.25 3V2H15C15.5523 2 16 2.44772 16 3V15C16 15.5523 15.5523 16 15 16H1C0.447715 16 2.41598e-08 15.5523 0 15V3C1.93278e-07 2.44772 0.447715 2 1 2H1.75V3ZM1 6V15H15V7C15 6.44772 14.5523 6 14 6H1Z" fill="var(--fill-0, #DE7AFF)"/>\n<path d="M6.5 7.25C6.5 7.11193 6.61193 7 6.75 7H9.25C9.38807 7 9.5 7.11193 9.5 7.25V9.75C9.5 9.88807 9.38807 10 9.25 10H6.75C6.61193 10 6.5 9.88807 6.5 9.75V7.25Z" fill="var(--fill-0, #DE7AFF)"/>\n<path d="M11 7.25C11 7.11193 11.1119 7 11.25 7H13.75C13.8881 7 14 7.11193 14 7.25V9.75C14 9.88807 13.8881 10 13.75 10H11.25C11.1119 10 11 9.88807 11 9.75V7.25Z" fill="var(--fill-0, #DE7AFF)"/>\n<path d="M2 11.25C2 11.1119 2.11193 11 2.25 11H4.75C4.88807 11 5 11.1119 5 11.25V13.75C5 13.8881 4.88807 14 4.75 14H2.25C2.11193 14 2 13.8881 2 13.75V11.25Z" fill="var(--fill-0, #DE7AFF)"/>\n<path d="M6.5 11.25C6.5 11.1119 6.61193 11 6.75 11H9.25C9.38807 11 9.5 11.1119 9.5 11.25V13.75C9.5 13.8881 9.38807 14 9.25 14H6.75C6.61193 14 6.5 13.8881 6.5 13.75V11.25Z" fill="var(--fill-0, #DE7AFF)"/>\n<path d="M11 11.25C11 11.1119 11.1119 11 11.25 11H13.75C13.8881 11 14 11.1119 14 11.25V13.75C14 13.8881 13.8881 14 13.75 14H11.25C11.1119 14 11 13.8881 11 13.75V11.25Z" fill="var(--fill-0, #DE7AFF)"/>\n</g>\n</svg>\n';
+const check12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 9.75 7.55261" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.19779L4.65061 7.22434C4.47618 7.43048 4.22054 7.55034 3.95051 7.55258C3.68048 7.55481 3.42289 7.43921 3.24507 7.23598L0 3.52734L1.39552 2.30626L3.93105 5.204L8.33443 0L9.75 1.19779Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const cross12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 8.56066 8.56066" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M4.28033 5.34099L7.5 8.56066L8.56066 7.5L5.34099 4.28033L8.56066 1.06066L7.5 0L4.28033 3.21967L1.06066 0L0 1.06066L3.21967 4.28033L0 7.5L1.06066 8.56066L4.28033 5.34099Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const headerAccountAuthorized16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM12.8 10.8571C12.8 12.1826 10.651 13.6 8 13.6C5.34903 13.6 3.2 12.1826 3.2 10.8571C3.2 9.53166 5.34903 8.8 8 8.8C10.651 8.8 12.8 9.53166 12.8 10.8571ZM8 7.2C9.32548 7.2 10.4 6.12548 10.4 4.8C10.4 3.47452 9.32548 2.4 8 2.4C6.67452 2.4 5.6 3.47452 5.6 4.8C5.6 6.12548 6.67452 7.2 8 7.2Z" fill="var(--fill-0, #FCF4FF)"/>\n</svg>\n';
+const headerSignOutAuthorized16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 10.5 10.7463" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Ellipse 2" d="M5.25 0V4.49634M2.25 2.14218C1.32938 2.96616 0.75 4.16359 0.75 5.49634C0.75 7.98162 2.76472 9.99634 5.25 9.99634C7.73528 9.99634 9.75 7.98162 9.75 5.49634C9.75 4.16359 9.17062 2.96616 8.25 2.14218" stroke="var(--stroke-0, #DE7AFF)" stroke-width="1.5"/>\n</svg>\n';
+const hide16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 14.6108" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M1.36569 0.234315C1.6781 -0.0781048 2.18464 -0.0781048 2.49706 0.234315L15.5078 13.2451C15.8202 13.5575 15.8202 14.064 15.5078 14.3764C15.1954 14.6889 14.6889 14.6889 14.3764 14.3764L12.873 12.873C11.6128 13.7678 9.9822 14.4 8 14.4C2.78172 14.4 0 10.0183 0 8C0 6.74838 1.06978 4.58784 3.12704 3.12704L1.36569 1.36569C1.05327 1.05327 1.05327 0.546734 1.36569 0.234315ZM5.17157 5.17157C4.44772 5.89543 4 6.89543 4 8C4 10.2091 5.79086 12 8 12C9.10457 12 10.1046 11.5523 10.8284 10.8284L9.69706 9.69706C9.24697 10.1471 8.63652 10.4 8 10.4C7.36348 10.4 6.75303 10.1471 6.30294 9.69706C5.85286 9.24697 5.6 8.63652 5.6 8C5.6 7.36348 5.85286 6.75303 6.30294 6.30294L5.17157 5.17157ZM6.12973 1.79836L8.34614 4.01477C10.2791 4.18045 11.8195 5.72086 11.9852 7.65386L15.0075 10.6761C15.6643 9.68737 16 8.70109 16 8C16 5.98172 13.2183 1.6 8 1.6C7.33701 1.6 6.71335 1.67073 6.12973 1.79836Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const mir32x62 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 61.8148 16.8825" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Vector">\n<path d="M0 0.00250663H5.8C6.33 0.00250663 7.91 -0.167493 8.61 2.29251C9.14 3.87251 9.84 6.33251 10.89 10.0225H11.24C12.29 6.15251 13.17 3.52251 13.52 2.29251C14.24 -0.167493 15.99 0.00250663 16.7 0.00250663H22.15V16.8725H16.53V6.86251H16.18L13.19 16.8825H8.97L5.98 6.86251H5.45V16.8825H0M24.43 0.00250663H30.05V10.0225H30.58L34.27 1.76251C34.97 0.182507 36.56 0.00250663 36.56 0.00250663H41.83V16.8725H36.21V6.86251H35.86L32.17 15.1225C31.47 16.7025 29.71 16.8825 29.71 16.8825H24.44M49.39 11.7825V16.8825H44.12V8.09251H61.34C60.64 10.2025 58.18 11.7825 55.36 11.7825" fill="var(--fill-0, #04121B)" fill-opacity="0.24"/>\n<path d="M61.68 7.03251C62.39 3.87251 60.28 0.00250663 55.71 0.00250663H43.76C44.11 3.69251 47.27 7.03251 50.61 7.03251" fill="var(--fill-0, #04121B)" fill-opacity="0.24"/>\n</g>\n</svg>\n';
+const profileCheck10 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 9.75 7.55261" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.19779L4.65061 7.22434C4.47618 7.43048 4.22054 7.55034 3.95051 7.55258C3.68048 7.55481 3.42289 7.43921 3.24507 7.23598L0 3.52734L1.39552 2.30626L3.93105 5.204L8.33443 0L9.75 1.19779Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const profileEdit12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Icon">\n<path d="M9.07353 0.502103C9.743 -0.167368 10.8284 -0.167368 11.4979 0.502103C12.1674 1.17157 12.1674 2.257 11.4979 2.92647L10.8183 3.60609L8.39391 1.18173L9.07353 0.502103Z" fill="var(--fill-0, #04121B)" fill-opacity="0.24"/>\n<path d="M7.18173 2.39391L0 9.57563V12H2.42436L9.60609 4.81827L7.18173 2.39391Z" fill="var(--fill-0, #04121B)" fill-opacity="0.24"/>\n</g>\n</svg>\n';
+const profilePlus10 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M4.28571 4.28571V0H5.71429V4.28571H10V5.71429H5.71429V10H4.28571V5.71429H0V4.28571H4.28571Z" fill="var(--fill-0, #DE7AFF)"/>\n</svg>\n';
+const profileTrash12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Icon">\n<path d="M0.714286 5.25H9.28571L8.91031 8.79755C8.79048 9.93001 8.73056 10.4962 8.48177 10.9236C8.26262 11.3 7.94291 11.6004 7.56241 11.7876C7.13046 12 6.58788 12 5.50271 12H4.49729C3.41212 12 2.86954 12 2.43759 11.7876C2.05709 11.6004 1.73738 11.3 1.51823 10.9236C1.26944 10.4962 1.20952 9.93001 1.08969 8.79755L0.714286 5.25Z" fill="var(--fill-0, #ED5C68)"/>\n<path d="M0 2.625C0 2.00368 0.479695 1.5 1.07143 1.5C1.66316 1.5 2.11764 0.96565 2.49694 0.511471C2.75877 0.197946 3.14309 0 3.57143 0H6.42857C6.85691 0 7.24123 0.197946 7.50306 0.511471C7.88236 0.96565 8.33684 1.5 8.92857 1.5C9.52031 1.5 10 2.00368 10 2.625C10 3.24632 9.52031 3.75 8.92857 3.75H1.07143C0.479695 3.75 0 3.24632 0 2.625Z" fill="#ED5C68"/>\n</g>\n</svg>\n';
+const puzzle16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" d="M5.6987 3.2574C5.5995 3.00645 5.50414 2.7657 5.38793 2.52142C5.32566 2.39052 5.26865 2.25333 5.20759 2.12167C5.08421 1.81448 5.10684 1.39485 5.23363 1.0906C5.41822 0.647653 5.76246 0.336019 6.20164 0.160362C6.76427 -0.0630875 7.39054 -0.0526621 7.9457 0.189395C8.3575 0.37343 8.69531 0.693228 8.86055 1.12315C8.98789 1.45445 8.99156 1.8716 8.84125 2.19525C8.67852 2.54554 8.51344 2.90152 8.37687 3.26461C9.32445 3.27269 10.2908 3.26247 11.2395 3.25884L12.0366 3.25564C12.1907 3.25498 12.3565 3.24671 12.5091 3.26357C12.8607 3.30243 12.8024 3.68615 12.8023 3.9411L12.8021 4.66736L12.8029 7.10031C13.0921 6.99951 13.3369 6.87034 13.615 6.74485C13.71 6.70201 13.8309 6.6361 13.9248 6.60165C14.2763 6.47506 14.6629 6.49805 14.9974 6.66543C15.4205 6.87617 15.7271 7.25446 15.8764 7.70693C15.9073 7.79923 15.9314 7.89367 15.9487 7.98963C15.9596 8.04851 15.9826 8.20302 16 8.24742V8.70118C15.9634 8.79992 15.9387 9.01403 15.9077 9.13155C15.6831 9.98227 14.8351 10.6592 13.9576 10.3522C13.8427 10.3119 13.7362 10.2518 13.6246 10.1996L13.0773 9.94638C12.9969 9.90867 12.8512 9.86395 12.7898 9.83069C12.7942 10.1405 12.7909 10.4592 12.792 10.7701L12.7981 13.0811L12.8002 14.1382C12.8005 14.2333 12.8005 14.3288 12.8017 14.4253C12.8047 14.637 12.8247 14.8703 12.5928 14.9677C12.5702 14.9771 12.4954 14.99 12.4701 14.9916C12.3056 15.0025 12.1359 14.9982 11.9711 14.9982L11.4954 14.9981L11.0198 14.998L9.35492 14.9982C9.05852 14.9983 8.76133 14.9999 8.46547 14.9974C8.25898 14.9957 8.06828 14.9453 7.92273 14.7926C7.67253 14.5301 7.71543 14.2397 7.84727 13.9313C7.94078 13.7125 8.03797 13.4902 8.13711 13.2729C8.185 13.1611 8.25016 13.035 8.28414 12.9211C8.36836 12.639 8.26867 12.3492 8.07539 12.1397C7.84156 11.8861 7.42566 11.7671 7.09238 11.7605C6.73984 11.7535 6.30291 11.8501 6.04051 12.1035C5.8779 12.2605 5.76977 12.4772 5.76555 12.7067C5.76203 12.8985 5.8317 13.023 5.9068 13.1913L6.13804 13.7059C6.30582 14.0773 6.48762 14.4557 6.14816 14.7999C6.04705 14.9024 5.9096 14.9707 5.76817 14.9853C5.5609 15.0067 5.326 14.9985 5.11603 14.9984L3.96061 14.9981L1.53094 14.998C1.15924 14.998 0.787102 14.998 0.41548 14.9994C0.303859 14.9998 0.169111 14.975 0.091282 14.8882C0.0332213 14.8235 0.0350815 14.7887 0 14.7276V9.74015C0.00979687 9.72265 0.043071 9.62613 0.050991 9.6021C0.10498 9.43844 0.226653 9.30835 0.382817 9.23785C0.48833 9.19091 0.604539 9.17468 0.718557 9.19099C1.05528 9.23801 1.63473 9.59112 1.97684 9.72065C2.16398 9.79322 2.3722 9.78415 2.55256 9.69551C3.37148 9.30166 3.40452 7.79724 2.6568 7.30386C2.30315 7.0705 2.03616 7.19319 1.69314 7.35191C1.46061 7.45948 0.95893 7.72221 0.717674 7.75571C0.621356 7.7686 0.523401 7.75801 0.431884 7.72483C0.266488 7.66627 0.132827 7.53969 0.0634802 7.37594C0.0399255 7.31921 0.0224379 7.2471 0 7.1995V3.51652C0.0491797 3.41957 0.0908422 3.31723 0.20283 3.28164C0.364929 3.23014 0.894148 3.25427 1.1013 3.25442L2.44405 3.2548L4.57613 3.2547C4.92859 3.25471 5.35159 3.24438 5.6987 3.2574Z" fill="var(--fill-0, #DE7AFF)"/>\n</svg>\n';
+const refresh16 = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n  <g transform="translate(1 1)">\n    <path\n      fill-rule="evenodd"\n      clip-rule="evenodd"\n      d="M10.3336 2.84883L10.7947 5.34531L9.29702 5.6215L8.53556 1.49857C8.49706 1.29009 8.54734 1.07502 8.67428 0.905166C8.80123 0.735312 8.99334 0.626081 9.20431 0.603791L13.3923 0.161318L13.5525 1.67468L11.5521 1.88602C11.6061 1.93395 11.6592 1.98271 11.7116 2.03228C13.0295 3.27946 13.8531 5.04683 13.8531 7.0052C13.8531 10.7873 10.7849 13.8533 6.99999 13.8533C3.21511 13.8533 0.146847 10.7873 0.146847 7.0052C0.146847 4.13004 1.91977 1.67049 4.4299 0.655167L5.00132 2.06578C3.04651 2.85649 1.66977 4.7711 1.66977 7.0052C1.66977 9.94684 4.05619 12.3315 6.99999 12.3315C9.9438 12.3315 12.3302 9.94684 12.3302 7.0052C12.3302 5.4819 11.6913 4.10896 10.6644 3.13721C10.5582 3.03665 10.4478 2.94043 10.3336 2.84883Z"\n      fill="#30010B"\n    />\n  </g>\n</svg>\n';
+const ruble12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 8.40127 9.78573" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M4.81572 6.10578H4.54888L1.45945 6.02573V6.01761L0.17286 5.98397L0 4.26929L1.44437 4.27857L1.41652 1.78777L1.25991 0.0475655C1.25991 0.0475655 2.90497 0 4.78091 0C9.82053 0 9.37968 6.10578 4.81572 6.10578ZM4.68926 1.77036C4.4874 1.77036 3.4572 1.78197 3.4572 1.78197L3.54189 4.26929L5.42014 4.25769C6.11506 3.80524 7.02345 1.77036 4.68926 1.77036ZM6.74966 8.49914L3.46648 8.43533V9.78573L1.49425 9.75208L1.48149 8.39705L0.413007 8.37733L0.265671 6.91672L7.01185 6.88539L6.74966 8.49914Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const ruble16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 11.2017 13.0476" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M6.42095 8.14105H6.06518L1.94593 8.03431V8.02348L0.23048 7.97863L0 5.69239L1.92582 5.70476L1.8887 2.38369L1.67987 0.0634206C1.67987 0.0634206 3.8733 0 6.37455 0C13.094 0 12.5062 8.14105 6.42095 8.14105ZM6.25235 2.36049C5.9832 2.36049 4.6096 2.37595 4.6096 2.37595L4.72252 5.69239L7.22686 5.67692C8.15342 5.07365 9.3646 2.36049 6.25235 2.36049ZM8.99955 11.3322L4.62197 11.2471V13.0476L1.99234 13.0028L1.97532 11.1961L0.550676 11.1698L0.354228 9.22229L9.34913 9.18053L8.99955 11.3322Z" fill="var(--fill-0, white)"/>\n</svg>\n';
+const show16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Icon">\n<path fill-rule="evenodd" clip-rule="evenodd" d="M8 12C12.4183 12 16 8.31371 16 6C16 3.68629 12.4183 0 8 0C3.58172 0 0 3.68629 0 6C0 8.31371 3.58172 12 8 12ZM8 10C10.2091 10 12 8.20914 12 6C12 3.79086 10.2091 2 8 2C5.79086 2 4 3.79086 4 6C4 8.20914 5.79086 10 8 10Z" fill="var(--fill-0, white)"/>\n<path d="M10 6C10 7.10457 9.10457 8 8 8C6.89543 8 6 7.10457 6 6C6.5 6 8 6 8 6C8 6 8 4.5 8 4C9.10457 4 10 4.89543 10 6Z" fill="white"/>\n</g>\n</svg>\n';
+const _sfc_main$i = {
   __name: "AppIcon",
   __ssrInlineRender: true,
   props: {
@@ -5408,14 +5436,14 @@ const _sfc_main$h = {
         ]
       },
       "header-account-authorized": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: headerAccountAuthorized16
         }
       },
       "header-sign-out-authorized": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: headerSignOutAuthorized16
         }
       },
@@ -5461,23 +5489,23 @@ const _sfc_main$h = {
         ]
       },
       "basket": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           12: basket12,
           16: basket16,
           24: basket24
         }
       },
       "arrow-right": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: arrowRight16,
           24: arrowRight24
         }
       },
       "ruble": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           12: ruble12,
           16: ruble16
         }
@@ -5494,32 +5522,32 @@ const _sfc_main$h = {
         ]
       },
       "check": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           12: check12
         }
       },
       "cross": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           12: cross12
         }
       },
       "refresh": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: refresh16
         }
       },
       "show": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: show16
         }
       },
       "hide": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: hide16
         }
       },
@@ -5617,8 +5645,8 @@ const _sfc_main$h = {
         ]
       },
       "alert": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: alert16
         }
       },
@@ -5632,27 +5660,51 @@ const _sfc_main$h = {
         ]
       },
       "puzzle": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: puzzle16
         }
       },
       "binky": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: binky16
         }
       },
       "calendar": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           16: calendar16
         }
       },
       "mir": {
-        kind: "image",
-        srcBySize: {
+        kind: "svg",
+        svgBySize: {
           32: mir32x62
+        }
+      },
+      "profile-edit": {
+        kind: "svg",
+        svgBySize: {
+          12: profileEdit12
+        }
+      },
+      "profile-check": {
+        kind: "svg",
+        svgBySize: {
+          10: profileCheck10
+        }
+      },
+      "profile-plus": {
+        kind: "svg",
+        svgBySize: {
+          10: profilePlus10
+        }
+      },
+      "profile-trash": {
+        kind: "svg",
+        svgBySize: {
+          12: profileTrash12
         }
       },
       "delivery-dot": {
@@ -5696,20 +5748,20 @@ const _sfc_main$h = {
       if (props.decorative) return void 0;
       return props.title || props.name;
     });
-    function resolveImageSrc(definition, requestedSize) {
-      const entries = Object.entries(definition.srcBySize).map(([size, src]) => ({ size: Number(size), src })).filter(({ size }) => Number.isFinite(size));
+    function resolveVariantBySize(variants, requestedSize) {
+      const entries = Object.entries(variants).map(([size, value]) => ({ size: Number(size), value })).filter(({ size }) => Number.isFinite(size));
       if (entries.length === 0) return "";
       if (requestedSize === void 0) {
         const default16 = entries.find(({ size }) => size === 16);
-        return (default16 || entries[0]).src;
+        return (default16 || entries[0]).value;
       }
       const exact = entries.find(({ size }) => size === requestedSize);
-      if (exact) return exact.src;
-      return entries.slice().sort((a, b) => Math.abs(a.size - requestedSize) - Math.abs(b.size - requestedSize))[0].src;
+      if (exact) return exact.value;
+      return entries.slice().sort((a, b) => Math.abs(a.size - requestedSize) - Math.abs(b.size - requestedSize))[0].value;
     }
-    const imageSrc = computed(() => {
-      if (icon.value.kind !== "image") return "";
-      return resolveImageSrc(icon.value, parsedNumericSize.value);
+    const svgMarkup = computed(() => {
+      if (icon.value.kind !== "svg") return "";
+      return resolveVariantBySize(icon.value.svgBySize, parsedNumericSize.value);
     });
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<span${ssrRenderAttrs(mergeProps({
@@ -5718,29 +5770,29 @@ const _sfc_main$h = {
         "aria-hidden": __props.decorative,
         role: __props.decorative ? void 0 : "img",
         "aria-label": unref(ariaLabel)
-      }, _attrs))} data-v-3c325e2e>`);
+      }, _attrs))} data-v-bcb98702>`);
       if (unref(icon).kind === "path") {
-        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-3c325e2e><!--[-->`);
+        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-bcb98702><!--[-->`);
         ssrRenderList(unref(icon).paths, (path, index2) => {
-          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-3c325e2e></path>`);
+          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-bcb98702></path>`);
         });
         _push(`<!--]--></svg>`);
-      } else if (unref(icon).kind === "image") {
-        _push(`<img${ssrRenderAttr("src", unref(imageSrc))} alt="" class="app-icon__image" data-v-3c325e2e>`);
+      } else if (unref(icon).kind === "svg") {
+        _push(`<span class="app-icon__raw" data-v-bcb98702>${unref(svgMarkup) ?? ""}</span>`);
       } else {
-        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-3c325e2e></span>`);
+        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-bcb98702></span>`);
       }
       _push(`</span>`);
     };
   }
 };
-const _sfc_setup$h = _sfc_main$h.setup;
-_sfc_main$h.setup = (props, ctx) => {
+const _sfc_setup$i = _sfc_main$i.setup;
+_sfc_main$i.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
-  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
+  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
-const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["__scopeId", "data-v-3c325e2e"]]);
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-bcb98702"]]);
 function pointerDownOutside(e, options = {}) {
   const originalEvent = e.detail.originalEvent;
   const target = originalEvent.target;
@@ -5814,7 +5866,7 @@ const theme$1 = {
     }
   ]
 };
-const _sfc_main$g = {
+const _sfc_main$h = {
   __name: "UModal",
   __ssrInlineRender: true,
   props: {
@@ -6013,7 +6065,7 @@ const _sfc_main$g = {
                                     if (_push5) {
                                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                                         if (props.close) {
-                                          _push5(ssrRenderComponent(_sfc_main$o, mergeProps({
+                                          _push5(ssrRenderComponent(_sfc_main$p, mergeProps({
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
                                             variant: "ghost",
@@ -6029,7 +6081,7 @@ const _sfc_main$g = {
                                     } else {
                                       return [
                                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                          props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+                                          props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                                             key: 0,
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
@@ -6134,7 +6186,7 @@ const _sfc_main$g = {
                                 }, {
                                   default: withCtx(() => [
                                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                      props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+                                      props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                                         key: 0,
                                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                         color: "neutral",
@@ -6244,7 +6296,7 @@ const _sfc_main$g = {
                               }, {
                                 default: withCtx(() => [
                                   renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                    props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+                                    props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                                       key: 0,
                                       icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                       color: "neutral",
@@ -6434,7 +6486,7 @@ const _sfc_main$g = {
                             }, {
                               default: withCtx(() => [
                                 renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                  props.close ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+                                  props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                                     key: 0,
                                     icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                     color: "neutral",
@@ -6511,13 +6563,13 @@ const _sfc_main$g = {
     };
   }
 };
-const _sfc_setup$g = _sfc_main$g.setup;
-_sfc_main$g.setup = (props, ctx) => {
+const _sfc_setup$h = _sfc_main$h.setup;
+_sfc_main$h.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
-  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
+  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
 };
-const _sfc_main$f = {
+const _sfc_main$g = {
   __name: "AuthSuccessView",
   __ssrInlineRender: true,
   emits: ["close"],
@@ -6526,7 +6578,7 @@ const _sfc_main$f = {
     const successTitle = flow.successTitle;
     const successDescription = flow.successDescription;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_AppIcon = __nuxt_component_0$1;
       _push(`<!--[--><button type="button" class="auth-entry__success-close" aria-label="Закрыть окно регистрации" data-v-4777aa4f>`);
       _push(ssrRenderComponent(_component_AppIcon, {
         name: "close",
@@ -6537,14 +6589,14 @@ const _sfc_main$f = {
     };
   }
 };
-const _sfc_setup$f = _sfc_main$f.setup;
-_sfc_main$f.setup = (props, ctx) => {
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthSuccessView.vue");
-  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-4777aa4f"]]);
-const _sfc_main$e = {
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-4777aa4f"]]);
+const _sfc_main$f = {
   __name: "AuthEntryForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6556,7 +6608,7 @@ const _sfc_main$e = {
     const identifier = flow.identifier;
     const entryRequestError = flow.entryRequestError;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_AppIcon = __nuxt_component_0$1;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
       }, _attrs))} data-v-99cf9303><label class="auth-entry__label" for="auth-entry-identifier" data-v-99cf9303> Почта или телефон </label><span class="auth-entry__input-row" data-v-99cf9303><span class="auth-entry__input-box" data-v-99cf9303><input id="auth-entry-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-error" : void 0)} data-v-99cf9303>`);
@@ -6593,14 +6645,14 @@ const _sfc_main$e = {
     };
   }
 };
-const _sfc_setup$e = _sfc_main$e.setup;
-_sfc_main$e.setup = (props, ctx) => {
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
-  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-99cf9303"]]);
-const _sfc_main$d = {
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-99cf9303"]]);
+const _sfc_main$e = {
   __name: "AuthLoginForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6615,7 +6667,7 @@ const _sfc_main$d = {
     const loginRequestError = flow.loginRequestError;
     const isLoginRequestPending = flow.isLoginRequestPending;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_AppIcon = __nuxt_component_0$1;
       _push(`<!--[--><div class="auth-entry__login-fields" data-v-06d05867><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-06d05867><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-06d05867> Email или телефон </label><input id="auth-entry-login-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-login-error" : void 0)} data-v-06d05867>`);
       if (unref(visibleError)) {
         _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-06d05867>${ssrInterpolate(unref(visibleError))}</p>`);
@@ -6644,14 +6696,14 @@ const _sfc_main$d = {
     };
   }
 };
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-06d05867"]]);
-const _sfc_main$c = {
+const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-06d05867"]]);
+const _sfc_main$d = {
   __name: "AuthPasswordRecoveryForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6662,29 +6714,46 @@ const _sfc_main$c = {
     const passwordRecoveryRequestMessage = flow.passwordRecoveryRequestMessage;
     const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending;
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-94c41901><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-94c41901><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-94c41901> Email </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="email" placeholder="Введите email" autocomplete="email" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-94c41901>`);
+      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-0e9fe146><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-0e9fe146><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-0e9fe146> Почта или телефон </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="text" placeholder="Почта или телефон" autocomplete="username" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-0e9fe146>`);
       if (unref(visiblePasswordRecoveryEmailError)) {
-        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-94c41901>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
+        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-0e9fe146>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div></div>`);
       if (unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage)) {
-        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-94c41901>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
+        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-0e9fe146>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="auth-entry__recovery-actions" data-v-94c41901><button type="button" class="auth-entry__secondary-button" data-v-94c41901> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-94c41901>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Отправить")}</button></div><!--]-->`);
+      _push(`<div class="auth-entry__recovery-actions" data-v-0e9fe146><button type="button" class="auth-entry__secondary-button" data-v-0e9fe146> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-0e9fe146>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Продолжить")}</button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+};
+const __nuxt_component_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-0e9fe146"]]);
+const _sfc_main$c = {
+  __name: "AuthPasswordRecoverySentView",
+  __ssrInlineRender: true,
+  emits: ["close"],
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__sent-actions" }, _attrs))} data-v-6fb21551><button type="button" class="auth-entry__sent-button" data-v-6fb21551> Хорошо </button></div>`);
     };
   }
 };
 const _sfc_setup$c = _sfc_main$c.setup;
 _sfc_main$c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
   return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
-const __nuxt_component_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-94c41901"]]);
+const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-6fb21551"]]);
 const _sfc_main$b = /* @__PURE__ */ Object.assign({
   inheritAttrs: false
 }, {
@@ -6749,15 +6818,15 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign({
       return rest;
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UIcon = _sfc_main$t;
+      const _component_UIcon = _sfc_main$u;
       let _temp0;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["app-input-wrapper", unref(wrapperAttributes).class],
         style: unref(wrapperAttributes).style
-      }, _attrs))} data-v-218afdd4><div class="${ssrRenderClass([
+      }, _attrs))} data-v-28c7bf21><div class="${ssrRenderClass([
         "app-input",
         { "app-input--disabled": __props.disabled }
-      ])}" data-v-218afdd4>`);
+      ])}" data-v-28c7bf21>`);
       if (__props.icon) {
         _push(ssrRenderComponent(_component_UIcon, {
           name: __props.icon,
@@ -6775,16 +6844,16 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign({
         min: __props.min,
         max: __props.max,
         class: "app-input__field"
-      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-218afdd4>`);
+      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-28c7bf21>`);
       ssrRenderSlot(_ctx.$slots, "suffix", {}, null, _push, _parent);
       if (__props.suffix) {
-        _push(`<span class="app-input__suffix" data-v-218afdd4>${ssrInterpolate(__props.suffix)}</span>`);
+        _push(`<span class="app-input__suffix" data-v-28c7bf21>${ssrInterpolate(__props.suffix)}</span>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div>`);
       if (__props.description) {
-        _push(`<p class="app-input-description" data-v-218afdd4>${ssrInterpolate(__props.description)}</p>`);
+        _push(`<p class="app-input-description" data-v-28c7bf21>${ssrInterpolate(__props.description)}</p>`);
       } else {
         _push(`<!---->`);
       }
@@ -6798,7 +6867,7 @@ _sfc_main$b.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
   return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
 };
-const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-218afdd4"]]);
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-28c7bf21"]]);
 const _sfc_main$a = {
   __name: "AppCheckbox",
   __ssrInlineRender: true,
@@ -6867,7 +6936,7 @@ const _sfc_main$9 = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppInput = __nuxt_component_0;
       const _component_AppCheckbox = __nuxt_component_1;
-      const _component_NuxtLink = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(`<!--[--><div class="auth-entry__registration-fields" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-name" data-v-e0a4769e> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-name",
@@ -7032,7 +7101,7 @@ _sfc_main$9.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterStartForm.vue");
   return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
-const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e0a4769e"]]);
+const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e0a4769e"]]);
 const _sfc_main$8 = {
   __name: "AuthRegisterCompleteForm",
   __ssrInlineRender: true,
@@ -7070,7 +7139,7 @@ const _sfc_main$8 = {
     });
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppInput = __nuxt_component_0;
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_AppIcon = __nuxt_component_0$1;
       const _component_AppCheckbox = __nuxt_component_1;
       _push(`<!--[--><div class="auth-entry__registration-fields" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-89a51056><label class="auth-entry__label" for="auth-entry-code-name" data-v-89a51056> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
@@ -7236,7 +7305,7 @@ _sfc_main$8.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterCompleteForm.vue");
   return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
-const __nuxt_component_7 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-89a51056"]]), { __name: "AuthRegisterCompleteForm" });
+const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-89a51056"]]), { __name: "AuthRegisterCompleteForm" });
 const _sfc_main$7 = {
   __name: "AuthLegalForm",
   __ssrInlineRender: true,
@@ -7320,7 +7389,7 @@ _sfc_main$7.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLegalForm.vue");
   return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
-const __nuxt_component_8 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0c732cca"]]);
+const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0c732cca"]]);
 const authClient = createAuthClient({
   basePath: "/api/auth",
   plugins: [
@@ -7394,8 +7463,8 @@ function useAuthEntryFlow({
   const passwordError = computed(() => getPasswordError(password.value));
   const visibleLoginPasswordError = computed(() => isLoginSubmitted.value ? passwordError.value : "");
   const visiblePasswordError = computed(() => isRegistrationSubmitted.value ? passwordError.value : "");
-  const passwordRecoveryEmailError = computed(() => getRegistrationEmailError(passwordRecoveryEmail.value));
-  const visiblePasswordRecoveryEmailError = computed(() => isPasswordRecoverySubmitted.value ? passwordRecoveryEmailError.value : "");
+  const passwordRecoveryIdentifierError = computed(() => getIdentifierError(passwordRecoveryEmail.value));
+  const visiblePasswordRecoveryEmailError = computed(() => isPasswordRecoverySubmitted.value ? passwordRecoveryIdentifierError.value : "");
   const inputMode = computed(() => isPhoneMode.value ? "tel" : "email");
   const canRequestCode = computed(() => normalizePhoneDigits(registrationPhone.value).length === 11 && isPersonalDataAccepted.value && isUserAgreementAccepted.value);
   const canResendCode = computed(() => resendSeconds.value === 0 && !isCodeRequestPending.value && !isCodeVerifyPending.value);
@@ -7420,7 +7489,16 @@ function useAuthEntryFlow({
   });
   const successTitle = computed(() => successMode.value === "login" ? "Готово, вы вошли!" : "Ура, зарегистрировались!");
   const successDescription = "Теперь у вас есть доступ к личному кабинету, избранному, отслеживанию заказов и безналичной оплате.";
-  const passwordRecoveryDescription = "Введите email, указанный при регистрации, и мы отправим ссылку для восстановления пароля";
+  const passwordRecoveryDescription = "Введите адрес электронной почты или телефон, мы отправим вам инструкцию по восстановлению пароля.";
+  const isPasswordRecoveryPhone = computed(() => isPhoneLike(passwordRecoveryEmail.value));
+  const passwordRecoverySentDescription = computed(() => {
+    const destination = passwordRecoveryEmail.value.trim() || (isPasswordRecoveryPhone.value ? "+7 (000) 000 00 00" : "Почта@домен.ру");
+    if (isPasswordRecoveryPhone.value) {
+      return "Мы отправили СМС\nсо ссылкой для сброса пароля.";
+    }
+    return `Мы отправили письмо со ссылкой для сброса пароля на почту ${destination}.`;
+  });
+  const passwordRecoverySentHint = computed(() => isPasswordRecoveryPhone.value ? "Если вы его не получили, повторите попытку через 10 минут или напишите нам адрес почты" : "Если вы его не получили, проверьте папку Спам или напишите нам адрес почты");
   const modalTitle = computed(() => {
     if (step.value === "entry") {
       return "Вход или регистрация";
@@ -7430,6 +7508,9 @@ function useAuthEntryFlow({
     }
     if (step.value === "password-recovery") {
       return "Восстановление пароля";
+    }
+    if (step.value === "password-recovery-sent") {
+      return isPasswordRecoveryPhone.value ? "Проверьте телефон" : "Проверьте почту";
     }
     return "Регистрация";
   });
@@ -7498,10 +7579,16 @@ function useAuthEntryFlow({
     loginRequestError.value = "";
     registrationRequestError.value = "";
   }
-  function onPasswordRecoveryEmailInput() {
+  function onPasswordRecoveryEmailInput(event) {
+    const value = event.target.value;
     isPasswordRecoverySubmitted.value = false;
     passwordRecoveryRequestError.value = "";
     passwordRecoveryRequestMessage.value = "";
+    if (isPhoneLike(value)) {
+      passwordRecoveryEmail.value = formatPhone(value);
+      return;
+    }
+    passwordRecoveryEmail.value = isPhoneLike(passwordRecoveryEmail.value) ? unmaskPhoneToEmail(value) : value;
   }
   function onSmsCodeInput(event) {
     smsCode.value = event.target.value.replace(/\D/g, "").slice(0, SMS_CODE_LENGTH);
@@ -7752,12 +7839,12 @@ function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = true;
     passwordRecoveryRequestError.value = "";
     passwordRecoveryRequestMessage.value = "";
-    if (passwordRecoveryEmailError.value) {
+    if (passwordRecoveryIdentifierError.value) {
       return;
     }
     isPasswordRecoveryRequestPending.value = true;
     try {
-      if (typeof authClient.forgetPassword === "function") {
+      if (!isPhoneLike(passwordRecoveryEmail.value) && typeof authClient.forgetPassword === "function") {
         const result = await authClient.forgetPassword({
           email: passwordRecoveryEmail.value.trim()
         });
@@ -7766,7 +7853,8 @@ function useAuthEntryFlow({
           return;
         }
       }
-      passwordRecoveryRequestMessage.value = "Если аккаунт с таким email существует, мы отправим ссылку для восстановления пароля.";
+      passwordRecoveryRequestMessage.value = "";
+      step.value = "password-recovery-sent";
     } catch (error) {
       passwordRecoveryRequestError.value = getAuthErrorMessage(error, "Не удалось отправить ссылку");
     } finally {
@@ -8117,7 +8205,7 @@ function useAuthEntryFlow({
     passwordError,
     visibleLoginPasswordError,
     visiblePasswordError,
-    passwordRecoveryEmailError,
+    passwordRecoveryEmailError: passwordRecoveryIdentifierError,
     visiblePasswordRecoveryEmailError,
     inputMode,
     canRequestCode,
@@ -8134,6 +8222,9 @@ function useAuthEntryFlow({
     successTitle,
     successDescription,
     passwordRecoveryDescription,
+    isPasswordRecoveryPhone,
+    passwordRecoverySentDescription,
+    passwordRecoverySentHint,
     modalTitle,
     // methods
     getPasswordError,
@@ -8196,6 +8287,8 @@ const _sfc_main$6 = {
     const modalTitle = flow.modalTitle;
     const isLegalRegistrationStep = flow.isLegalRegistrationStep;
     const passwordRecoveryDescription = flow.passwordRecoveryDescription;
+    const passwordRecoverySentDescription = flow.passwordRecoverySentDescription;
+    const passwordRecoverySentHint = flow.passwordRecoverySentHint;
     const onFormSubmit = flow.onFormSubmit;
     const stopResendTimer = flow.stopResendTimer;
     const stopOrganizationSuggestTimer = flow.stopOrganizationSuggestTimer;
@@ -8221,15 +8314,16 @@ const _sfc_main$6 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UModal = _sfc_main$g;
+      const _component_UModal = _sfc_main$h;
       const _component_AuthSuccessView = __nuxt_component_1$1;
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_AppIcon = __nuxt_component_0$1;
       const _component_AuthEntryForm = __nuxt_component_3;
       const _component_AuthLoginForm = __nuxt_component_4$1;
       const _component_AuthPasswordRecoveryForm = __nuxt_component_5$1;
-      const _component_AuthRegisterStartForm = __nuxt_component_6;
-      const _component_AuthRegisterCompleteForm = __nuxt_component_7;
-      const _component_AuthLegalForm = __nuxt_component_8;
+      const _component_AuthPasswordRecoverySentView = __nuxt_component_6;
+      const _component_AuthRegisterStartForm = __nuxt_component_7;
+      const _component_AuthRegisterCompleteForm = __nuxt_component_8;
+      const _component_AuthLegalForm = __nuxt_component_9;
       _push(ssrRenderComponent(_component_UModal, mergeProps({
         open: isOpen.value,
         "onUpdate:open": ($event) => isOpen.value = $event,
@@ -8246,25 +8340,32 @@ const _sfc_main$6 = {
             _push2(`<form class="${ssrRenderClass([{
               "auth-entry--login": unref(step) === "login",
               "auth-entry--password-recovery": unref(step) === "password-recovery",
+              "auth-entry--password-recovery-sent": unref(step) === "password-recovery-sent",
               "auth-entry--registration": unref(step) === "registration" || unref(step) === "code",
               "auth-entry--legal-details": unref(step) === "legal-details",
               "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
               "auth-entry--success": unref(step) === "success"
-            }, "auth-entry"])}" data-v-69eed2aa${_scopeId}>`);
+            }, "auth-entry"])}" data-v-d8aca3dd${_scopeId}>`);
             if (unref(step) === "success") {
               _push2(ssrRenderComponent(_component_AuthSuccessView, {
                 onClose: ($event) => isOpen.value = false
               }, null, _parent2, _scopeId));
             } else {
-              _push2(`<!--[--><header class="auth-entry__header" data-v-69eed2aa${_scopeId}><div class="auth-entry__title-block" data-v-69eed2aa${_scopeId}><h2 class="auth-entry__title" data-v-69eed2aa${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
+              _push2(`<!--[--><header class="auth-entry__header" data-v-d8aca3dd${_scopeId}><div class="auth-entry__title-block" data-v-d8aca3dd${_scopeId}><h2 class="auth-entry__title" data-v-d8aca3dd${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
               if (unref(isLegalRegistrationStep)) {
-                _push2(`<p class="auth-entry__subtitle" data-v-69eed2aa${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-d8aca3dd${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
               } else if (unref(step) === "password-recovery") {
-                _push2(`<p class="auth-entry__subtitle" data-v-69eed2aa${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-d8aca3dd${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
+              } else if (unref(step) === "password-recovery-sent") {
+                _push2(`<p class="auth-entry__subtitle" data-v-d8aca3dd${_scopeId}><!--[-->`);
+                ssrRenderList(unref(passwordRecoverySentDescription).split("\n"), (line) => {
+                  _push2(`<!--[-->${ssrInterpolate(line)}<br data-v-d8aca3dd${_scopeId}><!--]-->`);
+                });
+                _push2(`<!--]--><br data-v-d8aca3dd${_scopeId}> ${ssrInterpolate(unref(passwordRecoverySentHint))}</p>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-69eed2aa${_scopeId}>`);
+              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-d8aca3dd${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: "close",
                 size: 16,
@@ -8277,6 +8378,10 @@ const _sfc_main$6 = {
                 _push2(ssrRenderComponent(_component_AuthLoginForm, null, null, _parent2, _scopeId));
               } else if (unref(step) === "password-recovery") {
                 _push2(ssrRenderComponent(_component_AuthPasswordRecoveryForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "password-recovery-sent") {
+                _push2(ssrRenderComponent(_component_AuthPasswordRecoverySentView, {
+                  onClose: ($event) => isOpen.value = false
+                }, null, _parent2, _scopeId));
               } else if (unref(step) === "registration") {
                 _push2(ssrRenderComponent(_component_AuthRegisterStartForm, null, null, _parent2, _scopeId));
               } else if (unref(step) === "code") {
@@ -8295,6 +8400,7 @@ const _sfc_main$6 = {
                 class: ["auth-entry", {
                   "auth-entry--login": unref(step) === "login",
                   "auth-entry--password-recovery": unref(step) === "password-recovery",
+                  "auth-entry--password-recovery-sent": unref(step) === "password-recovery-sent",
                   "auth-entry--registration": unref(step) === "registration" || unref(step) === "code",
                   "auth-entry--legal-details": unref(step) === "legal-details",
                   "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
@@ -8315,7 +8421,19 @@ const _sfc_main$6 = {
                       }, " Укажите ИНН организации или ИП, остальные данные заполнятся автоматически ")) : unref(step) === "password-recovery" ? (openBlock(), createBlock("p", {
                         key: 1,
                         class: "auth-entry__subtitle"
-                      }, toDisplayString(unref(passwordRecoveryDescription)), 1)) : createCommentVNode("", true)
+                      }, toDisplayString(unref(passwordRecoveryDescription)), 1)) : unref(step) === "password-recovery-sent" ? (openBlock(), createBlock("p", {
+                        key: 2,
+                        class: "auth-entry__subtitle"
+                      }, [
+                        (openBlock(true), createBlock(Fragment, null, renderList(unref(passwordRecoverySentDescription).split("\n"), (line) => {
+                          return openBlock(), createBlock(Fragment, { key: line }, [
+                            createTextVNode(toDisplayString(line), 1),
+                            createVNode("br")
+                          ], 64);
+                        }), 128)),
+                        createVNode("br"),
+                        createTextVNode(" " + toDisplayString(unref(passwordRecoverySentHint)), 1)
+                      ])) : createCommentVNode("", true)
                     ]),
                     createVNode("button", {
                       type: "button",
@@ -8330,7 +8448,10 @@ const _sfc_main$6 = {
                       })
                     ], 8, ["onClick"])
                   ]),
-                  unref(step) === "entry" ? (openBlock(), createBlock(_component_AuthEntryForm, { key: 0 })) : unref(step) === "login" ? (openBlock(), createBlock(_component_AuthLoginForm, { key: 1 })) : unref(step) === "password-recovery" ? (openBlock(), createBlock(_component_AuthPasswordRecoveryForm, { key: 2 })) : unref(step) === "registration" ? (openBlock(), createBlock(_component_AuthRegisterStartForm, { key: 3 })) : unref(step) === "code" ? (openBlock(), createBlock(_component_AuthRegisterCompleteForm, { key: 4 })) : unref(step) === "legal-details" || unref(step) === "legal-confirmation" ? (openBlock(), createBlock(_component_AuthLegalForm, { key: 5 })) : createCommentVNode("", true)
+                  unref(step) === "entry" ? (openBlock(), createBlock(_component_AuthEntryForm, { key: 0 })) : unref(step) === "login" ? (openBlock(), createBlock(_component_AuthLoginForm, { key: 1 })) : unref(step) === "password-recovery" ? (openBlock(), createBlock(_component_AuthPasswordRecoveryForm, { key: 2 })) : unref(step) === "password-recovery-sent" ? (openBlock(), createBlock(_component_AuthPasswordRecoverySentView, {
+                    key: 3,
+                    onClose: ($event) => isOpen.value = false
+                  }, null, 8, ["onClose"])) : unref(step) === "registration" ? (openBlock(), createBlock(_component_AuthRegisterStartForm, { key: 4 })) : unref(step) === "code" ? (openBlock(), createBlock(_component_AuthRegisterCompleteForm, { key: 5 })) : unref(step) === "legal-details" || unref(step) === "legal-confirmation" ? (openBlock(), createBlock(_component_AuthLegalForm, { key: 6 })) : createCommentVNode("", true)
                 ], 64))
               ], 42, ["onSubmit"])
             ];
@@ -8347,7 +8468,7 @@ _sfc_main$6.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
   return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
-const __nuxt_component_2$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-69eed2aa"]]), { __name: "AuthEntryModal" });
+const __nuxt_component_2$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-d8aca3dd"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
@@ -8418,10 +8539,10 @@ const _sfc_main$5 = {
       session.value?.refetch?.();
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_AppIcon = __nuxt_component_0$1;
       const _component_AuthEntryModal = __nuxt_component_2$1;
-      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-2c22b602><div class="header__container" data-v-2c22b602><div class="header__inner" data-v-2c22b602>`);
+      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-38504e4e><div class="header__container" data-v-38504e4e><div class="header__inner" data-v-38504e4e>`);
       _push(ssrRenderComponent(_component_NuxtLink, {
         to: "/",
         class: "header__logo",
@@ -8429,7 +8550,7 @@ const _sfc_main$5 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="header__logo-cloud" data-v-2c22b602${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-2c22b602${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-2c22b602${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-2c22b602${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-2c22b602${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-2c22b602${_scopeId}>`);
+            _push2(`<div class="header__logo-cloud" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-38504e4e${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-38504e4e${_scopeId}>`);
           } else {
             return [
               createVNode("div", { class: "header__logo-cloud" }, [
@@ -8464,7 +8585,7 @@ const _sfc_main$5 = {
         }),
         _: 1
       }, _parent));
-      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-2c22b602><!--[-->`);
+      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-38504e4e><!--[-->`);
       ssrRenderList(navLinks, (item) => {
         _push(`<!--[-->`);
         if (item.to) {
@@ -8484,37 +8605,53 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-2c22b602>${ssrInterpolate(item.label)}</a>`);
+          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-38504e4e>${ssrInterpolate(item.label)}</a>`);
         }
         _push(`<!--]-->`);
       });
-      _push(`<!--]--></nav><div class="header__actions" data-v-2c22b602><!--[-->`);
+      _push(`<!--]--></nav><div class="header__actions" data-v-38504e4e><!--[-->`);
       ssrRenderList(unref(actionItems), (item) => {
-        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-2c22b602><span class="header-action__icon-wrap" data-v-2c22b602>`);
+        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-38504e4e><span class="header-action__icon-wrap" data-v-38504e4e>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: item.icon,
           class: ["header-action__icon", item.iconClass]
         }, null, _parent));
         if (item.counter) {
-          _push(`<span class="header-action__counter" data-v-2c22b602>${ssrInterpolate(item.counter)}</span>`);
+          _push(`<span class="header-action__counter" data-v-38504e4e>${ssrInterpolate(item.counter)}</span>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</span><span class="header-action__label" data-v-2c22b602>${ssrInterpolate(item.label)}</span></button>`);
+        _push(`</span><span class="header-action__label" data-v-38504e4e>${ssrInterpolate(item.label)}</span></button>`);
       });
       _push(`<!--]-->`);
       if (unref(sessionUser)) {
-        _push(`<div class="header-account-authorized" data-v-2c22b602><div class="header-account-authorized__top" data-v-2c22b602><span class="header-account-authorized__icon-wrap" data-v-2c22b602>`);
+        _push(`<div class="header-account-authorized" data-v-38504e4e><div class="header-account-authorized__top" data-v-38504e4e><span class="header-account-authorized__icon-wrap" data-v-38504e4e>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-account-authorized",
           class: "header-account-authorized__icon"
         }, null, _parent));
-        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-2c22b602>`);
+        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-38504e4e>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-sign-out-authorized",
           class: "header-account-authorized__sign-out-icon"
         }, null, _parent));
-        _push(`</button></div><span class="header-account-authorized__label" data-v-2c22b602>${ssrInterpolate(unref(accountLabel))}</span></div>`);
+        _push(`</button></div>`);
+        _push(ssrRenderComponent(_component_NuxtLink, {
+          to: "/profile",
+          class: "header-account-authorized__label"
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`${ssrInterpolate(unref(accountLabel))}`);
+            } else {
+              return [
+                createTextVNode(toDisplayString(unref(accountLabel)), 1)
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(`</div>`);
       } else {
         _push(`<!---->`);
       }
@@ -8535,7 +8672,7 @@ _sfc_main$5.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppHeader.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-2c22b602"]]);
+const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-38504e4e"]]);
 const theme = {
   "base": "min-h-[calc(100vh-var(--ui-header-height))]"
 };
@@ -8691,8 +8828,8 @@ const _sfc_main$3 = {
       { label: "Политика конфиденциальности", to: "/privacy-policy" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
-      const _component_AppIcon = __nuxt_component_1$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_AppIcon = __nuxt_component_0$1;
       _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-3309272d><div class="footer__container" data-v-3309272d><div class="footer__card" data-v-3309272d><div class="footer__top" data-v-3309272d><div class="footer__column" data-v-3309272d><h3 class="footer__title" data-v-3309272d> Каталог </h3><!--[-->`);
       ssrRenderList(catalogLinks, (item) => {
         _push(`<!--[-->`);
@@ -8806,8 +8943,8 @@ const _sfc_main$2 = {
       twitterCard: "summary_large_image"
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UApp = __nuxt_component_0$1;
-      const _component_DevGridOverlay = __nuxt_component_1$3;
+      const _component_UApp = __nuxt_component_0$2;
+      const _component_DevGridOverlay = __nuxt_component_1$2;
       const _component_AppHeader = __nuxt_component_2;
       const _component_UMain = _sfc_main$4;
       const _component_NuxtPage = __nuxt_component_4;
@@ -8955,5 +9092,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { _export_sfc as _, __nuxt_component_0$2 as a, _sfc_main$g as b, _sfc_main$t as c, __nuxt_component_1 as d, entry_default as default, __nuxt_component_0 as e, useState as f, fetchDefaults as g, useAsyncData as h, useRequestFetch as i, _sfc_main$o as j, __nuxt_component_1$2 as k, useSeoMeta as l, useHead as u };
+export { _export_sfc as _, __nuxt_component_0$3 as a, _sfc_main$h as b, _sfc_main$u as c, __nuxt_component_1 as d, entry_default as default, __nuxt_component_0 as e, useState as f, _sfc_main$p as g, fetchDefaults as h, useAsyncData as i, useRequestFetch as j, __nuxt_component_0$1 as k, useSeoMeta as l, useRequestHeaders as m, defineNuxtRouteMiddleware as n, authClient as o, navigateTo as p, setInterval as s, useHead as u };
 //# sourceMappingURL=server.mjs.map

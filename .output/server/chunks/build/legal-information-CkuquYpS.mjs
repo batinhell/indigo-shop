@@ -1,5 +1,5 @@
 import { _ as __nuxt_component_0 } from './AppBreadcrumbs-CDv8EEOG.mjs';
-import { _ as _export_sfc, l as useSeoMeta, a as __nuxt_component_0$2 } from './server.mjs';
+import { _ as _export_sfc, l as useSeoMeta, a as __nuxt_component_0$3 } from './server.mjs';
 import { mergeProps, withCtx, createTextVNode, toDisplayString, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrInterpolate } from 'vue/server-renderer';
 import '../nitro/nitro.mjs';
@@ -78,7 +78,7 @@ const _sfc_main = {
     });
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppBreadcrumbs = __nuxt_component_0;
-      const _component_NuxtLink = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(`<main${ssrRenderAttrs(mergeProps({ class: "legal-page" }, _attrs))} data-v-eb9c58a7><div class="legal-page__container" data-v-eb9c58a7><div class="legal-page__intro" data-v-eb9c58a7>`);
       _push(ssrRenderComponent(_component_AppBreadcrumbs, {
         items: breadcrumbs,

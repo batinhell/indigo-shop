@@ -29,8 +29,16 @@ defineProps({
     <span class="app-switch__track">
       <span class="app-switch__thumb" />
     </span>
-    <span v-if="label" class="app-switch__label">{{ label }}</span>
-    <span v-else class="app-switch__label">
+    <span
+      v-if="label"
+      class="app-switch__label"
+    >
+      {{ label }}
+    </span>
+    <span
+      v-else
+      class="app-switch__label"
+    >
       <slot />
     </span>
   </label>

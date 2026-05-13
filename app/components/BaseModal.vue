@@ -74,6 +74,14 @@ $radius-control: 0.75rem;
   border-radius: $radius-outer;
 }
 
+.modal-wrapper--fit {
+  width: fit-content;
+  max-width: calc(100dvw - 2rem);
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
 .modal-header {
   display: flex;
   align-items: flex-start;

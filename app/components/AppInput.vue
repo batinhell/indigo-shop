@@ -119,12 +119,15 @@ $color-input-bg: #f4f5f6;
 }
 
 .app-input {
+  --app-input-background: #{$color-input-bg};
+  --app-input-color: #{$color-base};
+
   display: flex;
   align-items: center;
   gap: 0.625rem;
   height: 2.5rem;
   padding: 0 0.875rem;
-  background: $color-input-bg;
+  background: var(--app-input-background);
   border: 2px solid transparent;
   border-radius: 0.75rem;
   overflow: hidden;
@@ -132,7 +135,8 @@ $color-input-bg: #f4f5f6;
   transition: background-color 0.15s, border-color 0.15s;
 
   &:focus-within {
-    background: white;
+    --app-input-background: white;
+
     border-color: #de7aff;
   }
 
@@ -153,7 +157,7 @@ $color-input-bg: #f4f5f6;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.2;
-    color: $color-base;
+    color: var(--app-input-color);
     font-feature-settings: 'lnum' 1, 'pnum' 1;
 
     &::placeholder {
@@ -174,6 +178,17 @@ $color-input-bg: #f4f5f6;
         -webkit-appearance: none;
         margin: 0;
       }
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-text-fill-color: var(--app-input-color);
+      caret-color: var(--app-input-color);
+      -webkit-box-shadow: 0 0 0 1000px var(--app-input-background) inset;
+      box-shadow: 0 0 0 1000px var(--app-input-background) inset;
+      transition: background-color 9999s ease-out 0s;
     }
   }
 

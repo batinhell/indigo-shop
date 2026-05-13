@@ -1,9 +1,5 @@
 <script setup>
-import catalogSliderImage1 from '~/assets/images/catalog_slider_1.png'
-import catalogSliderImage2 from '~/assets/images/catalog_slider_2.png'
-import catalogSliderImage3 from '~/assets/images/catalog_slider_3.png'
-import catalogSliderImage4 from '~/assets/images/catalog_slider_4.png'
-import catalogSliderImage5 from '~/assets/images/catalog_slider_5.png'
+import { catalogCategoryItems, catalogProducts } from '~/constants/catalog-products.js'
 
 const title = 'Каталог — Indigo'
 const description = 'Каталог флагов: популярные форматы, материалы и готовые конфигурации.'
@@ -12,156 +8,36 @@ const breadcrumbs = [
   { label: 'Каталог', to: '' }
 ]
 
-const categoryItems = [
-  {
-    id: 'artists',
-    label: 'Художникам',
-    description: 'Стикеры, постеры, скетчбуки и портфолио для творческих людей'
-  },
-  {
-    id: 'wedding',
-    label: 'Свадебное',
-    description: 'Полиграфия и сувениры в едином свадебном стиле'
-  },
-  {
-    id: 'albums',
-    label: 'Фотоальбомы',
-    description: 'Ручная сборка фотокниг под разные поводы'
-  },
-  {
-    id: 'textile',
-    label: 'Текстиль',
-    description: 'Нанесение на футболки, шопперы, кепки, флаги, нашивки'
-  },
-  {
-    id: 'retail',
-    label: 'Оформление магазинов',
-    description: 'Баннеры, стенды, таблички, вывески и витринная плёнка'
-  },
-  {
-    id: 'gifts',
-    label: 'Подарки близким',
-    description: 'Персонализированные сувениры с фото и гравировкой'
-  },
-  {
-    id: 'corporate',
-    label: 'Корпоративная продукция',
-    description: 'Имиджевая и рабочая полиграфия для бизнеса'
-  },
-  {
-    id: 'events',
-    label: 'К мероприятию',
-    description: 'Бейджи, браслеты, блокноты и фотозоны под событие'
-  }
-]
-
-const catalogSliderImages = [
-  catalogSliderImage1,
-  catalogSliderImage2,
-  catalogSliderImage3,
-  catalogSliderImage4,
-  catalogSliderImage5
-]
-
-function getProductImages(offset) {
-  return catalogSliderImages.map((_, index) => {
-    return catalogSliderImages[(index + offset) % catalogSliderImages.length]
-  })
-}
-
-const products = [
-  {
-    id: 1,
-    category: 'artists',
-    images: getProductImages(0),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 8 888 ₽',
-    oldPrice: '9999 ₽',
-    discount: '-15%',
-    badgeText: 'На сайте дешевле'
-  },
-  {
-    id: 2,
-    category: 'wedding',
-    images: getProductImages(1),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 7 550 ₽',
-    oldPrice: '8999 ₽',
-    discount: '-10%',
-    badgeText: 'На сайте выгоднее'
-  },
-  {
-    id: 3,
-    category: 'albums',
-    images: getProductImages(2),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 9 240 ₽',
-    oldPrice: '10999 ₽',
-    discount: '-20%',
-    badgeText: 'На сайте дешевле'
-  },
-  {
-    id: 4,
-    category: 'textile',
-    images: getProductImages(3),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 6 990 ₽',
-    oldPrice: '7999 ₽',
-    discount: '-8%',
-    badgeText: 'Акция'
-  },
-  {
-    id: 5,
-    category: 'retail',
-    images: getProductImages(4),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 10 900 ₽',
-    oldPrice: '12999 ₽',
-    discount: '-16%',
-    badgeText: 'На сайте дешевле'
-  },
-  {
-    id: 6,
-    category: 'gifts',
-    images: getProductImages(0),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 5 490 ₽',
-    oldPrice: '6499 ₽',
-    discount: '-12%',
-    badgeText: 'Акция'
-  },
-  {
-    id: 7,
-    category: 'corporate',
-    images: getProductImages(1),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 11 990 ₽',
-    oldPrice: '14999 ₽',
-    discount: '-20%',
-    badgeText: 'На сайте выгоднее'
-  },
-  {
-    id: 8,
-    category: 'events',
-    images: getProductImages(2),
-    title: 'Название товара в две-три строки, две-три строки',
-    price: 'от 4 990 ₽',
-    oldPrice: '5799 ₽',
-    discount: '-9%',
-    badgeText: 'На сайте дешевле'
-  }
-]
-
 const categorySections = computed(() => {
-  return categoryItems.map(category => ({
+  return catalogCategoryItems.map(category => ({
     ...category,
-    products: products.filter(item => item.category === category.id)
+    products: catalogProducts.filter(item => item.category === category.id)
   }))
 })
 
 const collapsedCategories = reactive(
-  Object.fromEntries(categoryItems.map(category => [category.id, false]))
+  Object.fromEntries(catalogCategoryItems.map(category => [category.id, false]))
 )
+
+const { isFavorite, toggleItem } = useFavorites()
+
+function normalizeFavoriteProduct(product) {
+  return {
+    id: product.id,
+    category: product.category,
+    images: product.images,
+    title: product.title,
+    subtitle: product.subtitle,
+    price: product.price,
+    discount: product.discount,
+    deliveryText: product.deliveryText,
+    deliveryTiming: product.deliveryTiming
+  }
+}
+
+function toggleFavorite(product) {
+  toggleItem(normalizeFavoriteProduct(product))
+}
 
 function toggleCategory(categoryId) {
   collapsedCategories[categoryId] = !collapsedCategories[categoryId]
@@ -233,12 +109,55 @@ useSeoMeta({
             :key="item.id"
             :images="item.images"
             :title="item.title"
+            :subtitle="item.subtitle"
             :price="item.price"
-            :old-price="item.oldPrice"
             :discount="item.discount"
-            :badge-text="item.badgeText"
-            :show-badge="Boolean(item.discount || item.badgeText)"
+            :delivery-text="item.deliveryText"
+            :delivery-timing="item.deliveryTiming"
+            :show-badge="Boolean(item.discount)"
+            :is-favorite="isFavorite(item.id)"
+            @toggle-favorite="toggleFavorite(item)"
           />
+        </div>
+
+        <div
+          v-show="!collapsedCategories[category.id]"
+          class="catalog-page__placeholder"
+          aria-label="Разделы каталога в разработке"
+        >
+          <div
+            class="catalog-page__placeholder-grid"
+            aria-hidden="true"
+          >
+            <div
+              v-for="index in 8"
+              :key="index"
+              class="catalog-page__skeleton-card"
+            >
+              <div class="catalog-page__skeleton-image" />
+              <div class="catalog-page__skeleton-content">
+                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--full" />
+                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--medium" />
+                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--small" />
+                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--price" />
+                <div class="catalog-page__skeleton-button" />
+              </div>
+            </div>
+          </div>
+
+          <div class="catalog-page__notice">
+            <h2 class="catalog-page__notice-title">
+              Мы еще работаем<br>
+              над наполнением каталога
+            </h2>
+            <p class="catalog-page__notice-description">
+              Скоро тут появятся: корпоративная продукция, товары для свадеб и оформления магазинов, фотоальбомы и товары для художников
+            </p>
+            <span
+              class="catalog-page__notice-arrow"
+              aria-hidden="true"
+            >⌣</span>
+          </div>
         </div>
       </section>
     </div>
@@ -342,14 +261,135 @@ useSeoMeta({
 
 .catalog-page__grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(16.25rem, 1fr));
+  gap: 1.375rem;
+  grid-template-columns: repeat(auto-fill, 16.25rem);
   justify-items: start;
+}
+
+.catalog-page__placeholder {
+  margin-top: 3rem;
+  min-height: 65.75rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.catalog-page__placeholder-grid {
+  display: grid;
+  gap: 1.375rem;
+  grid-template-columns: repeat(auto-fill, 16.25rem);
+}
+
+.catalog-page__skeleton-card {
+  background: #ffffff;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 27rem;
+  overflow: hidden;
+  width: 16.25rem;
+}
+
+.catalog-page__skeleton-image {
+  background: #faf5ff;
+  border-radius: 1.5rem;
+  height: 16.25rem;
+  margin: 0.625rem;
+}
+
+.catalog-page__skeleton-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.375rem 1rem 1.5rem;
+}
+
+.catalog-page__skeleton-line,
+.catalog-page__skeleton-button {
+  background: #faf5ff;
+  border-radius: 0.25rem;
+}
+
+.catalog-page__skeleton-line--full {
+  height: 1rem;
+  width: 100%;
+}
+
+.catalog-page__skeleton-line--medium {
+  height: 1rem;
+  width: 8.75rem;
+}
+
+.catalog-page__skeleton-line--small {
+  height: 0.75rem;
+  margin-top: 0.25rem;
+  width: 11.25rem;
+}
+
+.catalog-page__skeleton-line--price {
+  height: 1.5rem;
+  margin-top: 0.25rem;
+  width: 6.25rem;
+}
+
+.catalog-page__skeleton-button {
+  border-radius: 1.28125rem;
+  height: 2.25rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.catalog-page__placeholder::after {
+  backdrop-filter: blur(1.9px);
+  background: linear-gradient(180deg, rgba(250, 245, 255, 0.1) 27.06%, rgba(250, 245, 255, 0.8) 96.78%);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.catalog-page__notice {
+  align-items: center;
+  color: rgba(35, 8, 43, 0.64);
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+  left: 50%;
+  max-width: 32.625rem;
+  position: absolute;
+  text-align: center;
+  top: 7.625rem;
+  transform: translateX(-50%);
+  width: min(100%, 32.625rem);
+  z-index: 1;
+}
+
+.catalog-page__notice-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.045rem;
+  line-height: 2.75rem;
+  margin: 0;
+}
+
+.catalog-page__notice-description {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03rem;
+  line-height: 2rem;
+  margin: 0;
+}
+
+.catalog-page__notice-arrow {
+  color: #de7aff;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1;
 }
 
 @media (max-width: 960px) {
   .catalog-page__grid {
-    grid-template-columns: repeat(auto-fill, minmax(16.25rem, 1fr));
+    grid-template-columns: repeat(auto-fill, 16.25rem);
   }
 }
 
@@ -380,6 +420,33 @@ useSeoMeta({
   .catalog-page__subcategory-description {
     font-size: 0.875rem;
     line-height: 1.125rem;
+  }
+
+  .catalog-page__grid,
+  .catalog-page__placeholder-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .catalog-page__placeholder {
+    min-height: 44rem;
+  }
+
+  .catalog-page__notice {
+    top: 5rem;
+    width: calc(100% - 2rem);
+  }
+
+  .catalog-page__notice-title {
+    font-size: 1.75rem;
+    letter-spacing: -0.035rem;
+    line-height: 2.125rem;
+  }
+
+  .catalog-page__notice-description {
+    font-size: 1rem;
+    letter-spacing: 0;
+    line-height: 1.375rem;
   }
 }
 </style>

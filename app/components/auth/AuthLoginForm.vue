@@ -24,9 +24,9 @@ const isLoginRequestPending = flow.isLoginRequestPending
         Email или телефон
       </label>
 
-      <input
+      <AppInput
         id="auth-entry-login-identifier"
-        :value="identifier"
+        v-model="identifier"
         class="auth-entry__input auth-entry__input--compact"
         type="text"
         placeholder="Email или телефон"
@@ -36,7 +36,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
         :aria-describedby="visibleError ? 'auth-entry-login-error' : undefined"
         @input="flow.onIdentifierInput"
         @blur="flow.onIdentifierBlur"
-      >
+      />
 
       <p
         v-if="visibleError"
@@ -58,39 +58,39 @@ const isLoginRequestPending = flow.isLoginRequestPending
         Пароль
       </label>
 
-      <span class="auth-entry__password-box">
-        <input
-          id="auth-entry-login-password"
-          v-model="password"
-          class="auth-entry__input auth-entry__input--compact auth-entry__input--password"
-          :type="passwordInputType"
-          placeholder="Введите пароль"
-          autocomplete="current-password"
-          :aria-invalid="Boolean(visibleLoginPasswordError)"
-          :aria-describedby="visibleLoginPasswordError ? 'auth-entry-login-password-error' : undefined"
-          @input="flow.onPasswordInput"
-        >
-
-        <button
-          type="button"
-          class="auth-entry__password-toggle"
-          :aria-label="isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'"
-          @click="isPasswordVisible = !isPasswordVisible"
-        >
-          <AppIcon
-            :name="isPasswordVisible ? 'password-hide' : 'password-show'"
-            :size="16"
-            class="auth-entry__password-toggle-icon"
-          />
-        </button>
-      </span>
+      <AppInput
+        id="auth-entry-login-password"
+        v-model="password"
+        class="auth-entry__input auth-entry__input--compact auth-entry__input--password"
+        :type="passwordInputType"
+        placeholder="Введите пароль"
+        autocomplete="current-password"
+        :aria-invalid="Boolean(visibleLoginPasswordError)"
+        :aria-describedby="visibleLoginPasswordError || loginRequestError ? 'auth-entry-login-password-error' : undefined"
+        @input="flow.onPasswordInput"
+      >
+        <template #suffix>
+          <button
+            type="button"
+            class="auth-entry__password-toggle"
+            :aria-label="isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'"
+            @click="isPasswordVisible = !isPasswordVisible"
+          >
+            <AppIcon
+              :name="isPasswordVisible ? 'password-hide' : 'password-show'"
+              :size="16"
+              class="auth-entry__password-toggle-icon"
+            />
+          </button>
+        </template>
+      </AppInput>
 
       <p
-        v-if="visibleLoginPasswordError"
+        v-if="visibleLoginPasswordError || loginRequestError"
         id="auth-entry-login-password-error"
         class="auth-entry__error"
       >
-        {{ visibleLoginPasswordError }}
+        {{ visibleLoginPasswordError || loginRequestError }}
       </p>
 
       <button
@@ -102,13 +102,6 @@ const isLoginRequestPending = flow.isLoginRequestPending
       </button>
     </div>
   </div>
-
-  <p
-    v-if="loginRequestError"
-    class="auth-entry__request-status auth-entry__request-status--error"
-  >
-    {{ loginRequestError }}
-  </p>
 
   <div class="auth-entry__login-actions">
     <button
@@ -159,58 +152,44 @@ const isLoginRequestPending = flow.isLoginRequestPending
 
 .auth-entry__input {
   width: 100%;
-  height: 3.25rem;
-  padding: 0 0.875rem;
-  color: $color-base;
-  background: $color-input-bg;
-  border: 0.125rem solid transparent;
-  border-radius: $radius-control;
-  outline: none;
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  font-feature-settings: 'lnum' 1, 'pnum' 1;
+
+  :deep(.app-input) {
+    height: 3.25rem;
+  }
+
+  :deep(.app-input__field) {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
 
   .auth-entry__field--invalid & {
-    padding-right: 2.5rem;
-    color: #2e0509;
-    background: #ffebed;
-  }
+    :deep(.app-input) {
+      --app-input-background: #ffebed;
+      --app-input-color: #2e0509;
 
-  &::placeholder {
-    color: $color-base-secondary;
-  }
-
-  &:focus {
-    border-color: #de7aff;
+      background: #ffebed;
+    }
   }
 }
 
 .auth-entry__input--compact {
-  height: 2.5rem;
-  font-size: 1rem;
-  line-height: 1.2;
+  :deep(.app-input) {
+    height: 2.5rem;
+  }
 
-  &::placeholder {
-    color: $color-base-secondary;
+  :deep(.app-input__field) {
+    font-size: 1rem;
+    line-height: 1.2;
   }
 }
 
 .auth-entry__input--password {
-  padding-right: 2.875rem;
-}
-
-.auth-entry__password-box {
-  position: relative;
-  display: flex;
-  width: 100%;
+  :deep(.app-input) {
+    padding-right: 0.875rem;
+  }
 }
 
 .auth-entry__password-toggle {
-  position: absolute;
-  top: 50%;
-  right: 0.875rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -219,7 +198,6 @@ const isLoginRequestPending = flow.isLoginRequestPending
   color: $color-base-secondary;
   border-radius: 0.375rem;
   cursor: pointer;
-  transform: translateY(-50%);
   transition: color 0.15s, background-color 0.15s;
 
   &:hover {

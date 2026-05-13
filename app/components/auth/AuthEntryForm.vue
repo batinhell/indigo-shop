@@ -22,9 +22,9 @@ const entryRequestError = flow.entryRequestError
 
     <span class="auth-entry__input-row">
       <span class="auth-entry__input-box">
-        <input
+        <AppInput
           id="auth-entry-identifier"
-          :value="identifier"
+          v-model="identifier"
           class="auth-entry__input"
           type="text"
           placeholder="Email или телефон"
@@ -35,21 +35,23 @@ const entryRequestError = flow.entryRequestError
           @input="flow.onIdentifierInput"
           @blur="flow.onIdentifierBlur"
         >
-
-        <button
-          v-if="visibleError"
-          type="button"
-          class="auth-entry__reset"
-          aria-label="Сбросить поле"
-          @mousedown.prevent
-          @click="flow.resetIdentifier"
-        >
-          <AppIcon
-            name="reset"
-            :size="16"
-            class="auth-entry__reset-icon"
-          />
-        </button>
+          <template #suffix>
+            <button
+              v-if="visibleError"
+              type="button"
+              class="auth-entry__reset"
+              aria-label="Сбросить поле"
+              @mousedown.prevent
+              @click="flow.resetIdentifier"
+            >
+              <AppIcon
+                name="reset"
+                :size="16"
+                class="auth-entry__reset-icon"
+              />
+            </button>
+          </template>
+        </AppInput>
       </span>
 
       <button
@@ -104,7 +106,6 @@ const entryRequestError = flow.entryRequestError
 }
 
 .auth-entry__input-box {
-  position: relative;
   display: flex;
   flex: 1 1 auto;
   min-width: 0;
@@ -112,38 +113,27 @@ const entryRequestError = flow.entryRequestError
 
 .auth-entry__input {
   width: 100%;
-  height: 3.25rem;
-  padding: 0 0.875rem;
-  color: $color-base;
-  background: $color-input-bg;
-  border: 0.125rem solid transparent;
-  border-radius: $radius-control;
-  outline: none;
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.5rem;
-  font-feature-settings: 'lnum' 1, 'pnum' 1;
+
+  :deep(.app-input) {
+    height: 3.25rem;
+  }
+
+  :deep(.app-input__field) {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
 
   .auth-entry__field--invalid & {
-    padding-right: 2.5rem;
-    color: #2e0509;
-    background: #ffebed;
-  }
+    :deep(.app-input) {
+      --app-input-background: #ffebed;
+      --app-input-color: #2e0509;
 
-  &::placeholder {
-    color: $color-base-secondary;
-  }
-
-  &:focus {
-    border-color: #de7aff;
+      background: #ffebed;
+    }
   }
 }
 
 .auth-entry__reset {
-  position: absolute;
-  top: 50%;
-  right: 0.875rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,7 +142,6 @@ const entryRequestError = flow.entryRequestError
   color: #2e0509;
   border-radius: 0.5rem;
   cursor: pointer;
-  transform: translateY(-50%);
   transition: background-color 0.15s;
 
   &:hover {

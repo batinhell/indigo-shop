@@ -19,7 +19,10 @@ const props = defineProps({
       </span>
     </div>
 
-    <div class="product-badge-item product-badge-item--label">
+    <div
+      v-if="props.text"
+      class="product-badge-item product-badge-item--label"
+    >
       <span class="product-badge-item__text">
         {{ props.text }}
       </span>

@@ -6,13 +6,17 @@ import headerLogoBg4 from '~/assets/icons/header-logo-bg-4.svg'
 import headerLogoText from '~/assets/icons/header-logo-text.svg'
 import { authClient } from '~/utils/auth-client.js'
 
+const emit = defineEmits(['open-cart'])
+
 const navLinks = [
   { label: 'Каталог', to: '/catalog' },
-  { label: 'О нас', to: '' },
-  { label: 'Примеры работ', to: '' },
+  { label: 'О нас', to: '', hidden: true },
+  { label: 'Примеры работ', to: '', hidden: true },
   { label: 'Оплата', to: '/payment' },
   { label: 'Доставка', to: '/delivery' }
 ]
+
+const visibleNavLinks = computed(() => navLinks.filter(item => !item.hidden))
 
 const session = authClient.useSession()
 
@@ -25,14 +29,17 @@ const accountLabel = computed(() => {
 
   return sessionUser.value.name
 })
+const { totalItems: cartTotalItems } = useCart()
+const { totalItems: favoriteTotalItems } = useFavorites()
+const profileStore = useProfileStore()
 
-const baseActionItems = [
+const baseActionItems = computed(() => [
   {
     key: 'favorites',
     label: 'Избранное',
     icon: 'favorite',
     iconClass: 'header-action__icon_favorite',
-    counter: '99+',
+    counter: favoriteTotalItems.value,
     kind: 'favorite'
   },
   {
@@ -40,7 +47,7 @@ const baseActionItems = [
     label: 'Заказы',
     icon: 'orders',
     iconClass: 'header-action__icon_orders',
-    counter: '99+',
+    counter: 0,
     kind: 'secondary'
   },
   {
@@ -48,10 +55,10 @@ const baseActionItems = [
     label: 'Корзина',
     icon: 'cart',
     iconClass: 'header-action__icon_cart',
-    counter: '99+',
+    counter: cartTotalItems.value,
     kind: 'secondary'
   }
-]
+])
 
 const accountAction = computed(() => ({
   key: 'account',
@@ -64,7 +71,7 @@ const accountAction = computed(() => ({
 }))
 
 const actionItems = computed(() => [
-  ...baseActionItems,
+  ...baseActionItems.value,
   ...(!sessionUser.value && !isSessionPending.value ? [accountAction.value] : [])
 ])
 
@@ -72,13 +79,32 @@ const isAuthEntryOpen = ref(false)
 const isSignOutPending = ref(false)
 
 function onActionClick(item) {
+  if (item.key === 'cart') {
+    emit('open-cart')
+    return
+  }
+
+  if (item.key === 'favorites') {
+    navigateTo('/profile?tab=favorites')
+    return
+  }
+
+  if (item.key === 'orders') {
+    navigateTo('/profile?tab=orders')
+    return
+  }
+
   if (item.key === 'account' && !item.isAuthenticated) {
     isAuthEntryOpen.value = true
   }
 }
 
-function refreshSession() {
-  session.value?.refetch?.()
+async function refreshSession() {
+  await session.value?.refetch?.()
+
+  if (session.value?.data?.user) {
+    profileStore.fetchProfileOnce().catch(() => {})
+  }
 }
 
 async function signOut() {
@@ -90,7 +116,9 @@ async function signOut() {
 
   try {
     await authClient.signOut()
+    profileStore.clearProfile()
     await session.value?.refetch?.()
+    await navigateTo('/')
   } catch (error) {
     console.error('Sign out failed:', error)
   } finally {
@@ -142,7 +170,7 @@ async function signOut() {
           aria-label="Основная навигация"
         >
           <template
-            v-for="item in navLinks"
+            v-for="item in visibleNavLinks"
             :key="item.label"
           >
             <NuxtLink
@@ -215,9 +243,12 @@ async function signOut() {
               </button>
             </div>
 
-            <span class="header-account-authorized__label">
+            <NuxtLink
+              to="/profile"
+              class="header-account-authorized__label"
+            >
               {{ accountLabel }}
-            </span>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -247,8 +278,8 @@ async function signOut() {
   background: #fff;
   border-radius: 2rem;
   display: flex;
+  gap: 2rem;
   height: 64px;
-  justify-content: space-between;
   overflow: hidden;
   padding: 0 1.5rem 0 2rem;
   position: relative;
@@ -320,7 +351,8 @@ async function signOut() {
   border-radius: 2rem;
   display: flex;
   gap: 0.875rem;
-  padding: 0 2rem;
+  margin-left: 4rem;
+  padding: 0;
 }
 
 .header__nav-link {
@@ -345,6 +377,7 @@ async function signOut() {
   column-gap: 0.5rem;
   display: flex;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .header-action {
@@ -557,11 +590,13 @@ async function signOut() {
 
 @media (max-width: 1120px) {
   .header__inner {
+    gap: 1rem;
     padding: 0 1.25rem;
   }
 
   .header__nav {
-    padding: 0 0.75rem;
+    margin-left: 1.5rem;
+    padding: 0;
   }
 }
 

@@ -1,4 +1,10 @@
-import { isNotificoreTimeoutError, sendNotificoreOtp } from '../../utils/notificore.js'
+import {
+  assertSuccessfulNotificoreOtpResponse,
+  getNotificoreAuthenticationId,
+  getNotificoreAuthenticationPayload,
+  isNotificoreTimeoutError,
+  sendNotificoreOtp
+} from '../../utils/notificore.js'
 import { normalizePhoneDigits } from '~~/shared/utils/auth-identifier.js'
 import { assertRateLimit } from '../../utils/rate-limit.js'
 
@@ -32,12 +38,13 @@ export default defineEventHandler(async (event) => {
 
   try {
     const result = await sendNotificoreOtp({ phone })
-    const data = result.data ?? {}
+    const data = getNotificoreAuthenticationPayload(result)
+    assertSuccessfulNotificoreOtpResponse(data)
 
     setResponseStatus(event, 201)
 
     return {
-      authenticationId: data.id ?? null,
+      authenticationId: getNotificoreAuthenticationId(data),
       status: data.status ?? 'pending',
       recipient: data.recipient ?? phone,
       expiredAt: data.expired_at ?? null

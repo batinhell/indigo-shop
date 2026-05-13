@@ -13,11 +13,13 @@
     "@iconify-json/lucide": "^1.2.96",
     "@iconify-json/simple-icons": "^1.2.72",
     "@nuxt/ui": "^4.5.1",
+    "@pinia/nuxt": "^0.11.3",
     "better-auth": "^1.6.5",
     "kysely": "^0.28.16",
     "maska": "^3.2.0",
     "mysql2": "^3.22.1",
     "nuxt": "^4.3.1",
+    "pinia": "^3.0.4",
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
