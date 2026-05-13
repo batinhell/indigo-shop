@@ -23,8 +23,8 @@ const companyLinks = [
   { label: 'Доставка', to: '/delivery' }
 ]
 
-const bottomLinks = [
-  { label: 'Город Верных Сердец', to: '' },
+const bottomItems = [
+  { label: 'Город Верных Сердец' },
   { label: 'Пользовательское соглашение', to: '/user-agreement' },
   { label: 'Политика конфиденциальности', to: '/privacy-policy' }
 ]
@@ -179,7 +179,7 @@ const bottomLinks = [
       <div class="footer__bottom">
         <span class="footer__bottom-item footer__bottom-item_static">© {{ new Date().getFullYear() }}, Типография Индиго</span>
         <template
-          v-for="item in bottomLinks"
+          v-for="item in bottomItems"
           :key="item.label"
         >
           <NuxtLink
@@ -189,14 +189,12 @@ const bottomLinks = [
           >
             {{ item.label }}
           </NuxtLink>
-          <a
+          <span
             v-else
-            href="#"
-            class="footer__bottom-item"
-            @click.prevent
+            class="footer__bottom-item footer__bottom-item_static"
           >
             {{ item.label }}
-          </a>
+          </span>
         </template>
       </div>
     </div>

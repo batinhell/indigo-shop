@@ -37,7 +37,7 @@ const favoriteProducts = computed(() => (
         v-for="item in favoriteProducts"
         :key="item.id"
         :images="item.images"
-        title="Город Верных Сердец"
+        :title="item.title"
         @remove="removeItem(item.id)"
       />
     </div>
@@ -50,7 +50,7 @@ const favoriteProducts = computed(() => (
         v-for="item in items"
         :key="item.id"
         :images="item.images"
-        title="Город Верных Сердец"
+        :title="item.title"
         @remove="removeItem(item.id)"
       />
     </div>

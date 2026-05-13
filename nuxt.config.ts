@@ -57,7 +57,8 @@ export default defineNuxtConfig({
     },
     betterAuth: {
       url: '',
-      secret: ''
+      secret: '',
+      trustedOrigins: 'https://ra-indigo.com'
     }
   },
 

@@ -6,8 +6,18 @@ import { useDatabase } from './database.js'
 import { sendNotificoreEmail } from './notificore.js'
 
 const runtimeConfig = useRuntimeConfig()
-const betterAuthUrl = runtimeConfig.betterAuth?.url || ''
-const betterAuthSecret = runtimeConfig.betterAuth?.secret || ''
+const readEnv = name => process.env[name]?.trim() || ''
+const betterAuthUrl = runtimeConfig.betterAuth?.url || readEnv('BETTER_AUTH_URL')
+const betterAuthSecret = runtimeConfig.betterAuth?.secret || readEnv('BETTER_AUTH_SECRET')
+const betterAuthTrustedOrigins = [
+  'https://ra-indigo.com',
+  String(runtimeConfig.betterAuth?.trustedOrigins || ''),
+  readEnv('BETTER_AUTH_TRUSTED_ORIGINS')
+]
+  .join(',')
+  .split(',')
+  .map(origin => origin.trim().replace(/\/$/, ''))
+  .filter(Boolean)
 
 export const auth = betterAuth({
   database: {
@@ -17,6 +27,7 @@ export const auth = betterAuth({
   basePath: '/api/auth',
   baseURL: betterAuthUrl || undefined,
   secret: betterAuthSecret || undefined,
+  trustedOrigins: betterAuthTrustedOrigins,
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }) => {
