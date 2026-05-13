@@ -1,14 +1,16 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { useSlots, toRef, computed, unref, mergeProps, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, createVNode, Fragment, resolveDynamicComponent, isRef, ref, inject, toValue, getCurrentInstance, onServerPrefetch, defineComponent, shallowRef, h, resolveComponent, useModel, mergeModels, useAttrs, watch, hasInjectionContext, provide, nextTick, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, Suspense, createApp, renderList, useId, withModifiers, shallowReactive, onErrorCaptured, reactive, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, isShallow, isReactive, toRaw } from 'vue';
-import { I as serialize, J as defu, j as getRequestHeaders, K as hasProtocol, L as isScriptProtocol, G as joinURL, M as parseQuery, N as klona, O as withQuery, P as sanitizeStatusCode, Q as parseURL, R as encodePath, S as decodePath, T as defuFn, U as isEqual, V as getContext, c as createError$1, W as withTrailingSlash, X as withoutTrailingSlash, $ as $fetch$1, Y as baseURL, Z as createHooks, _ as isPhoneLike, a0 as getIdentifierError, a1 as getRegistrationEmailError, b as normalizePhoneDigits, q as formatAuthPhone, a2 as formatCompactPhone, a3 as formatPhone, a4 as unmaskPhoneToEmail, a5 as executeAsync } from '../nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { hasInjectionContext, inject, mergeProps, unref, createVNode, resolveDynamicComponent, computed, ref, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, useAttrs, mergeModels, getCurrentInstance, onServerPrefetch, toValue, watch, provide, nextTick, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, renderList, useId, withModifiers, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
+import { _ as serialize, $ as hasProtocol, a0 as isScriptProtocol, Y as joinURL, a1 as parseQuery, a2 as klona, a3 as defu, a4 as withQuery, a5 as sanitizeStatusCode, a6 as parseURL, a7 as encodePath, a8 as decodePath, a9 as defuFn, aa as getContext, o as getRequestHeaders, ab as isEqual, ac as withTrailingSlash, ad as withoutTrailingSlash, c as createError$1, ae as $fetch$1, af as baseURL, ag as hash, ah as isPhoneLike, ai as getIdentifierError, K as getRegistrationEmailError, b as normalizePhoneDigits, aj as getRussianSecondsWord, ak as formatCompactPhone, f as formatAuthPhone, al as formatPhone, am as unmaskPhoneToEmail, an as executeAsync } from '../nitro/nitro.mjs';
+import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
+import { debounce } from 'perfect-debounce';
+import { isPlainObject } from '@vue/shared';
 import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
-import { ssrRenderComponent, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderVNode, ssrRenderAttrs, ssrIncludeBooleanAttr, ssrLooseContain, ssrGetDynamicModelProps, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrRenderSuspense, ssrRenderDynamicModel } from 'vue/server-renderer';
-import { useForwardPropsEmits, DialogRoot, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, DialogTrigger, DialogPortal, DialogOverlay, useForwardProps, Primitive, Slot, createContext, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
+import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderAttrs, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrGetDynamicModelProps, ssrIncludeBooleanAttr, ssrLooseContain, ssrRenderSuspense } from 'vue/server-renderer';
+import { useForwardProps, useForwardPropsEmits, DialogRoot, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, DialogTrigger, DialogPortal, DialogOverlay, createContext, Primitive, Slot, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
 import { reactivePick, createReusableTemplate, reactiveOmit, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
 import { getIconCSS } from '@iconify/utils/lib/css/icon';
-import { debounce } from 'perfect-debounce';
 import { createAuthClient } from 'better-auth/vue';
 import { phoneNumberClient } from 'better-auth/client/plugins';
 import { u as useSeoMeta$1, a as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
@@ -31,6 +33,182 @@ import 'unhead/server';
 import 'devalue';
 import 'unhead/plugins';
 import 'unhead/utils';
+
+//#region src/utils.ts
+function flatHooks(configHooks, hooks = {}, parentName) {
+	for (const key in configHooks) {
+		const subHook = configHooks[key];
+		const name = parentName ? `${parentName}:${key}` : key;
+		if (typeof subHook === "object" && subHook !== null) flatHooks(subHook, hooks, name);
+		else if (typeof subHook === "function") hooks[name] = subHook;
+	}
+	return hooks;
+}
+const createTask = /* @__PURE__ */ (() => {
+	if (console.createTask) return console.createTask;
+	const defaultTask = { run: (fn) => fn() };
+	return () => defaultTask;
+})();
+function callHooks(hooks, args, startIndex, task) {
+	for (let i = startIndex; i < hooks.length; i += 1) try {
+		const result = task ? task.run(() => hooks[i](...args)) : hooks[i](...args);
+		if (result instanceof Promise) return result.then(() => callHooks(hooks, args, i + 1, task));
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+function serialTaskCaller(hooks, args, name) {
+	if (hooks.length > 0) return callHooks(hooks, args, 0, createTask(name));
+}
+function parallelTaskCaller(hooks, args, name) {
+	if (hooks.length > 0) {
+		const task = createTask(name);
+		return Promise.all(hooks.map((hook) => task.run(() => hook(...args))));
+	}
+}
+function callEachWith(callbacks, arg0) {
+	for (const callback of [...callbacks]) callback(arg0);
+}
+//#endregion
+//#region src/hookable.ts
+var Hookable = class {
+	_hooks;
+	_before;
+	_after;
+	_deprecatedHooks;
+	_deprecatedMessages;
+	constructor() {
+		this._hooks = {};
+		this._before = void 0;
+		this._after = void 0;
+		this._deprecatedMessages = void 0;
+		this._deprecatedHooks = {};
+		this.hook = this.hook.bind(this);
+		this.callHook = this.callHook.bind(this);
+		this.callHookWith = this.callHookWith.bind(this);
+	}
+	hook(name, function_, options = {}) {
+		if (!name || typeof function_ !== "function") return () => {};
+		const originalName = name;
+		let dep;
+		while (this._deprecatedHooks[name]) {
+			dep = this._deprecatedHooks[name];
+			name = dep.to;
+		}
+		if (dep && !options.allowDeprecated) {
+			let message = dep.message;
+			if (!message) message = `${originalName} hook has been deprecated` + (dep.to ? `, please use ${dep.to}` : "");
+			if (!this._deprecatedMessages) this._deprecatedMessages = /* @__PURE__ */ new Set();
+			if (!this._deprecatedMessages.has(message)) {
+				console.warn(message);
+				this._deprecatedMessages.add(message);
+			}
+		}
+		if (!function_.name) try {
+			Object.defineProperty(function_, "name", {
+				get: () => "_" + name.replace(/\W+/g, "_") + "_hook_cb",
+				configurable: true
+			});
+		} catch {}
+		this._hooks[name] = this._hooks[name] || [];
+		this._hooks[name].push(function_);
+		return () => {
+			if (function_) {
+				this.removeHook(name, function_);
+				function_ = void 0;
+			}
+		};
+	}
+	hookOnce(name, function_) {
+		let _unreg;
+		let _function = (...arguments_) => {
+			if (typeof _unreg === "function") _unreg();
+			_unreg = void 0;
+			_function = void 0;
+			return function_(...arguments_);
+		};
+		_unreg = this.hook(name, _function);
+		return _unreg;
+	}
+	removeHook(name, function_) {
+		const hooks = this._hooks[name];
+		if (hooks) {
+			const index = hooks.indexOf(function_);
+			if (index !== -1) hooks.splice(index, 1);
+			if (hooks.length === 0) this._hooks[name] = void 0;
+		}
+	}
+	clearHook(name) {
+		this._hooks[name] = void 0;
+	}
+	deprecateHook(name, deprecated) {
+		this._deprecatedHooks[name] = typeof deprecated === "string" ? { to: deprecated } : deprecated;
+		const _hooks = this._hooks[name] || [];
+		this._hooks[name] = void 0;
+		for (const hook of _hooks) this.hook(name, hook);
+	}
+	deprecateHooks(deprecatedHooks) {
+		for (const name in deprecatedHooks) this.deprecateHook(name, deprecatedHooks[name]);
+	}
+	addHooks(configHooks) {
+		const hooks = flatHooks(configHooks);
+		const removeFns = Object.keys(hooks).map((key) => this.hook(key, hooks[key]));
+		return () => {
+			for (const unreg of removeFns) unreg();
+			removeFns.length = 0;
+		};
+	}
+	removeHooks(configHooks) {
+		const hooks = flatHooks(configHooks);
+		for (const key in hooks) this.removeHook(key, hooks[key]);
+	}
+	removeAllHooks() {
+		this._hooks = {};
+	}
+	callHook(name, ...args) {
+		return this.callHookWith(serialTaskCaller, name, args);
+	}
+	callHookParallel(name, ...args) {
+		return this.callHookWith(parallelTaskCaller, name, args);
+	}
+	callHookWith(caller, name, args) {
+		const event = this._before || this._after ? {
+			name,
+			args,
+			context: {}
+		} : void 0;
+		if (this._before) callEachWith(this._before, event);
+		const result = caller(this._hooks[name] ? [...this._hooks[name]] : [], args, name);
+		if (result instanceof Promise) return result.finally(() => {
+			if (this._after && event) callEachWith(this._after, event);
+		});
+		if (this._after && event) callEachWith(this._after, event);
+		return result;
+	}
+	beforeEach(function_) {
+		this._before = this._before || [];
+		this._before.push(function_);
+		return () => {
+			if (this._before !== void 0) {
+				const index = this._before.indexOf(function_);
+				if (index !== -1) this._before.splice(index, 1);
+			}
+		};
+	}
+	afterEach(function_) {
+		this._after = this._after || [];
+		this._after.push(function_);
+		return () => {
+			if (this._after !== void 0) {
+				const index = this._after.indexOf(function_);
+				if (index !== -1) this._after.splice(index, 1);
+			}
+		};
+	}
+};
+function createHooks() {
+	return new Hookable();
+}
 
 function diff(obj1, obj2) {
   const h1 = _toHashedObject(obj1);
@@ -146,7 +324,7 @@ function createNuxtApp(options) {
     provide: void 0,
     versions: {
       get nuxt() {
-        return "4.3.1";
+        return "4.4.2";
       },
       get vue() {
         return nuxtApp.vueApp.version;
@@ -190,6 +368,7 @@ function createNuxtApp(options) {
     },
     _asyncDataPromises: {},
     _asyncData: shallowReactive({}),
+    _state: shallowReactive({}),
     _payloadRevivers: {},
     ...options
   };
@@ -213,7 +392,7 @@ function createNuxtApp(options) {
         await nuxtApp.runWithContext(() => hook(...args));
       }
     };
-    nuxtApp.hooks.callHook = (name, ...args) => nuxtApp.hooks.callHookWith(contextCaller, name, ...args);
+    nuxtApp.hooks.callHook = (name, ...args) => nuxtApp.hooks.callHookWith(contextCaller, name, args);
   }
   nuxtApp.callHook = nuxtApp.hooks.callHook;
   nuxtApp.provide = (name, value) => {
@@ -311,6 +490,7 @@ function defineNuxtPlugin(plugin2) {
   return Object.assign(plugin2.setup || (() => {
   }), plugin2, { [NuxtPluginIndicator]: true, _name });
 }
+const definePayloadPlugin = defineNuxtPlugin;
 function callWithNuxt(nuxt, setup, args) {
   const fn = () => setup();
   const nuxtAppCtx = getNuxtAppCtx(nuxt._id);
@@ -486,16 +666,25 @@ const createError = (error) => {
   });
   return nuxtError;
 };
-const unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU = /* @__PURE__ */ defineNuxtPlugin({
-  name: "nuxt:head",
-  enforce: "pre",
-  setup(nuxtApp) {
-    const head = nuxtApp.ssrContext.head;
-    nuxtApp.vueApp.use(head);
-  }
-});
-function toArray(value) {
-  return Array.isArray(value) ? value : [value];
+function injectHead(nuxtApp) {
+  const nuxt = nuxtApp || useNuxtApp();
+  return nuxt.ssrContext?.head || nuxt.runWithContext(() => {
+    if (hasInjectionContext()) {
+      const head = inject(headSymbol);
+      if (!head) {
+        throw new Error("[nuxt] [unhead] Missing Unhead instance.");
+      }
+      return head;
+    }
+  });
+}
+function useHead(input, options = {}) {
+  const head = options.head || injectHead(options.nuxt);
+  return useHead$1(input, { head, ...options });
+}
+function useSeoMeta(input, options = {}) {
+  const head = options.head || injectHead(options.nuxt);
+  return useSeoMeta$1(input, { head, ...options });
 }
 const matcher = /* @__PURE__ */ (() => {
   const $0 = { prerender: true };
@@ -519,52 +708,81 @@ function getRouteRules(arg) {
     return {};
   }
 }
+function definePayloadReducer(name, reduce) {
+  {
+    useNuxtApp().ssrContext["~payloadReducers"][name] = reduce;
+  }
+}
+const payloadPlugin = definePayloadPlugin(() => {
+  definePayloadReducer(
+    "skipHydrate",
+    // We need to return something truthy to be treated as a match
+    (data) => !shouldHydrate(data) && 1
+  );
+});
+const unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU = /* @__PURE__ */ defineNuxtPlugin({
+  name: "nuxt:head",
+  enforce: "pre",
+  setup(nuxtApp) {
+    const head = nuxtApp.ssrContext.head;
+    nuxtApp.vueApp.use(head);
+  }
+});
+function toArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
 const _routes = [
   {
-    name: "index",
-    path: "/",
-    component: () => import('./index-CBtEAMnI.mjs')
+    name: "profile-orders-orderId",
+    path: "/profile/orders/:orderId()",
+    meta: { "middleware": ["auth"] },
+    component: () => import('./_orderId_--ZJDXdh3.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-QBxsDupZ.mjs')
+    component: () => import('./catalog-CqcsGRYK.mjs')
+  },
+  {
+    name: "cookie-policy",
+    path: "/cookie-policy",
+    component: () => import('./cookie-policy-D_fzbr6m.mjs')
+  },
+  {
+    name: "delivery",
+    path: "/delivery",
+    component: () => import('./delivery-BsQq78Iu.mjs')
+  },
+  {
+    name: "legal-information",
+    path: "/legal-information",
+    component: () => import('./legal-information-CeaGgVUi.mjs')
   },
   {
     name: "payment",
     path: "/payment",
-    component: () => import('./payment-CrfrzLBF.mjs')
+    component: () => import('./payment-9m-NRfAX.mjs')
+  },
+  {
+    name: "privacy-policy",
+    path: "/privacy-policy",
+    component: () => import('./privacy-policy-COS3HAlG.mjs')
   },
   {
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./profile-DZdmrubS.mjs')
-  },
-  {
-    name: "delivery",
-    path: "/delivery",
-    component: () => import('./delivery-DtEvxTLj.mjs')
-  },
-  {
-    name: "cookie-policy",
-    path: "/cookie-policy",
-    component: () => import('./cookie-policy-B16kTOYU.mjs')
-  },
-  {
-    name: "privacy-policy",
-    path: "/privacy-policy",
-    component: () => import('./privacy-policy-J45CIRsw.mjs')
+    component: () => import('./index-Bm_SFJHs.mjs')
   },
   {
     name: "user-agreement",
     path: "/user-agreement",
-    component: () => import('./user-agreement-BEnZ5BqX.mjs')
+    component: () => import('./user-agreement-CuVhMbhl.mjs')
   },
   {
-    name: "legal-information",
-    path: "/legal-information",
-    component: () => import('./legal-information-CkuquYpS.mjs')
+    name: "index",
+    path: "/",
+    component: () => import('./index-CC7V1i_B.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -606,14 +824,20 @@ const routerOptions0 = {
     if (routeAllowsScrollToTop === false) {
       return false;
     }
-    const hookToWait = nuxtApp._runningTransition ? "page:transition:finish" : "page:loading:end";
+    if (from === START_LOCATION) {
+      return _calculatePosition(to, from, savedPosition, hashScrollBehaviour);
+    }
     return new Promise((resolve) => {
-      if (from === START_LOCATION) {
-        resolve(_calculatePosition(to, from, savedPosition, hashScrollBehaviour));
-        return;
-      }
-      nuxtApp.hooks.hookOnce(hookToWait, () => {
+      const doScroll = () => {
         requestAnimationFrame(() => resolve(_calculatePosition(to, from, savedPosition, hashScrollBehaviour)));
+      };
+      nuxtApp.hooks.hookOnce("page:loading:end", () => {
+        const transitionPromise = nuxtApp["~transitionPromise"];
+        if (transitionPromise) {
+          transitionPromise.then(doScroll);
+        } else {
+          doScroll();
+        }
       });
     });
   }
@@ -684,9 +908,9 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./auth-Xvf1exZq.mjs')
+  auth: () => import('./auth-BEQq-_uW.mjs')
 };
-const plugin = /* @__PURE__ */ defineNuxtPlugin({
+const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
   enforce: "pre",
   async setup(nuxtApp) {
@@ -774,6 +998,7 @@ const plugin = /* @__PURE__ */ defineNuxtPlugin({
       [__temp, __restore] = executeAsync(() => nuxtApp.runWithContext(() => showError(error2))), await __temp, __restore();
     }
     const resolvedInitialRoute = router.currentRoute.value;
+    const hasDeferredRoute = false;
     syncCurrentRoute();
     if (nuxtApp.ssrContext?.islandContext) {
       return { provide: { router } };
@@ -868,10 +1093,13 @@ const plugin = /* @__PURE__ */ defineNuxtPlugin({
         if ("name" in resolvedInitialRoute) {
           resolvedInitialRoute.name = void 0;
         }
-        await router.replace({
-          ...resolvedInitialRoute,
-          force: true
-        });
+        if (hasDeferredRoute) ;
+        else {
+          await router.replace({
+            ...resolvedInitialRoute,
+            force: true
+          });
+        }
         router.options.scrollBehavior = routerOptions.scrollBehavior;
       } catch (error2) {
         await nuxtApp.runWithContext(() => showError(error2));
@@ -880,31 +1108,6 @@ const plugin = /* @__PURE__ */ defineNuxtPlugin({
     return { provide: { router } };
   }
 });
-function injectHead(nuxtApp) {
-  const nuxt = nuxtApp || useNuxtApp();
-  return nuxt.ssrContext?.head || nuxt.runWithContext(() => {
-    if (hasInjectionContext()) {
-      const head = inject(headSymbol);
-      if (!head) {
-        throw new Error("[nuxt] [unhead] Missing Unhead instance.");
-      }
-      return head;
-    }
-  });
-}
-function useHead(input, options = {}) {
-  const head = options.head || injectHead(options.nuxt);
-  return useHead$1(input, { head, ...options });
-}
-function useSeoMeta(input, options = {}) {
-  const head = options.head || injectHead(options.nuxt);
-  return useSeoMeta$1(input, { head, ...options });
-}
-function definePayloadReducer(name, reduce) {
-  {
-    useNuxtApp().ssrContext["~payloadReducers"][name] = reduce;
-  }
-}
 const reducers = [
   ["NuxtError", (data) => isNuxtError(data) && data.toJSON()],
   ["EmptyShallowRef", (data) => isRef(data) && isShallow(data) && !data.value && (typeof data.value === "bigint" ? "0n" : JSON.stringify(data.value) || "_")],
@@ -922,19 +1125,814 @@ const revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms = /* @__
     }
   }
 });
-const LazyIcon = defineAsyncComponent(() => Promise.resolve().then(() => index).then((r) => r["default"] || r.default || r));
-const lazyGlobalComponents = [
-  ["Icon", LazyIcon]
-];
-const components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8 = /* @__PURE__ */ defineNuxtPlugin({
-  name: "nuxt:global-components",
-  setup(nuxtApp) {
-    for (const [name, component] of lazyGlobalComponents) {
-      nuxtApp.vueApp.component(name, component);
-      nuxtApp.vueApp.component("Lazy" + name, component);
-    }
+defineComponent({
+  name: "ServerPlaceholder",
+  render() {
+    return createElementBlock("div");
   }
 });
+const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
+defineComponent({
+  name: "ClientOnly",
+  inheritAttrs: false,
+  props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
+  ...false,
+  setup(props, { slots, attrs }) {
+    const mounted = shallowRef(false);
+    const vm = getCurrentInstance();
+    if (vm) {
+      vm._nuxtClientOnly = true;
+    }
+    provide(clientOnlySymbol, true);
+    return () => {
+      if (mounted.value) {
+        const vnodes = slots.default?.();
+        if (vnodes && vnodes.length === 1) {
+          return [cloneVNode(vnodes[0], attrs)];
+        }
+        return vnodes;
+      }
+      const slot = slots.fallback || slots.placeholder;
+      if (slot) {
+        return h(slot);
+      }
+      const fallbackStr = props.fallback || props.placeholder || "";
+      const fallbackTag = props.fallbackTag || props.placeholderTag || "span";
+      return createElementBlock(fallbackTag, attrs, fallbackStr);
+    };
+  }
+});
+function defineKeyedFunctionFactory(factory) {
+  const placeholder = function() {
+    throw new Error(`[nuxt] \`${factory.name}\` is a compiler macro and cannot be called at runtime.`);
+  };
+  return Object.defineProperty(placeholder, "__nuxt_factory", {
+    enumerable: false,
+    get: () => factory.factory
+  });
+}
+const createUseAsyncData = defineKeyedFunctionFactory({
+  name: "createUseAsyncData",
+  factory(options = {}) {
+    function useAsyncData2(...args) {
+      const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
+      if (_isAutoKeyNeeded(args[0], args[1])) {
+        args.unshift(autoKey);
+      }
+      let [_key, _handler, opts = {}] = args;
+      const key = computed(() => toValue(_key));
+      if (typeof key.value !== "string") {
+        throw new TypeError("[nuxt] [useAsyncData] key must be a string.");
+      }
+      if (typeof _handler !== "function") {
+        throw new TypeError("[nuxt] [useAsyncData] handler must be a function.");
+      }
+      const shouldFactoryOptionsOverride = typeof options === "function";
+      const nuxtApp = useNuxtApp();
+      const factoryOptions = shouldFactoryOptionsOverride ? options(opts) : options;
+      if (!shouldFactoryOptionsOverride) {
+        for (const key2 in factoryOptions) {
+          if (factoryOptions[key2] === void 0) {
+            continue;
+          }
+          if (opts[key2] !== void 0) {
+            continue;
+          }
+          opts[key2] = factoryOptions[key2];
+        }
+      }
+      opts.server ??= true;
+      opts.default ??= getDefault;
+      opts.getCachedData ??= getDefaultCachedData;
+      opts.lazy ??= false;
+      opts.immediate ??= true;
+      opts.deep ??= asyncDataDefaults.deep;
+      opts.dedupe ??= "cancel";
+      if (shouldFactoryOptionsOverride) {
+        for (const key2 in factoryOptions) {
+          if (factoryOptions[key2] === void 0) {
+            continue;
+          }
+          opts[key2] = factoryOptions[key2];
+        }
+      }
+      nuxtApp._asyncData[key.value];
+      function createInitialFetch() {
+        const initialFetchOptions = { cause: "initial", dedupe: opts.dedupe };
+        if (!nuxtApp._asyncData[key.value]?._init) {
+          initialFetchOptions.cachedData = opts.getCachedData(key.value, nuxtApp, { cause: "initial" });
+          nuxtApp._asyncData[key.value] = buildAsyncData(nuxtApp, key.value, _handler, opts, initialFetchOptions.cachedData);
+        }
+        return () => nuxtApp._asyncData[key.value].execute(initialFetchOptions);
+      }
+      const initialFetch = createInitialFetch();
+      const asyncData = nuxtApp._asyncData[key.value];
+      asyncData._deps++;
+      const fetchOnServer = opts.server !== false && nuxtApp.payload.serverRendered;
+      if (fetchOnServer && opts.immediate) {
+        const promise = initialFetch();
+        if (getCurrentInstance()) {
+          onServerPrefetch(() => promise);
+        } else {
+          nuxtApp.hook("app:created", async () => {
+            await promise;
+          });
+        }
+      }
+      const asyncReturn = {
+        data: writableComputedRef(() => nuxtApp._asyncData[key.value]?.data),
+        pending: writableComputedRef(() => nuxtApp._asyncData[key.value]?.pending),
+        status: writableComputedRef(() => nuxtApp._asyncData[key.value]?.status),
+        error: writableComputedRef(() => nuxtApp._asyncData[key.value]?.error),
+        refresh: (...args2) => {
+          if (!nuxtApp._asyncData[key.value]?._init) {
+            const initialFetch2 = createInitialFetch();
+            return initialFetch2();
+          }
+          return nuxtApp._asyncData[key.value].execute(...args2);
+        },
+        execute: (...args2) => asyncReturn.refresh(...args2),
+        clear: () => {
+          const entry2 = nuxtApp._asyncData[key.value];
+          if (entry2?._abortController) {
+            try {
+              entry2._abortController.abort(new DOMException("AsyncData aborted by user.", "AbortError"));
+            } finally {
+              entry2._abortController = void 0;
+            }
+          }
+          clearNuxtDataByKey(nuxtApp, key.value);
+        }
+      };
+      const asyncDataPromise = Promise.resolve(nuxtApp._asyncDataPromises[key.value]).then(() => asyncReturn);
+      Object.assign(asyncDataPromise, asyncReturn);
+      Object.defineProperties(asyncDataPromise, {
+        then: { enumerable: true, value: asyncDataPromise.then.bind(asyncDataPromise) },
+        catch: { enumerable: true, value: asyncDataPromise.catch.bind(asyncDataPromise) },
+        finally: { enumerable: true, value: asyncDataPromise.finally.bind(asyncDataPromise) }
+      });
+      return asyncDataPromise;
+    }
+    return useAsyncData2;
+  }
+});
+const useAsyncData = createUseAsyncData.__nuxt_factory();
+createUseAsyncData.__nuxt_factory({
+  lazy: true,
+  // @ts-expect-error private property
+  _functionName: "useLazyAsyncData"
+});
+function writableComputedRef(getter) {
+  return computed({
+    get() {
+      return getter()?.value;
+    },
+    set(value) {
+      const ref2 = getter();
+      if (ref2) {
+        ref2.value = value;
+      }
+    }
+  });
+}
+function _isAutoKeyNeeded(keyOrFetcher, fetcher) {
+  if (typeof keyOrFetcher === "string") {
+    return false;
+  }
+  if (typeof keyOrFetcher === "object" && keyOrFetcher !== null) {
+    return false;
+  }
+  if (typeof keyOrFetcher === "function" && typeof fetcher === "function") {
+    return false;
+  }
+  return true;
+}
+function clearNuxtDataByKey(nuxtApp, key) {
+  if (key in nuxtApp.payload.data) {
+    nuxtApp.payload.data[key] = void 0;
+  }
+  if (key in nuxtApp.payload._errors) {
+    nuxtApp.payload._errors[key] = void 0;
+  }
+  if (nuxtApp._asyncData[key]) {
+    nuxtApp._asyncData[key].data.value = unref(nuxtApp._asyncData[key]._default());
+    nuxtApp._asyncData[key].error.value = void 0;
+    nuxtApp._asyncData[key].status.value = "idle";
+  }
+  if (key in nuxtApp._asyncDataPromises) {
+    nuxtApp._asyncDataPromises[key] = void 0;
+  }
+}
+function pick(obj, keys) {
+  const newObj = {};
+  for (const key of keys) {
+    newObj[key] = obj[key];
+  }
+  return newObj;
+}
+function buildAsyncData(nuxtApp, key, _handler, options, initialCachedData) {
+  nuxtApp.payload._errors[key] ??= void 0;
+  const hasCustomGetCachedData = options.getCachedData !== getDefaultCachedData;
+  const handler = _handler ;
+  const _ref = options.deep ? ref : shallowRef;
+  const hasCachedData = initialCachedData !== void 0;
+  const unsubRefreshAsyncData = nuxtApp.hook("app:data:refresh", async (keys) => {
+    if (!keys || keys.includes(key)) {
+      await asyncData.execute({ cause: "refresh:hook" });
+    }
+  });
+  const asyncData = {
+    data: _ref(hasCachedData ? initialCachedData : options.default()),
+    pending: computed(() => asyncData.status.value === "pending"),
+    error: toRef(nuxtApp.payload._errors, key),
+    status: shallowRef("idle"),
+    execute: (...args) => {
+      const [_opts, newValue = void 0] = args;
+      const opts = _opts && newValue === void 0 && typeof _opts === "object" ? _opts : {};
+      if (nuxtApp._asyncDataPromises[key]) {
+        if ((opts.dedupe ?? options.dedupe) === "defer") {
+          return nuxtApp._asyncDataPromises[key];
+        }
+      }
+      {
+        const cachedData = "cachedData" in opts ? opts.cachedData : options.getCachedData(key, nuxtApp, { cause: opts.cause ?? "refresh:manual" });
+        if (cachedData !== void 0) {
+          nuxtApp.payload.data[key] = asyncData.data.value = cachedData;
+          asyncData.error.value = void 0;
+          asyncData.status.value = "success";
+          return Promise.resolve(cachedData);
+        }
+      }
+      if (asyncData._abortController) {
+        asyncData._abortController.abort(new DOMException("AsyncData request cancelled by deduplication", "AbortError"));
+      }
+      asyncData._abortController = new AbortController();
+      asyncData.status.value = "pending";
+      const cleanupController = new AbortController();
+      const promise = new Promise(
+        (resolve, reject) => {
+          try {
+            const timeout = opts.timeout ?? options.timeout;
+            const mergedSignal = mergeAbortSignals([asyncData._abortController?.signal, opts?.signal], cleanupController.signal, timeout);
+            if (mergedSignal.aborted) {
+              const reason = mergedSignal.reason;
+              reject(reason instanceof Error ? reason : new DOMException(String(reason ?? "Aborted"), "AbortError"));
+              return;
+            }
+            mergedSignal.addEventListener("abort", () => {
+              const reason = mergedSignal.reason;
+              reject(reason instanceof Error ? reason : new DOMException(String(reason ?? "Aborted"), "AbortError"));
+            }, { once: true, signal: cleanupController.signal });
+            return Promise.resolve(handler(nuxtApp, { signal: mergedSignal })).then(resolve, reject);
+          } catch (err) {
+            reject(err);
+          }
+        }
+      ).then(async (_result) => {
+        let result = _result;
+        if (options.transform) {
+          result = await options.transform(_result);
+        }
+        if (options.pick) {
+          result = pick(result, options.pick);
+        }
+        nuxtApp.payload.data[key] = result;
+        asyncData.data.value = result;
+        asyncData.error.value = void 0;
+        asyncData.status.value = "success";
+      }).catch((error) => {
+        if (nuxtApp._asyncDataPromises[key] && nuxtApp._asyncDataPromises[key] !== promise) {
+          return nuxtApp._asyncDataPromises[key];
+        }
+        if (asyncData._abortController?.signal.aborted) {
+          return nuxtApp._asyncDataPromises[key];
+        }
+        if (typeof DOMException !== "undefined" && error instanceof DOMException && error.name === "AbortError") {
+          asyncData.status.value = "idle";
+          return nuxtApp._asyncDataPromises[key];
+        }
+        asyncData.error.value = createError(error);
+        asyncData.data.value = unref(options.default());
+        asyncData.status.value = "error";
+      }).finally(() => {
+        cleanupController.abort();
+        delete nuxtApp._asyncDataPromises[key];
+      });
+      nuxtApp._asyncDataPromises[key] = promise;
+      return nuxtApp._asyncDataPromises[key];
+    },
+    _execute: debounce((...args) => asyncData.execute(...args), 0, { leading: true }),
+    _default: options.default,
+    _deps: 0,
+    _init: true,
+    _hash: void 0,
+    _off: () => {
+      unsubRefreshAsyncData();
+      if (nuxtApp._asyncData[key]?._init) {
+        nuxtApp._asyncData[key]._init = false;
+      }
+      if (!hasCustomGetCachedData) {
+        nextTick(() => {
+          if (!nuxtApp._asyncData[key]?._init) {
+            clearNuxtDataByKey(nuxtApp, key);
+            asyncData.execute = () => Promise.resolve();
+          }
+        });
+      }
+    }
+  };
+  return asyncData;
+}
+const getDefault = () => void 0;
+const getDefaultCachedData = (key, nuxtApp, ctx) => {
+  if (nuxtApp.isHydrating) {
+    return nuxtApp.payload.data[key];
+  }
+  if (ctx.cause !== "refresh:manual" && ctx.cause !== "refresh:hook") {
+    return nuxtApp.static.data[key];
+  }
+};
+function mergeAbortSignals(signals, cleanupSignal, timeout) {
+  const list = signals.filter((s) => !!s);
+  if (typeof timeout === "number" && timeout >= 0) {
+    const timeoutSignal = AbortSignal.timeout?.(timeout);
+    if (timeoutSignal) {
+      list.push(timeoutSignal);
+    }
+  }
+  if (AbortSignal.any) {
+    return AbortSignal.any(list);
+  }
+  const controller = new AbortController();
+  for (const sig of list) {
+    if (sig.aborted) {
+      const reason = sig.reason ?? new DOMException("Aborted", "AbortError");
+      try {
+        controller.abort(reason);
+      } catch {
+        controller.abort();
+      }
+      return controller.signal;
+    }
+  }
+  const onAbort = () => {
+    const abortedSignal = list.find((s) => s.aborted);
+    const reason = abortedSignal?.reason ?? new DOMException("Aborted", "AbortError");
+    try {
+      controller.abort(reason);
+    } catch {
+      controller.abort();
+    }
+  };
+  for (const sig of list) {
+    sig.addEventListener?.("abort", onAbort, { once: true, signal: cleanupSignal });
+  }
+  return controller.signal;
+}
+const useStateKeyPrefix = "$s";
+function useState(...args) {
+  const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
+  if (typeof args[0] !== "string") {
+    args.unshift(autoKey);
+  }
+  const [_key, init] = args;
+  if (!_key || typeof _key !== "string") {
+    throw new TypeError("[nuxt] [useState] key must be a string: " + _key);
+  }
+  if (init !== void 0 && typeof init !== "function") {
+    throw new Error("[nuxt] [useState] init must be a function: " + init);
+  }
+  const key = useStateKeyPrefix + _key;
+  const nuxtApp = useNuxtApp();
+  const state = toRef(nuxtApp.payload.state, key);
+  if (init) {
+    nuxtApp._state[key] ??= { _default: init };
+  }
+  if (state.value === void 0 && init) {
+    const initialValue = init();
+    if (isRef(initialValue)) {
+      nuxtApp.payload.state[key] = initialValue;
+      return initialValue;
+    }
+    state.value = initialValue;
+  }
+  return state;
+}
+function useRequestEvent(nuxtApp) {
+  nuxtApp ||= useNuxtApp();
+  return nuxtApp.ssrContext?.event;
+}
+function useRequestHeaders(include) {
+  const event = useRequestEvent();
+  const _headers = event ? getRequestHeaders(event) : {};
+  if (!include || !event) {
+    return _headers;
+  }
+  const headers = /* @__PURE__ */ Object.create(null);
+  for (const _key of include) {
+    const key = _key.toLowerCase();
+    const header = _headers[key];
+    if (header) {
+      headers[key] = header;
+    }
+  }
+  return headers;
+}
+function useRequestFetch() {
+  return useRequestEvent()?.$fetch || globalThis.$fetch;
+}
+function generateOptionSegments(opts) {
+  const segments = [
+    toValue(opts.method)?.toUpperCase() || "GET",
+    toValue(opts.baseURL)
+  ];
+  for (const _obj of [opts.query || opts.params]) {
+    const obj = toValue(_obj);
+    if (!obj) {
+      continue;
+    }
+    const unwrapped = {};
+    for (const [key, value] of Object.entries(obj)) {
+      unwrapped[toValue(key)] = toValue(value);
+    }
+    segments.push(unwrapped);
+  }
+  if (opts.body) {
+    const value = toValue(opts.body);
+    if (!value) {
+      segments.push(hash(value));
+    } else if (value instanceof ArrayBuffer) {
+      segments.push(hash(Object.fromEntries([...new Uint8Array(value).entries()].map(([k, v]) => [k, v.toString()]))));
+    } else if (value instanceof FormData) {
+      const obj = {};
+      for (const entry2 of value.entries()) {
+        const [key, val] = entry2;
+        obj[key] = val instanceof File ? val.name : val;
+      }
+      segments.push(hash(obj));
+    } else if (isPlainObject(value)) {
+      segments.push(hash(reactive(value)));
+    } else {
+      try {
+        segments.push(hash(value));
+      } catch {
+        console.warn("[useFetch] Failed to hash body", value);
+      }
+    }
+  }
+  return segments;
+}
+const createUseFetch = defineKeyedFunctionFactory({
+  name: "createUseFetch",
+  factory(options = {}) {
+    function useFetch2(request, arg1, arg2) {
+      const [opts = {}, autoKey] = typeof arg1 === "string" ? [{}, arg1] : [arg1, arg2];
+      const _request = computed(() => toValue(request));
+      const key = computed(() => toValue(opts.key) || "$f" + hash([autoKey, typeof _request.value === "string" ? _request.value : "", ...generateOptionSegments(opts)]));
+      if (!opts.baseURL && typeof _request.value === "string" && (_request.value[0] === "/" && _request.value[1] === "/")) {
+        throw new Error('[nuxt] [useFetch] the request URL must not start with "//".');
+      }
+      const factoryOptions = typeof options === "function" ? options(opts) : options;
+      const {
+        server,
+        lazy,
+        default: defaultFn,
+        transform,
+        pick: pick2,
+        watch: watchSources,
+        immediate,
+        getCachedData,
+        deep,
+        dedupe,
+        timeout,
+        ...fetchOptions
+      } = {
+        ...typeof options === "function" ? {} : factoryOptions,
+        ...opts,
+        ...typeof options === "function" ? factoryOptions : {}
+      };
+      const _fetchOptions = reactive({
+        ...fetchDefaults,
+        ...fetchOptions,
+        cache: typeof fetchOptions.cache === "boolean" ? void 0 : fetchOptions.cache
+      });
+      const _asyncDataOptions = {
+        server,
+        lazy,
+        default: defaultFn,
+        transform,
+        pick: pick2,
+        immediate,
+        getCachedData,
+        deep,
+        dedupe,
+        timeout,
+        watch: watchSources === false ? [] : [...watchSources || [], _fetchOptions]
+      };
+      const asyncData = useAsyncData(watchSources === false ? key.value : key, (_, { signal }) => {
+        let _$fetch = opts.$fetch || globalThis.$fetch;
+        if (!opts.$fetch) {
+          const isLocalFetch = typeof _request.value === "string" && _request.value[0] === "/" && (!toValue(opts.baseURL) || toValue(opts.baseURL)[0] === "/");
+          if (isLocalFetch) {
+            _$fetch = useRequestFetch();
+          }
+        }
+        return _$fetch(_request.value, { signal, ..._fetchOptions });
+      }, _asyncDataOptions);
+      return asyncData;
+    }
+    return useFetch2;
+  }
+});
+const useFetch = createUseFetch.__nuxt_factory();
+createUseFetch.__nuxt_factory({
+  lazy: true,
+  // @ts-expect-error private property
+  _functionName: "useLazyFetch"
+});
+const firstNonUndefined = (...args) => args.find((arg) => arg !== void 0);
+// @__NO_SIDE_EFFECTS__
+function defineNuxtLink(options) {
+  const componentName = options.componentName || "NuxtLink";
+  function isHashLinkWithoutHashMode(link) {
+    return typeof link === "string" && link.startsWith("#");
+  }
+  function resolveTrailingSlashBehavior(to, resolve, trailingSlash) {
+    const effectiveTrailingSlash = trailingSlash ?? options.trailingSlash;
+    if (!to || effectiveTrailingSlash !== "append" && effectiveTrailingSlash !== "remove") {
+      return to;
+    }
+    if (typeof to === "string") {
+      return applyTrailingSlashBehavior(to, effectiveTrailingSlash);
+    }
+    const path = "path" in to && to.path !== void 0 ? to.path : resolve(to).path;
+    const resolvedPath = {
+      ...to,
+      name: void 0,
+      // named routes would otherwise always override trailing slash behavior
+      path: applyTrailingSlashBehavior(path, effectiveTrailingSlash)
+    };
+    return resolvedPath;
+  }
+  function useNuxtLink(props) {
+    const router = useRouter();
+    const config = /* @__PURE__ */ useRuntimeConfig();
+    const hasTarget = computed(() => !!unref(props.target) && unref(props.target) !== "_self");
+    const isAbsoluteUrl = computed(() => {
+      const path = unref(props.to) || unref(props.href) || "";
+      return typeof path === "string" && hasProtocol(path, { acceptRelative: true });
+    });
+    const builtinRouterLink = resolveComponent("RouterLink");
+    const useBuiltinLink = builtinRouterLink && typeof builtinRouterLink !== "string" ? builtinRouterLink.useLink : void 0;
+    const isExternal = computed(() => {
+      if (unref(props.external)) {
+        return true;
+      }
+      const path = unref(props.to) || unref(props.href) || "";
+      if (typeof path === "object") {
+        return false;
+      }
+      return path === "" || isAbsoluteUrl.value;
+    });
+    const to = computed(() => {
+      const path = unref(props.to) || unref(props.href) || "";
+      if (isExternal.value) {
+        return path;
+      }
+      return resolveTrailingSlashBehavior(path, router.resolve, unref(props.trailingSlash));
+    });
+    const link = isExternal.value ? void 0 : useBuiltinLink?.({ ...props, to, viewTransition: unref(props.viewTransition) });
+    const href = computed(() => {
+      const effectiveTrailingSlash = unref(props.trailingSlash) ?? options.trailingSlash;
+      if (!to.value || isAbsoluteUrl.value || isHashLinkWithoutHashMode(to.value)) {
+        return to.value;
+      }
+      if (isExternal.value) {
+        const path = typeof to.value === "object" && "path" in to.value ? resolveRouteObject(to.value) : to.value;
+        const href2 = typeof path === "object" ? router.resolve(path).href : path;
+        return applyTrailingSlashBehavior(href2, effectiveTrailingSlash);
+      }
+      if (typeof to.value === "object") {
+        return router.resolve(to.value)?.href ?? null;
+      }
+      return applyTrailingSlashBehavior(joinURL(config.app.baseURL, to.value), effectiveTrailingSlash);
+    });
+    return {
+      to,
+      hasTarget,
+      isAbsoluteUrl,
+      isExternal,
+      //
+      href,
+      isActive: link?.isActive ?? computed(() => to.value === router.currentRoute.value.path),
+      isExactActive: link?.isExactActive ?? computed(() => to.value === router.currentRoute.value.path),
+      route: link?.route ?? computed(() => router.resolve(to.value)),
+      async navigate(_e) {
+        await navigateTo(href.value, { replace: unref(props.replace), external: isExternal.value || hasTarget.value });
+      }
+    };
+  }
+  return defineComponent({
+    name: componentName,
+    props: {
+      // Routing
+      to: {
+        type: [String, Object],
+        default: void 0,
+        required: false
+      },
+      href: {
+        type: [String, Object],
+        default: void 0,
+        required: false
+      },
+      // Attributes
+      target: {
+        type: String,
+        default: void 0,
+        required: false
+      },
+      rel: {
+        type: String,
+        default: void 0,
+        required: false
+      },
+      noRel: {
+        type: Boolean,
+        default: void 0,
+        required: false
+      },
+      // Prefetching
+      prefetch: {
+        type: Boolean,
+        default: void 0,
+        required: false
+      },
+      prefetchOn: {
+        type: [String, Object],
+        default: void 0,
+        required: false
+      },
+      noPrefetch: {
+        type: Boolean,
+        default: void 0,
+        required: false
+      },
+      // Styling
+      activeClass: {
+        type: String,
+        default: void 0,
+        required: false
+      },
+      exactActiveClass: {
+        type: String,
+        default: void 0,
+        required: false
+      },
+      prefetchedClass: {
+        type: String,
+        default: void 0,
+        required: false
+      },
+      // Vue Router's `<RouterLink>` additional props
+      replace: {
+        type: Boolean,
+        default: void 0,
+        required: false
+      },
+      ariaCurrentValue: {
+        type: String,
+        default: void 0,
+        required: false
+      },
+      // Edge cases handling
+      external: {
+        type: Boolean,
+        default: void 0,
+        required: false
+      },
+      // Slot API
+      custom: {
+        type: Boolean,
+        default: void 0,
+        required: false
+      },
+      // Behavior
+      trailingSlash: {
+        type: String,
+        default: void 0,
+        required: false
+      }
+    },
+    useLink: useNuxtLink,
+    setup(props, { slots }) {
+      const router = useRouter();
+      const { to, href, navigate, isExternal, hasTarget, isAbsoluteUrl } = useNuxtLink(props);
+      shallowRef(false);
+      const el = void 0;
+      const elRef = void 0;
+      async function prefetch(nuxtApp = useNuxtApp()) {
+        {
+          return;
+        }
+      }
+      return () => {
+        if (!isExternal.value && !hasTarget.value && !isHashLinkWithoutHashMode(to.value)) {
+          const routerLinkProps = {
+            ref: elRef,
+            to: to.value,
+            activeClass: props.activeClass || options.activeClass,
+            exactActiveClass: props.exactActiveClass || options.exactActiveClass,
+            replace: props.replace,
+            ariaCurrentValue: props.ariaCurrentValue,
+            custom: props.custom
+          };
+          if (!props.custom) {
+            routerLinkProps.rel = props.rel || void 0;
+          }
+          return h(
+            resolveComponent("RouterLink"),
+            routerLinkProps,
+            slots.default
+          );
+        }
+        const target = props.target || null;
+        const rel = firstNonUndefined(
+          // converts `""` to `null` to prevent the attribute from being added as empty (`rel=""`)
+          props.noRel ? "" : props.rel,
+          options.externalRelAttribute,
+          /*
+          * A fallback rel of `noopener noreferrer` is applied for external links or links that open in a new tab.
+          * This solves a reverse tabnapping security flaw in browsers pre-2021 as well as improving privacy.
+          */
+          isAbsoluteUrl.value || hasTarget.value ? "noopener noreferrer" : ""
+        ) || null;
+        if (props.custom) {
+          if (!slots.default) {
+            return null;
+          }
+          return slots.default({
+            href: href.value,
+            navigate,
+            prefetch,
+            get route() {
+              if (!href.value) {
+                return void 0;
+              }
+              const url = new URL(href.value, "http://localhost");
+              return {
+                path: url.pathname,
+                fullPath: url.pathname,
+                get query() {
+                  return parseQuery(url.search);
+                },
+                hash: url.hash,
+                params: {},
+                name: void 0,
+                matched: [],
+                redirectedFrom: void 0,
+                meta: {},
+                href: href.value
+              };
+            },
+            rel,
+            target,
+            isExternal: isExternal.value || hasTarget.value,
+            isActive: false,
+            isExactActive: false
+          });
+        }
+        return h("a", {
+          ref: el,
+          href: href.value || null,
+          // converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
+          rel,
+          target,
+          onClick: async (event) => {
+            if (isExternal.value || hasTarget.value) {
+              return;
+            }
+            event.preventDefault();
+            try {
+              const encodedHref = encodeRoutePath(href.value);
+              return await (props.replace ? router.replace(encodedHref) : router.push(encodedHref));
+            } finally {
+            }
+          }
+        }, slots.default?.());
+      };
+    }
+  });
+}
+const __nuxt_component_0$5 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+function applyTrailingSlashBehavior(to, trailingSlash) {
+  const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
+  const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
+  if (hasProtocolDifferentFromHttp) {
+    return to;
+  }
+  return normalizeFn(to, true);
+}
 const cfg0 = defineAppConfig({
   ui: {
     colors: {
@@ -1248,6 +2246,42 @@ function useAppConfig() {
   nuxtApp._appConfig ||= klona(appConfig);
   return nuxtApp._appConfig;
 }
+const plugin = /* @__PURE__ */ defineNuxtPlugin({
+  name: "pinia",
+  setup(nuxtApp) {
+    const pinia = createPinia();
+    nuxtApp.vueApp.use(pinia);
+    setActivePinia(pinia);
+    if (nuxtApp.payload && nuxtApp.payload.pinia) {
+      pinia.state.value = nuxtApp.payload.pinia;
+    }
+    return {
+      provide: {
+        pinia
+      }
+    };
+  },
+  hooks: {
+    "app:rendered"() {
+      const nuxtApp = useNuxtApp();
+      nuxtApp.payload.pinia = toRaw(nuxtApp.$pinia).state.value;
+      setActivePinia(void 0);
+    }
+  }
+});
+const LazyIcon = defineAsyncComponent(() => Promise.resolve().then(() => index).then((r) => r["default"] || r.default || r));
+const lazyGlobalComponents = [
+  ["Icon", LazyIcon]
+];
+const components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8 = /* @__PURE__ */ defineNuxtPlugin({
+  name: "nuxt:global-components",
+  setup(nuxtApp) {
+    for (const [name, component] of lazyGlobalComponents) {
+      nuxtApp.vueApp.component(name, component);
+      nuxtApp.vueApp.component("Lazy" + name, component);
+    }
+  }
+});
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 function getColor(color, shade) {
   if (color in colors && typeof colors[color] === "object" && shade in colors[color]) {
@@ -1290,55 +2324,6 @@ const colors_E7kSti5pGZ28QhUUurq6gGRU3l65WuXO_KJC3GQgzFo = /* @__PURE__ */ defin
   useHead(headData);
 });
 const preference = "system";
-const useStateKeyPrefix = "$s";
-function useState(...args) {
-  const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
-  if (typeof args[0] !== "string") {
-    args.unshift(autoKey);
-  }
-  const [_key, init] = args;
-  if (!_key || typeof _key !== "string") {
-    throw new TypeError("[nuxt] [useState] key must be a string: " + _key);
-  }
-  if (init !== void 0 && typeof init !== "function") {
-    throw new Error("[nuxt] [useState] init must be a function: " + init);
-  }
-  const key = useStateKeyPrefix + _key;
-  const nuxtApp = useNuxtApp();
-  const state = toRef(nuxtApp.payload.state, key);
-  if (state.value === void 0 && init) {
-    const initialValue = init();
-    if (isRef(initialValue)) {
-      nuxtApp.payload.state[key] = initialValue;
-      return initialValue;
-    }
-    state.value = initialValue;
-  }
-  return state;
-}
-function useRequestEvent(nuxtApp) {
-  nuxtApp ||= useNuxtApp();
-  return nuxtApp.ssrContext?.event;
-}
-function useRequestHeaders(include) {
-  const event = useRequestEvent();
-  const _headers = event ? getRequestHeaders(event) : {};
-  if (!include || !event) {
-    return _headers;
-  }
-  const headers = /* @__PURE__ */ Object.create(null);
-  for (const _key of include) {
-    const key = _key.toLowerCase();
-    const header = _headers[key];
-    if (header) {
-      headers[key] = header;
-    }
-  }
-  return headers;
-}
-function useRequestFetch() {
-  return useRequestEvent()?.$fetch || globalThis.$fetch;
-}
 const plugin_server_9Ca9_HhnjAGwBWpwAydRauMHxWoxTDY60BrArRnXN_A = /* @__PURE__ */ defineNuxtPlugin((nuxtApp) => {
   const colorMode = nuxtApp.ssrContext?.islandContext ? ref({}) : useState("color-mode", () => reactive({
     preference,
@@ -1409,9 +2394,11 @@ const prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk = /* @__PURE_
   }
 });
 const plugins = [
+  payloadPlugin,
   unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU,
-  plugin,
+  plugin$1,
   revive_payload_server_MVtmlZaQpj6ApFmshWfUWl5PehCebzaBf2NuRMiIbms,
+  plugin,
   components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8,
   colors_E7kSti5pGZ28QhUUurq6gGRU3l65WuXO_KJC3GQgzFo,
   plugin_server_9Ca9_HhnjAGwBWpwAydRauMHxWoxTDY60BrArRnXN_A,
@@ -1636,7 +2623,7 @@ function useToast() {
   const max = inject(toastMaxInjectionKey, void 0);
   const running = ref(false);
   const queue = [];
-  const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  const generateId2 = () => `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
   async function processQueue() {
     if (running.value || queue.length === 0) {
       return;
@@ -1651,7 +2638,7 @@ function useToast() {
   }
   function add(toast) {
     const body = {
-      id: generateId(),
+      id: generateId2(),
       open: true,
       ...toast
     };
@@ -1836,324 +2823,6 @@ const NuxtIconCss = /* @__PURE__ */ defineComponent({
     return () => h("span", { class: ["iconify", cssClass.value] });
   }
 });
-defineComponent({
-  name: "ServerPlaceholder",
-  render() {
-    return createElementBlock("div");
-  }
-});
-const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
-defineComponent({
-  name: "ClientOnly",
-  inheritAttrs: false,
-  props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
-  ...false,
-  setup(props, { slots, attrs }) {
-    const mounted = shallowRef(false);
-    const vm = getCurrentInstance();
-    if (vm) {
-      vm._nuxtClientOnly = true;
-    }
-    provide(clientOnlySymbol, true);
-    return () => {
-      if (mounted.value) {
-        const vnodes = slots.default?.();
-        if (vnodes && vnodes.length === 1) {
-          return [cloneVNode(vnodes[0], attrs)];
-        }
-        return vnodes;
-      }
-      const slot = slots.fallback || slots.placeholder;
-      if (slot) {
-        return h(slot);
-      }
-      const fallbackStr = props.fallback || props.placeholder || "";
-      const fallbackTag = props.fallbackTag || props.placeholderTag || "span";
-      return createElementBlock(fallbackTag, attrs, fallbackStr);
-    };
-  }
-});
-function useAsyncData(...args) {
-  const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
-  if (_isAutoKeyNeeded(args[0], args[1])) {
-    args.unshift(autoKey);
-  }
-  let [_key, _handler, options = {}] = args;
-  const key = computed(() => toValue(_key));
-  if (typeof key.value !== "string") {
-    throw new TypeError("[nuxt] [useAsyncData] key must be a string.");
-  }
-  if (typeof _handler !== "function") {
-    throw new TypeError("[nuxt] [useAsyncData] handler must be a function.");
-  }
-  const nuxtApp = useNuxtApp();
-  options.server ??= true;
-  options.default ??= getDefault;
-  options.getCachedData ??= getDefaultCachedData;
-  options.lazy ??= false;
-  options.immediate ??= true;
-  options.deep ??= asyncDataDefaults.deep;
-  options.dedupe ??= "cancel";
-  options._functionName || "useAsyncData";
-  nuxtApp._asyncData[key.value];
-  function createInitialFetch() {
-    const initialFetchOptions = { cause: "initial", dedupe: options.dedupe };
-    if (!nuxtApp._asyncData[key.value]?._init) {
-      initialFetchOptions.cachedData = options.getCachedData(key.value, nuxtApp, { cause: "initial" });
-      nuxtApp._asyncData[key.value] = createAsyncData(nuxtApp, key.value, _handler, options, initialFetchOptions.cachedData);
-    }
-    return () => nuxtApp._asyncData[key.value].execute(initialFetchOptions);
-  }
-  const initialFetch = createInitialFetch();
-  const asyncData = nuxtApp._asyncData[key.value];
-  asyncData._deps++;
-  const fetchOnServer = options.server !== false && nuxtApp.payload.serverRendered;
-  if (fetchOnServer && options.immediate) {
-    const promise = initialFetch();
-    if (getCurrentInstance()) {
-      onServerPrefetch(() => promise);
-    } else {
-      nuxtApp.hook("app:created", async () => {
-        await promise;
-      });
-    }
-  }
-  const asyncReturn = {
-    data: writableComputedRef(() => nuxtApp._asyncData[key.value]?.data),
-    pending: writableComputedRef(() => nuxtApp._asyncData[key.value]?.pending),
-    status: writableComputedRef(() => nuxtApp._asyncData[key.value]?.status),
-    error: writableComputedRef(() => nuxtApp._asyncData[key.value]?.error),
-    refresh: (...args2) => {
-      if (!nuxtApp._asyncData[key.value]?._init) {
-        const initialFetch2 = createInitialFetch();
-        return initialFetch2();
-      }
-      return nuxtApp._asyncData[key.value].execute(...args2);
-    },
-    execute: (...args2) => asyncReturn.refresh(...args2),
-    clear: () => {
-      const entry2 = nuxtApp._asyncData[key.value];
-      if (entry2?._abortController) {
-        try {
-          entry2._abortController.abort(new DOMException("AsyncData aborted by user.", "AbortError"));
-        } finally {
-          entry2._abortController = void 0;
-        }
-      }
-      clearNuxtDataByKey(nuxtApp, key.value);
-    }
-  };
-  const asyncDataPromise = Promise.resolve(nuxtApp._asyncDataPromises[key.value]).then(() => asyncReturn);
-  Object.assign(asyncDataPromise, asyncReturn);
-  return asyncDataPromise;
-}
-function writableComputedRef(getter) {
-  return computed({
-    get() {
-      return getter()?.value;
-    },
-    set(value) {
-      const ref2 = getter();
-      if (ref2) {
-        ref2.value = value;
-      }
-    }
-  });
-}
-function _isAutoKeyNeeded(keyOrFetcher, fetcher) {
-  if (typeof keyOrFetcher === "string") {
-    return false;
-  }
-  if (typeof keyOrFetcher === "object" && keyOrFetcher !== null) {
-    return false;
-  }
-  if (typeof keyOrFetcher === "function" && typeof fetcher === "function") {
-    return false;
-  }
-  return true;
-}
-function clearNuxtDataByKey(nuxtApp, key) {
-  if (key in nuxtApp.payload.data) {
-    nuxtApp.payload.data[key] = void 0;
-  }
-  if (key in nuxtApp.payload._errors) {
-    nuxtApp.payload._errors[key] = void 0;
-  }
-  if (nuxtApp._asyncData[key]) {
-    nuxtApp._asyncData[key].data.value = unref(nuxtApp._asyncData[key]._default());
-    nuxtApp._asyncData[key].error.value = void 0;
-    nuxtApp._asyncData[key].status.value = "idle";
-  }
-  if (key in nuxtApp._asyncDataPromises) {
-    nuxtApp._asyncDataPromises[key] = void 0;
-  }
-}
-function pick(obj, keys) {
-  const newObj = {};
-  for (const key of keys) {
-    newObj[key] = obj[key];
-  }
-  return newObj;
-}
-function createAsyncData(nuxtApp, key, _handler, options, initialCachedData) {
-  nuxtApp.payload._errors[key] ??= void 0;
-  const hasCustomGetCachedData = options.getCachedData !== getDefaultCachedData;
-  const handler = _handler ;
-  const _ref = options.deep ? ref : shallowRef;
-  const hasCachedData = initialCachedData !== void 0;
-  const unsubRefreshAsyncData = nuxtApp.hook("app:data:refresh", async (keys) => {
-    if (!keys || keys.includes(key)) {
-      await asyncData.execute({ cause: "refresh:hook" });
-    }
-  });
-  const asyncData = {
-    data: _ref(hasCachedData ? initialCachedData : options.default()),
-    pending: computed(() => asyncData.status.value === "pending"),
-    error: toRef(nuxtApp.payload._errors, key),
-    status: shallowRef("idle"),
-    execute: (...args) => {
-      const [_opts, newValue = void 0] = args;
-      const opts = _opts && newValue === void 0 && typeof _opts === "object" ? _opts : {};
-      if (nuxtApp._asyncDataPromises[key]) {
-        if ((opts.dedupe ?? options.dedupe) === "defer") {
-          return nuxtApp._asyncDataPromises[key];
-        }
-      }
-      {
-        const cachedData = "cachedData" in opts ? opts.cachedData : options.getCachedData(key, nuxtApp, { cause: opts.cause ?? "refresh:manual" });
-        if (cachedData !== void 0) {
-          nuxtApp.payload.data[key] = asyncData.data.value = cachedData;
-          asyncData.error.value = void 0;
-          asyncData.status.value = "success";
-          return Promise.resolve(cachedData);
-        }
-      }
-      if (asyncData._abortController) {
-        asyncData._abortController.abort(new DOMException("AsyncData request cancelled by deduplication", "AbortError"));
-      }
-      asyncData._abortController = new AbortController();
-      asyncData.status.value = "pending";
-      const cleanupController = new AbortController();
-      const promise = new Promise(
-        (resolve, reject) => {
-          try {
-            const timeout = opts.timeout ?? options.timeout;
-            const mergedSignal = mergeAbortSignals([asyncData._abortController?.signal, opts?.signal], cleanupController.signal, timeout);
-            if (mergedSignal.aborted) {
-              const reason = mergedSignal.reason;
-              reject(reason instanceof Error ? reason : new DOMException(String(reason ?? "Aborted"), "AbortError"));
-              return;
-            }
-            mergedSignal.addEventListener("abort", () => {
-              const reason = mergedSignal.reason;
-              reject(reason instanceof Error ? reason : new DOMException(String(reason ?? "Aborted"), "AbortError"));
-            }, { once: true, signal: cleanupController.signal });
-            return Promise.resolve(handler(nuxtApp, { signal: mergedSignal })).then(resolve, reject);
-          } catch (err) {
-            reject(err);
-          }
-        }
-      ).then(async (_result) => {
-        let result = _result;
-        if (options.transform) {
-          result = await options.transform(_result);
-        }
-        if (options.pick) {
-          result = pick(result, options.pick);
-        }
-        nuxtApp.payload.data[key] = result;
-        asyncData.data.value = result;
-        asyncData.error.value = void 0;
-        asyncData.status.value = "success";
-      }).catch((error) => {
-        if (nuxtApp._asyncDataPromises[key] && nuxtApp._asyncDataPromises[key] !== promise) {
-          return nuxtApp._asyncDataPromises[key];
-        }
-        if (asyncData._abortController?.signal.aborted) {
-          return nuxtApp._asyncDataPromises[key];
-        }
-        if (typeof DOMException !== "undefined" && error instanceof DOMException && error.name === "AbortError") {
-          asyncData.status.value = "idle";
-          return nuxtApp._asyncDataPromises[key];
-        }
-        asyncData.error.value = createError(error);
-        asyncData.data.value = unref(options.default());
-        asyncData.status.value = "error";
-      }).finally(() => {
-        cleanupController.abort();
-        delete nuxtApp._asyncDataPromises[key];
-      });
-      nuxtApp._asyncDataPromises[key] = promise;
-      return nuxtApp._asyncDataPromises[key];
-    },
-    _execute: debounce((...args) => asyncData.execute(...args), 0, { leading: true }),
-    _default: options.default,
-    _deps: 0,
-    _init: true,
-    _hash: void 0,
-    _off: () => {
-      unsubRefreshAsyncData();
-      if (nuxtApp._asyncData[key]?._init) {
-        nuxtApp._asyncData[key]._init = false;
-      }
-      if (!hasCustomGetCachedData) {
-        nextTick(() => {
-          if (!nuxtApp._asyncData[key]?._init) {
-            clearNuxtDataByKey(nuxtApp, key);
-            asyncData.execute = () => Promise.resolve();
-          }
-        });
-      }
-    }
-  };
-  return asyncData;
-}
-const getDefault = () => void 0;
-const getDefaultCachedData = (key, nuxtApp, ctx) => {
-  if (nuxtApp.isHydrating) {
-    return nuxtApp.payload.data[key];
-  }
-  if (ctx.cause !== "refresh:manual" && ctx.cause !== "refresh:hook") {
-    return nuxtApp.static.data[key];
-  }
-};
-function mergeAbortSignals(signals, cleanupSignal, timeout) {
-  const list = signals.filter((s) => !!s);
-  if (typeof timeout === "number" && timeout >= 0) {
-    const timeoutSignal = AbortSignal.timeout?.(timeout);
-    if (timeoutSignal) {
-      list.push(timeoutSignal);
-    }
-  }
-  if (AbortSignal.any) {
-    return AbortSignal.any(list);
-  }
-  const controller = new AbortController();
-  for (const sig of list) {
-    if (sig.aborted) {
-      const reason = sig.reason ?? new DOMException("Aborted", "AbortError");
-      try {
-        controller.abort(reason);
-      } catch {
-        controller.abort();
-      }
-      return controller.signal;
-    }
-  }
-  const onAbort = () => {
-    const abortedSignal = list.find((s) => s.aborted);
-    const reason = abortedSignal?.reason ?? new DOMException("Aborted", "AbortError");
-    try {
-      controller.abort(reason);
-    } catch {
-      controller.abort();
-    }
-  };
-  for (const sig of list) {
-    sig.addEventListener?.("abort", onAbort, { once: true, signal: cleanupSignal });
-  }
-  return controller.signal;
-}
 const NuxtIconSvg = /* @__PURE__ */ defineComponent({
   name: "NuxtIconSvg",
   props: {
@@ -2242,7 +2911,7 @@ const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePropert
   __proto__: null,
   default: __nuxt_component_0$4
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$u = {
+const _sfc_main$C = {
   __name: "UIcon",
   __ssrInlineRender: true,
   props: {
@@ -2264,11 +2933,11 @@ const _sfc_main$u = {
     };
   }
 };
-const _sfc_setup$u = _sfc_main$u.setup;
-_sfc_main$u.setup = (props, ctx) => {
+const _sfc_setup$C = _sfc_main$C.setup;
+_sfc_main$C.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
-  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
+  return _sfc_setup$C ? _sfc_setup$C(props, ctx) : void 0;
 };
 const ImageComponent = "img";
 const avatarGroupInjectionKey = /* @__PURE__ */ Symbol("nuxt-ui.avatar-group");
@@ -2347,7 +3016,7 @@ const theme$8 = {
     "position": "top-right"
   }
 };
-const _sfc_main$t = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$B = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UChip",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -2432,11 +3101,11 @@ const _sfc_main$t = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$t = _sfc_main$t.setup;
-_sfc_main$t.setup = (props, ctx) => {
+const _sfc_setup$B = _sfc_main$B.setup;
+_sfc_main$B.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
-  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
+  return _sfc_setup$B ? _sfc_setup$B(props, ctx) : void 0;
 };
 const theme$7 = {
   "slots": {
@@ -2480,7 +3149,7 @@ const theme$7 = {
     "size": "md"
   }
 };
-const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$A = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UAvatar",
   __ssrInlineRender: true,
   props: {
@@ -2531,7 +3200,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       error.value = true;
     }
     return (_ctx, _push, _parent, _attrs) => {
-      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$t : unref(Primitive)), mergeProps({
+      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$B : unref(Primitive)), mergeProps({
         as: as.value.root
       }, props.chip ? typeof props.chip === "object" ? { inset: true, ...props.chip } : { inset: true } : {}, {
         "data-slot": "root",
@@ -2557,7 +3226,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   if (_push3) {
                     ssrRenderSlot(_ctx.$slots, "default", {}, () => {
                       if (__props.icon) {
-                        _push3(ssrRenderComponent(_sfc_main$u, {
+                        _push3(ssrRenderComponent(_sfc_main$C, {
                           name: __props.icon,
                           "data-slot": "icon",
                           class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -2569,7 +3238,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   } else {
                     return [
                       renderSlot(_ctx.$slots, "default", {}, () => [
-                        __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
+                        __props.icon ? (openBlock(), createBlock(_sfc_main$C, {
                           key: 0,
                           name: __props.icon,
                           "data-slot": "icon",
@@ -2601,7 +3270,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
               }), null, 16, ["src", "alt", "width", "height", "class"])) : (openBlock(), createBlock(unref(Slot), mergeProps({ key: 1 }, _ctx.$attrs), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "default", {}, () => [
-                    __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
+                    __props.icon ? (openBlock(), createBlock(_sfc_main$C, {
                       key: 0,
                       name: __props.icon,
                       "data-slot": "icon",
@@ -2623,11 +3292,11 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$s = _sfc_main$s.setup;
-_sfc_main$s.setup = (props, ctx) => {
+const _sfc_setup$A = _sfc_main$A.setup;
+_sfc_main$A.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
-  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
+  return _sfc_setup$A ? _sfc_setup$A(props, ctx) : void 0;
 };
 function useComponentIcons(componentProps) {
   const appConfig2 = useAppConfig();
@@ -2723,290 +3392,7 @@ function isPartiallyEqual(item1, item2) {
   const item2Filtered = Object.fromEntries(Object.entries(item2).filter(([key]) => !diffedKeys.has(key)));
   return isEqual(item1Filtered, item2Filtered);
 }
-const firstNonUndefined = (...args) => args.find((arg) => arg !== void 0);
-// @__NO_SIDE_EFFECTS__
-function defineNuxtLink(options) {
-  const componentName = options.componentName || "NuxtLink";
-  function isHashLinkWithoutHashMode(link) {
-    return typeof link === "string" && link.startsWith("#");
-  }
-  function resolveTrailingSlashBehavior(to, resolve, trailingSlash) {
-    const effectiveTrailingSlash = trailingSlash ?? options.trailingSlash;
-    if (!to || effectiveTrailingSlash !== "append" && effectiveTrailingSlash !== "remove") {
-      return to;
-    }
-    if (typeof to === "string") {
-      return applyTrailingSlashBehavior(to, effectiveTrailingSlash);
-    }
-    const path = "path" in to && to.path !== void 0 ? to.path : resolve(to).path;
-    const resolvedPath = {
-      ...to,
-      name: void 0,
-      // named routes would otherwise always override trailing slash behavior
-      path: applyTrailingSlashBehavior(path, effectiveTrailingSlash)
-    };
-    return resolvedPath;
-  }
-  function useNuxtLink(props) {
-    const router = useRouter();
-    const config = /* @__PURE__ */ useRuntimeConfig();
-    const hasTarget = computed(() => !!props.target && props.target !== "_self");
-    const isAbsoluteUrl = computed(() => {
-      const path = props.to || props.href || "";
-      return typeof path === "string" && hasProtocol(path, { acceptRelative: true });
-    });
-    const builtinRouterLink = resolveComponent("RouterLink");
-    const useBuiltinLink = builtinRouterLink && typeof builtinRouterLink !== "string" ? builtinRouterLink.useLink : void 0;
-    const isExternal = computed(() => {
-      if (props.external) {
-        return true;
-      }
-      const path = props.to || props.href || "";
-      if (typeof path === "object") {
-        return false;
-      }
-      return path === "" || isAbsoluteUrl.value;
-    });
-    const to = computed(() => {
-      const path = props.to || props.href || "";
-      if (isExternal.value) {
-        return path;
-      }
-      return resolveTrailingSlashBehavior(path, router.resolve, props.trailingSlash);
-    });
-    const link = isExternal.value ? void 0 : useBuiltinLink?.({ ...props, to });
-    const href = computed(() => {
-      const effectiveTrailingSlash = props.trailingSlash ?? options.trailingSlash;
-      if (!to.value || isAbsoluteUrl.value || isHashLinkWithoutHashMode(to.value)) {
-        return to.value;
-      }
-      if (isExternal.value) {
-        const path = typeof to.value === "object" && "path" in to.value ? resolveRouteObject(to.value) : to.value;
-        const href2 = typeof path === "object" ? router.resolve(path).href : path;
-        return applyTrailingSlashBehavior(href2, effectiveTrailingSlash);
-      }
-      if (typeof to.value === "object") {
-        return router.resolve(to.value)?.href ?? null;
-      }
-      return applyTrailingSlashBehavior(joinURL(config.app.baseURL, to.value), effectiveTrailingSlash);
-    });
-    return {
-      to,
-      hasTarget,
-      isAbsoluteUrl,
-      isExternal,
-      //
-      href,
-      isActive: link?.isActive ?? computed(() => to.value === router.currentRoute.value.path),
-      isExactActive: link?.isExactActive ?? computed(() => to.value === router.currentRoute.value.path),
-      route: link?.route ?? computed(() => router.resolve(to.value)),
-      async navigate(_e) {
-        await navigateTo(href.value, { replace: props.replace, external: isExternal.value || hasTarget.value });
-      }
-    };
-  }
-  return defineComponent({
-    name: componentName,
-    props: {
-      // Routing
-      to: {
-        type: [String, Object],
-        default: void 0,
-        required: false
-      },
-      href: {
-        type: [String, Object],
-        default: void 0,
-        required: false
-      },
-      // Attributes
-      target: {
-        type: String,
-        default: void 0,
-        required: false
-      },
-      rel: {
-        type: String,
-        default: void 0,
-        required: false
-      },
-      noRel: {
-        type: Boolean,
-        default: void 0,
-        required: false
-      },
-      // Prefetching
-      prefetch: {
-        type: Boolean,
-        default: void 0,
-        required: false
-      },
-      prefetchOn: {
-        type: [String, Object],
-        default: void 0,
-        required: false
-      },
-      noPrefetch: {
-        type: Boolean,
-        default: void 0,
-        required: false
-      },
-      // Styling
-      activeClass: {
-        type: String,
-        default: void 0,
-        required: false
-      },
-      exactActiveClass: {
-        type: String,
-        default: void 0,
-        required: false
-      },
-      prefetchedClass: {
-        type: String,
-        default: void 0,
-        required: false
-      },
-      // Vue Router's `<RouterLink>` additional props
-      replace: {
-        type: Boolean,
-        default: void 0,
-        required: false
-      },
-      ariaCurrentValue: {
-        type: String,
-        default: void 0,
-        required: false
-      },
-      // Edge cases handling
-      external: {
-        type: Boolean,
-        default: void 0,
-        required: false
-      },
-      // Slot API
-      custom: {
-        type: Boolean,
-        default: void 0,
-        required: false
-      },
-      // Behavior
-      trailingSlash: {
-        type: String,
-        default: void 0,
-        required: false
-      }
-    },
-    useLink: useNuxtLink,
-    setup(props, { slots }) {
-      const router = useRouter();
-      const { to, href, navigate, isExternal, hasTarget, isAbsoluteUrl } = useNuxtLink(props);
-      shallowRef(false);
-      const el = void 0;
-      const elRef = void 0;
-      async function prefetch(nuxtApp = useNuxtApp()) {
-        {
-          return;
-        }
-      }
-      return () => {
-        if (!isExternal.value && !hasTarget.value && !isHashLinkWithoutHashMode(to.value)) {
-          const routerLinkProps = {
-            ref: elRef,
-            to: to.value,
-            activeClass: props.activeClass || options.activeClass,
-            exactActiveClass: props.exactActiveClass || options.exactActiveClass,
-            replace: props.replace,
-            ariaCurrentValue: props.ariaCurrentValue,
-            custom: props.custom
-          };
-          if (!props.custom) {
-            routerLinkProps.rel = props.rel || void 0;
-          }
-          return h(
-            resolveComponent("RouterLink"),
-            routerLinkProps,
-            slots.default
-          );
-        }
-        const target = props.target || null;
-        const rel = firstNonUndefined(
-          // converts `""` to `null` to prevent the attribute from being added as empty (`rel=""`)
-          props.noRel ? "" : props.rel,
-          options.externalRelAttribute,
-          /*
-          * A fallback rel of `noopener noreferrer` is applied for external links or links that open in a new tab.
-          * This solves a reverse tabnapping security flaw in browsers pre-2021 as well as improving privacy.
-          */
-          isAbsoluteUrl.value || hasTarget.value ? "noopener noreferrer" : ""
-        ) || null;
-        if (props.custom) {
-          if (!slots.default) {
-            return null;
-          }
-          return slots.default({
-            href: href.value,
-            navigate,
-            prefetch,
-            get route() {
-              if (!href.value) {
-                return void 0;
-              }
-              const url = new URL(href.value, "http://localhost");
-              return {
-                path: url.pathname,
-                fullPath: url.pathname,
-                get query() {
-                  return parseQuery(url.search);
-                },
-                hash: url.hash,
-                params: {},
-                name: void 0,
-                matched: [],
-                redirectedFrom: void 0,
-                meta: {},
-                href: href.value
-              };
-            },
-            rel,
-            target,
-            isExternal: isExternal.value || hasTarget.value,
-            isActive: false,
-            isExactActive: false
-          });
-        }
-        return h("a", {
-          ref: el,
-          href: href.value || null,
-          // converts `""` to `null` to prevent the attribute from being added as empty (`href=""`)
-          rel,
-          target,
-          onClick: async (event) => {
-            if (isExternal.value || hasTarget.value) {
-              return;
-            }
-            event.preventDefault();
-            try {
-              const encodedHref = encodeRoutePath(href.value);
-              return await (props.replace ? router.replace(encodedHref) : router.push(encodedHref));
-            } finally {
-            }
-          }
-        }, slots.default?.());
-      };
-    }
-  });
-}
-const __nuxt_component_0$3 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
-function applyTrailingSlashBehavior(to, trailingSlash) {
-  const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
-  const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
-  if (hasProtocolDifferentFromHttp) {
-    return to;
-  }
-  return normalizeFn(to, true);
-}
-const _sfc_main$r = {
+const _sfc_main$z = {
   __name: "ULinkBase",
   __ssrInlineRender: true,
   props: {
@@ -3070,11 +3456,11 @@ const _sfc_main$r = {
     };
   }
 };
-const _sfc_setup$r = _sfc_main$r.setup;
-_sfc_main$r.setup = (props, ctx) => {
+const _sfc_setup$z = _sfc_main$z.setup;
+_sfc_main$z.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
-  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
+  return _sfc_setup$z ? _sfc_setup$z(props, ctx) : void 0;
 };
 const theme$6 = {
   "base": "focus-visible:outline-primary",
@@ -3098,7 +3484,7 @@ const theme$6 = {
     }
   ]
 };
-const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$y = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "ULink",
   __ssrInlineRender: true,
   props: {
@@ -3175,7 +3561,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       return ui.value({ class: props.class, active, disabled: props.disabled });
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_NuxtLink = __nuxt_component_0$5;
       _push(ssrRenderComponent(_component_NuxtLink, mergeProps(unref(nuxtLinkProps), {
         to: to.value,
         custom: ""
@@ -3197,7 +3583,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
               }, null, _push2, _parent2, _scopeId);
             } else {
-              _push2(ssrRenderComponent(_sfc_main$r, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$z, mergeProps({
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -3241,7 +3627,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 target: rest.target,
                 isExternal: rest.isExternal,
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
-              })) : (openBlock(), createBlock(_sfc_main$r, mergeProps({ key: 1 }, {
+              })) : (openBlock(), createBlock(_sfc_main$z, mergeProps({ key: 1 }, {
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -3270,11 +3656,11 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$q = _sfc_main$q.setup;
-_sfc_main$q.setup = (props, ctx) => {
+const _sfc_setup$y = _sfc_main$y.setup;
+_sfc_main$y.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
-  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
+  return _sfc_setup$y ? _sfc_setup$y(props, ctx) : void 0;
 };
 const theme$5 = {
   "slots": {
@@ -3627,7 +4013,7 @@ const theme$5 = {
     "size": "md"
   }
 };
-const _sfc_main$p = {
+const _sfc_main$x = {
   __name: "UButton",
   __ssrInlineRender: true,
   props: {
@@ -3726,13 +4112,13 @@ const _sfc_main$p = {
       fieldGroup: orientation.value
     }));
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$q, mergeProps({
+      _push(ssrRenderComponent(_sfc_main$y, mergeProps({
         type: __props.type,
         disabled: __props.disabled || isLoading.value
       }, unref(omit)(unref(linkProps), ["type", "disabled", "onClick"]), { custom: "" }, _attrs), {
         default: withCtx(({ active, ...slotProps }, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_sfc_main$r, mergeProps(slotProps, {
+            _push2(ssrRenderComponent(_sfc_main$z, mergeProps(slotProps, {
               "data-slot": "base",
               class: ui.value.base({
                 class: [unref(uiProp)?.base, props.class],
@@ -3746,13 +4132,13 @@ const _sfc_main$p = {
                 if (_push3) {
                   ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
                     if (unref(isLeading) && unref(leadingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$u, {
+                      _push3(ssrRenderComponent(_sfc_main$C, {
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
                       }, null, _parent3, _scopeId2));
                     } else if (!!__props.avatar) {
-                      _push3(ssrRenderComponent(_sfc_main$s, mergeProps({
+                      _push3(ssrRenderComponent(_sfc_main$A, mergeProps({
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
                         "data-slot": "leadingAvatar",
@@ -3771,7 +4157,7 @@ const _sfc_main$p = {
                   }, _push3, _parent3, _scopeId2);
                   ssrRenderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => {
                     if (unref(isTrailing) && unref(trailingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$u, {
+                      _push3(ssrRenderComponent(_sfc_main$C, {
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
                         class: ui.value.trailingIcon({ class: unref(uiProp)?.trailingIcon, active })
@@ -3783,12 +4169,12 @@ const _sfc_main$p = {
                 } else {
                   return [
                     renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$C, {
                         key: 0,
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
+                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$A, mergeProps({
                         key: 1,
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
@@ -3804,7 +4190,7 @@ const _sfc_main$p = {
                       }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                     ]),
                     renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$C, {
                         key: 0,
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
@@ -3818,7 +4204,7 @@ const _sfc_main$p = {
             }, _parent2, _scopeId));
           } else {
             return [
-              createVNode(_sfc_main$r, mergeProps(slotProps, {
+              createVNode(_sfc_main$z, mergeProps(slotProps, {
                 "data-slot": "base",
                 class: ui.value.base({
                   class: [unref(uiProp)?.base, props.class],
@@ -3830,12 +4216,12 @@ const _sfc_main$p = {
               }), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$C, {
                       key: 0,
                       name: unref(leadingIconName),
                       "data-slot": "leadingIcon",
                       class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
+                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$A, mergeProps({
                       key: 1,
                       size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                     }, __props.avatar, {
@@ -3851,7 +4237,7 @@ const _sfc_main$p = {
                     }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                   ]),
                   renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$C, {
                       key: 0,
                       name: unref(trailingIconName),
                       "data-slot": "trailingIcon",
@@ -3869,11 +4255,11 @@ const _sfc_main$p = {
     };
   }
 };
-const _sfc_setup$p = _sfc_main$p.setup;
-_sfc_main$p.setup = (props, ctx) => {
+const _sfc_setup$x = _sfc_main$x.setup;
+_sfc_main$x.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
-  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
+  return _sfc_setup$x ? _sfc_setup$x(props, ctx) : void 0;
 };
 const theme$4 = {
   "slots": {
@@ -4133,7 +4519,7 @@ const theme$4 = {
     "size": "md"
   }
 };
-const _sfc_main$o = {
+const _sfc_main$w = {
   __name: "UProgress",
   __ssrInlineRender: true,
   props: {
@@ -4345,11 +4731,11 @@ const _sfc_main$o = {
     };
   }
 };
-const _sfc_setup$o = _sfc_main$o.setup;
-_sfc_main$o.setup = (props, ctx) => {
+const _sfc_setup$w = _sfc_main$w.setup;
+_sfc_main$w.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
-  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
+  return _sfc_setup$w ? _sfc_setup$w(props, ctx) : void 0;
 };
 const theme$3 = {
   "slots": {
@@ -4415,7 +4801,7 @@ const theme$3 = {
     "color": "primary"
   }
 };
-const _sfc_main$n = {
+const _sfc_main$v = {
   __name: "UToast",
   __ssrInlineRender: true,
   props: {
@@ -4470,14 +4856,14 @@ const _sfc_main$n = {
           if (_push2) {
             ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
               if (__props.avatar) {
-                _push2(ssrRenderComponent(_sfc_main$s, mergeProps({
+                _push2(ssrRenderComponent(_sfc_main$A, mergeProps({
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
                 }), null, _parent2, _scopeId));
               } else if (__props.icon) {
-                _push2(ssrRenderComponent(_sfc_main$u, {
+                _push2(ssrRenderComponent(_sfc_main$C, {
                   name: __props.icon,
                   "data-slot": "icon",
                   class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -4563,13 +4949,13 @@ const _sfc_main$n = {
                   }, {
                     default: withCtx((_, _push3, _parent3, _scopeId2) => {
                       if (_push3) {
-                        _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                        _push3(ssrRenderComponent(_sfc_main$x, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, _parent3, _scopeId2));
                       } else {
                         return [
-                          createVNode(_sfc_main$p, mergeProps({
+                          createVNode(_sfc_main$x, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -4601,13 +4987,13 @@ const _sfc_main$n = {
                     }, {
                       default: withCtx((_, _push3, _parent3, _scopeId2) => {
                         if (_push3) {
-                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$x, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, _parent3, _scopeId2));
                         } else {
                           return [
-                            createVNode(_sfc_main$p, mergeProps({
+                            createVNode(_sfc_main$x, mergeProps({
                               size: "xs",
                               color: __props.color
                             }, { ref_for: true }, action), null, 16, ["color"])
@@ -4628,7 +5014,7 @@ const _sfc_main$n = {
                     if (_push3) {
                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                         if (__props.close) {
-                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$x, mergeProps({
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
                             variant: "link",
@@ -4646,7 +5032,7 @@ const _sfc_main$n = {
                     } else {
                       return [
                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                          __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                          __props.close ? (openBlock(), createBlock(_sfc_main$x, mergeProps({
                             key: 0,
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
@@ -4672,7 +5058,7 @@ const _sfc_main$n = {
               _push2(`<!---->`);
             }
             if (__props.progress && open && remaining > 0 && duration) {
-              _push2(ssrRenderComponent(_sfc_main$o, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$w, mergeProps({
                 "model-value": remaining / duration * 100,
                 color: __props.color
               }, typeof __props.progress === "object" ? __props.progress : {}, {
@@ -4686,13 +5072,13 @@ const _sfc_main$n = {
           } else {
             return [
               renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                __props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
+                __props.avatar ? (openBlock(), createBlock(_sfc_main$A, mergeProps({
                   key: 0,
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
-                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
+                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$C, {
                   key: 1,
                   name: __props.icon,
                   "data-slot": "icon",
@@ -4746,7 +5132,7 @@ const _sfc_main$n = {
                         }, ["stop"])
                       }, {
                         default: withCtx(() => [
-                          createVNode(_sfc_main$p, mergeProps({
+                          createVNode(_sfc_main$x, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -4772,7 +5158,7 @@ const _sfc_main$n = {
                       }, ["stop"])
                     }, {
                       default: withCtx(() => [
-                        createVNode(_sfc_main$p, mergeProps({
+                        createVNode(_sfc_main$x, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, 16, ["color"])
@@ -4787,7 +5173,7 @@ const _sfc_main$n = {
                 }, {
                   default: withCtx(() => [
                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                      __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                      __props.close ? (openBlock(), createBlock(_sfc_main$x, mergeProps({
                         key: 0,
                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                         color: "neutral",
@@ -4804,7 +5190,7 @@ const _sfc_main$n = {
                   _: 3
                 })) : createCommentVNode("", true)
               ], 2)) : createCommentVNode("", true),
-              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$w, mergeProps({
                 key: 1,
                 "model-value": remaining / duration * 100,
                 color: __props.color
@@ -4821,11 +5207,11 @@ const _sfc_main$n = {
     };
   }
 };
-const _sfc_setup$n = _sfc_main$n.setup;
-_sfc_main$n.setup = (props, ctx) => {
+const _sfc_setup$v = _sfc_main$v.setup;
+_sfc_main$v.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
-  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
+  return _sfc_setup$v ? _sfc_setup$v(props, ctx) : void 0;
 };
 const theme$2 = {
   "slots": {
@@ -4905,7 +5291,7 @@ const theme$2 = {
 const __default__$1 = {
   name: "Toaster"
 };
-const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
+const _sfc_main$u = /* @__PURE__ */ Object.assign(__default__$1, {
   __ssrInlineRender: true,
   props: {
     position: { type: null, required: false },
@@ -4968,7 +5354,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
             ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
             _push2(`<!--[-->`);
             ssrRenderList(unref(toasts), (toast, index2) => {
-              _push2(ssrRenderComponent(_sfc_main$n, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$v, mergeProps({
                 key: toast.id,
                 ref_for: true,
                 ref_key: "refs",
@@ -5036,7 +5422,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
             return [
               renderSlot(_ctx.$slots, "default"),
               (openBlock(true), createBlock(Fragment, null, renderList(unref(toasts), (toast, index2) => {
-                return openBlock(), createBlock(_sfc_main$n, mergeProps({
+                return openBlock(), createBlock(_sfc_main$v, mergeProps({
                   key: toast.id,
                   ref_for: true,
                   ref_key: "refs",
@@ -5088,13 +5474,13 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
     };
   }
 });
-const _sfc_setup$m = _sfc_main$m.setup;
-_sfc_main$m.setup = (props, ctx) => {
+const _sfc_setup$u = _sfc_main$u.setup;
+_sfc_main$u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
-  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
+  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
 };
-const UToaster = Object.assign(_sfc_main$m, { __name: "UToaster" });
+const UToaster = Object.assign(_sfc_main$u, { __name: "UToaster" });
 function _useOverlay() {
   const overlays = shallowReactive([]);
   const create = (component, _options) => {
@@ -5179,7 +5565,7 @@ function _useOverlay() {
   };
 }
 const useOverlay = /* @__PURE__ */ createSharedComposable(_useOverlay);
-const _sfc_main$l = {
+const _sfc_main$t = {
   __name: "UOverlayProvider",
   __ssrInlineRender: true,
   setup(__props) {
@@ -5208,16 +5594,16 @@ const _sfc_main$l = {
     };
   }
 };
-const _sfc_setup$l = _sfc_main$l.setup;
-_sfc_main$l.setup = (props, ctx) => {
+const _sfc_setup$t = _sfc_main$t.setup;
+_sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
-  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
+  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
 const __default__ = {
   name: "App"
 };
-const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
+const _sfc_main$s = /* @__PURE__ */ Object.assign(__default__, {
   __ssrInlineRender: true,
   props: {
     tooltip: { type: Object, required: false },
@@ -5264,7 +5650,7 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
                   } else {
                     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
                   }
-                  _push3(ssrRenderComponent(_sfc_main$l, null, null, _parent3, _scopeId2));
+                  _push3(ssrRenderComponent(_sfc_main$t, null, null, _parent3, _scopeId2));
                 } else {
                   return [
                     __props.toaster !== null ? (openBlock(), createBlock(UToaster, mergeProps({ key: 0 }, toasterProps.value), {
@@ -5273,7 +5659,7 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
                       ]),
                       _: 3
                     }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                    createVNode(_sfc_main$l)
+                    createVNode(_sfc_main$t)
                   ];
                 }
               }),
@@ -5289,7 +5675,7 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
                     ]),
                     _: 3
                   }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                  createVNode(_sfc_main$l)
+                  createVNode(_sfc_main$t)
                 ]),
                 _: 3
               }, 16)
@@ -5301,13 +5687,13 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
     };
   }
 });
-const _sfc_setup$k = _sfc_main$k.setup;
-_sfc_main$k.setup = (props, ctx) => {
+const _sfc_setup$s = _sfc_main$s.setup;
+_sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/App.vue");
-  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
-const __nuxt_component_0$2 = Object.assign(_sfc_main$k, { __name: "UApp" });
+const __nuxt_component_0$3 = Object.assign(_sfc_main$s, { __name: "UApp" });
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -5315,7 +5701,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$j = {
+const _sfc_main$r = {
   __name: "DevGridOverlay",
   __ssrInlineRender: true,
   props: {
@@ -5371,13 +5757,13 @@ const _sfc_main$j = {
     };
   }
 };
-const _sfc_setup$j = _sfc_main$j.setup;
-_sfc_main$j.setup = (props, ctx) => {
+const _sfc_setup$r = _sfc_main$r.setup;
+_sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/DevGridOverlay.vue");
-  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
+  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
-const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e31d3a8a"]]);
+const __nuxt_component_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["__scopeId", "data-v-e31d3a8a"]]);
 const alert16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 7.5V4H9V7.5H7ZM9.25 11C9.25 11.6904 8.69036 12.25 8 12.25C7.30964 12.25 6.75 11.6904 6.75 11C6.75 10.3096 7.30964 9.75 8 9.75C8.69036 9.75 9.25 10.3096 9.25 11Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const arrowRight16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 13.4142 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M6 0.292893C6.39052 -0.0976311 7.02369 -0.0976311 7.41421 0.292893L13.4142 6.29289L12 7.70711L7.70711 3.41421V13H5.70711V3.41421L1.41421 7.70711L0 6.29289L6 0.292893Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const arrowRight24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15.4141 14.8755" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Union" d="M6.88672 0.291507C7.36328 -0.0971695 8.05078 -0.0971683 8.52734 0.291507L8.62598 0.380374L15.4141 7.16846L14 8.58252L8.70703 3.28955V14.8755H6.70703V3.28955L1.41406 8.58252L0 7.16846L6.78809 0.380374L6.88672 0.291507Z" fill="var(--fill-0, white)"/>\n</svg>\n';
@@ -5401,7 +5787,10 @@ const refresh16 = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" x
 const ruble12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 8.40127 9.78573" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M4.81572 6.10578H4.54888L1.45945 6.02573V6.01761L0.17286 5.98397L0 4.26929L1.44437 4.27857L1.41652 1.78777L1.25991 0.0475655C1.25991 0.0475655 2.90497 0 4.78091 0C9.82053 0 9.37968 6.10578 4.81572 6.10578ZM4.68926 1.77036C4.4874 1.77036 3.4572 1.78197 3.4572 1.78197L3.54189 4.26929L5.42014 4.25769C6.11506 3.80524 7.02345 1.77036 4.68926 1.77036ZM6.74966 8.49914L3.46648 8.43533V9.78573L1.49425 9.75208L1.48149 8.39705L0.413007 8.37733L0.265671 6.91672L7.01185 6.88539L6.74966 8.49914Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const ruble16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 11.2017 13.0476" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M6.42095 8.14105H6.06518L1.94593 8.03431V8.02348L0.23048 7.97863L0 5.69239L1.92582 5.70476L1.8887 2.38369L1.67987 0.0634206C1.67987 0.0634206 3.8733 0 6.37455 0C13.094 0 12.5062 8.14105 6.42095 8.14105ZM6.25235 2.36049C5.9832 2.36049 4.6096 2.37595 4.6096 2.37595L4.72252 5.69239L7.22686 5.67692C8.15342 5.07365 9.3646 2.36049 6.25235 2.36049ZM8.99955 11.3322L4.62197 11.2471V13.0476L1.99234 13.0028L1.97532 11.1961L0.550676 11.1698L0.354228 9.22229L9.34913 9.18053L8.99955 11.3322Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const show16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<g id="Icon">\n<path fill-rule="evenodd" clip-rule="evenodd" d="M8 12C12.4183 12 16 8.31371 16 6C16 3.68629 12.4183 0 8 0C3.58172 0 0 3.68629 0 6C0 8.31371 3.58172 12 8 12ZM8 10C10.2091 10 12 8.20914 12 6C12 3.79086 10.2091 2 8 2C5.79086 2 4 3.79086 4 6C4 8.20914 5.79086 10 8 10Z" fill="var(--fill-0, white)"/>\n<path d="M10 6C10 7.10457 9.10457 8 8 8C6.89543 8 6 7.10457 6 6C6.5 6 8 6 8 6C8 6 8 4.5 8 4C9.10457 4 10 4.89543 10 6Z" fill="white"/>\n</g>\n</svg>\n';
-const _sfc_main$i = {
+const termLow12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #ED5C68)"/>\n</svg>\n';
+const termMedium12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
+const termShort12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #0ABD5D)"/>\n</svg>\n';
+const _sfc_main$q = {
   __name: "AppIcon",
   __ssrInlineRender: true,
   props: {
@@ -5410,6 +5799,14 @@ const _sfc_main$i = {
       required: true
     },
     size: {
+      type: [Number, String],
+      default: void 0
+    },
+    width: {
+      type: [Number, String],
+      default: void 0
+    },
+    height: {
       type: [Number, String],
       default: void 0
     },
@@ -5677,6 +6074,24 @@ const _sfc_main$i = {
           16: calendar16
         }
       },
+      "term-short": {
+        kind: "svg",
+        svgBySize: {
+          12: termShort12
+        }
+      },
+      "term-medium": {
+        kind: "svg",
+        svgBySize: {
+          12: termMedium12
+        }
+      },
+      "term-low": {
+        kind: "svg",
+        svgBySize: {
+          12: termLow12
+        }
+      },
       "mir": {
         kind: "svg",
         svgBySize: {
@@ -5730,15 +6145,24 @@ const _sfc_main$i = {
       const value = Number.parseFloat(normalized);
       return Number.isFinite(value) ? value : void 0;
     });
+    function normalizeCssSize(value) {
+      if (value === void 0 || value === null || value === "") return void 0;
+      if (typeof value === "number") return `${value}px`;
+      const normalized = value.trim();
+      if (!normalized) return void 0;
+      return /^\d+(\.\d+)?$/.test(normalized) ? `${normalized}px` : normalized;
+    }
     const sizeStyle = computed(() => {
-      if (props.size === void 0 || props.size === null || props.size === "") return void 0;
-      let raw = "";
-      if (typeof props.size === "number") {
-        raw = `${props.size}px`;
-      } else {
-        const normalized = props.size.trim();
-        raw = /^\d+(\.\d+)?$/.test(normalized) ? `${normalized}px` : normalized;
+      const width = normalizeCssSize(props.width);
+      const height = normalizeCssSize(props.height);
+      if (width || height) {
+        return {
+          width: width || height,
+          height: height || width
+        };
       }
+      const raw = normalizeCssSize(props.size);
+      if (!raw) return void 0;
       return {
         width: raw,
         height: raw
@@ -5770,29 +6194,29 @@ const _sfc_main$i = {
         "aria-hidden": __props.decorative,
         role: __props.decorative ? void 0 : "img",
         "aria-label": unref(ariaLabel)
-      }, _attrs))} data-v-bcb98702>`);
+      }, _attrs))} data-v-a55e45e6>`);
       if (unref(icon).kind === "path") {
-        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-bcb98702><!--[-->`);
+        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-a55e45e6><!--[-->`);
         ssrRenderList(unref(icon).paths, (path, index2) => {
-          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-bcb98702></path>`);
+          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-a55e45e6></path>`);
         });
         _push(`<!--]--></svg>`);
       } else if (unref(icon).kind === "svg") {
-        _push(`<span class="app-icon__raw" data-v-bcb98702>${unref(svgMarkup) ?? ""}</span>`);
+        _push(`<span class="app-icon__raw" data-v-a55e45e6>${unref(svgMarkup) ?? ""}</span>`);
       } else {
-        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-bcb98702></span>`);
+        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-a55e45e6></span>`);
       }
       _push(`</span>`);
     };
   }
 };
-const _sfc_setup$i = _sfc_main$i.setup;
-_sfc_main$i.setup = (props, ctx) => {
+const _sfc_setup$q = _sfc_main$q.setup;
+_sfc_main$q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
-  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
+  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
 };
-const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-bcb98702"]]);
+const __nuxt_component_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["__scopeId", "data-v-a55e45e6"]]);
 function pointerDownOutside(e, options = {}) {
   const originalEvent = e.detail.originalEvent;
   const target = originalEvent.target;
@@ -5866,7 +6290,7 @@ const theme$1 = {
     }
   ]
 };
-const _sfc_main$h = {
+const _sfc_main$p = {
   __name: "UModal",
   __ssrInlineRender: true,
   props: {
@@ -6065,7 +6489,7 @@ const _sfc_main$h = {
                                     if (_push5) {
                                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                                         if (props.close) {
-                                          _push5(ssrRenderComponent(_sfc_main$p, mergeProps({
+                                          _push5(ssrRenderComponent(_sfc_main$x, mergeProps({
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
                                             variant: "ghost",
@@ -6081,7 +6505,7 @@ const _sfc_main$h = {
                                     } else {
                                       return [
                                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                          props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                          props.close ? (openBlock(), createBlock(_sfc_main$x, mergeProps({
                                             key: 0,
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
@@ -6186,7 +6610,7 @@ const _sfc_main$h = {
                                 }, {
                                   default: withCtx(() => [
                                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                      props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                      props.close ? (openBlock(), createBlock(_sfc_main$x, mergeProps({
                                         key: 0,
                                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                         color: "neutral",
@@ -6296,7 +6720,7 @@ const _sfc_main$h = {
                               }, {
                                 default: withCtx(() => [
                                   renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                    props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                    props.close ? (openBlock(), createBlock(_sfc_main$x, mergeProps({
                                       key: 0,
                                       icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                       color: "neutral",
@@ -6486,7 +6910,7 @@ const _sfc_main$h = {
                             }, {
                               default: withCtx(() => [
                                 renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                  props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                  props.close ? (openBlock(), createBlock(_sfc_main$x, mergeProps({
                                     key: 0,
                                     icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                     color: "neutral",
@@ -6563,13 +6987,13 @@ const _sfc_main$h = {
     };
   }
 };
-const _sfc_setup$h = _sfc_main$h.setup;
-_sfc_main$h.setup = (props, ctx) => {
+const _sfc_setup$p = _sfc_main$p.setup;
+_sfc_main$p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
-  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
+  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
 };
-const _sfc_main$g = {
+const _sfc_main$o = {
   __name: "AuthSuccessView",
   __ssrInlineRender: true,
   emits: ["close"],
@@ -6578,7 +7002,7 @@ const _sfc_main$g = {
     const successTitle = flow.successTitle;
     const successDescription = flow.successDescription;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppIcon = __nuxt_component_0$1;
+      const _component_AppIcon = __nuxt_component_1$3;
       _push(`<!--[--><button type="button" class="auth-entry__success-close" aria-label="Закрыть окно регистрации" data-v-4777aa4f>`);
       _push(ssrRenderComponent(_component_AppIcon, {
         name: "close",
@@ -6589,172 +7013,14 @@ const _sfc_main$g = {
     };
   }
 };
-const _sfc_setup$g = _sfc_main$g.setup;
-_sfc_main$g.setup = (props, ctx) => {
+const _sfc_setup$o = _sfc_main$o.setup;
+_sfc_main$o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthSuccessView.vue");
-  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
+  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-4777aa4f"]]);
-const _sfc_main$f = {
-  __name: "AuthEntryForm",
-  __ssrInlineRender: true,
-  setup(__props) {
-    const flow = inject("authFlow");
-    const visibleError = flow.visibleError;
-    const hasIdentifier = flow.hasIdentifier;
-    const isEntryRequestPending = flow.isEntryRequestPending;
-    const inputMode = flow.inputMode;
-    const identifier = flow.identifier;
-    const entryRequestError = flow.entryRequestError;
-    return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppIcon = __nuxt_component_0$1;
-      _push(`<div${ssrRenderAttrs(mergeProps({
-        class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
-      }, _attrs))} data-v-99cf9303><label class="auth-entry__label" for="auth-entry-identifier" data-v-99cf9303> Почта или телефон </label><span class="auth-entry__input-row" data-v-99cf9303><span class="auth-entry__input-box" data-v-99cf9303><input id="auth-entry-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-error" : void 0)} data-v-99cf9303>`);
-      if (unref(visibleError)) {
-        _push(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-99cf9303>`);
-        _push(ssrRenderComponent(_component_AppIcon, {
-          name: "reset",
-          size: 16,
-          class: "auth-entry__reset-icon"
-        }, null, _parent));
-        _push(`</button>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</span>`);
-      if (unref(hasIdentifier)) {
-        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Получить код")} data-v-99cf9303>`);
-        _push(ssrRenderComponent(_component_AppIcon, {
-          name: "arrow-right-line",
-          size: 24,
-          class: "auth-entry__submit-icon"
-        }, null, _parent));
-        _push(`</button>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</span>`);
-      if (unref(visibleError) || unref(entryRequestError)) {
-        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-99cf9303>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</div>`);
-    };
-  }
-};
-const _sfc_setup$f = _sfc_main$f.setup;
-_sfc_main$f.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
-  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
-};
-const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-99cf9303"]]);
-const _sfc_main$e = {
-  __name: "AuthLoginForm",
-  __ssrInlineRender: true,
-  setup(__props) {
-    const flow = inject("authFlow");
-    const visibleError = flow.visibleError;
-    const identifier = flow.identifier;
-    const inputMode = flow.inputMode;
-    const password = flow.password;
-    const passwordInputType = flow.passwordInputType;
-    const visibleLoginPasswordError = flow.visibleLoginPasswordError;
-    const isPasswordVisible = flow.isPasswordVisible;
-    const loginRequestError = flow.loginRequestError;
-    const isLoginRequestPending = flow.isLoginRequestPending;
-    return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppIcon = __nuxt_component_0$1;
-      _push(`<!--[--><div class="auth-entry__login-fields" data-v-06d05867><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-06d05867><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-06d05867> Email или телефон </label><input id="auth-entry-login-identifier"${ssrRenderAttr("value", unref(identifier))} class="auth-entry__input auth-entry__input--compact" type="text" placeholder="Email или телефон" autocomplete="username"${ssrRenderAttr("inputmode", unref(inputMode))}${ssrRenderAttr("aria-invalid", Boolean(unref(visibleError)))}${ssrRenderAttr("aria-describedby", unref(visibleError) ? "auth-entry-login-error" : void 0)} data-v-06d05867>`);
-      if (unref(visibleError)) {
-        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-06d05867>${ssrInterpolate(unref(visibleError))}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-06d05867><label class="auth-entry__label" for="auth-entry-login-password" data-v-06d05867> Пароль </label><span class="auth-entry__password-box" data-v-06d05867><input id="auth-entry-login-password"${ssrRenderDynamicModel(unref(passwordInputType), unref(password), null)} class="auth-entry__input auth-entry__input--compact auth-entry__input--password"${ssrRenderAttr("type", unref(passwordInputType))} placeholder="Введите пароль" autocomplete="current-password"${ssrRenderAttr("aria-invalid", Boolean(unref(visibleLoginPasswordError)))}${ssrRenderAttr("aria-describedby", unref(visibleLoginPasswordError) ? "auth-entry-login-password-error" : void 0)} data-v-06d05867><button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-06d05867>`);
-      _push(ssrRenderComponent(_component_AppIcon, {
-        name: unref(isPasswordVisible) ? "password-hide" : "password-show",
-        size: 16,
-        class: "auth-entry__password-toggle-icon"
-      }, null, _parent));
-      _push(`</button></span>`);
-      if (unref(visibleLoginPasswordError)) {
-        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-06d05867>${ssrInterpolate(unref(visibleLoginPasswordError))}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`<button type="button" class="auth-entry__forgot-password" data-v-06d05867> Забыли пароль? </button></div></div>`);
-      if (unref(loginRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-06d05867>${ssrInterpolate(unref(loginRequestError))}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`<div class="auth-entry__login-actions" data-v-06d05867><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-06d05867>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
-    };
-  }
-};
-const _sfc_setup$e = _sfc_main$e.setup;
-_sfc_main$e.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
-  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
-};
-const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-06d05867"]]);
-const _sfc_main$d = {
-  __name: "AuthPasswordRecoveryForm",
-  __ssrInlineRender: true,
-  setup(__props) {
-    const flow = inject("authFlow");
-    const passwordRecoveryEmail = flow.passwordRecoveryEmail;
-    const visiblePasswordRecoveryEmailError = flow.visiblePasswordRecoveryEmailError;
-    const passwordRecoveryRequestError = flow.passwordRecoveryRequestError;
-    const passwordRecoveryRequestMessage = flow.passwordRecoveryRequestMessage;
-    const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending;
-    return (_ctx, _push, _parent, _attrs) => {
-      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-0e9fe146><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-0e9fe146><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-0e9fe146> Почта или телефон </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="text" placeholder="Почта или телефон" autocomplete="username" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-0e9fe146>`);
-      if (unref(visiblePasswordRecoveryEmailError)) {
-        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-0e9fe146>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</div></div>`);
-      if (unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage)) {
-        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-0e9fe146>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`<div class="auth-entry__recovery-actions" data-v-0e9fe146><button type="button" class="auth-entry__secondary-button" data-v-0e9fe146> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-0e9fe146>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Продолжить")}</button></div><!--]-->`);
-    };
-  }
-};
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
-};
-const __nuxt_component_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-0e9fe146"]]);
-const _sfc_main$c = {
-  __name: "AuthPasswordRecoverySentView",
-  __ssrInlineRender: true,
-  emits: ["close"],
-  setup(__props) {
-    return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__sent-actions" }, _attrs))} data-v-6fb21551><button type="button" class="auth-entry__sent-button" data-v-6fb21551> Хорошо </button></div>`);
-    };
-  }
-};
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
-  const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
-};
-const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-6fb21551"]]);
-const _sfc_main$b = /* @__PURE__ */ Object.assign({
+const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["__scopeId", "data-v-4777aa4f"]]);
+const _sfc_main$n = /* @__PURE__ */ Object.assign({
   inheritAttrs: false
 }, {
   __name: "AppInput",
@@ -6818,15 +7084,15 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign({
       return rest;
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UIcon = _sfc_main$u;
+      const _component_UIcon = _sfc_main$C;
       let _temp0;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["app-input-wrapper", unref(wrapperAttributes).class],
         style: unref(wrapperAttributes).style
-      }, _attrs))} data-v-28c7bf21><div class="${ssrRenderClass([
+      }, _attrs))} data-v-f8460b1b><div class="${ssrRenderClass([
         "app-input",
         { "app-input--disabled": __props.disabled }
-      ])}" data-v-28c7bf21>`);
+      ])}" data-v-f8460b1b>`);
       if (__props.icon) {
         _push(ssrRenderComponent(_component_UIcon, {
           name: __props.icon,
@@ -6844,16 +7110,16 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign({
         min: __props.min,
         max: __props.max,
         class: "app-input__field"
-      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-28c7bf21>`);
+      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-f8460b1b>`);
       ssrRenderSlot(_ctx.$slots, "suffix", {}, null, _push, _parent);
       if (__props.suffix) {
-        _push(`<span class="app-input__suffix" data-v-28c7bf21>${ssrInterpolate(__props.suffix)}</span>`);
+        _push(`<span class="app-input__suffix" data-v-f8460b1b>${ssrInterpolate(__props.suffix)}</span>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div>`);
       if (__props.description) {
-        _push(`<p class="app-input-description" data-v-28c7bf21>${ssrInterpolate(__props.description)}</p>`);
+        _push(`<p class="app-input-description" data-v-f8460b1b>${ssrInterpolate(__props.description)}</p>`);
       } else {
         _push(`<!---->`);
       }
@@ -6861,14 +7127,304 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign({
     };
   }
 });
-const _sfc_setup$b = _sfc_main$b.setup;
-_sfc_main$b.setup = (props, ctx) => {
+const _sfc_setup$n = _sfc_main$n.setup;
+_sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
-  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
-const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-28c7bf21"]]);
-const _sfc_main$a = {
+const __nuxt_component_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["__scopeId", "data-v-f8460b1b"]]);
+const _sfc_main$m = {
+  __name: "AuthEntryForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const visibleError = flow.visibleError;
+    const hasIdentifier = flow.hasIdentifier;
+    const isEntryRequestPending = flow.isEntryRequestPending;
+    const inputMode = flow.inputMode;
+    const identifier = flow.identifier;
+    const entryRequestError = flow.entryRequestError;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0$2;
+      const _component_AppIcon = __nuxt_component_1$3;
+      _push(`<div${ssrRenderAttrs(mergeProps({
+        class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
+      }, _attrs))} data-v-42c52b56><label class="auth-entry__label" for="auth-entry-identifier" data-v-42c52b56> Почта или телефон </label><span class="auth-entry__input-row" data-v-42c52b56><span class="auth-entry__input-box" data-v-42c52b56>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-identifier",
+        modelValue: unref(identifier),
+        "onUpdate:modelValue": ($event) => isRef(identifier) ? identifier.value = $event : null,
+        class: "auth-entry__input",
+        type: "text",
+        placeholder: "Email или телефон",
+        autocomplete: "username",
+        inputmode: unref(inputMode),
+        "aria-invalid": Boolean(unref(visibleError)),
+        "aria-describedby": unref(visibleError) ? "auth-entry-error" : void 0,
+        onInput: unref(flow).onIdentifierInput,
+        onBlur: unref(flow).onIdentifierBlur
+      }, {
+        suffix: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (unref(visibleError)) {
+              _push2(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-42c52b56${_scopeId}>`);
+              _push2(ssrRenderComponent(_component_AppIcon, {
+                name: "reset",
+                size: 16,
+                class: "auth-entry__reset-icon"
+              }, null, _parent2, _scopeId));
+              _push2(`</button>`);
+            } else {
+              _push2(`<!---->`);
+            }
+          } else {
+            return [
+              unref(visibleError) ? (openBlock(), createBlock("button", {
+                key: 0,
+                type: "button",
+                class: "auth-entry__reset",
+                "aria-label": "Сбросить поле",
+                onMousedown: withModifiers(() => {
+                }, ["prevent"]),
+                onClick: unref(flow).resetIdentifier
+              }, [
+                createVNode(_component_AppIcon, {
+                  name: "reset",
+                  size: 16,
+                  class: "auth-entry__reset-icon"
+                })
+              ], 40, ["onMousedown", "onClick"])) : createCommentVNode("", true)
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`</span>`);
+      if (unref(hasIdentifier)) {
+        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Получить код")} data-v-42c52b56>`);
+        _push(ssrRenderComponent(_component_AppIcon, {
+          name: "arrow-right-line",
+          size: 24,
+          class: "auth-entry__submit-icon"
+        }, null, _parent));
+        _push(`</button>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</span>`);
+      if (unref(visibleError) || unref(entryRequestError)) {
+        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-42c52b56>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div>`);
+    };
+  }
+};
+const _sfc_setup$m = _sfc_main$m.setup;
+_sfc_main$m.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
+  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
+};
+const __nuxt_component_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-42c52b56"]]);
+const _sfc_main$l = {
+  __name: "AuthLoginForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const visibleError = flow.visibleError;
+    const identifier = flow.identifier;
+    const inputMode = flow.inputMode;
+    const password = flow.password;
+    const passwordInputType = flow.passwordInputType;
+    const visibleLoginPasswordError = flow.visibleLoginPasswordError;
+    const isPasswordVisible = flow.isPasswordVisible;
+    const loginRequestError = flow.loginRequestError;
+    const isLoginRequestPending = flow.isLoginRequestPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0$2;
+      const _component_AppIcon = __nuxt_component_1$3;
+      _push(`<!--[--><div class="auth-entry__login-fields" data-v-022a0cae><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-022a0cae> Email или телефон </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-login-identifier",
+        modelValue: unref(identifier),
+        "onUpdate:modelValue": ($event) => isRef(identifier) ? identifier.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact",
+        type: "text",
+        placeholder: "Email или телефон",
+        autocomplete: "username",
+        inputmode: unref(inputMode),
+        "aria-invalid": Boolean(unref(visibleError)),
+        "aria-describedby": unref(visibleError) ? "auth-entry-login-error" : void 0,
+        onInput: unref(flow).onIdentifierInput,
+        onBlur: unref(flow).onIdentifierBlur
+      }, null, _parent));
+      if (unref(visibleError)) {
+        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-022a0cae>${ssrInterpolate(unref(visibleError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-password" data-v-022a0cae> Пароль </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-login-password",
+        modelValue: unref(password),
+        "onUpdate:modelValue": ($event) => isRef(password) ? password.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact auth-entry__input--password",
+        type: unref(passwordInputType),
+        placeholder: "Введите пароль",
+        autocomplete: "current-password",
+        "aria-invalid": Boolean(unref(visibleLoginPasswordError)),
+        "aria-describedby": unref(visibleLoginPasswordError) || unref(loginRequestError) ? "auth-entry-login-password-error" : void 0,
+        onInput: unref(flow).onPasswordInput
+      }, {
+        suffix: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-022a0cae${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_AppIcon, {
+              name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+              size: 16,
+              class: "auth-entry__password-toggle-icon"
+            }, null, _parent2, _scopeId));
+            _push2(`</button>`);
+          } else {
+            return [
+              createVNode("button", {
+                type: "button",
+                class: "auth-entry__password-toggle",
+                "aria-label": unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль",
+                onClick: ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
+              }, [
+                createVNode(_component_AppIcon, {
+                  name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+                  size: 16,
+                  class: "auth-entry__password-toggle-icon"
+                }, null, 8, ["name"])
+              ], 8, ["aria-label", "onClick"])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      if (unref(visibleLoginPasswordError) || unref(loginRequestError)) {
+        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-022a0cae>${ssrInterpolate(unref(visibleLoginPasswordError) || unref(loginRequestError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<button type="button" class="auth-entry__forgot-password" data-v-022a0cae> Забыли пароль? </button></div></div><div class="auth-entry__login-actions" data-v-022a0cae><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-022a0cae>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$l = _sfc_main$l.setup;
+_sfc_main$l.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
+  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
+};
+const __nuxt_component_4$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["__scopeId", "data-v-022a0cae"]]);
+const _sfc_main$k = {
+  __name: "AuthPasswordRecoveryForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const passwordRecoveryEmail = flow.passwordRecoveryEmail;
+    const visiblePasswordRecoveryEmailError = flow.visiblePasswordRecoveryEmailError;
+    const passwordRecoveryRequestError = flow.passwordRecoveryRequestError;
+    const passwordRecoveryRequestMessage = flow.passwordRecoveryRequestMessage;
+    const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-0e9fe146><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-0e9fe146><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-0e9fe146> Почта или телефон </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="text" placeholder="Почта или телефон" autocomplete="username" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-0e9fe146>`);
+      if (unref(visiblePasswordRecoveryEmailError)) {
+        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-0e9fe146>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div>`);
+      if (unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage)) {
+        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-0e9fe146>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<div class="auth-entry__recovery-actions" data-v-0e9fe146><button type="button" class="auth-entry__secondary-button" data-v-0e9fe146> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-0e9fe146>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Продолжить")}</button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$k = _sfc_main$k.setup;
+_sfc_main$k.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
+  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+};
+const __nuxt_component_5$2 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["__scopeId", "data-v-0e9fe146"]]);
+const _sfc_main$j = {
+  __name: "AuthPasswordRecoverySentView",
+  __ssrInlineRender: true,
+  emits: ["close"],
+  setup(__props) {
+    const flow = inject("authFlow");
+    const isPasswordRecoveryPhone = flow.isPasswordRecoveryPhone;
+    const passwordRecoveryPhone = flow.passwordRecoveryPhone;
+    const smsCode = flow.smsCode;
+    const smsCodePlaceholder = flow.smsCodePlaceholder;
+    const SMS_CODE_LENGTH = flow.SMS_CODE_LENGTH;
+    const canResendCode = flow.canResendCode;
+    const resendButtonText = flow.resendButtonText;
+    const passwordRecoveryRequestError = flow.passwordRecoveryRequestError;
+    const passwordRecoveryCodeError = flow.passwordRecoveryCodeError;
+    const isCodeVerifyPending = flow.isCodeVerifyPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0$2;
+      if (unref(isPasswordRecoveryPhone)) {
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__phone-recovery" }, _attrs))} data-v-e42088da><div class="auth-entry__phone-recovery-fields" data-v-e42088da><div class="auth-entry__field auth-entry__phone-field" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-phone" data-v-e42088da> Номер телефона </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-password-recovery-phone",
+          "model-value": unref(passwordRecoveryPhone),
+          class: "auth-entry__input auth-entry__input--phone auth-entry__input--readonly",
+          type: "tel",
+          readonly: ""
+        }, null, _parent));
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(passwordRecoveryCodeError) }, "auth-entry__field auth-entry__sms-code-field"])}" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-sms-code" data-v-e42088da> Код из СМС </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-password-recovery-sms-code",
+          "model-value": unref(smsCode),
+          class: "auth-entry__input auth-entry__input--sms-code",
+          type: "text",
+          placeholder: unref(smsCodePlaceholder),
+          autocomplete: "one-time-code",
+          inputmode: "numeric",
+          maxlength: unref(SMS_CODE_LENGTH),
+          disabled: unref(isCodeVerifyPending),
+          "aria-invalid": Boolean(unref(passwordRecoveryCodeError)),
+          "aria-describedby": unref(passwordRecoveryCodeError) ? "auth-entry-password-recovery-code-error" : void 0,
+          onInput: unref(flow).onSmsCodeInput
+        }, null, _parent));
+        _push(`</div></div>`);
+        if (unref(passwordRecoveryCodeError)) {
+          _push(`<p id="auth-entry-password-recovery-code-error" class="auth-entry__error" data-v-e42088da>${ssrInterpolate(unref(passwordRecoveryCodeError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        if (unref(passwordRecoveryRequestError)) {
+          _push(`<p class="auth-entry__error" data-v-e42088da>${ssrInterpolate(unref(passwordRecoveryRequestError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`<button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-e42088da>${ssrInterpolate(unref(resendButtonText))}</button></div>`);
+      } else {
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__sent-actions" }, _attrs))} data-v-e42088da><button type="button" class="auth-entry__sent-button" data-v-e42088da> Хорошо </button></div>`);
+      }
+    };
+  }
+};
+const _sfc_setup$j = _sfc_main$j.setup;
+_sfc_main$j.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
+  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
+};
+const __nuxt_component_6$1 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e42088da"]]);
+const _sfc_main$i = {
   __name: "AppCheckbox",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -6911,14 +7467,14 @@ const _sfc_main$a = {
     };
   }
 };
-const _sfc_setup$a = _sfc_main$a.setup;
-_sfc_main$a.setup = (props, ctx) => {
+const _sfc_setup$i = _sfc_main$i.setup;
+_sfc_main$i.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppCheckbox.vue");
-  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
-const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-5c83338d"]]);
-const _sfc_main$9 = {
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-5c83338d"]]);
+const _sfc_main$h = {
   __name: "AuthRegisterStartForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6934,9 +7490,9 @@ const _sfc_main$9 = {
     const isPersonalDataAccepted = flow.isPersonalDataAccepted;
     const isUserAgreementAccepted = flow.isUserAgreementAccepted;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
-      const _component_AppCheckbox = __nuxt_component_1;
-      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_AppInput = __nuxt_component_0$2;
+      const _component_AppCheckbox = __nuxt_component_1$1;
+      const _component_NuxtLink = __nuxt_component_0$5;
       _push(`<!--[--><div class="auth-entry__registration-fields" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-name" data-v-e0a4769e> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-name",
@@ -7095,14 +7651,14 @@ const _sfc_main$9 = {
     };
   }
 };
-const _sfc_setup$9 = _sfc_main$9.setup;
-_sfc_main$9.setup = (props, ctx) => {
+const _sfc_setup$h = _sfc_main$h.setup;
+_sfc_main$h.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterStartForm.vue");
-  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
 };
-const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e0a4769e"]]);
-const _sfc_main$8 = {
+const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["__scopeId", "data-v-e0a4769e"]]);
+const _sfc_main$g = {
   __name: "AuthRegisterCompleteForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -7119,7 +7675,6 @@ const _sfc_main$8 = {
     const resendButtonText = flow.resendButtonText;
     const codeRequestError = flow.codeRequestError;
     const codeVerifyError = flow.codeVerifyError;
-    flow.isCodeVerifyPending;
     const registrationEmail = flow.registrationEmail;
     const visibleRegistrationEmailError = flow.visibleRegistrationEmailError;
     const password = flow.password;
@@ -7138,10 +7693,10 @@ const _sfc_main$8 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
-      const _component_AppIcon = __nuxt_component_0$1;
-      const _component_AppCheckbox = __nuxt_component_1;
-      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-89a51056><label class="auth-entry__label" for="auth-entry-code-name" data-v-89a51056> Имя и фамилия </label>`);
+      const _component_AppInput = __nuxt_component_0$2;
+      const _component_AppIcon = __nuxt_component_1$3;
+      const _component_AppCheckbox = __nuxt_component_1$1;
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-name" data-v-1ef7f7a6> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-code-name",
         modelValue: unref(fullName),
@@ -7152,9 +7707,9 @@ const _sfc_main$8 = {
         autocomplete: "name",
         onInput: unref(flow).onFullNameInput
       }, null, _parent));
-      _push(`</div><div class="auth-entry__code-fields" data-v-89a51056>`);
+      _push(`</div><div class="auth-entry__code-fields" data-v-1ef7f7a6>`);
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-89a51056><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-89a51056> Номер телефона </label>`);
+        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-1ef7f7a6> Номер телефона </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-confirmed-phone",
           modelValue: unref(registrationPhone),
@@ -7164,9 +7719,9 @@ const _sfc_main$8 = {
           autocomplete: "tel",
           readonly: ""
         }, null, _parent));
-        _push(`</div><div class="auth-entry__confirmed-badge" data-v-89a51056> Подтверждён </div></div>`);
+        _push(`</div><div class="auth-entry__confirmed-badge" data-v-1ef7f7a6> Подтверждён </div></div>`);
       } else {
-        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-89a51056><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-89a51056><label class="auth-entry__label" for="auth-entry-code-phone" data-v-89a51056> Номер телефона </label>`);
+        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-phone" data-v-1ef7f7a6> Номер телефона </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-code-phone",
           modelValue: unref(registrationPhone),
@@ -7178,7 +7733,7 @@ const _sfc_main$8 = {
           inputmode: "tel",
           readonly: ""
         }, null, _parent));
-        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-89a51056><label class="auth-entry__label" for="auth-entry-sms-code" data-v-89a51056> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-89a51056><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-89a51056>`);
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-sms-code" data-v-1ef7f7a6> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-1ef7f7a6><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-1ef7f7a6>`);
         if (unref(isSmsCodeInvalid)) {
           _push(ssrRenderComponent(_component_AppIcon, {
             name: "reset",
@@ -7188,9 +7743,9 @@ const _sfc_main$8 = {
         } else {
           _push(`<!---->`);
         }
-        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-89a51056>${ssrInterpolate(unref(resendButtonText))}</button>`);
+        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-1ef7f7a6>${ssrInterpolate(unref(resendButtonText))}</button>`);
         if (unref(codeRequestError) || unref(codeVerifyError)) {
-          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-89a51056>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1ef7f7a6>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -7198,7 +7753,7 @@ const _sfc_main$8 = {
       }
       _push(`</div>`);
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<div class="auth-entry__profile-fields" data-v-89a51056><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-89a51056><label class="auth-entry__label" for="auth-entry-email" data-v-89a51056> Электронная почта </label>`);
+        _push(`<div class="auth-entry__profile-fields" data-v-1ef7f7a6><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-email" data-v-1ef7f7a6> Электронная почта </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-email",
           modelValue: unref(registrationEmail),
@@ -7213,11 +7768,11 @@ const _sfc_main$8 = {
           onInput: unref(flow).onRegistrationEmailInput
         }, null, _parent));
         if (unref(visibleRegistrationEmailError)) {
-          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-89a51056>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
+          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-1ef7f7a6>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-89a51056><label class="auth-entry__label" for="auth-entry-password" data-v-89a51056> Пароль </label>`);
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-password" data-v-1ef7f7a6> Пароль </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-password",
           modelValue: unref(password),
@@ -7232,7 +7787,7 @@ const _sfc_main$8 = {
         }, {
           suffix: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
-              _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-89a51056${_scopeId}>`);
+              _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-1ef7f7a6${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: unref(isPasswordVisible) ? "password-hide" : "password-show",
                 size: 16,
@@ -7259,7 +7814,7 @@ const _sfc_main$8 = {
           _: 1
         }, _parent));
         if (unref(visiblePasswordError)) {
-          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-89a51056>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
+          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-1ef7f7a6>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -7267,7 +7822,7 @@ const _sfc_main$8 = {
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-89a51056>`);
+      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-1ef7f7a6>`);
       _push(ssrRenderComponent(_component_AppCheckbox, {
         modelValue: unref(isLegalRepresentative),
         "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
@@ -7275,7 +7830,7 @@ const _sfc_main$8 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-89a51056${_scopeId}> Я представитель юрлица или ИП </span>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-1ef7f7a6${_scopeId}> Я представитель юрлица или ИП </span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
@@ -7286,12 +7841,12 @@ const _sfc_main$8 = {
       }, _parent));
       _push(`</div>`);
       if (unref(registrationRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-89a51056>${ssrInterpolate(unref(registrationRequestError))}</p>`);
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1ef7f7a6>${ssrInterpolate(unref(registrationRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-89a51056>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
+        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-1ef7f7a6>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
       } else {
         _push(`<!---->`);
       }
@@ -7299,14 +7854,14 @@ const _sfc_main$8 = {
     };
   }
 };
-const _sfc_setup$8 = _sfc_main$8.setup;
-_sfc_main$8.setup = (props, ctx) => {
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterCompleteForm.vue");
-  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
-const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-89a51056"]]), { __name: "AuthRegisterCompleteForm" });
-const _sfc_main$7 = {
+const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$g, [["__scopeId", "data-v-1ef7f7a6"]]), { __name: "AuthRegisterCompleteForm" });
+const _sfc_main$f = {
   __name: "AuthLegalForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -7383,13 +7938,13 @@ const _sfc_main$7 = {
     };
   }
 };
-const _sfc_setup$7 = _sfc_main$7.setup;
-_sfc_main$7.setup = (props, ctx) => {
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLegalForm.vue");
-  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0c732cca"]]);
+const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-0c732cca"]]);
 const authClient = createAuthClient({
   basePath: "/api/auth",
   plugins: [
@@ -7420,6 +7975,7 @@ function useAuthEntryFlow({
   const isPasswordRecoveryRequestPending = ref(false);
   const passwordRecoveryRequestError = ref("");
   const passwordRecoveryRequestMessage = ref("");
+  const passwordRecoveryCodeError = ref("");
   const organizationInn = ref("");
   const isPasswordVisible = ref(false);
   const smsCode = ref("");
@@ -7448,7 +8004,7 @@ function useAuthEntryFlow({
   const isOrganizationSuggestionsOpen = ref(false);
   const isOrganizationSavePending = ref(false);
   const organizationSaveError = ref("");
-  const SMS_CODE_LENGTH = 5;
+  const SMS_CODE_LENGTH = 4;
   const MIN_PASSWORD_LENGTH = 8;
   const ORGANIZATION_SUGGEST_DELAY = 350;
   let resendTimerId;
@@ -7467,7 +8023,7 @@ function useAuthEntryFlow({
   const visiblePasswordRecoveryEmailError = computed(() => isPasswordRecoverySubmitted.value ? passwordRecoveryIdentifierError.value : "");
   const inputMode = computed(() => isPhoneMode.value ? "tel" : "email");
   const canRequestCode = computed(() => normalizePhoneDigits(registrationPhone.value).length === 11 && isPersonalDataAccepted.value && isUserAgreementAccepted.value);
-  const canResendCode = computed(() => resendSeconds.value === 0 && !isCodeRequestPending.value && !isCodeVerifyPending.value);
+  const canResendCode = computed(() => resendSeconds.value === 0 && !isCodeRequestPending.value && !isPasswordRecoveryRequestPending.value && !isCodeVerifyPending.value);
   const isSmsCodeConfirmed = computed(() => isPhoneConfirmed.value);
   const isSmsCodeInvalid = computed(() => Boolean(codeVerifyError.value));
   const smsCodePlaceholder = computed(() => Array.from({ length: SMS_CODE_LENGTH }, () => "—").join(" "));
@@ -7480,9 +8036,9 @@ function useAuthEntryFlow({
     }
     return "Получить код";
   });
-  const resendCountdownText = computed(() => `Получить повторно можно через ${resendSeconds.value} ${getSecondsWord(resendSeconds.value)}`);
+  const resendCountdownText = computed(() => `Получить повторно можно через ${resendSeconds.value} ${getRussianSecondsWord(resendSeconds.value)}`);
   const resendButtonText = computed(() => {
-    if (isCodeRequestPending.value) {
+    if (isCodeRequestPending.value || isPasswordRecoveryRequestPending.value) {
       return "Отправляем код";
     }
     return canResendCode.value ? "Отправить повторно" : resendCountdownText.value;
@@ -7494,11 +8050,12 @@ function useAuthEntryFlow({
   const passwordRecoverySentDescription = computed(() => {
     const destination = passwordRecoveryEmail.value.trim() || (isPasswordRecoveryPhone.value ? "+7 (000) 000 00 00" : "Почта@домен.ру");
     if (isPasswordRecoveryPhone.value) {
-      return "Мы отправили СМС\nсо ссылкой для сброса пароля.";
+      return "Мы отправили СМС\nс кодом для сброса пароля";
     }
     return `Мы отправили письмо со ссылкой для сброса пароля на почту ${destination}.`;
   });
-  const passwordRecoverySentHint = computed(() => isPasswordRecoveryPhone.value ? "Если вы его не получили, повторите попытку через 10 минут или напишите нам адрес почты" : "Если вы его не получили, проверьте папку Спам или напишите нам адрес почты");
+  const passwordRecoverySentHint = computed(() => isPasswordRecoveryPhone.value ? "Если вы его не получили, повторите попытку через 10 минут или напишите нам" : "Если вы его не получили, проверьте папку Спам или напишите нам адрес почты");
+  const passwordRecoveryPhone = computed(() => formatCompactPhone(passwordRecoveryEmail.value));
   const modalTitle = computed(() => {
     if (step.value === "entry") {
       return "Вход или регистрация";
@@ -7519,21 +8076,6 @@ function useAuthEntryFlow({
       return "Введите пароль";
     }
     return value.length >= MIN_PASSWORD_LENGTH ? "" : `Минимум ${MIN_PASSWORD_LENGTH} символов`;
-  }
-  function getSecondsWord(value) {
-    const absoluteValue = Math.abs(value);
-    const lastTwo = absoluteValue % 100;
-    if (lastTwo >= 11 && lastTwo <= 14) {
-      return "секунд";
-    }
-    const lastDigit = absoluteValue % 10;
-    if (lastDigit === 1) {
-      return "секунду";
-    }
-    if (lastDigit >= 2 && lastDigit <= 4) {
-      return "секунды";
-    }
-    return "секунд";
   }
   function onIdentifierInput(event) {
     const value = event.target.value;
@@ -7584,6 +8126,7 @@ function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = false;
     passwordRecoveryRequestError.value = "";
     passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
     if (isPhoneLike(value)) {
       passwordRecoveryEmail.value = formatPhone(value);
       return;
@@ -7593,6 +8136,7 @@ function useAuthEntryFlow({
   function onSmsCodeInput(event) {
     smsCode.value = event.target.value.replace(/\D/g, "").slice(0, SMS_CODE_LENGTH);
     codeVerifyError.value = "";
+    passwordRecoveryCodeError.value = "";
     registrationRequestError.value = "";
   }
   function onOrganizationInnInput(event) {
@@ -7769,6 +8313,10 @@ function useAuthEntryFlow({
       requestPasswordRecovery();
       return;
     }
+    if (step.value === "password-recovery-sent" && isPasswordRecoveryPhone.value) {
+      verifyCode();
+      return;
+    }
     if (step.value === "registration") {
       requestCode();
       return;
@@ -7818,6 +8366,7 @@ function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = false;
     passwordRecoveryRequestError.value = "";
     passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
     step.value = "password-recovery";
     nextTick(() => {
       (void 0).getElementById("auth-entry-password-recovery-email")?.focus();
@@ -7827,6 +8376,7 @@ function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = false;
     passwordRecoveryRequestError.value = "";
     passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
     step.value = "login";
     nextTick(() => {
       (void 0).getElementById("auth-entry-login-password")?.focus();
@@ -7839,12 +8389,47 @@ function useAuthEntryFlow({
     isPasswordRecoverySubmitted.value = true;
     passwordRecoveryRequestError.value = "";
     passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
+    codeAuthenticationId.value = "";
+    codeVerifyError.value = "";
     if (passwordRecoveryIdentifierError.value) {
       return;
     }
+    const isPhoneRecovery = isPhoneLike(passwordRecoveryEmail.value);
+    if (isPhoneRecovery) {
+      isPasswordRecoveryRequestPending.value = true;
+      passwordRecoveryRequestMessage.value = "";
+      codeAuthenticationId.value = "";
+      codeVerifyError.value = "";
+      smsCode.value = "";
+      isPhoneConfirmed.value = false;
+      startResendTimer();
+      step.value = "password-recovery-sent";
+      nextTick(() => {
+        (void 0).getElementById("auth-entry-password-recovery-sms-code")?.focus();
+      });
+      try {
+        const result = await $fetch("/api/auth/password-recovery/request-code", {
+          method: "POST",
+          timeout: 4e4,
+          body: {
+            phone: passwordRecoveryEmail.value.trim()
+          }
+        });
+        codeAuthenticationId.value = result.authenticationId || "";
+        return;
+      } catch (error) {
+        stopResendTimer();
+        resendSeconds.value = 0;
+        passwordRecoveryRequestError.value = getAuthErrorMessage(error, "Не удалось отправить код");
+        return;
+      } finally {
+        isPasswordRecoveryRequestPending.value = false;
+      }
+    }
     isPasswordRecoveryRequestPending.value = true;
     try {
-      if (!isPhoneLike(passwordRecoveryEmail.value) && typeof authClient.forgetPassword === "function") {
+      if (typeof authClient.forgetPassword === "function") {
         const result = await authClient.forgetPassword({
           email: passwordRecoveryEmail.value.trim()
         });
@@ -8140,8 +8725,14 @@ function useAuthEntryFlow({
         }
       });
       isPhoneConfirmed.value = true;
+      if (step.value === "password-recovery-sent") {
+        passwordRecoveryCodeError.value = "";
+      }
     } catch (error) {
       codeVerifyError.value = getVerifyErrorMessage(error);
+      if (step.value === "password-recovery-sent") {
+        passwordRecoveryCodeError.value = codeVerifyError.value;
+      }
     } finally {
       isCodeVerifyPending.value = false;
     }
@@ -8163,6 +8754,7 @@ function useAuthEntryFlow({
     isPasswordRecoveryRequestPending,
     passwordRecoveryRequestError,
     passwordRecoveryRequestMessage,
+    passwordRecoveryCodeError,
     organizationInn,
     isPasswordVisible,
     smsCode,
@@ -8225,6 +8817,7 @@ function useAuthEntryFlow({
     isPasswordRecoveryPhone,
     passwordRecoverySentDescription,
     passwordRecoverySentHint,
+    passwordRecoveryPhone,
     modalTitle,
     // methods
     getPasswordError,
@@ -8266,7 +8859,7 @@ function useAuthEntryFlow({
     verifyCode
   };
 }
-const _sfc_main$6 = {
+const _sfc_main$e = {
   __name: "AuthEntryModal",
   __ssrInlineRender: true,
   props: {
@@ -8289,6 +8882,7 @@ const _sfc_main$6 = {
     const passwordRecoveryDescription = flow.passwordRecoveryDescription;
     const passwordRecoverySentDescription = flow.passwordRecoverySentDescription;
     const passwordRecoverySentHint = flow.passwordRecoverySentHint;
+    const isPasswordRecoveryPhone = flow.isPasswordRecoveryPhone;
     const onFormSubmit = flow.onFormSubmit;
     const stopResendTimer = flow.stopResendTimer;
     const stopOrganizationSuggestTimer = flow.stopOrganizationSuggestTimer;
@@ -8314,13 +8908,13 @@ const _sfc_main$6 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UModal = _sfc_main$h;
-      const _component_AuthSuccessView = __nuxt_component_1$1;
-      const _component_AppIcon = __nuxt_component_0$1;
-      const _component_AuthEntryForm = __nuxt_component_3;
-      const _component_AuthLoginForm = __nuxt_component_4$1;
-      const _component_AuthPasswordRecoveryForm = __nuxt_component_5$1;
-      const _component_AuthPasswordRecoverySentView = __nuxt_component_6;
+      const _component_UModal = _sfc_main$p;
+      const _component_AuthSuccessView = __nuxt_component_1$2;
+      const _component_AppIcon = __nuxt_component_1$3;
+      const _component_AuthEntryForm = __nuxt_component_3$1;
+      const _component_AuthLoginForm = __nuxt_component_4$2;
+      const _component_AuthPasswordRecoveryForm = __nuxt_component_5$2;
+      const _component_AuthPasswordRecoverySentView = __nuxt_component_6$1;
       const _component_AuthRegisterStartForm = __nuxt_component_7;
       const _component_AuthRegisterCompleteForm = __nuxt_component_8;
       const _component_AuthLegalForm = __nuxt_component_9;
@@ -8345,27 +8939,33 @@ const _sfc_main$6 = {
               "auth-entry--legal-details": unref(step) === "legal-details",
               "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
               "auth-entry--success": unref(step) === "success"
-            }, "auth-entry"])}" data-v-d8aca3dd${_scopeId}>`);
+            }, "auth-entry"])}" data-v-83aaadc7${_scopeId}>`);
             if (unref(step) === "success") {
               _push2(ssrRenderComponent(_component_AuthSuccessView, {
                 onClose: ($event) => isOpen.value = false
               }, null, _parent2, _scopeId));
             } else {
-              _push2(`<!--[--><header class="auth-entry__header" data-v-d8aca3dd${_scopeId}><div class="auth-entry__title-block" data-v-d8aca3dd${_scopeId}><h2 class="auth-entry__title" data-v-d8aca3dd${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
+              _push2(`<!--[--><header class="auth-entry__header" data-v-83aaadc7${_scopeId}><div class="auth-entry__title-block" data-v-83aaadc7${_scopeId}><h2 class="auth-entry__title" data-v-83aaadc7${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
               if (unref(isLegalRegistrationStep)) {
-                _push2(`<p class="auth-entry__subtitle" data-v-d8aca3dd${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
               } else if (unref(step) === "password-recovery") {
-                _push2(`<p class="auth-entry__subtitle" data-v-d8aca3dd${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
               } else if (unref(step) === "password-recovery-sent") {
-                _push2(`<p class="auth-entry__subtitle" data-v-d8aca3dd${_scopeId}><!--[-->`);
+                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}><!--[-->`);
                 ssrRenderList(unref(passwordRecoverySentDescription).split("\n"), (line) => {
-                  _push2(`<!--[-->${ssrInterpolate(line)}<br data-v-d8aca3dd${_scopeId}><!--]-->`);
+                  _push2(`<!--[-->${ssrInterpolate(line)}<br data-v-83aaadc7${_scopeId}><!--]-->`);
                 });
-                _push2(`<!--]--><br data-v-d8aca3dd${_scopeId}> ${ssrInterpolate(unref(passwordRecoverySentHint))}</p>`);
+                _push2(`<!--]--><br data-v-83aaadc7${_scopeId}> ${ssrInterpolate(unref(passwordRecoverySentHint))} `);
+                if (unref(isPasswordRecoveryPhone)) {
+                  _push2(`<a class="auth-entry__subtitle-link" href="mailto:Info@indigo-mail.ru" target="_blank" rel="noopener noreferrer" data-v-83aaadc7${_scopeId}> на Info@indigo-mail.ru </a>`);
+                } else {
+                  _push2(`<!---->`);
+                }
+                _push2(`</p>`);
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-d8aca3dd${_scopeId}>`);
+              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-83aaadc7${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: "close",
                 size: 16,
@@ -8432,7 +9032,14 @@ const _sfc_main$6 = {
                           ], 64);
                         }), 128)),
                         createVNode("br"),
-                        createTextVNode(" " + toDisplayString(unref(passwordRecoverySentHint)), 1)
+                        createTextVNode(" " + toDisplayString(unref(passwordRecoverySentHint)) + " ", 1),
+                        unref(isPasswordRecoveryPhone) ? (openBlock(), createBlock("a", {
+                          key: 0,
+                          class: "auth-entry__subtitle-link",
+                          href: "mailto:Info@indigo-mail.ru",
+                          target: "_blank",
+                          rel: "noopener noreferrer"
+                        }, " на Info@indigo-mail.ru ")) : createCommentVNode("", true)
                       ])) : createCommentVNode("", true)
                     ]),
                     createVNode("button", {
@@ -8462,29 +9069,411 @@ const _sfc_main$6 = {
     };
   }
 };
-const _sfc_setup$6 = _sfc_main$6.setup;
-_sfc_main$6.setup = (props, ctx) => {
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
-  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const __nuxt_component_2$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-d8aca3dd"]]), { __name: "AuthEntryModal" });
+const __nuxt_component_2$2 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$e, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg4 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.919%20115.919'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Summertime%20Sadness'%20d='M69.8504%205.45261C59.5645%20-2.97403%2044.3949%20-1.46673%2035.9682%208.81925C27.5415%2019.1054%2029.0489%2034.2748%2039.3349%2042.7015C29.0489%2034.2748%2013.8794%2035.782%205.45266%2046.0681C-2.97411%2056.3543%20-1.46668%2071.5237%208.81931%2079.9503C19.1055%2088.3771%2034.2748%2086.8698%2042.7015%2076.5837C34.2748%2086.8698%2035.782%20102.039%2046.0682%20110.466C56.3543%20118.893%2071.5236%20117.385%2079.9504%20107.099C88.3772%2096.8131%2086.8699%2081.6438%2076.5837%2073.217C86.8699%2081.6438%20102.039%2080.1365%20110.466%2069.8504C118.893%2059.5644%20117.385%2044.3949%20107.099%2035.9682C96.8132%2027.5414%2081.6437%2029.0488%2073.2171%2039.3348C81.6437%2029.0488%2080.1366%2013.8794%2069.8504%205.45261Z'%20fill='var(--fill-0,%20%23F94A4F)'/%3e%3cpath%20id='Star%205'%20d='M70.2645%2014.7376C73.3477%2011.3099%2078.3943%2010.4759%2082.4164%2012.7295V12.7295C83.2834%2013.2153%2084.219%2013.5673%2085.1913%2013.7734V13.7734C89.7013%2014.7297%2092.9469%2018.6832%2093.0063%2023.2932V23.2932C93.0191%2024.287%2093.1821%2025.2732%2093.4897%2026.2182V26.2182C94.9166%2030.6022%2093.1155%2035.3898%2089.1529%2037.7462V37.7462C88.2986%2038.2542%2087.526%2038.8884%2086.8614%2039.6273V39.6273C83.7782%2043.0551%2078.7315%2043.889%2074.7095%2041.6355V41.6355C73.8424%2041.1497%2072.9069%2040.7977%2071.9346%2040.5916V40.5916C67.4245%2039.6353%2064.1789%2035.6818%2064.1195%2031.0718V31.0718C64.1067%2030.078%2063.9438%2029.0918%2063.6362%2028.1467V28.1467C62.2092%2023.7627%2064.0103%2018.9752%2067.973%2016.6188V16.6188C68.8273%2016.1108%2069.5998%2015.4766%2070.2645%2014.7376V14.7376Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoText = "" + __buildAssetsURL("header-logo-text.B_a9knhz.svg");
-const _sfc_main$5 = {
+const __vite_glob_0_0 = "" + __buildAssetsURL("catalog_slider_1.BiVYIshC.png");
+const __vite_glob_0_1 = "" + __buildAssetsURL("catalog_slider_2.BH45i3L8.png");
+const __vite_glob_0_2 = "" + __buildAssetsURL("catalog_slider_3.qx5ywKHs.png");
+const __vite_glob_0_3 = "" + __buildAssetsURL("catalog_slider_4.C0q_KMLO.png");
+const __vite_glob_0_4 = "" + __buildAssetsURL("catalog_slider_5.J76b3FyM.png");
+const __vite_glob_0_5 = "" + __buildAssetsURL("dense_polyester_grommets_60x90_double.za9T4eXU.png");
+const __vite_glob_0_6 = "" + __buildAssetsURL("dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png");
+const __vite_glob_0_7 = "" + __buildAssetsURL("dense_polyester_grommets_60x90_single.DKCu2Fiq.png");
+const __vite_glob_0_8 = "" + __buildAssetsURL("dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png");
+const __vite_glob_0_9 = "" + __buildAssetsURL("dense_polyester_grommets_90x135_double.Cd_hhpv8.png");
+const __vite_glob_0_10 = "" + __buildAssetsURL("dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png");
+const __vite_glob_0_11 = "" + __buildAssetsURL("dense_polyester_grommets_90x135_single.BVUsePy3.png");
+const __vite_glob_0_12 = "" + __buildAssetsURL("dense_polyester_grommets_90x135_single_fringe.BvTafySI.png");
+const __vite_glob_0_13 = "" + __buildAssetsURL("dense_polyester_sleeve_60x90_double.ACc-aKlY.png");
+const __vite_glob_0_14 = "" + __buildAssetsURL("dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png");
+const __vite_glob_0_15 = "" + __buildAssetsURL("dense_polyester_sleeve_60x90_single._p5eDjvq.png");
+const __vite_glob_0_16 = "" + __buildAssetsURL("dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png");
+const __vite_glob_0_17 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_double.BrJn4Xaq.png");
+const __vite_glob_0_18 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png");
+const __vite_glob_0_19 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_single.051p5EBo.png");
+const __vite_glob_0_20 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png");
+const __vite_glob_0_21 = "" + __buildAssetsURL("mesh_grommets_60x90_double.DUTuOgHv.png");
+const __vite_glob_0_22 = "" + __buildAssetsURL("mesh_grommets_60x90_double_fringe.C-pTSaox.png");
+const __vite_glob_0_23 = "" + __buildAssetsURL("mesh_grommets_60x90_single.CQzq71gw.png");
+const __vite_glob_0_24 = "" + __buildAssetsURL("mesh_grommets_60x90_single_fringe.DU2MNMvp.png");
+const __vite_glob_0_25 = "" + __buildAssetsURL("mesh_grommets_90x135_double.BtL6Voqz.png");
+const __vite_glob_0_26 = "" + __buildAssetsURL("mesh_grommets_90x135_double_fringe.B69a68ry.png");
+const __vite_glob_0_27 = "" + __buildAssetsURL("mesh_grommets_90x135_single.DPD0554Q.png");
+const __vite_glob_0_28 = "" + __buildAssetsURL("mesh_grommets_90x135_single_fringe.DxWtrmVO.png");
+const __vite_glob_0_29 = "" + __buildAssetsURL("mesh_sleeve_60x90_double.AU-psE_l.png");
+const __vite_glob_0_30 = "" + __buildAssetsURL("mesh_sleeve_60x90_double_fringe.SrC3VtWH.png");
+const __vite_glob_0_31 = "" + __buildAssetsURL("mesh_sleeve_60x90_single.CmS-puQr.png");
+const __vite_glob_0_32 = "" + __buildAssetsURL("mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png");
+const __vite_glob_0_33 = "" + __buildAssetsURL("mesh_sleeve_90x135_double.gzM_G-fO.png");
+const __vite_glob_0_34 = "" + __buildAssetsURL("mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png");
+const __vite_glob_0_35 = "" + __buildAssetsURL("mesh_sleeve_90x135_single.BF76aDEu.png");
+const productImage = "" + __buildAssetsURL("mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png");
+const __vite_glob_0_37 = "" + __buildAssetsURL("polyester_grommets_60x90_double.D8jS7Lud.png");
+const __vite_glob_0_38 = "" + __buildAssetsURL("polyester_grommets_60x90_double_fringe.DVWDASzD.png");
+const __vite_glob_0_39 = "" + __buildAssetsURL("polyester_grommets_60x90_single.MOirczvX.png");
+const __vite_glob_0_40 = "" + __buildAssetsURL("polyester_grommets_60x90_single_fringe.4fPcYHcK.png");
+const __vite_glob_0_41 = "" + __buildAssetsURL("polyester_grommets_90x135_double.Bc5E38oN.png");
+const __vite_glob_0_42 = "" + __buildAssetsURL("polyester_grommets_90x135_double_fringe.C_votDlE.png");
+const __vite_glob_0_43 = "" + __buildAssetsURL("polyester_grommets_90x135_single.DSceDMP9.png");
+const __vite_glob_0_44 = "" + __buildAssetsURL("polyester_grommets_90x135_single_fringe.sevc2bgj.png");
+const __vite_glob_0_45 = "" + __buildAssetsURL("polyester_sleeve_60x90_double.CuU2f0Nk.png");
+const __vite_glob_0_46 = "" + __buildAssetsURL("polyester_sleeve_60x90_double_fringe.D5RRAdln.png");
+const __vite_glob_0_47 = "" + __buildAssetsURL("polyester_sleeve_60x90_single.C7RVHdnM.png");
+const __vite_glob_0_48 = "" + __buildAssetsURL("polyester_sleeve_60x90_single_fringe.CtfDHoBx.png");
+const __vite_glob_0_49 = "" + __buildAssetsURL("polyester_sleeve_90x135_double.C2ikPQO1.png");
+const __vite_glob_0_50 = "" + __buildAssetsURL("polyester_sleeve_90x135_double_fringe.UUtANBuN.png");
+const __vite_glob_0_51 = "" + __buildAssetsURL("polyester_sleeve_90x135_single.gck03kxQ.png");
+const __vite_glob_0_52 = "" + __buildAssetsURL("polyester_sleeve_90x135_single_fringe.BiFaViDN.png");
+const __vite_glob_0_53 = "" + __buildAssetsURL("satin_grommets_60x90_double.C8GIQrJU.png");
+const __vite_glob_0_54 = "" + __buildAssetsURL("satin_grommets_60x90_double_fringe.CRifW5D4.png");
+const __vite_glob_0_55 = "" + __buildAssetsURL("satin_grommets_60x90_single.-INYcgSl.png");
+const __vite_glob_0_56 = "" + __buildAssetsURL("satin_grommets_60x90_single_fringe.B2c9NQZ0.png");
+const __vite_glob_0_57 = "" + __buildAssetsURL("satin_grommets_90x135_double.CeveyNnt.png");
+const __vite_glob_0_58 = "" + __buildAssetsURL("satin_grommets_90x135_double_fringe.7Iinn9rA.png");
+const __vite_glob_0_59 = "" + __buildAssetsURL("satin_grommets_90x135_single.DjgR8eU2.png");
+const __vite_glob_0_60 = "" + __buildAssetsURL("satin_grommets_90x135_single_fringe.nyG-fLFQ.png");
+const __vite_glob_0_61 = "" + __buildAssetsURL("satin_sleeve_60x90_double.B-d5Istq.png");
+const __vite_glob_0_62 = "" + __buildAssetsURL("satin_sleeve_60x90_double_fringe.mC-RM5cb.png");
+const __vite_glob_0_63 = "" + __buildAssetsURL("satin_sleeve_60x90_single.ByUDhn4E.png");
+const __vite_glob_0_64 = "" + __buildAssetsURL("satin_sleeve_60x90_single_fringe.C2qvKlSZ.png");
+const __vite_glob_0_65 = "" + __buildAssetsURL("satin_sleeve_90x135_double.Cat8n9H4.png");
+const __vite_glob_0_66 = "" + __buildAssetsURL("satin_sleeve_90x135_double_fringe.DUYdMMof.png");
+const __vite_glob_0_67 = "" + __buildAssetsURL("satin_sleeve_90x135_single.BWcmz37Z.png");
+const __vite_glob_0_68 = "" + __buildAssetsURL("satin_sleeve_90x135_single_fringe.00B5d1PG.png");
+function formatPriceRaw(value) {
+  return value.toLocaleString("ru-RU");
+}
+const FRINGE_PRICE = 300;
+const DOUBLE_SIDED_PRICE = 1e3;
+const DESIGN_PRICE = 1500;
+const PRICE_TABLE = {
+  "90x135": {
+    "Атлас": { "1-4": 2e3, "5-10": 1900, "20-100": 1800, raopt: 1800 },
+    "Нейлон": { "1-4": 1400, "5-10": 1300, "20-100": 1200, raopt: 1200 },
+    "Флажная сетка": { "1-4": 1400, "5-10": 1300, "20-100": 1200, raopt: 1200 },
+    "Купольный атлас": { "1-4": 6500, "5-10": 6e3, "20-100": 6e3, raopt: 6e3 },
+    "Габардин": { "1-4": 2e3, "5-10": 1900, "20-100": 1800, raopt: 1800 }
+  },
+  "90x60": {
+    "Атлас 210гр": { "1-4": 800, "5-10": 750, "20-100": 740, raopt: 690 },
+    "Нейлон": { "1-4": 700, "5-10": 650, "20-100": 640, raopt: 590 },
+    "Флажная сетка": { "1-4": 700, "5-10": 650, "20-100": 640, raopt: 590 },
+    "Купольный атлас": { "1-4": 2950, "5-10": 2600, "20-100": 2340, raopt: 2340 },
+    "Габардин": { "1-4": 800, "5-10": 750, "20-100": 740, raopt: 690 }
+  }
+};
+const SIZE_TO_PRICE_KEY = {
+  "90x135": "90x135",
+  "60x90": "90x60"
+};
+function getFabricPriceKey(fabricLabel, priceSize) {
+  if (priceSize === "90x60" && fabricLabel === "Атлас") {
+    return "Атлас 210гр";
+  }
+  return fabricLabel;
+}
+function getTier(quantity) {
+  if (quantity >= 100) return "raopt";
+  if (quantity >= 20) return "20-100";
+  if (quantity >= 5) return "5-10";
+  return "1-4";
+}
+function calcUnitPrice(fabricLabel, size, quantity, hasFringe, doubleSided) {
+  const priceSize = SIZE_TO_PRICE_KEY[size];
+  if (!priceSize || !PRICE_TABLE[priceSize]) return 0;
+  const fabricKey = getFabricPriceKey(fabricLabel, priceSize);
+  if (!PRICE_TABLE[priceSize][fabricKey]) return 0;
+  const tier = getTier(quantity);
+  const basePrice = PRICE_TABLE[priceSize][fabricKey][tier];
+  const fringeAddition = hasFringe ? FRINGE_PRICE : 0;
+  const doubleSidedAddition = doubleSided ? DOUBLE_SIDED_PRICE : 0;
+  return basePrice + fringeAddition + doubleSidedAddition;
+}
+function calcDesignPrice(orderDesign) {
+  return orderDesign ? DESIGN_PRICE : 0;
+}
+const FABRICS = [
+  { label: "Атлас", genitive: "атласа", value: "atlas" },
+  { label: "Нейлон", genitive: "нейлона", value: "nylon" },
+  { label: "Флажная сетка", genitive: "флажной сетки", value: "mesh" },
+  { label: "Габардин", genitive: "габардина", value: "gabardine" },
+  { label: "Купольный атлас", genitive: "купольного атласа", value: "dome-atlas" }
+];
+const MOUNTINGS = [
+  { label: "Люверсы", value: "grommets" },
+  { label: "Под древко", value: "pocket" }
+];
+const SIZES = [
+  { label: "90×135 см", value: "90x135" },
+  { label: "60×90 см", value: "60x90" }
+];
+const FABRIC_IMAGE_MAP = {
+  atlas: "satin",
+  nylon: "polyester",
+  mesh: "mesh",
+  gabardine: "dense_polyester",
+  "dome-atlas": "satin"
+};
+const MOUNTING_IMAGE_MAP = {
+  grommets: "grommets",
+  pocket: "sleeve"
+};
+function getFabricLabel(value) {
+  return FABRICS.find((f) => f.value === value)?.label ?? "";
+}
+function getFabricGenitive(value) {
+  return FABRICS.find((f) => f.value === value)?.genitive ?? "";
+}
+function getSizeLabel(value) {
+  return SIZES.find((s) => s.value === value)?.label ?? "";
+}
+const imageModules = /* @__PURE__ */ Object.assign({ "/assets/images/catalog_slider_1.png": __vite_glob_0_0, "/assets/images/catalog_slider_2.png": __vite_glob_0_1, "/assets/images/catalog_slider_3.png": __vite_glob_0_2, "/assets/images/catalog_slider_4.png": __vite_glob_0_3, "/assets/images/catalog_slider_5.png": __vite_glob_0_4, "/assets/images/dense_polyester_grommets_60x90_double.png": __vite_glob_0_5, "/assets/images/dense_polyester_grommets_60x90_double_fringe.png": __vite_glob_0_6, "/assets/images/dense_polyester_grommets_60x90_single.png": __vite_glob_0_7, "/assets/images/dense_polyester_grommets_60x90_single_fringe.png": __vite_glob_0_8, "/assets/images/dense_polyester_grommets_90x135_double.png": __vite_glob_0_9, "/assets/images/dense_polyester_grommets_90x135_double_fringe.png": __vite_glob_0_10, "/assets/images/dense_polyester_grommets_90x135_single.png": __vite_glob_0_11, "/assets/images/dense_polyester_grommets_90x135_single_fringe.png": __vite_glob_0_12, "/assets/images/dense_polyester_sleeve_60x90_double.png": __vite_glob_0_13, "/assets/images/dense_polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_14, "/assets/images/dense_polyester_sleeve_60x90_single.png": __vite_glob_0_15, "/assets/images/dense_polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_16, "/assets/images/dense_polyester_sleeve_90x135_double.png": __vite_glob_0_17, "/assets/images/dense_polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_18, "/assets/images/dense_polyester_sleeve_90x135_single.png": __vite_glob_0_19, "/assets/images/dense_polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_20, "/assets/images/mesh_grommets_60x90_double.png": __vite_glob_0_21, "/assets/images/mesh_grommets_60x90_double_fringe.png": __vite_glob_0_22, "/assets/images/mesh_grommets_60x90_single.png": __vite_glob_0_23, "/assets/images/mesh_grommets_60x90_single_fringe.png": __vite_glob_0_24, "/assets/images/mesh_grommets_90x135_double.png": __vite_glob_0_25, "/assets/images/mesh_grommets_90x135_double_fringe.png": __vite_glob_0_26, "/assets/images/mesh_grommets_90x135_single.png": __vite_glob_0_27, "/assets/images/mesh_grommets_90x135_single_fringe.png": __vite_glob_0_28, "/assets/images/mesh_sleeve_60x90_double.png": __vite_glob_0_29, "/assets/images/mesh_sleeve_60x90_double_fringe.png": __vite_glob_0_30, "/assets/images/mesh_sleeve_60x90_single.png": __vite_glob_0_31, "/assets/images/mesh_sleeve_60x90_single_fringe.png": __vite_glob_0_32, "/assets/images/mesh_sleeve_90x135_double.png": __vite_glob_0_33, "/assets/images/mesh_sleeve_90x135_double_fringe.png": __vite_glob_0_34, "/assets/images/mesh_sleeve_90x135_single.png": __vite_glob_0_35, "/assets/images/mesh_sleeve_90x135_single_fringe.png": productImage, "/assets/images/polyester_grommets_60x90_double.png": __vite_glob_0_37, "/assets/images/polyester_grommets_60x90_double_fringe.png": __vite_glob_0_38, "/assets/images/polyester_grommets_60x90_single.png": __vite_glob_0_39, "/assets/images/polyester_grommets_60x90_single_fringe.png": __vite_glob_0_40, "/assets/images/polyester_grommets_90x135_double.png": __vite_glob_0_41, "/assets/images/polyester_grommets_90x135_double_fringe.png": __vite_glob_0_42, "/assets/images/polyester_grommets_90x135_single.png": __vite_glob_0_43, "/assets/images/polyester_grommets_90x135_single_fringe.png": __vite_glob_0_44, "/assets/images/polyester_sleeve_60x90_double.png": __vite_glob_0_45, "/assets/images/polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_46, "/assets/images/polyester_sleeve_60x90_single.png": __vite_glob_0_47, "/assets/images/polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_48, "/assets/images/polyester_sleeve_90x135_double.png": __vite_glob_0_49, "/assets/images/polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_50, "/assets/images/polyester_sleeve_90x135_single.png": __vite_glob_0_51, "/assets/images/polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_52, "/assets/images/satin_grommets_60x90_double.png": __vite_glob_0_53, "/assets/images/satin_grommets_60x90_double_fringe.png": __vite_glob_0_54, "/assets/images/satin_grommets_60x90_single.png": __vite_glob_0_55, "/assets/images/satin_grommets_60x90_single_fringe.png": __vite_glob_0_56, "/assets/images/satin_grommets_90x135_double.png": __vite_glob_0_57, "/assets/images/satin_grommets_90x135_double_fringe.png": __vite_glob_0_58, "/assets/images/satin_grommets_90x135_single.png": __vite_glob_0_59, "/assets/images/satin_grommets_90x135_single_fringe.png": __vite_glob_0_60, "/assets/images/satin_sleeve_60x90_double.png": __vite_glob_0_61, "/assets/images/satin_sleeve_60x90_double_fringe.png": __vite_glob_0_62, "/assets/images/satin_sleeve_60x90_single.png": __vite_glob_0_63, "/assets/images/satin_sleeve_60x90_single_fringe.png": __vite_glob_0_64, "/assets/images/satin_sleeve_90x135_double.png": __vite_glob_0_65, "/assets/images/satin_sleeve_90x135_double_fringe.png": __vite_glob_0_66, "/assets/images/satin_sleeve_90x135_single.png": __vite_glob_0_67, "/assets/images/satin_sleeve_90x135_single_fringe.png": __vite_glob_0_68 });
+function resolveImage(fabric, mounting, size, doubleSided, hasFringe) {
+  const fabricKey = FABRIC_IMAGE_MAP[fabric] || "mesh";
+  const mountingKey = MOUNTING_IMAGE_MAP[mounting] || "sleeve";
+  const sided = doubleSided ? "double" : "single";
+  const fringe = hasFringe ? "_fringe" : "";
+  const filename = `${fabricKey}_${mountingKey}_${size}_${sided}${fringe}.png`;
+  const key = Object.keys(imageModules).find((k) => k.endsWith(`/${filename}`));
+  return key ? imageModules[key] : "";
+}
+function buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign }) {
+  const parts = [fabricLabel];
+  if (mounting === "grommets") parts.push("люверсы");
+  else parts.push("под древко");
+  parts.push(sizeLabel);
+  if (hasFringe) parts.push("бахрома");
+  if (doubleSided) parts.push("печать с двух сторон");
+  if (orderDesign) parts.push("услуги дизайнера");
+  return parts.join(", ");
+}
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+function useCart() {
+  const items = useState("cart-items", () => []);
+  function addItem({ fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description: description2 }) {
+    const image = resolveImage(fabric, mounting, size, doubleSided, hasFringe);
+    const itemDescription = buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign });
+    const customerComment = description2?.trim() ?? "";
+    const genitive = fabricGenitive || getFabricGenitive(fabric);
+    const item = {
+      id: generateId(),
+      name: `Флаг из ${genitive}`,
+      description: itemDescription,
+      customerComment,
+      image,
+      quantity,
+      unitPrice,
+      designPrice: designPrice || 0,
+      selected: true,
+      config: { fabric, mounting, size, quantity, hasFringe, doubleSided, orderDesign }
+    };
+    items.value = [...items.value, item];
+    return item;
+  }
+  function removeItem(id) {
+    items.value = items.value.filter((item) => item.id !== id);
+  }
+  function removeItems(ids) {
+    const idSet = new Set(ids);
+    items.value = items.value.filter((item) => !idSet.has(item.id));
+  }
+  function updateQuantity(id, quantity) {
+    items.value = items.value.map((item) => {
+      if (item.id !== id) return item;
+      const nextQuantity = Math.max(1, quantity);
+      const fabricLabel = getFabricLabel(item.config.fabric);
+      const unitPrice = calcUnitPrice(
+        fabricLabel,
+        item.config.size,
+        nextQuantity,
+        item.config.hasFringe,
+        item.config.doubleSided
+      );
+      return {
+        ...item,
+        quantity: nextQuantity,
+        unitPrice,
+        config: {
+          ...item.config,
+          quantity: nextQuantity
+        }
+      };
+    });
+  }
+  function updateItem(id, config) {
+    items.value = items.value.map((item) => {
+      if (item.id !== id) return item;
+      const image = resolveImage(config.fabric, config.mounting, config.size, config.doubleSided, config.hasFringe);
+      const fabricLabel = getFabricLabel(config.fabric);
+      const fabricGenitive = getFabricGenitive(config.fabric);
+      const sizeLabel = getSizeLabel(config.size);
+      const description2 = buildDescription({
+        fabricLabel,
+        mounting: config.mounting,
+        sizeLabel,
+        hasFringe: config.hasFringe,
+        doubleSided: config.doubleSided,
+        orderDesign: config.orderDesign
+      });
+      const unitPrice = calcUnitPrice(fabricLabel, config.size, item.quantity, config.hasFringe, config.doubleSided);
+      const designPrice = calcDesignPrice(config.orderDesign);
+      return {
+        ...item,
+        name: `Флаг из ${fabricGenitive}`,
+        description: description2,
+        image,
+        unitPrice,
+        designPrice,
+        config: { ...config }
+      };
+    });
+  }
+  function clearCart() {
+    items.value = [];
+  }
+  const totalItems = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0));
+  const totalPrice = computed(() => items.value.reduce((sum, item) => sum + item.unitPrice * item.quantity + item.designPrice, 0));
+  return {
+    items,
+    addItem,
+    removeItem,
+    removeItems,
+    updateItem,
+    updateQuantity,
+    clearCart,
+    totalItems,
+    totalPrice
+  };
+}
+function useFavorites() {
+  const items = useState("favorite-items", () => []);
+  useState("favorite-items-ready", () => false);
+  const favoriteIds = computed(() => new Set(items.value.map((item) => item.id)));
+  const totalItems = computed(() => items.value.length);
+  function persist(nextItems) {
+    items.value = nextItems;
+  }
+  function isFavorite(id) {
+    return favoriteIds.value.has(id);
+  }
+  function addItem(product) {
+    if (!product?.id || isFavorite(product.id)) {
+      return;
+    }
+    persist([
+      product,
+      ...items.value
+    ]);
+  }
+  function removeItem(id) {
+    persist(items.value.filter((item) => item.id !== id));
+  }
+  function clearItems() {
+    persist([]);
+  }
+  function toggleItem(product) {
+    if (!product?.id) {
+      return false;
+    }
+    if (isFavorite(product.id)) {
+      removeItem(product.id);
+      return false;
+    }
+    addItem(product);
+    return true;
+  }
+  return {
+    items,
+    totalItems,
+    isFavorite,
+    addItem,
+    removeItem,
+    clearItems,
+    toggleItem
+  };
+}
+const useProfileStore = defineStore("profile", () => {
+  const profileData = ref(null);
+  const isLoading = ref(false);
+  const error = ref(null);
+  let fetchPromise = null;
+  const user = computed(() => profileData.value?.profile?.user ?? null);
+  const organizations = computed(() => profileData.value?.profile?.organizations ?? []);
+  const recipients = computed(() => profileData.value?.profile?.recipients ?? []);
+  const isLoaded = computed(() => Boolean(profileData.value));
+  async function fetchProfile({ force = false } = {}) {
+    if (!force && profileData.value) {
+      return profileData.value;
+    }
+    if (fetchPromise) {
+      return fetchPromise;
+    }
+    isLoading.value = true;
+    error.value = null;
+    fetchPromise = $fetch("/api/profile", {
+      headers: useRequestHeaders(["cookie"])
+    }).then((data) => {
+      profileData.value = data;
+      return data;
+    }).catch((fetchError) => {
+      error.value = fetchError;
+      throw fetchError;
+    }).finally(() => {
+      isLoading.value = false;
+      fetchPromise = null;
+    });
+    return fetchPromise;
+  }
+  function fetchProfileOnce() {
+    return fetchProfile();
+  }
+  function refreshProfile() {
+    return fetchProfile({ force: true });
+  }
+  function clearProfile() {
+    profileData.value = null;
+    error.value = null;
+    isLoading.value = false;
+    fetchPromise = null;
+  }
+  return {
+    profileData,
+    user,
+    organizations,
+    recipients,
+    isLoaded,
+    isLoading,
+    error,
+    fetchProfileOnce,
+    refreshProfile,
+    clearProfile
+  };
+});
+const _sfc_main$d = {
   __name: "AppHeader",
   __ssrInlineRender: true,
-  setup(__props) {
+  emits: ["open-cart"],
+  setup(__props, { emit: __emit }) {
     const navLinks = [
       { label: "Каталог", to: "/catalog" },
-      { label: "О нас", to: "" },
-      { label: "Примеры работ", to: "" },
+      { label: "О нас", to: "", hidden: true },
+      { label: "Примеры работ", to: "", hidden: true },
       { label: "Оплата", to: "/payment" },
       { label: "Доставка", to: "/delivery" }
     ];
+    const visibleNavLinks = computed(() => navLinks.filter((item) => !item.hidden));
     const session = authClient.useSession();
     const isSessionPending = computed(() => session.value?.isPending ?? true);
     const sessionUser = computed(() => session.value?.data?.user ?? null);
@@ -8494,13 +9483,16 @@ const _sfc_main$5 = {
       }
       return sessionUser.value.name;
     });
-    const baseActionItems = [
+    const { totalItems: cartTotalItems } = useCart();
+    const { totalItems: favoriteTotalItems } = useFavorites();
+    const profileStore = useProfileStore();
+    const baseActionItems = computed(() => [
       {
         key: "favorites",
         label: "Избранное",
         icon: "favorite",
         iconClass: "header-action__icon_favorite",
-        counter: "99+",
+        counter: favoriteTotalItems.value,
         kind: "favorite"
       },
       {
@@ -8508,7 +9500,7 @@ const _sfc_main$5 = {
         label: "Заказы",
         icon: "orders",
         iconClass: "header-action__icon_orders",
-        counter: "99+",
+        counter: 0,
         kind: "secondary"
       },
       {
@@ -8516,10 +9508,10 @@ const _sfc_main$5 = {
         label: "Корзина",
         icon: "cart",
         iconClass: "header-action__icon_cart",
-        counter: "99+",
+        counter: cartTotalItems.value,
         kind: "secondary"
       }
-    ];
+    ]);
     const accountAction = computed(() => ({
       key: "account",
       label: accountLabel.value,
@@ -8530,19 +9522,23 @@ const _sfc_main$5 = {
       isAuthenticated: Boolean(sessionUser.value)
     }));
     const actionItems = computed(() => [
-      ...baseActionItems,
+      ...baseActionItems.value,
       ...!sessionUser.value && !isSessionPending.value ? [accountAction.value] : []
     ]);
     const isAuthEntryOpen = ref(false);
     const isSignOutPending = ref(false);
-    function refreshSession() {
-      session.value?.refetch?.();
+    async function refreshSession() {
+      await session.value?.refetch?.();
+      if (session.value?.data?.user) {
+        profileStore.fetchProfileOnce().catch(() => {
+        });
+      }
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$3;
-      const _component_AppIcon = __nuxt_component_0$1;
-      const _component_AuthEntryModal = __nuxt_component_2$1;
-      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-38504e4e><div class="header__container" data-v-38504e4e><div class="header__inner" data-v-38504e4e>`);
+      const _component_NuxtLink = __nuxt_component_0$5;
+      const _component_AppIcon = __nuxt_component_1$3;
+      const _component_AuthEntryModal = __nuxt_component_2$2;
+      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-052ad214><div class="header__container" data-v-052ad214><div class="header__inner" data-v-052ad214>`);
       _push(ssrRenderComponent(_component_NuxtLink, {
         to: "/",
         class: "header__logo",
@@ -8550,7 +9546,7 @@ const _sfc_main$5 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="header__logo-cloud" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-38504e4e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-38504e4e${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-38504e4e${_scopeId}>`);
+            _push2(`<div class="header__logo-cloud" data-v-052ad214${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-052ad214${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-052ad214${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-052ad214${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-052ad214${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-052ad214${_scopeId}>`);
           } else {
             return [
               createVNode("div", { class: "header__logo-cloud" }, [
@@ -8585,8 +9581,8 @@ const _sfc_main$5 = {
         }),
         _: 1
       }, _parent));
-      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-38504e4e><!--[-->`);
-      ssrRenderList(navLinks, (item) => {
+      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-052ad214><!--[-->`);
+      ssrRenderList(unref(visibleNavLinks), (item) => {
         _push(`<!--[-->`);
         if (item.to) {
           _push(ssrRenderComponent(_component_NuxtLink, {
@@ -8605,32 +9601,32 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-38504e4e>${ssrInterpolate(item.label)}</a>`);
+          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-052ad214>${ssrInterpolate(item.label)}</a>`);
         }
         _push(`<!--]-->`);
       });
-      _push(`<!--]--></nav><div class="header__actions" data-v-38504e4e><!--[-->`);
+      _push(`<!--]--></nav><div class="header__actions" data-v-052ad214><!--[-->`);
       ssrRenderList(unref(actionItems), (item) => {
-        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-38504e4e><span class="header-action__icon-wrap" data-v-38504e4e>`);
+        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-052ad214><span class="header-action__icon-wrap" data-v-052ad214>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: item.icon,
           class: ["header-action__icon", item.iconClass]
         }, null, _parent));
         if (item.counter) {
-          _push(`<span class="header-action__counter" data-v-38504e4e>${ssrInterpolate(item.counter)}</span>`);
+          _push(`<span class="header-action__counter" data-v-052ad214>${ssrInterpolate(item.counter)}</span>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</span><span class="header-action__label" data-v-38504e4e>${ssrInterpolate(item.label)}</span></button>`);
+        _push(`</span><span class="header-action__label" data-v-052ad214>${ssrInterpolate(item.label)}</span></button>`);
       });
       _push(`<!--]-->`);
       if (unref(sessionUser)) {
-        _push(`<div class="header-account-authorized" data-v-38504e4e><div class="header-account-authorized__top" data-v-38504e4e><span class="header-account-authorized__icon-wrap" data-v-38504e4e>`);
+        _push(`<div class="header-account-authorized" data-v-052ad214><div class="header-account-authorized__top" data-v-052ad214><span class="header-account-authorized__icon-wrap" data-v-052ad214>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-account-authorized",
           class: "header-account-authorized__icon"
         }, null, _parent));
-        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-38504e4e>`);
+        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-052ad214>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-sign-out-authorized",
           class: "header-account-authorized__sign-out-icon"
@@ -8666,17 +9662,17 @@ const _sfc_main$5 = {
     };
   }
 };
-const _sfc_setup$5 = _sfc_main$5.setup;
-_sfc_main$5.setup = (props, ctx) => {
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppHeader.vue");
-  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
-const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-38504e4e"]]);
+const __nuxt_component_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-052ad214"]]);
 const theme = {
   "base": "min-h-[calc(100vh-var(--ui-header-height))]"
 };
-const _sfc_main$4 = {
+const _sfc_main$c = {
   __name: "UMain",
   __ssrInlineRender: true,
   props: {
@@ -8708,11 +9704,11 @@ const _sfc_main$4 = {
     };
   }
 };
-const _sfc_setup$4 = _sfc_main$4.setup;
-_sfc_main$4.setup = (props, ctx) => {
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Main.vue");
-  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
 const defineRouteProvider = (name = "RouteProvider") => defineComponent({
   name,
@@ -8746,7 +9742,7 @@ const defineRouteProvider = (name = "RouteProvider") => defineComponent({
   }
 });
 const RouteProvider = defineRouteProvider();
-const __nuxt_component_4 = defineComponent({
+const __nuxt_component_4$1 = defineComponent({
   name: "NuxtPage",
   inheritAttrs: false,
   props: {
@@ -8799,7 +9795,7 @@ function normalizeSlot(slot, data) {
 }
 const footerLogo = "" + __buildAssetsURL("footer-logo.CDJvr2uJ.svg");
 const footerSbp = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2051.2236%2027.0625'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Vector'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.329%200L23.9926%207.71665L13.6757%2013.5312L23.9926%2019.3578L10.329%2027.0625V15.4213L0%2021.2599V5.82661L10.317%2011.6532V0H10.329ZM13.6757%2021.4044L17.2872%2019.3578L13.6757%2017.3233V21.4044ZM3.34669%2015.5778L6.95823%2013.5433L3.34669%2011.5088V15.5778ZM13.6757%209.76319L17.2872%207.71665L13.6757%205.68215V9.76319Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M41.4364%209.703H39.1852C38.6314%209.67892%2038.0897%209.87153%2037.6563%2010.2207C37.2349%2010.5698%2036.9581%2011.0633%2036.8738%2011.6051C37.572%2011.0152%2038.4749%2010.7022%2039.4019%2010.7142C40.2325%2010.7263%2041.0391%2011.0513%2041.629%2011.6291C42.2189%2012.195%2042.568%2012.9775%2042.6041%2013.784V14.1572C42.4235%2015.975%2040.8224%2017.2391%2038.6073%2017.2391C36.3682%2017.2391%2034.4781%2015.9148%2034.4781%2012.6885C34.4781%209.9558%2036.2719%207.69257%2038.9083%207.65646H42.5921L41.4243%209.71503L41.4364%209.703ZM38.3545%2012.4839C38.0656%2012.532%2037.8008%2012.6645%2037.5841%2012.8691C37.3674%2013.0738%2037.2229%2013.3266%2037.1627%2013.6035C37.1025%2013.8803%2037.1266%2014.1813%2037.2229%2014.4461C37.3313%2014.711%2037.5118%2014.9518%2037.7526%2015.1083C37.9934%2015.2768%2038.2823%2015.3731%2038.5712%2015.3731C38.7638%2015.3731%2038.9685%2015.349%2039.1491%2015.2768C39.3296%2015.2046%2039.5102%2015.1083%2039.6547%2014.9638C39.7991%2014.8314%2039.9075%2014.6628%2039.9918%2014.4823C40.064%2014.3017%2040.1121%2014.1091%2040.1121%2013.9165C40.1121%2013.6275%2040.0279%2013.3506%2039.8714%2013.1099C39.7149%2012.8691%2039.4861%2012.6765%2039.2093%2012.5681C38.9444%2012.4598%2038.6434%2012.4237%2038.3545%2012.4718V12.4839Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20d='M30.7462%209.87153C31.7454%209.87153%2032.7085%2010.1725%2033.491%2010.7744L32.552%2012.4117C31.9621%2012.0625%2031.288%2011.8699%2030.6018%2011.882C30.1684%2011.906%2029.7591%2012.0866%2029.4701%2012.3996C29.1692%2012.7006%2029.0006%2013.1099%2029.0006%2013.5312C29.0006%2013.9526%2029.1692%2014.3619%2029.4701%2014.6628C29.7711%2014.9638%2030.1684%2015.1564%2030.6018%2015.1805C31.288%2015.1805%2031.9741%2014.9999%2032.552%2014.6508L33.491%2016.3001C32.7085%2016.902%2031.7213%2017.227%2030.7221%2017.227C28.5071%2017.227%2026.617%2015.5537%2026.617%2013.5433C26.617%2011.8218%2028.2904%209.88357%2030.7342%209.88357L30.7462%209.87153Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20d='M48.7317%2017.0224V12.1348H46.324V17.0224H43.82V10.0762H51.2236V17.0224H48.7317Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3c/g%3e%3c/svg%3e";
-const _sfc_main$3 = {
+const _sfc_main$b = {
   __name: "AppFooter",
   __ssrInlineRender: true,
   setup(__props) {
@@ -8828,8 +9824,8 @@ const _sfc_main$3 = {
       { label: "Политика конфиденциальности", to: "/privacy-policy" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$3;
-      const _component_AppIcon = __nuxt_component_0$1;
+      const _component_NuxtLink = __nuxt_component_0$5;
+      const _component_AppIcon = __nuxt_component_1$3;
       _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-3309272d><div class="footer__container" data-v-3309272d><div class="footer__card" data-v-3309272d><div class="footer__top" data-v-3309272d><div class="footer__column" data-v-3309272d><h3 class="footer__title" data-v-3309272d> Каталог </h3><!--[-->`);
       ssrRenderList(catalogLinks, (item) => {
         _push(`<!--[-->`);
@@ -8916,13 +9912,714 @@ const _sfc_main$3 = {
     };
   }
 };
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppFooter.vue");
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+};
+const __nuxt_component_5$1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-3309272d"]]);
+const _sfc_main$a = {
+  __name: "BaseModal",
+  __ssrInlineRender: true,
+  props: /* @__PURE__ */ mergeModels({
+    title: {
+      type: String,
+      default: ""
+    },
+    maxWidth: {
+      type: String,
+      default: "56.25rem"
+    },
+    showHeader: {
+      type: Boolean,
+      default: true
+    },
+    overlayClass: {
+      type: String,
+      default: "bg-[rgba(35,8,43,0.18)] backdrop-blur-[3px]"
+    },
+    wrapperClass: {
+      type: String,
+      default: ""
+    }
+  }, {
+    "modelValue": { required: true },
+    "modelModifiers": {}
+  }),
+  emits: ["update:modelValue"],
+  setup(__props) {
+    const isOpen = useModel(__props, "modelValue");
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UModal = _sfc_main$p;
+      _push(ssrRenderComponent(_component_UModal, mergeProps({
+        open: isOpen.value,
+        "onUpdate:open": ($event) => isOpen.value = $event,
+        overlay: true,
+        close: false,
+        scrollable: true,
+        ui: {
+          content: "w-auto max-w-none bg-transparent ring-0 shadow-none p-0 rounded-none",
+          overlay: __props.overlayClass
+        }
+      }, _attrs), {
+        content: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<div class="${ssrRenderClass(["modal-wrapper", __props.wrapperClass])}" style="${ssrRenderStyle({ "--modal-max-w": __props.maxWidth })}" data-v-f4972e26${_scopeId}>`);
+            if (__props.showHeader) {
+              _push2(`<div class="modal-header" data-v-f4972e26${_scopeId}><div class="modal-header__left" data-v-f4972e26${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "header-left", {}, null, _push2, _parent2, _scopeId);
+              if (__props.title) {
+                _push2(`<h2 class="modal-title" data-v-f4972e26${_scopeId}>${ssrInterpolate(__props.title)}</h2>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</div><button class="close-btn" data-v-f4972e26${_scopeId}><svg class="close-btn__icon" viewBox="0 0 16 16" fill="none" data-v-f4972e26${_scopeId}><path fill-rule="evenodd" clip-rule="evenodd" d="M3.46967 3.46967C3.76256 3.17678 4.23744 3.17678 4.53033 3.46967L8 6.93934L11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967C12.8232 3.76256 12.8232 4.23744 12.5303 4.53033L9.06066 8L12.5303 11.4697C12.8232 11.7626 12.8232 12.2374 12.5303 12.5303C12.2374 12.8232 11.7626 12.8232 11.4697 12.5303L8 9.06066L4.53033 12.5303C4.23744 12.8232 3.76256 12.8232 3.46967 12.5303C3.17678 12.2374 3.17678 11.7626 3.46967 11.4697L6.93934 8L3.46967 4.53033C3.17678 4.23744 3.17678 3.76256 3.46967 3.46967Z" fill="currentColor" data-v-f4972e26${_scopeId}></path></svg></button></div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
+            _push2(`</div>`);
+          } else {
+            return [
+              createVNode("div", {
+                class: ["modal-wrapper", __props.wrapperClass],
+                style: { "--modal-max-w": __props.maxWidth }
+              }, [
+                __props.showHeader ? (openBlock(), createBlock("div", {
+                  key: 0,
+                  class: "modal-header"
+                }, [
+                  createVNode("div", { class: "modal-header__left" }, [
+                    renderSlot(_ctx.$slots, "header-left", {}, void 0, true),
+                    __props.title ? (openBlock(), createBlock("h2", {
+                      key: 0,
+                      class: "modal-title"
+                    }, toDisplayString(__props.title), 1)) : createCommentVNode("", true)
+                  ]),
+                  createVNode("button", {
+                    class: "close-btn",
+                    onClick: ($event) => isOpen.value = false
+                  }, [
+                    (openBlock(), createBlock("svg", {
+                      class: "close-btn__icon",
+                      viewBox: "0 0 16 16",
+                      fill: "none"
+                    }, [
+                      createVNode("path", {
+                        "fill-rule": "evenodd",
+                        "clip-rule": "evenodd",
+                        d: "M3.46967 3.46967C3.76256 3.17678 4.23744 3.17678 4.53033 3.46967L8 6.93934L11.4697 3.46967C11.7626 3.17678 12.2374 3.17678 12.5303 3.46967C12.8232 3.76256 12.8232 4.23744 12.5303 4.53033L9.06066 8L12.5303 11.4697C12.8232 11.7626 12.8232 12.2374 12.5303 12.5303C12.2374 12.8232 11.7626 12.8232 11.4697 12.5303L8 9.06066L4.53033 12.5303C4.23744 12.8232 3.76256 12.8232 3.46967 12.5303C3.17678 12.2374 3.17678 11.7626 3.46967 11.4697L6.93934 8L3.46967 4.53033C3.17678 4.23744 3.17678 3.76256 3.46967 3.46967Z",
+                        fill: "currentColor"
+                      })
+                    ]))
+                  ], 8, ["onClick"])
+                ])) : createCommentVNode("", true),
+                renderSlot(_ctx.$slots, "default", {}, void 0, true)
+              ], 6)
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$a = _sfc_main$a.setup;
+_sfc_main$a.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/BaseModal.vue");
+  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+};
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-f4972e26"]]);
+const _sfc_main$9 = {
+  __name: "QuantityInput",
+  __ssrInlineRender: true,
+  props: /* @__PURE__ */ mergeModels({
+    min: {
+      type: Number,
+      default: 1
+    },
+    max: {
+      type: Number,
+      default: 1e4
+    },
+    suffix: {
+      type: String,
+      default: "шт"
+    }
+  }, {
+    "modelValue": { type: Number, default: 1 },
+    "modelModifiers": {}
+  }),
+  emits: ["update:modelValue"],
+  setup(__props) {
+    const model = useModel(__props, "modelValue");
+    const props = __props;
+    const canDecrement = computed(() => model.value > props.min);
+    const canIncrement = computed(() => model.value < props.max);
+    const isEditing = ref(false);
+    const editValue = ref("");
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "qty-input" }, _attrs))} data-v-8464ac0f><button type="button" class="${ssrRenderClass(["qty-input__btn", { "qty-input__btn--disabled": !unref(canDecrement) }])}"${ssrIncludeBooleanAttr(!unref(canDecrement)) ? " disabled" : ""} aria-label="Уменьшить количество" data-v-8464ac0f><svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg" data-v-8464ac0f><path d="M1 1h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" data-v-8464ac0f></path></svg></button>`);
+      if (unref(isEditing)) {
+        _push(`<input${ssrRenderAttr("value", unref(editValue))} class="qty-input__input" type="text" inputmode="numeric" data-v-8464ac0f>`);
+      } else {
+        _push(`<span class="qty-input__value" data-v-8464ac0f>${ssrInterpolate(model.value)} ${ssrInterpolate(__props.suffix)}</span>`);
+      }
+      _push(`<button type="button" class="${ssrRenderClass(["qty-input__btn", { "qty-input__btn--disabled": !unref(canIncrement) }])}"${ssrIncludeBooleanAttr(!unref(canIncrement)) ? " disabled" : ""} aria-label="Увеличить количество" data-v-8464ac0f><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" data-v-8464ac0f><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" data-v-8464ac0f></path></svg></button></div>`);
+    };
+  }
+};
+const _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/QuantityInput.vue");
+  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+};
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-8464ac0f"]]);
+const _sfc_main$8 = {
+  __name: "CartItemRow",
+  __ssrInlineRender: true,
+  props: {
+    item: { type: Object, required: true },
+    editing: { type: Boolean, default: false }
+  },
+  emits: [
+    "toggle",
+    "start-edit",
+    "cancel-edit",
+    "confirm-edit",
+    "update-quantity"
+  ],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    const emit = __emit;
+    const editDraft = ref(null);
+    const openDropdown = ref(null);
+    watch(() => props.editing, (val) => {
+      if (val) {
+        editDraft.value = { ...props.item.config };
+        (void 0).addEventListener("click", closeDropdowns);
+      } else {
+        editDraft.value = null;
+        openDropdown.value = null;
+        (void 0).removeEventListener("click", closeDropdowns);
+      }
+    });
+    function labelFor(options, value) {
+      return options.find((o) => o.value === value)?.label ?? value;
+    }
+    function closeDropdowns() {
+      openDropdown.value = null;
+    }
+    const previewPrice = computed(() => {
+      if (!editDraft.value) return null;
+      const fabricLabel = getFabricLabel(editDraft.value.fabric);
+      const unitPrice = calcUnitPrice(
+        fabricLabel,
+        editDraft.value.size,
+        props.item.quantity,
+        editDraft.value.hasFringe,
+        editDraft.value.doubleSided
+      );
+      const designPrice = calcDesignPrice(editDraft.value.orderDesign);
+      return {
+        total: unitPrice * props.item.quantity + designPrice,
+        unit: unitPrice
+      };
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppCheckbox = __nuxt_component_1$1;
+      const _component_QuantityInput = __nuxt_component_1;
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "item-row" }, _attrs))} data-v-0c8b6daa>`);
+      _push(ssrRenderComponent(_component_AppCheckbox, {
+        "model-value": __props.item.selected,
+        "onUpdate:modelValue": ($event) => emit("toggle")
+      }, null, _parent));
+      _push(`<div class="item-row__product" data-v-0c8b6daa><div class="item-row__image-wrap" data-v-0c8b6daa><img${ssrRenderAttr("src", __props.item.image)}${ssrRenderAttr("alt", __props.item.name)} class="item-row__image" data-v-0c8b6daa></div><div class="item-row__details" data-v-0c8b6daa><div class="item-row__top" data-v-0c8b6daa><div class="item-row__info" data-v-0c8b6daa><p class="item-row__name" data-v-0c8b6daa>${ssrInterpolate(__props.item.name)}</p>`);
+      if (!__props.editing) {
+        _push(`<div class="item-row__meta" data-v-0c8b6daa><p class="item-row__desc" data-v-0c8b6daa>${ssrInterpolate(__props.item.description)}</p>`);
+        if (__props.item.customerComment) {
+          _push(`<p class="item-row__note" data-v-0c8b6daa>${ssrInterpolate(__props.item.customerComment)}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div>`);
+      } else {
+        _push(`<div class="item-row__edit-options" data-v-0c8b6daa><div class="inline-select" role="listbox" data-v-0c8b6daa><span class="inline-select__text" data-v-0c8b6daa>${ssrInterpolate(labelFor(unref(FABRICS), unref(editDraft).fabric))}</span><svg class="inline-select__chevron" viewBox="0 0 9 5" fill="none"${ssrRenderAttr("aria-expanded", unref(openDropdown) === "fabric")} data-v-0c8b6daa><path d="M1 1l3.28 3.28L7.56 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" data-v-0c8b6daa></path></svg>`);
+        if (unref(openDropdown) === "fabric") {
+          _push(`<div class="inline-select__dropdown" role="listbox" data-v-0c8b6daa><!--[-->`);
+          ssrRenderList(unref(FABRICS), (f) => {
+            _push(`<button role="option"${ssrRenderAttr("aria-selected", f.value === unref(editDraft).fabric)} class="${ssrRenderClass(["inline-select__option", { "inline-select__option--active": f.value === unref(editDraft).fabric }])}" data-v-0c8b6daa>${ssrInterpolate(f.label)}</button>`);
+          });
+          _push(`<!--]--></div>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div><div class="inline-select" role="listbox" data-v-0c8b6daa><span class="inline-select__text" data-v-0c8b6daa>${ssrInterpolate(labelFor(unref(MOUNTINGS), unref(editDraft).mounting))}</span><svg class="inline-select__chevron" viewBox="0 0 9 5" fill="none"${ssrRenderAttr("aria-expanded", unref(openDropdown) === "mounting")} data-v-0c8b6daa><path d="M1 1l3.28 3.28L7.56 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" data-v-0c8b6daa></path></svg>`);
+        if (unref(openDropdown) === "mounting") {
+          _push(`<div class="inline-select__dropdown" role="listbox" data-v-0c8b6daa><!--[-->`);
+          ssrRenderList(unref(MOUNTINGS), (m) => {
+            _push(`<button role="option"${ssrRenderAttr("aria-selected", m.value === unref(editDraft).mounting)} class="${ssrRenderClass(["inline-select__option", { "inline-select__option--active": m.value === unref(editDraft).mounting }])}" data-v-0c8b6daa>${ssrInterpolate(m.label)}</button>`);
+          });
+          _push(`<!--]--></div>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div><div class="inline-select" role="listbox" data-v-0c8b6daa><span class="inline-select__text" data-v-0c8b6daa>${ssrInterpolate(labelFor(unref(SIZES), unref(editDraft).size))}</span><svg class="inline-select__chevron" viewBox="0 0 9 5" fill="none"${ssrRenderAttr("aria-expanded", unref(openDropdown) === "size")} data-v-0c8b6daa><path d="M1 1l3.28 3.28L7.56 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" data-v-0c8b6daa></path></svg>`);
+        if (unref(openDropdown) === "size") {
+          _push(`<div class="inline-select__dropdown" role="listbox" data-v-0c8b6daa><!--[-->`);
+          ssrRenderList(unref(SIZES), (s) => {
+            _push(`<button role="option"${ssrRenderAttr("aria-selected", s.value === unref(editDraft).size)} class="${ssrRenderClass(["inline-select__option", { "inline-select__option--active": s.value === unref(editDraft).size }])}" data-v-0c8b6daa>${ssrInterpolate(s.label)}</button>`);
+          });
+          _push(`<!--]--></div>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div><span class="${ssrRenderClass(["inline-toggle", { "inline-toggle--off": !unref(editDraft).hasFringe }])}" data-v-0c8b6daa>бахрома</span><span class="${ssrRenderClass(["inline-toggle", { "inline-toggle--off": !unref(editDraft).doubleSided }])}" data-v-0c8b6daa>печать с двух сторон</span></div>`);
+      }
+      _push(`</div>`);
+      if (!__props.editing) {
+        _push(`<button class="item-edit-badge" data-v-0c8b6daa>Изменить</button>`);
+      } else {
+        _push(`<div class="item-row__edit-actions" data-v-0c8b6daa><button class="edit-action edit-action--cancel" aria-label="Отменить редактирование" data-v-0c8b6daa><svg viewBox="0 0 8.56 8.56" fill="none" data-v-0c8b6daa><path fill-rule="evenodd" clip-rule="evenodd" d="M4.28 5.34L7.5 8.56l1.06-1.06L5.34 4.28 8.56 1.06 7.5 0 4.28 3.22 1.06 0 0 1.06l3.22 3.22L0 7.5l1.06 1.06L4.28 5.34Z" fill="#E12E3C" data-v-0c8b6daa></path></svg></button><button class="edit-action edit-action--confirm" aria-label="Подтвердить изменения" data-v-0c8b6daa><svg viewBox="0 0 9.75 7.55" fill="none" data-v-0c8b6daa><path fill-rule="evenodd" clip-rule="evenodd" d="M9.75 1.2L4.65 7.22a1 1 0 0 1-.7.33 1 1 0 0 1-.71-.32L0 3.53l1.4-1.22 2.53 2.9L8.33 0 9.75 1.2Z" fill="#008A0B" data-v-0c8b6daa></path></svg></button></div>`);
+      }
+      _push(`</div><div class="item-row__bottom" data-v-0c8b6daa>`);
+      _push(ssrRenderComponent(_component_QuantityInput, {
+        "model-value": __props.item.quantity,
+        "onUpdate:modelValue": (qty) => emit("update-quantity", qty)
+      }, null, _parent));
+      _push(`<div class="item-row__price" data-v-0c8b6daa>`);
+      if (__props.editing && unref(previewPrice)) {
+        _push(`<!--[--><p class="item-row__total" data-v-0c8b6daa>${ssrInterpolate(unref(formatPriceRaw)(unref(previewPrice).total))} ₽</p><p class="item-row__unit-price" data-v-0c8b6daa>${ssrInterpolate(unref(formatPriceRaw)(unref(previewPrice).unit))} ₽ / шт</p><!--]-->`);
+      } else {
+        _push(`<!--[--><p class="item-row__total" data-v-0c8b6daa>${ssrInterpolate(unref(formatPriceRaw)(__props.item.unitPrice * __props.item.quantity + __props.item.designPrice))} ₽</p><p class="item-row__unit-price" data-v-0c8b6daa>${ssrInterpolate(unref(formatPriceRaw)(__props.item.unitPrice))} ₽ / шт</p><!--]-->`);
+      }
+      _push(`</div></div></div></div></div>`);
+    };
+  }
+};
+const _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartItemRow.vue");
+  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+};
+const __nuxt_component_2 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-0c8b6daa"]]), { __name: "CartItemRow" });
+const _sfc_main$7 = {
+  __name: "AppSwitch",
+  __ssrInlineRender: true,
+  props: /* @__PURE__ */ mergeModels({
+    label: {
+      type: String,
+      default: ""
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  }, {
+    "modelValue": { type: Boolean, default: false },
+    "modelModifiers": {}
+  }),
+  emits: ["update:modelValue"],
+  setup(__props) {
+    const model = useModel(__props, "modelValue");
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<label${ssrRenderAttrs(mergeProps({
+        class: [
+          "app-switch",
+          { "app-switch--active": model.value, "app-switch--disabled": __props.disabled }
+        ]
+      }, _attrs))} data-v-84c8a38d><input${ssrIncludeBooleanAttr(Array.isArray(model.value) ? ssrLooseContain(model.value, null) : model.value) ? " checked" : ""} type="checkbox" class="app-switch__input"${ssrIncludeBooleanAttr(__props.disabled) ? " disabled" : ""} data-v-84c8a38d><span class="app-switch__track" data-v-84c8a38d><span class="app-switch__thumb" data-v-84c8a38d></span></span>`);
+      if (__props.label) {
+        _push(`<span class="app-switch__label" data-v-84c8a38d>${ssrInterpolate(__props.label)}</span>`);
+      } else {
+        _push(`<span class="app-switch__label" data-v-84c8a38d>`);
+        ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+        _push(`</span>`);
+      }
+      _push(`</label>`);
+    };
+  }
+};
+const _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppSwitch.vue");
+  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+};
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-84c8a38d"]]);
+const _sfc_main$6 = {
+  __name: "CartRecipient",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const recipientName = ref("");
+    const recipientPhone = ref("");
+    const recipientEmail = ref("");
+    const anotherPerson = ref(false);
+    const anotherName = ref("");
+    const anotherPhone = ref("");
+    const emailError = computed(() => {
+      if (!recipientEmail.value) return "";
+      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return pattern.test(recipientEmail.value) ? "" : "Некорректный email";
+    });
+    const phoneError = computed(() => {
+      if (!recipientPhone.value) return "";
+      const digits = recipientPhone.value.replace(/\D/g, "");
+      return digits.length >= 11 ? "" : "Введите полный номер";
+    });
+    const anotherPhoneError = computed(() => {
+      if (!anotherPhone.value) return "";
+      const digits = anotherPhone.value.replace(/\D/g, "");
+      return digits.length >= 11 ? "" : "Введите полный номер";
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0$2;
+      const _component_AppSwitch = __nuxt_component_0;
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "card card--mid" }, _attrs))} data-v-7c4f2694><div class="card__inner" data-v-7c4f2694><div class="recipient-header" data-v-7c4f2694><p class="section-title" data-v-7c4f2694>Данные получателя</p><div class="recipient-links" data-v-7c4f2694><a href="#" class="ext-link ext-link--muted" data-v-7c4f2694> Добавить организацию <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-7c4f2694><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-7c4f2694></path></svg></a><a href="#" class="ext-link ext-link--muted" data-v-7c4f2694> Добавить получателя <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-7c4f2694><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-7c4f2694></path></svg></a></div></div><div class="form-fields" data-v-7c4f2694><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Имя</label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        modelValue: unref(recipientName),
+        "onUpdate:modelValue": ($event) => isRef(recipientName) ? recipientName.value = $event : null,
+        placeholder: "Иван"
+      }, null, _parent));
+      _push(`</div><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Номер телефона</label><div class="field-col" data-v-7c4f2694>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        modelValue: unref(recipientPhone),
+        "onUpdate:modelValue": ($event) => isRef(recipientPhone) ? recipientPhone.value = $event : null,
+        mask: "+7(###)-###-##-##",
+        placeholder: "+7(___)-___-__-__"
+      }, null, _parent));
+      if (unref(phoneError)) {
+        _push(`<span class="field-error" data-v-7c4f2694>${ssrInterpolate(unref(phoneError))}</span>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Электропочта</label><div class="field-col" data-v-7c4f2694>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        modelValue: unref(recipientEmail),
+        "onUpdate:modelValue": ($event) => isRef(recipientEmail) ? recipientEmail.value = $event : null,
+        placeholder: "mail@example.com"
+      }, null, _parent));
+      if (unref(emailError)) {
+        _push(`<span class="field-error" data-v-7c4f2694>${ssrInterpolate(unref(emailError))}</span>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div></div>`);
+      _push(ssrRenderComponent(_component_AppSwitch, {
+        modelValue: unref(anotherPerson),
+        "onUpdate:modelValue": ($event) => isRef(anotherPerson) ? anotherPerson.value = $event : null,
+        label: "Заберёт другой человек"
+      }, null, _parent));
+      if (unref(anotherPerson)) {
+        _push(`<div class="form-fields" data-v-7c4f2694><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Имя</label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          modelValue: unref(anotherName),
+          "onUpdate:modelValue": ($event) => isRef(anotherName) ? anotherName.value = $event : null,
+          placeholder: "Иван"
+        }, null, _parent));
+        _push(`</div><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Номер телефона</label><div class="field-col" data-v-7c4f2694>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          modelValue: unref(anotherPhone),
+          "onUpdate:modelValue": ($event) => isRef(anotherPhone) ? anotherPhone.value = $event : null,
+          mask: "+7(###)-###-##-##",
+          placeholder: "+7(___)-___-__-__"
+        }, null, _parent));
+        if (unref(anotherPhoneError)) {
+          _push(`<span class="field-error" data-v-7c4f2694>${ssrInterpolate(unref(anotherPhoneError))}</span>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div></div></div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div>`);
+    };
+  }
+};
+const _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartRecipient.vue");
+  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+};
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-7c4f2694"]]);
+const _sfc_main$5 = {};
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "card card--bottom" }, _attrs))} data-v-a007ae44><div class="card__inner" data-v-a007ae44><div class="pickup-header" data-v-a007ae44><p class="section-title" data-v-a007ae44>Откуда забрать заказ</p><div class="pickup-address" data-v-a007ae44><a href="https://yandex.ru/maps/-/CHEbFD2T" target="_blank" rel="noopener noreferrer" class="ext-link" data-v-a007ae44> ДНР, Донецк, ул. Постышева, дом 60 <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-a007ae44><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-a007ae44></path></svg></a><p class="pickup-schedule" data-v-a007ae44>Пн–Пт 9:00–18:00, Сб 10:00–15:00</p></div></div><div class="map-container" data-v-a007ae44><iframe src="https://yandex.ru/map-widget/v1/?ll=37.802556%2C48.002076&amp;z=12&amp;pt=37.802556%2C48.002076%2Cpm2rdm" class="map-iframe" sandbox="allow-scripts allow-same-origin" allowfullscreen title="Карта с адресом самовывоза" data-v-a007ae44></iframe></div><p class="pickup-note" data-v-a007ae44> Для онлайн заказов доступна только доставка самовывозом. Мы работаем над тем чтобы организовать курьерскую доставку. </p></div></div>`);
+}
+const _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartPickup.vue");
+  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+};
+const __nuxt_component_4 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-a007ae44"]]), { __name: "CartPickup" });
+const _sfc_main$4 = {
+  __name: "CartSummary",
+  __ssrInlineRender: true,
+  props: {
+    totalItems: { type: Number, default: 0 },
+    totalPrice: { type: Number, default: 0 },
+    payDisabled: { type: Boolean, default: false }
+  },
+  emits: ["pay"],
+  setup(__props, { emit: __emit }) {
+    const promoCode = ref("");
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0$2;
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "sidebar-sticky" }, _attrs))} data-v-3dd90177><div class="summary-card" data-v-3dd90177><p class="section-title" data-v-3dd90177>Товары</p><div class="summary-rows" data-v-3dd90177><div class="summary-row" data-v-3dd90177><span class="summary-row__label" data-v-3dd90177>Тиражи (${ssrInterpolate(__props.totalItems)} шт)</span><span class="summary-row__value" data-v-3dd90177>${ssrInterpolate(unref(formatPriceRaw)(__props.totalPrice))} ₽</span></div><div class="summary-row" data-v-3dd90177><span class="summary-row__label" data-v-3dd90177>Доставка</span><span class="summary-row__value" data-v-3dd90177>Самовывоз</span></div></div><div class="summary-divider" data-v-3dd90177></div><div class="summary-total" data-v-3dd90177><span class="summary-total__label" data-v-3dd90177>К оплате</span><span class="summary-total__value" data-v-3dd90177>${ssrInterpolate(unref(formatPriceRaw)(__props.totalPrice))} ₽</span></div><div class="promo-section" data-v-3dd90177><div class="promo-row" data-v-3dd90177>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        modelValue: unref(promoCode),
+        "onUpdate:modelValue": ($event) => isRef(promoCode) ? promoCode.value = $event : null,
+        placeholder: "Введите промокод"
+      }, null, _parent));
+      _push(`<button class="promo-btn" data-v-3dd90177>Применить</button></div></div><button class="pay-btn"${ssrIncludeBooleanAttr(__props.payDisabled) ? " disabled" : ""} data-v-3dd90177> Оплатить заказ </button><div class="trust-badges" data-v-3dd90177><div class="trust-badge" data-v-3dd90177><svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none" data-v-3dd90177><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" data-v-3dd90177></circle></svg><span class="trust-badge__text" data-v-3dd90177>Безопасная оплата</span></div><div class="trust-badge" data-v-3dd90177><svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none" data-v-3dd90177><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" data-v-3dd90177></circle></svg><span class="trust-badge__text" data-v-3dd90177>Оплата СБП или по счёту</span></div><div class="trust-badge" data-v-3dd90177><svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none" data-v-3dd90177><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" data-v-3dd90177></circle></svg><span class="trust-badge__text" data-v-3dd90177>Самовывоз из Донецка</span></div></div></div><div class="help-card" data-v-3dd90177><div class="help-card__info" data-v-3dd90177><div class="help-card__avatar" data-v-3dd90177></div><div class="help-card__text" data-v-3dd90177><p class="help-card__title" data-v-3dd90177>Нужна помощь?</p><p class="help-card__subtitle" data-v-3dd90177>Позвоните в поддержку.</p></div></div><a href="tel:+78001234567" class="help-card__call-btn" aria-label="Позвонить в поддержку" data-v-3dd90177><svg class="help-card__call-icon" viewBox="0 0 23 9" fill="none" data-v-3dd90177><path d="M18.187 0H19.5458C19.9537 0 20.1577 0 20.3219 0.0181341C21.8931 0.191675 23.06 1.55458 22.9896 3.13374C22.9822 3.29873 22.9508 3.50026 22.888 3.90328L22.888 3.90341C22.8643 4.0556 22.9236 3.67511 22.8733 3.89107C22.5263 5.3836 20.4307 7.7069 18.9818 8.20556C18.7721 8.27771 19.9455 7.96861 19.4761 8.09225C17.7018 8.55968 15.0794 9 11.4963 9C7.91323 9 5.29085 8.55968 3.51648 8.09225C3.04715 7.96861 4.22048 8.27771 4.01084 8.20556C2.56189 7.7069 0.466323 5.3836 0.119262 3.89107C0.069047 3.67512 0.128344 4.0556 0.104625 3.90341C0.0418033 3.5003 0.0103925 3.29875 0.00302911 3.13374C-0.0674374 1.55458 1.09952 0.191675 2.67069 0.0181341C2.83487 0 3.03886 0 3.44683 0H4.80565C6.05418 0 7.15861 0.809421 7.53458 2C7.91055 3.19058 9.01498 4 10.2635 4H12.7291C13.9776 4 15.0821 3.19058 15.458 2C15.834 0.809421 16.9384 0 18.187 0Z" fill="currentColor" data-v-3dd90177></path></svg></a></div></div>`);
+    };
+  }
+};
+const _sfc_setup$4 = _sfc_main$4.setup;
+_sfc_main$4.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartSummary.vue");
+  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+};
+const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-3dd90177"]]);
+const _sfc_main$3 = {
+  __name: "CartModal",
+  __ssrInlineRender: true,
+  props: {
+    "modelValue": { required: true },
+    "modelModifiers": {}
+  },
+  emits: /* @__PURE__ */ mergeModels(["pay", "continue-shopping"], ["update:modelValue"]),
+  setup(__props, { emit: __emit }) {
+    const isOpen = useModel(__props, "modelValue");
+    const emit = __emit;
+    const { items: cartItems, updateQuantity, removeItems, updateItem } = useCart();
+    const selectedItems = computed(() => cartItems.value.filter((item) => item.selected));
+    const allSelected = computed({
+      get: () => cartItems.value.length > 0 && cartItems.value.every((i) => i.selected),
+      set: (val) => {
+        cartItems.value = cartItems.value.map((i) => ({ ...i, selected: val }));
+      }
+    });
+    const selectedTotalItems = computed(
+      () => selectedItems.value.reduce((sum, item) => sum + item.quantity, 0)
+    );
+    const selectedTotalPrice = computed(
+      () => selectedItems.value.reduce((sum, item) => sum + item.unitPrice * item.quantity + item.designPrice, 0)
+    );
+    function toggleItem(item) {
+      cartItems.value = cartItems.value.map(
+        (i) => i.id === item.id ? { ...i, selected: !i.selected } : i
+      );
+    }
+    function deleteSelected() {
+      const ids = cartItems.value.filter((i) => i.selected).map((i) => i.id);
+      removeItems(ids);
+    }
+    const editingId = ref(null);
+    function startEdit(itemId) {
+      editingId.value = itemId;
+    }
+    function cancelEdit() {
+      editingId.value = null;
+    }
+    function confirmEdit(itemId, config) {
+      updateItem(itemId, config);
+      editingId.value = null;
+    }
+    function pluralItems(n) {
+      const mod100 = n % 100;
+      const mod10 = n % 10;
+      if (mod100 >= 11 && mod100 <= 19) return "тиражей";
+      if (mod10 === 1) return "тираж";
+      if (mod10 >= 2 && mod10 <= 4) return "тиража";
+      return "тиражей";
+    }
+    function onPay() {
+      if (selectedItems.value.length === 0) return;
+      emit("pay", selectedItems.value);
+    }
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_BaseModal = __nuxt_component_0$1;
+      const _component_AppCheckbox = __nuxt_component_1$1;
+      const _component_CartItemRow = __nuxt_component_2;
+      const _component_CartRecipient = __nuxt_component_3;
+      const _component_CartPickup = __nuxt_component_4;
+      const _component_CartSummary = __nuxt_component_5;
+      _push(ssrRenderComponent(_component_BaseModal, mergeProps({
+        modelValue: isOpen.value,
+        "onUpdate:modelValue": ($event) => isOpen.value = $event,
+        title: "Корзина",
+        "max-width": "70rem"
+      }, _attrs), {
+        "header-left": withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<button class="back-link" data-v-0fb587ff${_scopeId}><svg class="back-link__icon" viewBox="0 0 16 16" fill="none" data-v-0fb587ff${_scopeId}><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-0fb587ff${_scopeId}></path></svg><span class="back-link__text" data-v-0fb587ff${_scopeId}>Продолжить покупки</span></button>`);
+          } else {
+            return [
+              createVNode("button", {
+                class: "back-link",
+                onClick: ($event) => emit("continue-shopping")
+              }, [
+                (openBlock(), createBlock("svg", {
+                  class: "back-link__icon",
+                  viewBox: "0 0 16 16",
+                  fill: "none"
+                }, [
+                  createVNode("path", {
+                    d: "M10 12L6 8L10 4",
+                    stroke: "currentColor",
+                    "stroke-width": "1.5",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  })
+                ])),
+                createVNode("span", { class: "back-link__text" }, "Продолжить покупки")
+              ], 8, ["onClick"])
+            ];
+          }
+        }),
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<div class="modal-content" data-v-0fb587ff${_scopeId}><div class="left-column" data-v-0fb587ff${_scopeId}>`);
+            if (unref(cartItems).length === 0) {
+              _push2(`<div class="card card--top" data-v-0fb587ff${_scopeId}><div class="card__inner empty-state" data-v-0fb587ff${_scopeId}><p class="empty-state__title" data-v-0fb587ff${_scopeId}>Корзина пуста</p><p class="empty-state__subtitle" data-v-0fb587ff${_scopeId}>Воспользуйтесь каталогом, чтобы найти всё что нужно</p><button class="empty-state__btn" type="button" data-v-0fb587ff${_scopeId}>Начать покупки</button></div></div>`);
+            } else {
+              _push2(`<div class="card card--top" data-v-0fb587ff${_scopeId}><div class="card__inner" data-v-0fb587ff${_scopeId}><p class="section-title" data-v-0fb587ff${_scopeId}>Товары</p><div class="items-header" data-v-0fb587ff${_scopeId}><div class="items-header__left" data-v-0fb587ff${_scopeId}>`);
+              _push2(ssrRenderComponent(_component_AppCheckbox, {
+                modelValue: unref(allSelected),
+                "onUpdate:modelValue": ($event) => isRef(allSelected) ? allSelected.value = $event : null
+              }, null, _parent2, _scopeId));
+              _push2(`<span class="items-header__count" data-v-0fb587ff${_scopeId}>${ssrInterpolate(unref(cartItems).length)} ${ssrInterpolate(pluralItems(unref(cartItems).length))}</span></div><button class="items-header__delete" aria-label="Удалить выбранные тиражи" data-v-0fb587ff${_scopeId}><svg class="items-header__delete-icon" viewBox="0 0 16 16" fill="none" data-v-0fb587ff${_scopeId}><path d="M2 7H14L13.4744 11.7301C13.3067 13.24 13.2228 13.995 12.8745 14.5647C12.5677 15.0666 12.1201 15.4672 11.5874 15.7168C10.9826 16 10.223 16 8.70379 16H7.29621C5.77697 16 5.01735 16 4.41263 15.7168C3.87993 15.4672 3.43233 15.0666 3.12552 14.5647C2.77722 13.995 2.69333 13.24 2.52556 11.7301L2 7Z" fill="currentColor" fill-opacity="0.64" data-v-0fb587ff${_scopeId}></path><path d="M1 3.5C1 2.67157 1.67157 2 2.5 2C3.32843 2 3.97177 1.24281 4.53657 0.636766C4.90168 0.244995 5.42223 0 6 0H10C10.5778 0 11.0983 0.244995 11.4634 0.636766C12.0282 1.24281 12.6716 2 13.5 2C14.3284 2 15 2.67157 15 3.5C15 4.32843 14.3284 5 13.5 5H2.5C1.67157 5 1 4.32843 1 3.5Z" fill="currentColor" fill-opacity="0.64" data-v-0fb587ff${_scopeId}></path></svg><span data-v-0fb587ff${_scopeId}>Удалить</span></button></div><div class="items-list" data-v-0fb587ff${_scopeId}><!--[-->`);
+              ssrRenderList(unref(cartItems), (item) => {
+                _push2(ssrRenderComponent(_component_CartItemRow, {
+                  key: item.id,
+                  item,
+                  editing: unref(editingId) === item.id,
+                  onToggle: ($event) => toggleItem(item),
+                  onStartEdit: ($event) => startEdit(item.id),
+                  onCancelEdit: cancelEdit,
+                  onConfirmEdit: (config) => confirmEdit(item.id, config),
+                  onUpdateQuantity: (qty) => unref(updateQuantity)(item.id, qty)
+                }, null, _parent2, _scopeId));
+              });
+              _push2(`<!--]--></div></div></div>`);
+            }
+            _push2(ssrRenderComponent(_component_CartRecipient, null, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_CartPickup, null, null, _parent2, _scopeId));
+            _push2(`</div><div class="right-column" data-v-0fb587ff${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_CartSummary, {
+              "total-items": unref(selectedTotalItems),
+              "total-price": unref(selectedTotalPrice),
+              "pay-disabled": unref(selectedItems).length === 0,
+              onPay
+            }, null, _parent2, _scopeId));
+            _push2(`</div></div>`);
+          } else {
+            return [
+              createVNode("div", { class: "modal-content" }, [
+                createVNode("div", { class: "left-column" }, [
+                  unref(cartItems).length === 0 ? (openBlock(), createBlock("div", {
+                    key: 0,
+                    class: "card card--top"
+                  }, [
+                    createVNode("div", { class: "card__inner empty-state" }, [
+                      createVNode("p", { class: "empty-state__title" }, "Корзина пуста"),
+                      createVNode("p", { class: "empty-state__subtitle" }, "Воспользуйтесь каталогом, чтобы найти всё что нужно"),
+                      createVNode("button", {
+                        class: "empty-state__btn",
+                        type: "button",
+                        onClick: ($event) => emit("continue-shopping")
+                      }, "Начать покупки", 8, ["onClick"])
+                    ])
+                  ])) : (openBlock(), createBlock("div", {
+                    key: 1,
+                    class: "card card--top"
+                  }, [
+                    createVNode("div", { class: "card__inner" }, [
+                      createVNode("p", { class: "section-title" }, "Товары"),
+                      createVNode("div", { class: "items-header" }, [
+                        createVNode("div", { class: "items-header__left" }, [
+                          createVNode(_component_AppCheckbox, {
+                            modelValue: unref(allSelected),
+                            "onUpdate:modelValue": ($event) => isRef(allSelected) ? allSelected.value = $event : null
+                          }, null, 8, ["modelValue", "onUpdate:modelValue"]),
+                          createVNode("span", { class: "items-header__count" }, toDisplayString(unref(cartItems).length) + " " + toDisplayString(pluralItems(unref(cartItems).length)), 1)
+                        ]),
+                        createVNode("button", {
+                          class: "items-header__delete",
+                          "aria-label": "Удалить выбранные тиражи",
+                          onClick: deleteSelected
+                        }, [
+                          (openBlock(), createBlock("svg", {
+                            class: "items-header__delete-icon",
+                            viewBox: "0 0 16 16",
+                            fill: "none"
+                          }, [
+                            createVNode("path", {
+                              d: "M2 7H14L13.4744 11.7301C13.3067 13.24 13.2228 13.995 12.8745 14.5647C12.5677 15.0666 12.1201 15.4672 11.5874 15.7168C10.9826 16 10.223 16 8.70379 16H7.29621C5.77697 16 5.01735 16 4.41263 15.7168C3.87993 15.4672 3.43233 15.0666 3.12552 14.5647C2.77722 13.995 2.69333 13.24 2.52556 11.7301L2 7Z",
+                              fill: "currentColor",
+                              "fill-opacity": "0.64"
+                            }),
+                            createVNode("path", {
+                              d: "M1 3.5C1 2.67157 1.67157 2 2.5 2C3.32843 2 3.97177 1.24281 4.53657 0.636766C4.90168 0.244995 5.42223 0 6 0H10C10.5778 0 11.0983 0.244995 11.4634 0.636766C12.0282 1.24281 12.6716 2 13.5 2C14.3284 2 15 2.67157 15 3.5C15 4.32843 14.3284 5 13.5 5H2.5C1.67157 5 1 4.32843 1 3.5Z",
+                              fill: "currentColor",
+                              "fill-opacity": "0.64"
+                            })
+                          ])),
+                          createVNode("span", null, "Удалить")
+                        ])
+                      ]),
+                      createVNode("div", { class: "items-list" }, [
+                        (openBlock(true), createBlock(Fragment, null, renderList(unref(cartItems), (item) => {
+                          return openBlock(), createBlock(_component_CartItemRow, {
+                            key: item.id,
+                            item,
+                            editing: unref(editingId) === item.id,
+                            onToggle: ($event) => toggleItem(item),
+                            onStartEdit: ($event) => startEdit(item.id),
+                            onCancelEdit: cancelEdit,
+                            onConfirmEdit: (config) => confirmEdit(item.id, config),
+                            onUpdateQuantity: (qty) => unref(updateQuantity)(item.id, qty)
+                          }, null, 8, ["item", "editing", "onToggle", "onStartEdit", "onConfirmEdit", "onUpdateQuantity"]);
+                        }), 128))
+                      ])
+                    ])
+                  ])),
+                  createVNode(_component_CartRecipient),
+                  createVNode(_component_CartPickup)
+                ]),
+                createVNode("div", { class: "right-column" }, [
+                  createVNode(_component_CartSummary, {
+                    "total-items": unref(selectedTotalItems),
+                    "total-price": unref(selectedTotalPrice),
+                    "pay-disabled": unref(selectedItems).length === 0,
+                    onPay
+                  }, null, 8, ["total-items", "total-price", "pay-disabled"])
+                ])
+              ])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+    };
+  }
+};
 const _sfc_setup$3 = _sfc_main$3.setup;
 _sfc_main$3.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppFooter.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/CartModal.vue");
   return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
 };
-const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-3309272d"]]);
+const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-0fb587ff"]]);
 const title = "Indigo — Печать флагов на заказ";
 const description = "Типография Indigo: печать флагов любых размеров и конфигураций. Конструктор флагов, быстрый заказ, доставка по России.";
 const _sfc_main$2 = {
@@ -8930,6 +10627,11 @@ const _sfc_main$2 = {
   __ssrInlineRender: true,
   setup(__props) {
     useRoute();
+    const isCartOpen = ref(false);
+    const session = authClient.useSession();
+    const profileStore = useProfileStore();
+    const { isLoaded: isProfileLoaded } = storeToRefs(profileStore);
+    const sessionUser = computed(() => session.value?.data?.user ?? null);
     const isGridEnabled = computed(() => {
       {
         return false;
@@ -8942,13 +10644,35 @@ const _sfc_main$2 = {
       ogDescription: description,
       twitterCard: "summary_large_image"
     });
+    function openCart() {
+      isCartOpen.value = true;
+    }
+    function continueShopping() {
+      isCartOpen.value = false;
+      navigateTo("/catalog");
+    }
+    watch(
+      sessionUser,
+      (user) => {
+        if (!user) {
+          profileStore.clearProfile();
+          return;
+        }
+        if (!isProfileLoaded.value) {
+          profileStore.fetchProfileOnce().catch(() => {
+          });
+        }
+      },
+      { immediate: true }
+    );
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UApp = __nuxt_component_0$2;
-      const _component_DevGridOverlay = __nuxt_component_1$2;
-      const _component_AppHeader = __nuxt_component_2;
-      const _component_UMain = _sfc_main$4;
-      const _component_NuxtPage = __nuxt_component_4;
-      const _component_AppFooter = __nuxt_component_5;
+      const _component_UApp = __nuxt_component_0$3;
+      const _component_DevGridOverlay = __nuxt_component_1$4;
+      const _component_AppHeader = __nuxt_component_2$1;
+      const _component_UMain = _sfc_main$c;
+      const _component_NuxtPage = __nuxt_component_4$1;
+      const _component_AppFooter = __nuxt_component_5$1;
+      const _component_CartModal = __nuxt_component_6;
       _push(ssrRenderComponent(_component_UApp, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -8957,7 +10681,7 @@ const _sfc_main$2 = {
             } else {
               _push2(`<!---->`);
             }
-            _push2(ssrRenderComponent(_component_AppHeader, null, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_AppHeader, { onOpenCart: openCart }, null, _parent2, _scopeId));
             _push2(ssrRenderComponent(_component_UMain, null, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
@@ -8971,17 +10695,27 @@ const _sfc_main$2 = {
               _: 1
             }, _parent2, _scopeId));
             _push2(ssrRenderComponent(_component_AppFooter, null, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_CartModal, {
+              modelValue: unref(isCartOpen),
+              "onUpdate:modelValue": ($event) => isRef(isCartOpen) ? isCartOpen.value = $event : null,
+              onContinueShopping: continueShopping
+            }, null, _parent2, _scopeId));
           } else {
             return [
               unref(isGridEnabled) ? (openBlock(), createBlock(_component_DevGridOverlay, { key: 0 })) : createCommentVNode("", true),
-              createVNode(_component_AppHeader),
+              createVNode(_component_AppHeader, { onOpenCart: openCart }),
               createVNode(_component_UMain, null, {
                 default: withCtx(() => [
                   createVNode(_component_NuxtPage)
                 ]),
                 _: 1
               }),
-              createVNode(_component_AppFooter)
+              createVNode(_component_AppFooter),
+              createVNode(_component_CartModal, {
+                modelValue: unref(isCartOpen),
+                "onUpdate:modelValue": ($event) => isRef(isCartOpen) ? isCartOpen.value = $event : null,
+                onContinueShopping: continueShopping
+              }, null, 8, ["modelValue", "onUpdate:modelValue"])
             ];
           }
         }),
@@ -9010,8 +10744,8 @@ const _sfc_main$1 = {
     const statusText = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description2 = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-DBFNYTz_.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-BaTLZSKl.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-BUKDMSaW.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-CtUKToas.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ status: unref(status), statusText: unref(statusText), statusCode: unref(status), statusMessage: unref(statusText), description: unref(description2), stack: unref(stack) }, _attrs), null, _parent));
@@ -9038,7 +10772,7 @@ const _sfc_main = {
     const error = /* @__PURE__ */ useError();
     const abortRender = error.value && !nuxtApp.ssrContext.error;
     onErrorCaptured((err, target, info) => {
-      nuxtApp.hooks.callHook("vue:error", err, target, info).catch((hookError) => console.error("[nuxt] Error in `vue:error` hook", hookError));
+      nuxtApp.hooks.callHook("vue:error", err, target, info)?.catch((hookError) => console.error("[nuxt] Error in `vue:error` hook", hookError));
       {
         const p = nuxtApp.runWithContext(() => showError(err));
         onServerPrefetch(() => p);
@@ -9092,5 +10826,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { _export_sfc as _, __nuxt_component_0$3 as a, _sfc_main$h as b, _sfc_main$u as c, __nuxt_component_1 as d, entry_default as default, __nuxt_component_0 as e, useState as f, _sfc_main$p as g, fetchDefaults as h, useAsyncData as i, useRequestFetch as j, __nuxt_component_0$1 as k, useSeoMeta as l, useRequestHeaders as m, defineNuxtRouteMiddleware as n, authClient as o, navigateTo as p, setInterval as s, useHead as u };
+export { _export_sfc as _, __nuxt_component_0$5 as a, useRoute as b, __nuxt_component_1$3 as c, _sfc_main$C as d, entry_default as default, useFavorites as e, useSeoMeta as f, useProfileStore as g, _sfc_main$p as h, __nuxt_component_0$2 as i, __nuxt_component_0 as j, authClient as k, defineNuxtRouteMiddleware as l, useFetch as m, navigateTo as n, productImage as p, setInterval as s, useHead as u };
 //# sourceMappingURL=server.mjs.map

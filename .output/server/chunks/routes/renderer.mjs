@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { y as buildAssetsURL, z as useRuntimeConfig, A as getResponseStatusText, B as getResponseStatus, C as defineRenderHandler, D as publicAssetsURL, o as getQuery, c as createError, E as destr, F as getRouteRules, G as joinURL, H as useNitroApp } from '../nitro/nitro.mjs';
+import { Q as buildAssetsURL, R as useRuntimeConfig, S as getResponseStatusText, T as getResponseStatus, U as defineRenderHandler, V as publicAssetsURL, z as getQuery, c as createError, W as destr, X as getRouteRules, Y as joinURL, Z as useNitroApp } from '../nitro/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -84,6 +84,7 @@ function createHead(options = {}) {
   return head;
 }
 
+const NUXT_PAYLOAD_INLINE = false;
 const NUXT_RUNTIME_PAYLOAD_EXTRACTION = false;
 
 const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[{"rel":"icon","href":"/favicon.ico"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"ru"}};
@@ -186,7 +187,7 @@ const getSSRStyles = lazyCachedFunction(() => import('../build/styles.mjs').then
 
 function renderPayloadResponse(ssrContext) {
 	return {
-		body: stringify(splitPayload(ssrContext).payload, ssrContext["~payloadReducers"]) ,
+		body: encodeForwardSlashes(stringify(splitPayload(ssrContext).payload, ssrContext["~payloadReducers"])) ,
 		statusCode: getResponseStatus(ssrContext.event),
 		statusMessage: getResponseStatusText(ssrContext.event),
 		headers: {
@@ -196,7 +197,7 @@ function renderPayloadResponse(ssrContext) {
 	};
 }
 function renderPayloadJsonScript(opts) {
-	const contents = opts.data ? stringify(opts.data, opts.ssrContext["~payloadReducers"]) : "";
+	const contents = opts.data ? encodeForwardSlashes(stringify(opts.data, opts.ssrContext["~payloadReducers"])) : "";
 	const payload = {
 		"type": "application/json",
 		"innerHTML": contents,
@@ -211,6 +212,14 @@ function renderPayloadJsonScript(opts) {
 	}
 	const config = uneval(opts.ssrContext.config);
 	return [payload, { innerHTML: `window.__NUXT__={};window.__NUXT__.config=${config}` }];
+}
+/**
+* Encode forward slashes as unicode escape sequences to prevent
+* Google from treating them as internal links and trying to crawl them.
+* @see https://github.com/nuxt/nuxt/issues/24175
+*/
+function encodeForwardSlashes(str) {
+	return str.replaceAll("/", "\\u002F");
 }
 function splitPayload(ssrContext) {
 	const { data, prerenderedAt, ...initial } = ssrContext.payload;
@@ -277,7 +286,7 @@ const APP_TELEPORT_OPEN_TAG = HAS_APP_TELEPORTS ? `<${appTeleportTag}${propsToSt
 const APP_TELEPORT_CLOSE_TAG = HAS_APP_TELEPORTS ? `</${appTeleportTag}>` : "";
 const PAYLOAD_URL_RE = /^[^?]*\/_payload.json(?:\?.*)?$/ ;
 const PAYLOAD_FILENAME = "_payload.json" ;
-const renderer = defineRenderHandler(async (event) => {
+const handler = defineRenderHandler(async (event) => {
 	const nitroApp = useNitroApp();
 	// Whether we're rendering an error page
 	const ssrError = event.path.startsWith("/__nuxt_error") ? getQuery(event) : null;
@@ -311,6 +320,10 @@ const renderer = defineRenderHandler(async (event) => {
 	const routeOptions = getRouteRules(event);
 	// Whether we are prerendering route or using ISR/SWR caching
 	const _PAYLOAD_EXTRACTION = !ssrContext.noSSR && (NUXT_RUNTIME_PAYLOAD_EXTRACTION);
+	// When NUXT_PAYLOAD_INLINE is true (payloadExtraction: 'client'), we inline the full payload
+	// in the HTML to avoid a separate _payload.json fetch on initial load (which would trigger a
+	// second render or lambda invocation). The _payload.json endpoint still works for client-side nav.
+	const _PAYLOAD_INLINE = !_PAYLOAD_EXTRACTION || NUXT_PAYLOAD_INLINE;
 	const isRenderingPayload = (_PAYLOAD_EXTRACTION || false) && PAYLOAD_URL_RE.test(ssrContext.url);
 	if (isRenderingPayload) {
 		const url = ssrContext.url.substring(0, ssrContext.url.lastIndexOf("/")) || "/";
@@ -363,25 +376,14 @@ const renderer = defineRenderHandler(async (event) => {
 	// Setup head
 	const { styles, scripts } = getRequestDependencies(ssrContext, renderer.rendererContext);
 	// 1. Preload payloads and app manifest
-	if (_PAYLOAD_EXTRACTION && !NO_SCRIPTS) {
+	// Skip preload when inlining full payload in HTML (no separate fetch needed for initial load)
+	if (_PAYLOAD_EXTRACTION && !_PAYLOAD_INLINE && !NO_SCRIPTS) {
 		ssrContext.head.push({ link: [{
 			rel: "preload",
 			as: "fetch",
 			crossorigin: "anonymous",
 			href: payloadURL
 		} ] }, headEntryOptions);
-	}
-	if (ssrContext["~preloadManifest"] && !NO_SCRIPTS) {
-		ssrContext.head.push({ link: [{
-			rel: "preload",
-			as: "fetch",
-			fetchpriority: "low",
-			crossorigin: "anonymous",
-			href: buildAssetsURL(`builds/meta/${ssrContext.runtimeConfig.app.buildId}.json`)
-		}] }, {
-			...headEntryOptions,
-			tagPriority: "low"
-		});
 	}
 	// 2. Styles
 	if (inlinedStyles.length) {
@@ -413,13 +415,13 @@ const renderer = defineRenderHandler(async (event) => {
 		ssrContext.head.push({ link: getPreloadLinks(ssrContext, renderer.rendererContext) }, headEntryOptions);
 		ssrContext.head.push({ link: getPrefetchLinks(ssrContext, renderer.rendererContext) }, headEntryOptions);
 		// 5. Payloads
-		ssrContext.head.push({ script: _PAYLOAD_EXTRACTION ? renderPayloadJsonScript({
+		ssrContext.head.push({ script: _PAYLOAD_INLINE ? renderPayloadJsonScript({
+			ssrContext,
+			data: ssrContext.payload
+		})  : renderPayloadJsonScript({
 			ssrContext,
 			data: splitPayload(ssrContext).initial,
 			src: payloadURL
-		})  : renderPayloadJsonScript({
-			ssrContext,
-			data: ssrContext.payload
 		})  }, {
 			...headEntryOptions,
 			tagPosition: "bodyClose",
@@ -483,10 +485,10 @@ function renderHTMLDocument(html) {
 	return "<!DOCTYPE html>" + `<html${joinAttrs(html.htmlAttrs)}>` + `<head>${joinTags(html.head)}</head>` + `<body${joinAttrs(html.bodyAttrs)}>${joinTags(html.bodyPrepend)}${joinTags(html.body)}${joinTags(html.bodyAppend)}</body>` + "</html>";
 }
 
-const renderer$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const renderer = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  default: renderer
+  default: handler
 }, Symbol.toStringTag, { value: 'Module' }));
 
-export { useHead as a, headSymbol as h, renderer$1 as r, useSeoMeta as u };
+export { useHead as a, headSymbol as h, renderer as r, useSeoMeta as u };
 //# sourceMappingURL=renderer.mjs.map

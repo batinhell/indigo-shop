@@ -2375,7 +2375,7 @@ var icons = {
 		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M12 13V2l8 4l-8 4\"/><path d=\"M20.561 10.222a9 9 0 1 1-12.55-5.29\"/><path d=\"M8.002 9.997a5 5 0 1 0 8.9 2.02\"/></g>"
 	},
 	gpu: {
-		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M2 21V3m0 2h18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2.26M7 17v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3\"/><circle cx=\"16\" cy=\"11\" r=\"2\"/><circle cx=\"8\" cy=\"11\" r=\"2\"/></g>"
+		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M2 17h18a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H2m0 16V3m5 14v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3\"/><circle cx=\"16\" cy=\"11\" r=\"2\"/><circle cx=\"8\" cy=\"11\" r=\"2\"/></g>"
 	},
 	"graduation-cap": {
 		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0zM22 10v6\"/><path d=\"M6 12.5V16a6 3 0 0 0 12 0v-3.5\"/></g>"
@@ -3981,7 +3981,7 @@ var icons = {
 		hidden: true
 	},
 	school: {
-		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M14 21v-3a2 2 0 0 0-4 0v3m8-16v16M4 6l7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/><path d=\"m6 11l-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11M6 5v16\"/><circle cx=\"12\" cy=\"9\" r=\"2\"/></g>"
+		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path d=\"M14 21v-3a2 2 0 0 0-4 0v3m8-16.067V21M4 6l7.106-3.79a2 2 0 0 1 1.788 0L20 6\"/><path d=\"m6 11l-3.52 2.147a1 1 0 0 0-.48.854V19a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a1 1 0 0 0-.48-.853L18 11M6 4.933V21\"/><circle cx=\"12\" cy=\"9\" r=\"2\"/></g>"
 	},
 	scissors: {
 		body: "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><circle cx=\"6\" cy=\"6\" r=\"3\"/><path d=\"M8.12 8.12L12 12m8-8L8.12 15.88\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><path d=\"M14.8 14.8L20 20\"/></g>"
@@ -5923,7 +5923,7 @@ var aliases = {
 		parent: "square-x"
 	}
 };
-var lastModified = 1772823499;
+var lastModified = 1773553740;
 var width = 24;
 var height = 24;
 const icons_default = {

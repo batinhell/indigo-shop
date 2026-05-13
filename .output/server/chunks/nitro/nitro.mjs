@@ -878,6 +878,20 @@ function toWebRequest(event) {
     body: getRequestWebStream(event)
   });
 }
+function getRequestIP(event, opts = {}) {
+  if (event.context.clientAddress) {
+    return event.context.clientAddress;
+  }
+  if (opts.xForwardedFor) {
+    const xForwardedFor = getRequestHeader(event, "x-forwarded-for")?.split(",").shift()?.trim();
+    if (xForwardedFor) {
+      return xForwardedFor;
+    }
+  }
+  if (event.node.req.socket.remoteAddress) {
+    return event.node.req.socket.remoteAddress;
+  }
+}
 
 const RawBodySymbol = Symbol.for("h3RawBody");
 const ParsedBodySymbol = Symbol.for("h3ParsedBody");
@@ -1630,15 +1644,6 @@ function isEventHandler(input) {
   return hasProp(input, "__is_handler__");
 }
 function toEventHandler(input, _, _route) {
-  if (!isEventHandler(input)) {
-    console.warn(
-      "[h3] Implicit event handler conversion is deprecated. Use `eventHandler()` or `fromNodeMiddleware()` to define event handlers.",
-      _route && _route !== "/" ? `
-     Route: ${_route}` : "",
-      `
-     Handler: ${input}`
-    );
-  }
   return input;
 }
 function defineLazyEventHandler(factory) {
@@ -1717,7 +1722,8 @@ function createAppEventHandler(stack, options) {
   const spacing = options.debug ? 2 : void 0;
   return eventHandler(async (event) => {
     event.node.req.originalUrl = event.node.req.originalUrl || event.node.req.url || "/";
-    const _reqPath = event._path || event.node.req.url || "/";
+    const _reqPath = _decodePath(event._path || event.node.req.url || "/");
+    event._path = _reqPath;
     let _layerPath;
     if (options.onRequest) {
       await options.onRequest(event);
@@ -1867,6 +1873,13 @@ function cachedFn(fn) {
     return cache;
   };
 }
+function _decodePath(url) {
+  const qIndex = url.indexOf("?");
+  const path = qIndex === -1 ? url : url.slice(0, qIndex);
+  const query = qIndex === -1 ? "" : url.slice(qIndex);
+  const decodedPath = path.includes("%25") ? decodePath(path.replace(/%25/g, "%2525")) : decodePath(path);
+  return decodedPath + query;
+}
 function websocketOptions(evResolver, appOptions) {
   return {
     ...appOptions.websocket,
@@ -1906,7 +1919,7 @@ function createRouter(opts = {}) {
         addRoute(path, handler, m);
       }
     } else {
-      route.handlers[method] = toEventHandler(handler, void 0, path);
+      route.handlers[method] = toEventHandler(handler);
     }
     return router;
   };
@@ -2604,10 +2617,10 @@ function createNodeFetch() {
     return l(input, { ...nodeFetchOptions, ...init });
   };
 }
-const fetch = globalThis.fetch ? (...args) => globalThis.fetch(...args) : createNodeFetch();
+const fetch$1 = globalThis.fetch ? (...args) => globalThis.fetch(...args) : createNodeFetch();
 const Headers$1 = globalThis.Headers || s$1;
 const AbortController = globalThis.AbortController || i;
-const ofetch = createFetch({ fetch, Headers: Headers$1, AbortController });
+const ofetch = createFetch({ fetch: fetch$1, Headers: Headers$1, AbortController });
 const $fetch$1 = ofetch;
 
 function wrapToPromise(value) {
@@ -4421,7 +4434,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "5b06df70-cd28-4f25-838b-3c255dfd4beb",
+    "buildId": "5fcb047f-9576-4379-8243-98279473d98a",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4459,16 +4472,32 @@ const _inlineRuntimeConfig = {
   "public": {},
   "notificore": {
     "apiKey": "",
-    "apiBaseUrl": "https://one-api.notificore.ru",
+    "apiBaseUrl": "https://api.notificore.ru",
+    "oneApiBaseUrl": "https://one-api.notificore.ru",
     "sender": "",
     "otpTemplateId": "",
-    "codeDigits": 5,
-    "codeLifetime": 300,
-    "codeMaxTries": 3
+    "emailApiKey": "",
+    "emailApiBaseUrl": "https://one-api.notificore.ru",
+    "emailFrom": "",
+    "confirmationEmailTemplateId": "",
+    "codeDigits": 4,
+    "codeLifetime": 60,
+    "codeMaxTries": 3,
+    "emailTimeout": 20000
   },
   "dadata": {
     "apiKey": "",
     "suggestUrl": "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party"
+  },
+  "vtbPayment": {
+    "baseUrl": "https://vtb.rbsuat.com/payment/rest/",
+    "token": "",
+    "userName": "",
+    "password": "",
+    "returnUrl": "",
+    "failUrl": "",
+    "callbackUrl": "",
+    "qrTtlSeconds": 900
   },
   "betterAuth": {
     "url": "",
@@ -4764,7 +4793,7 @@ function isJsonRequest(event) {
 }
 function hasReqHeader(event, name, includes) {
 	const value = getRequestHeader(event, name);
-	return value && typeof value === "string" && value.toLowerCase().includes(includes);
+	return !!(value && typeof value === "string" && value.toLowerCase().includes(includes));
 }
 
 const errorHandler$0 = (async function errorhandler(error, event, { defaultHandler }) {
@@ -4923,808 +4952,885 @@ const plugins = [
 const assets = {
   "/_payload.json": {
     "type": "application/json;charset=utf-8",
-    "etag": "\"ad-yjLCaz2fL7pZ+qc9D38UKMnfvio\"",
-    "mtime": "2026-05-01T16:44:44.711Z",
-    "size": 173,
+    "etag": "\"45-famx8fBU4QJ7pNJn9/QD4vkNQF8\"",
+    "mtime": "2026-05-13T19:24:11.576Z",
+    "size": 69,
     "path": "../public/_payload.json"
   },
   "/favicon.ico": {
     "type": "image/vnd.microsoft.icon",
     "etag": "\"10be-n8egyE9tcb7sKGr/pYCaQ4uWqxI\"",
-    "mtime": "2026-05-01T16:44:45.377Z",
+    "mtime": "2026-05-13T19:24:12.181Z",
     "size": 4286,
     "path": "../public/favicon.ico"
   },
   "/sw.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"cf-Yaz0W3MuC8fvUl2UpJuR3JzbKX0\"",
-    "mtime": "2026-05-01T16:44:45.108Z",
+    "mtime": "2026-05-13T19:24:12.174Z",
     "size": 207,
     "path": "../public/sw.js"
   },
   "/_fonts/6CXtQpr9VY5Z0zV1xogwmkWDzNR_19zN1NTGulEzmjg-kCRFKXhkCh0_kGLAckhVN3TP-F_bkwm7Ivy9TdKzUJg.woff2": {
     "type": "font/woff2",
     "etag": "\"6000-yOr+6GOlMYXr/a2M9DBWFj+PFP0\"",
-    "mtime": "2026-05-01T16:44:44.921Z",
+    "mtime": "2026-05-13T19:24:11.803Z",
     "size": 24576,
     "path": "../public/_fonts/6CXtQpr9VY5Z0zV1xogwmkWDzNR_19zN1NTGulEzmjg-kCRFKXhkCh0_kGLAckhVN3TP-F_bkwm7Ivy9TdKzUJg.woff2"
   },
   "/_fonts/FPImowmXkU1aWgmKsxPu7Akj0JNowdsV90BaJJQN8Dw-_91jnewDEbv6Ft52Ae56infTiwcwq3HFAAhB_Y7h8Nw.woff2": {
     "type": "font/woff2",
     "etag": "\"212c-qyXMIA38lm8hz7dJ91nZrSUTpo8\"",
-    "mtime": "2026-05-01T16:44:44.921Z",
+    "mtime": "2026-05-13T19:24:11.803Z",
     "size": 8492,
     "path": "../public/_fonts/FPImowmXkU1aWgmKsxPu7Akj0JNowdsV90BaJJQN8Dw-_91jnewDEbv6Ft52Ae56infTiwcwq3HFAAhB_Y7h8Nw.woff2"
+  },
+  "/index.html": {
+    "type": "text/html;charset=utf-8",
+    "etag": "\"12dd2-wfZ7t7RKEGLerP2R5ng9vMm9P3g\"",
+    "mtime": "2026-05-13T19:24:11.572Z",
+    "size": 77266,
+    "path": "../public/index.html"
   },
   "/_fonts/Im8HkqQ00A1IGqihOqFViX4pj8D3DlxkfI6t6LTbZQg-jR4Prvz_J7I8oA8oUj3_1pTizDgpRYIEI5b7BlHPneU.woff2": {
     "type": "font/woff2",
     "etag": "\"a20-/mE2T1SnEVqacISsybF/22fJxpQ\"",
-    "mtime": "2026-05-01T16:44:44.921Z",
+    "mtime": "2026-05-13T19:24:11.803Z",
     "size": 2592,
     "path": "../public/_fonts/Im8HkqQ00A1IGqihOqFViX4pj8D3DlxkfI6t6LTbZQg-jR4Prvz_J7I8oA8oUj3_1pTizDgpRYIEI5b7BlHPneU.woff2"
-  },
-  "/index.html": {
-    "type": "text/html;charset=utf-8",
-    "etag": "\"14902-NjoKeQ5JpNj4l44J3ASq0IGnJdo\"",
-    "mtime": "2026-05-01T16:44:44.703Z",
-    "size": 84226,
-    "path": "../public/index.html"
   },
   "/_fonts/UnngOpW3QUFmW9ustR7f4iJ6HMtsBQrF8MRey6Urw8M-bdAyUOEhdSN8LU65JRDWYqdkUIYhM59ZKeszsiAgtAI.woff2": {
     "type": "font/woff2",
     "etag": "\"2490-lxxhduGHtEyKOfaXOsN0tycYxLo\"",
-    "mtime": "2026-05-01T16:44:44.921Z",
+    "mtime": "2026-05-13T19:24:11.803Z",
     "size": 9360,
     "path": "../public/_fonts/UnngOpW3QUFmW9ustR7f4iJ6HMtsBQrF8MRey6Urw8M-bdAyUOEhdSN8LU65JRDWYqdkUIYhM59ZKeszsiAgtAI.woff2"
-  },
-  "/_fonts/bJM9t_QZ4-OukAilpAvXFzrpFWWgeGJ0mI4OoxeTBXA-T1gZRQnm_CyPlHs2G7o5lSEBc3-0yjeDI6MJ5h7RFr8.woff2": {
-    "type": "font/woff2",
-    "etag": "\"3b88-8PPUGEtSggUUaoWKHrBtMZpCcII\"",
-    "mtime": "2026-05-01T16:44:44.921Z",
-    "size": 15240,
-    "path": "../public/_fonts/bJM9t_QZ4-OukAilpAvXFzrpFWWgeGJ0mI4OoxeTBXA-T1gZRQnm_CyPlHs2G7o5lSEBc3-0yjeDI6MJ5h7RFr8.woff2"
   },
   "/_fonts/j2DQVh5iMWeAm2MqpLd4MwbmjfUsIAMYOc7Un8-q1oQ-5gkdZw7cVFs_x-rFm49rMnDT-AGGoIvy6_RxE2XbStA.woff2": {
     "type": "font/woff2",
     "etag": "\"38d0-N24h2Ga9QWdeZ+V28x7JcqD6is8\"",
-    "mtime": "2026-05-01T16:44:44.921Z",
+    "mtime": "2026-05-13T19:24:11.803Z",
     "size": 14544,
     "path": "../public/_fonts/j2DQVh5iMWeAm2MqpLd4MwbmjfUsIAMYOc7Un8-q1oQ-5gkdZw7cVFs_x-rFm49rMnDT-AGGoIvy6_RxE2XbStA.woff2"
   },
   "/_nuxt/AppBreadcrumbs.D4A7nhcc.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"33d-UT8XP1UjG1rgljHe0/Zqy1RSimc\"",
-    "mtime": "2026-05-01T16:44:45.011Z",
+    "mtime": "2026-05-13T19:24:11.895Z",
     "size": 829,
     "path": "../public/_nuxt/AppBreadcrumbs.D4A7nhcc.css"
-  },
-  "/_nuxt/AppSwitch.CSgRb82J.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"4d9-Sg8+wuhbS+VBr7Eqb3hb//Nq634\"",
-    "mtime": "2026-05-01T16:44:45.011Z",
-    "size": 1241,
-    "path": "../public/_nuxt/AppSwitch.CSgRb82J.css"
-  },
-  "/_nuxt/B4Oei59i.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"44a-jGcF7HbfykNVpn+XkNlU67EZF2Q\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 1098,
-    "path": "../public/_nuxt/B4Oei59i.js"
-  },
-  "/_nuxt/BL6fPG8k.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e6-h7ZkYGWNKCK8neA9XhF05P11bxg\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 230,
-    "path": "../public/_nuxt/BL6fPG8k.js"
-  },
-  "/_nuxt/BNM-a6Bw.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"192-ONpHBdtHeaQJWt/DWCO5eQF6o/s\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 402,
-    "path": "../public/_nuxt/BNM-a6Bw.js"
   },
   "/_nuxt/BcScItuj.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b88-W/mqPn0HSiXUZKjxGUJXxTfNwVo\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
+    "mtime": "2026-05-13T19:24:11.895Z",
     "size": 7048,
     "path": "../public/_nuxt/BcScItuj.js"
   },
-  "/_nuxt/Bm7ZXzPv.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1699-9fqForEVb6OCFSwVbwJ5TQ+9qBQ\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 5785,
-    "path": "../public/_nuxt/Bm7ZXzPv.js"
-  },
-  "/_nuxt/C2tL01YN.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2def-FeQvWKIrt+T8+Z/Ij0MxAPSnlsQ\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 11759,
-    "path": "../public/_nuxt/C2tL01YN.js"
-  },
-  "/_nuxt/CER0ljvc.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e99-lBenD9U5HQy6VURZhka7D5wkxks\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 3737,
-    "path": "../public/_nuxt/CER0ljvc.js"
-  },
-  "/_nuxt/CGjLLP12.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"64e-wkjNpTY7P3J/KB8LP+kahX7jOKk\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 1614,
-    "path": "../public/_nuxt/CGjLLP12.js"
-  },
-  "/_nuxt/CQiODDTy.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"7550-isdJHCLdf8XuFlDac6kskYDXuFs\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 30032,
-    "path": "../public/_nuxt/CQiODDTy.js"
-  },
-  "/_nuxt/CVTebbrk.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"3a9-xu1oI2OkTMzQxdDvYWwVR/wlY18\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 937,
-    "path": "../public/_nuxt/CVTebbrk.js"
-  },
-  "/_nuxt/CZJbOPaR.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2f4-Av6SGL+ZYlrqhlZqskjrMB1nup8\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 756,
-    "path": "../public/_nuxt/CZJbOPaR.js"
-  },
-  "/_nuxt/CiRVkZpy.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"d7b-fw/3VUU8f3ILZcMg0TpCTyzqFPU\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 3451,
-    "path": "../public/_nuxt/CiRVkZpy.js"
-  },
-  "/_nuxt/CsBBNxnK.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"293a-BUfp6R86qAZaFD5U69Kp6nGY/FU\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 10554,
-    "path": "../public/_nuxt/CsBBNxnK.js"
-  },
-  "/_nuxt/D4Pcy4c-.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"809d-N8U0hK3uqqoet9BGOhgHcPbFjYk\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 32925,
-    "path": "../public/_nuxt/D4Pcy4c-.js"
-  },
-  "/_nuxt/D_npBMeN.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"fc8c-OxV9zI08V8P6qW9V8UX7+GiLyk4\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 64652,
-    "path": "../public/_nuxt/D_npBMeN.js"
-  },
-  "/_nuxt/WKnFsiJO.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2dfe-uT2V8G8bwipi+hsbos2AQVptVGA\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 11774,
-    "path": "../public/_nuxt/WKnFsiJO.js"
-  },
-  "/_nuxt/catalog.BbaNVuns.css": {
+  "/_nuxt/AppButton.DUN3cgd3.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"1ef3-S6REaD08bbcw/aIdbCuDL1/cDFk\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 7923,
-    "path": "../public/_nuxt/catalog.BbaNVuns.css"
+    "etag": "\"d33-iLQovk+Qj/63/lNlV5X2a++Juls\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 3379,
+    "path": "../public/_nuxt/AppButton.DUN3cgd3.css"
   },
-  "/_nuxt/DLkGpFLr.js": {
+  "/_nuxt/BdrmLR-Q.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"79326-Hq3NjsdqY5mSADAKFLcS729DGKg\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
-    "size": 496422,
-    "path": "../public/_nuxt/DLkGpFLr.js"
+    "etag": "\"1456-unNaAk0Wb4/olVM1e9XDuTacClE\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 5206,
+    "path": "../public/_nuxt/BdrmLR-Q.js"
+  },
+  "/_nuxt/C3XiLLtL.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"584-BKS+u6OtVp+v08NQnfCgHhBf4lg\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 1412,
+    "path": "../public/_nuxt/C3XiLLtL.js"
+  },
+  "/_fonts/bJM9t_QZ4-OukAilpAvXFzrpFWWgeGJ0mI4OoxeTBXA-T1gZRQnm_CyPlHs2G7o5lSEBc3-0yjeDI6MJ5h7RFr8.woff2": {
+    "type": "font/woff2",
+    "etag": "\"3b88-8PPUGEtSggUUaoWKHrBtMZpCcII\"",
+    "mtime": "2026-05-13T19:24:11.803Z",
+    "size": 15240,
+    "path": "../public/_fonts/bJM9t_QZ4-OukAilpAvXFzrpFWWgeGJ0mI4OoxeTBXA-T1gZRQnm_CyPlHs2G7o5lSEBc3-0yjeDI6MJ5h7RFr8.woff2"
+  },
+  "/_nuxt/BvP-zlp_.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2dfe-XGnMSv/uonH+9LCcCdm/lRpGDuc\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 11774,
+    "path": "../public/_nuxt/BvP-zlp_.js"
+  },
+  "/_nuxt/CDydSiqX.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"c9-TbJ5t8G6I2AjLDpvyAVubcLrSwQ\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 201,
+    "path": "../public/_nuxt/CDydSiqX.js"
+  },
+  "/_nuxt/DDWiUM4X.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1699-xeUBnNG28KykhG/nabQ4y9/Bc3M\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 5785,
+    "path": "../public/_nuxt/DDWiUM4X.js"
+  },
+  "/_nuxt/DPO-qgTo.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2f4-FyhNbwxlqvWXKIPGxt5z3s7Ntps\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 756,
+    "path": "../public/_nuxt/DPO-qgTo.js"
+  },
+  "/_nuxt/DdGcf61q.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"809d-QKj6Xv93++GD6rgxHqCSTfi6yxs\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 32925,
+    "path": "../public/_nuxt/DdGcf61q.js"
+  },
+  "/_nuxt/Iyo6lDT5.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d7b-nz0Szh8ZJKHEkToToDmp8hFDKx8\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 3451,
+    "path": "../public/_nuxt/Iyo6lDT5.js"
+  },
+  "/_nuxt/DdW4D90l.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1273-79hkQaXv2qiZCGD48AxeU0FxWro\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 4723,
+    "path": "../public/_nuxt/DdW4D90l.js"
+  },
+  "/_nuxt/OeA9d1qk.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"21d9-+cYGeS9MpwZ/6IAaP0olzdd3cxY\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 8665,
+    "path": "../public/_nuxt/OeA9d1qk.js"
+  },
+  "/_nuxt/DW3UAdme.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"44a-nqPjRPKDExiWFS1JpQEYLsuVEzs\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 1098,
+    "path": "../public/_nuxt/DW3UAdme.js"
+  },
+  "/_nuxt/D29WzoE2.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"88b6a-U8v5Ey8L+68bpt8Df3ReEopGedQ\"",
+    "mtime": "2026-05-13T19:24:11.899Z",
+    "size": 559978,
+    "path": "../public/_nuxt/D29WzoE2.js"
+  },
+  "/_nuxt/QlMYYwE5.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d51f-jT7xLLWqy6dLyloPzNK3Q39/Sjc\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 54559,
+    "path": "../public/_nuxt/QlMYYwE5.js"
+  },
+  "/_nuxt/XSPQOpAH.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"e99-81pScD4ddJW/+fdfMPIA7iQZA0U\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 3737,
+    "path": "../public/_nuxt/XSPQOpAH.js"
+  },
+  "/_nuxt/_orderId_.bC04XxWT.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"1aff-5cNi3z39flX6VM73sqXcb8ZFBN8\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 6911,
+    "path": "../public/_nuxt/_orderId_.bC04XxWT.css"
+  },
+  "/_nuxt/catalog-products.D-HW1Ud6.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"332-9oj4F6Z+k9WBj+GEDxiMTsk1VZ0\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 818,
+    "path": "../public/_nuxt/catalog-products.D-HW1Ud6.css"
+  },
+  "/_nuxt/catalog.B6NB7DDW.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"24fe-UHmeJ7o8VvZT6F5HOStIc4Cj19o\"",
+    "mtime": "2026-05-13T19:24:11.895Z",
+    "size": 9470,
+    "path": "../public/_nuxt/catalog.B6NB7DDW.css"
   },
   "/_nuxt/catalog_slider_2.BH45i3L8.png": {
     "type": "image/png",
     "etag": "\"5262d-4c8UpFC77yPLHqigal4rgiTKR4g\"",
-    "mtime": "2026-05-01T16:44:45.015Z",
+    "mtime": "2026-05-13T19:24:11.895Z",
     "size": 337453,
     "path": "../public/_nuxt/catalog_slider_2.BH45i3L8.png"
   },
   "/_nuxt/cookie-policy.DbJ_Hgph.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"399-B/YQ46Eaho4o1o84/13G7uEWcnQ\"",
-    "mtime": "2026-05-01T16:44:45.019Z",
+    "mtime": "2026-05-13T19:24:11.899Z",
     "size": 921,
     "path": "../public/_nuxt/cookie-policy.DbJ_Hgph.css"
-  },
-  "/_nuxt/delivery.eNplfU_M.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"89b-9um6TuALWIIUhtVK3c7zTL6Z3Ts\"",
-    "mtime": "2026-05-01T16:44:45.019Z",
-    "size": 2203,
-    "path": "../public/_nuxt/delivery.eNplfU_M.css"
   },
   "/_nuxt/catalog_slider_5.J76b3FyM.png": {
     "type": "image/png",
     "etag": "\"7ae65-13onMZeTGAYGPrS6zKQG05uoHKY\"",
-    "mtime": "2026-05-01T16:44:45.019Z",
+    "mtime": "2026-05-13T19:24:11.902Z",
     "size": 503397,
     "path": "../public/_nuxt/catalog_slider_5.J76b3FyM.png"
   },
-  "/_nuxt/catalog_slider_4.C0q_KMLO.png": {
-    "type": "image/png",
-    "etag": "\"da674-xfTbUkrpoLqvpDxyWfmtU63bZ8g\"",
-    "mtime": "2026-05-01T16:44:45.019Z",
-    "size": 894580,
-    "path": "../public/_nuxt/catalog_slider_4.C0q_KMLO.png"
-  },
-  "/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png": {
-    "type": "image/png",
-    "etag": "\"e6c7e-BW6nR+IDPI88oNumjyYWhoVU+9w\"",
-    "mtime": "2026-05-01T16:44:45.026Z",
-    "size": 945278,
-    "path": "../public/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png"
-  },
-  "/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png": {
-    "type": "image/png",
-    "etag": "\"974af-rFo4G91FF29VCRxG8Uj8Rd96c2I\"",
-    "mtime": "2026-05-01T16:44:45.022Z",
-    "size": 619695,
-    "path": "../public/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png"
-  },
-  "/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png": {
-    "type": "image/png",
-    "etag": "\"c1c3c-WPXrPMYN1haE73E/bhw5EvrxsfM\"",
-    "mtime": "2026-05-01T16:44:45.022Z",
-    "size": 793660,
-    "path": "../public/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png"
+  "/_nuxt/delivery.eNplfU_M.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"89b-9um6TuALWIIUhtVK3c7zTL6Z3Ts\"",
+    "mtime": "2026-05-13T19:24:11.902Z",
+    "size": 2203,
+    "path": "../public/_nuxt/delivery.eNplfU_M.css"
   },
   "/_nuxt/catalog_slider_3.qx5ywKHs.png": {
     "type": "image/png",
     "etag": "\"db421-XPTQRXfj0AwjWEXQjihfrMmx6Ok\"",
-    "mtime": "2026-05-01T16:44:45.019Z",
+    "mtime": "2026-05-13T19:24:11.895Z",
     "size": 898081,
     "path": "../public/_nuxt/catalog_slider_3.qx5ywKHs.png"
+  },
+  "/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png": {
+    "type": "image/png",
+    "etag": "\"c1c3c-WPXrPMYN1haE73E/bhw5EvrxsfM\"",
+    "mtime": "2026-05-13T19:24:11.902Z",
+    "size": 793660,
+    "path": "../public/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png"
+  },
+  "/_nuxt/catalog_slider_4.C0q_KMLO.png": {
+    "type": "image/png",
+    "etag": "\"da674-xfTbUkrpoLqvpDxyWfmtU63bZ8g\"",
+    "mtime": "2026-05-13T19:24:11.899Z",
+    "size": 894580,
+    "path": "../public/_nuxt/catalog_slider_4.C0q_KMLO.png"
+  },
+  "/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png": {
+    "type": "image/png",
+    "etag": "\"974af-rFo4G91FF29VCRxG8Uj8Rd96c2I\"",
+    "mtime": "2026-05-13T19:24:11.902Z",
+    "size": 619695,
+    "path": "../public/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png"
+  },
+  "/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png": {
+    "type": "image/png",
+    "etag": "\"e6c7e-BW6nR+IDPI88oNumjyYWhoVU+9w\"",
+    "mtime": "2026-05-13T19:24:11.902Z",
+    "size": 945278,
+    "path": "../public/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png"
   },
   "/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png": {
     "type": "image/png",
     "etag": "\"c6368-Ruf+t2JpbGOKa1TSV1RJZsdcexo\"",
-    "mtime": "2026-05-01T16:44:45.026Z",
+    "mtime": "2026-05-13T19:24:11.906Z",
     "size": 811880,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png": {
     "type": "image/png",
     "etag": "\"afe45-+U/r8gotREKnoFkqjAXjFeAf3KU\"",
-    "mtime": "2026-05-01T16:44:45.026Z",
+    "mtime": "2026-05-13T19:24:11.906Z",
     "size": 720453,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png": {
     "type": "image/png",
     "etag": "\"cf2fd-rzZNc2ktEkMoKtGIWhp1nhObTzM\"",
-    "mtime": "2026-05-01T16:44:45.030Z",
+    "mtime": "2026-05-13T19:24:11.957Z",
     "size": 848637,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png"
-  },
-  "/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png": {
-    "type": "image/png",
-    "etag": "\"d0274-TzhC58l3kLcrY4xJnFNFaKdyjJc\"",
-    "mtime": "2026-05-01T16:44:45.030Z",
-    "size": 852596,
-    "path": "../public/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png": {
-    "type": "image/png",
-    "etag": "\"ad8bf-XqXSmL08NF69/BRtKJOyUXye1d8\"",
-    "mtime": "2026-05-01T16:44:45.034Z",
-    "size": 710847,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png": {
-    "type": "image/png",
-    "etag": "\"b5adf-icXnosKHM1Dr7M9BqslsTjgtYTQ\"",
-    "mtime": "2026-05-01T16:44:45.034Z",
-    "size": 744159,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_single.BVUsePy3.png": {
     "type": "image/png",
     "etag": "\"b51dc-IQ1iRAmeZp+RV9y2TQ7Z4EVzeU0\"",
-    "mtime": "2026-05-01T16:44:45.030Z",
+    "mtime": "2026-05-13T19:24:11.954Z",
     "size": 741852,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_single.BVUsePy3.png"
+  },
+  "/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png": {
+    "type": "image/png",
+    "etag": "\"d0274-TzhC58l3kLcrY4xJnFNFaKdyjJc\"",
+    "mtime": "2026-05-13T19:24:11.954Z",
+    "size": 852596,
+    "path": "../public/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png": {
+    "type": "image/png",
+    "etag": "\"b5adf-icXnosKHM1Dr7M9BqslsTjgtYTQ\"",
+    "mtime": "2026-05-13T19:24:11.957Z",
+    "size": 744159,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png"
   },
   "/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png": {
     "type": "image/png",
     "etag": "\"af2e3-rHg7lA2xtgll8lyyR2els45M8WI\"",
-    "mtime": "2026-05-01T16:44:45.034Z",
+    "mtime": "2026-05-13T19:24:11.957Z",
     "size": 717539,
     "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png"
   },
-  "/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png": {
+  "/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png": {
     "type": "image/png",
-    "etag": "\"94eed-tmHpVV5QnTclEjHqfn8Mt9DYv/Q\"",
-    "mtime": "2026-05-01T16:44:45.038Z",
-    "size": 610029,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png"
+    "etag": "\"ad8bf-XqXSmL08NF69/BRtKJOyUXye1d8\"",
+    "mtime": "2026-05-13T19:24:11.957Z",
+    "size": 710847,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png"
   },
   "/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png": {
     "type": "image/png",
     "etag": "\"c5922-DjKZ5tyA9pa7yb6LcHWW//vP69g\"",
-    "mtime": "2026-05-01T16:44:45.038Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 809250,
     "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png": {
+    "type": "image/png",
+    "etag": "\"94eed-tmHpVV5QnTclEjHqfn8Mt9DYv/Q\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 610029,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png"
   },
   "/_nuxt/error-404.C-Ezrlz-.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"97e-YLcQ2HBNLea0KJoUeqSqSCendIU\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 2430,
     "path": "../public/_nuxt/error-404.C-Ezrlz-.css"
   },
   "/_nuxt/error-500.DBWf9FGj.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"773-9MNIE+ztUss3x7HN62QKMFz0rhs\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 1907,
     "path": "../public/_nuxt/error-500.DBWf9FGj.css"
   },
   "/_nuxt/footer-logo.CDJvr2uJ.svg": {
     "type": "image/svg+xml",
     "etag": "\"274f-FjEz6rXc88Q6g5nOTOnXiPXnJTI\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 10063,
     "path": "../public/_nuxt/footer-logo.CDJvr2uJ.svg"
-  },
-  "/_nuxt/g8g0DzVk.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"6e3c-JLKoL5eCcqJI+7m6N+mrqxnSdME\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
-    "size": 28220,
-    "path": "../public/_nuxt/g8g0DzVk.js"
   },
   "/_nuxt/header-logo-text.B_a9knhz.svg": {
     "type": "image/svg+xml",
     "etag": "\"272f-YQkkTXHp4uPT4lIdOvHHm6SqpVM\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 10031,
     "path": "../public/_nuxt/header-logo-text.B_a9knhz.svg"
   },
-  "/_nuxt/entry.C8mtNofE.css": {
+  "/_nuxt/index.D-gZelbG.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"4a78b-isFs2JyZLakJ1ytKlgb2q910mBg\"",
-    "mtime": "2026-05-01T16:44:45.038Z",
-    "size": 305035,
-    "path": "../public/_nuxt/entry.C8mtNofE.css"
+    "etag": "\"116c-D29DNd9vcslimd3Wt19fg0qFa2c\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 4460,
+    "path": "../public/_nuxt/index.D-gZelbG.css"
+  },
+  "/_nuxt/entry.DL8GTEut.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"51140-+utNSehzIL8MKSwJ/LHunYzBMvY\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 332096,
+    "path": "../public/_nuxt/entry.DL8GTEut.css"
   },
   "/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png": {
     "type": "image/png",
     "etag": "\"a4488-DIo4O1BbqcnbmdhJC5NNBCRkA3s\"",
-    "mtime": "2026-05-01T16:44:45.038Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 672904,
     "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png"
-  },
-  "/_nuxt/index.DL0Lb1RI.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"1207b-osLJirR/yKYZRx5m45UtE1NpTLA\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
-    "size": 73851,
-    "path": "../public/_nuxt/index.DL0Lb1RI.css"
-  },
-  "/_nuxt/legal-information.Kzi_0WoB.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"53d-48A/ngoy6yK+qzj/1RdrBKZ7O5c\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
-    "size": 1341,
-    "path": "../public/_nuxt/legal-information.Kzi_0WoB.css"
-  },
-  "/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png": {
-    "type": "image/png",
-    "etag": "\"f7f0e-KLHb6o1ndMEUC0u9JIJpgj83K3k\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
-    "size": 1015566,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png"
   },
   "/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png": {
     "type": "image/png",
     "etag": "\"e626d-DuxpsFNbK6xJ6y4ZD74yIqrYEhI\"",
-    "mtime": "2026-05-01T16:44:45.042Z",
+    "mtime": "2026-05-13T19:24:11.961Z",
     "size": 942701,
     "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png"
+  },
+  "/_nuxt/jp3cZp8N.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"7550-ZHSHP3e5chrITNyJqO9oNpOb9v4\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 30032,
+    "path": "../public/_nuxt/jp3cZp8N.js"
+  },
+  "/_nuxt/legal-information.Kzi_0WoB.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"53d-48A/ngoy6yK+qzj/1RdrBKZ7O5c\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 1341,
+    "path": "../public/_nuxt/legal-information.Kzi_0WoB.css"
+  },
+  "/_nuxt/index.cUNe2ROm.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"20e7a-1Pd45sHmcE+vqP6YlXwYBAi3rpA\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 134778,
+    "path": "../public/_nuxt/index.cUNe2ROm.css"
+  },
+  "/_nuxt/landing-hero-pattern.DfC6rtHl.svg": {
+    "type": "image/svg+xml",
+    "etag": "\"148e7-F5jHI/7VIhHnkT7/1QLmCvmMgAc\"",
+    "mtime": "2026-05-13T19:24:11.961Z",
+    "size": 84199,
+    "path": "../public/_nuxt/landing-hero-pattern.DfC6rtHl.svg"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png": {
+    "type": "image/png",
+    "etag": "\"f7f0e-KLHb6o1ndMEUC0u9JIJpgj83K3k\"",
+    "mtime": "2026-05-13T19:24:11.968Z",
+    "size": 1015566,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png"
   },
   "/_nuxt/mesh_grommets_60x90_double.DUTuOgHv.png": {
     "type": "image/png",
     "etag": "\"ca2ab-7RE/t9akhiXfSecyDfP6rwzvxgM\"",
-    "mtime": "2026-05-01T16:44:45.046Z",
+    "mtime": "2026-05-13T19:24:11.968Z",
     "size": 828075,
     "path": "../public/_nuxt/mesh_grommets_60x90_double.DUTuOgHv.png"
-  },
-  "/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png": {
-    "type": "image/png",
-    "etag": "\"f9d3b-7PaD5v3wiR9QBJa4kU5m3HCjD3Q\"",
-    "mtime": "2026-05-01T16:44:45.058Z",
-    "size": 1023291,
-    "path": "../public/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png"
   },
   "/_nuxt/mesh_grommets_60x90_single.CQzq71gw.png": {
     "type": "image/png",
     "etag": "\"f4de3-SKSKAHzpvuwKtkxLyDWggYqq6sQ\"",
-    "mtime": "2026-05-01T16:44:45.046Z",
+    "mtime": "2026-05-13T19:24:11.968Z",
     "size": 1002979,
     "path": "../public/_nuxt/mesh_grommets_60x90_single.CQzq71gw.png"
   },
-  "/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png": {
+  "/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png": {
     "type": "image/png",
-    "etag": "\"e41c2-gn3NuTZexL7pnIiYv/S3hN+WUwg\"",
-    "mtime": "2026-05-01T16:44:45.058Z",
-    "size": 934338,
-    "path": "../public/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png"
-  },
-  "/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png": {
-    "type": "image/png",
-    "etag": "\"f05f9-rTB5AQAPkQp9fWfDnP4xucGtV6U\"",
-    "mtime": "2026-05-01T16:44:45.061Z",
-    "size": 984569,
-    "path": "../public/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png"
+    "etag": "\"f9d3b-7PaD5v3wiR9QBJa4kU5m3HCjD3Q\"",
+    "mtime": "2026-05-13T19:24:11.972Z",
+    "size": 1023291,
+    "path": "../public/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png"
   },
   "/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png": {
     "type": "image/png",
     "etag": "\"10bc88-hDhg4NNq6kd1JyedBw7aLxQ0c6E\"",
-    "mtime": "2026-05-01T16:44:45.046Z",
+    "mtime": "2026-05-13T19:24:11.968Z",
     "size": 1096840,
     "path": "../public/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png"
-  },
-  "/_nuxt/catalog_slider_1.BiVYIshC.png": {
-    "type": "image/png",
-    "etag": "\"3b66ed-8Fv6jlmmxiTrk+I5uuG29yjUS9o\"",
-    "mtime": "2026-05-01T16:44:45.034Z",
-    "size": 3892973,
-    "path": "../public/_nuxt/catalog_slider_1.BiVYIshC.png"
   },
   "/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png": {
     "type": "image/png",
     "etag": "\"111fe9-QNxA0zMV3U5mePIStrhocShfGxM\"",
-    "mtime": "2026-05-01T16:44:45.046Z",
+    "mtime": "2026-05-13T19:24:11.972Z",
     "size": 1122281,
     "path": "../public/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png"
+  },
+  "/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png": {
+    "type": "image/png",
+    "etag": "\"10ed3b-6YML+cTdF2zmed7JEItYq1Vq3cc\"",
+    "mtime": "2026-05-13T19:24:11.972Z",
+    "size": 1109307,
+    "path": "../public/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png"
+  },
+  "/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png": {
+    "type": "image/png",
+    "etag": "\"e41c2-gn3NuTZexL7pnIiYv/S3hN+WUwg\"",
+    "mtime": "2026-05-13T19:24:11.979Z",
+    "size": 934338,
+    "path": "../public/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png"
+  },
+  "/_nuxt/catalog_slider_1.BiVYIshC.png": {
+    "type": "image/png",
+    "etag": "\"3b66ed-8Fv6jlmmxiTrk+I5uuG29yjUS9o\"",
+    "mtime": "2026-05-13T19:24:11.910Z",
+    "size": 3892973,
+    "path": "../public/_nuxt/catalog_slider_1.BiVYIshC.png"
   },
   "/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png": {
     "type": "image/png",
     "etag": "\"10309b-0UBE9mC6o4233B9fQYnITJDWJE4\"",
-    "mtime": "2026-05-01T16:44:45.050Z",
+    "mtime": "2026-05-13T19:24:11.976Z",
     "size": 1061019,
     "path": "../public/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png"
   },
   "/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png": {
     "type": "image/png",
     "etag": "\"1131f7-HIEsvRixV3Fw1m9dqsNm9u5JLSQ\"",
-    "mtime": "2026-05-01T16:44:45.050Z",
+    "mtime": "2026-05-13T19:24:11.976Z",
     "size": 1126903,
     "path": "../public/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png"
-  },
-  "/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png": {
-    "type": "image/png",
-    "etag": "\"10ed3b-6YML+cTdF2zmed7JEItYq1Vq3cc\"",
-    "mtime": "2026-05-01T16:44:45.050Z",
-    "size": 1109307,
-    "path": "../public/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png"
   },
   "/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png": {
     "type": "image/png",
     "etag": "\"106b6d-piT0AW5eiQK/BH5pmowglNu7wkk\"",
-    "mtime": "2026-05-01T16:44:45.054Z",
+    "mtime": "2026-05-13T19:24:11.976Z",
     "size": 1076077,
     "path": "../public/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png"
   },
   "/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png": {
     "type": "image/png",
     "etag": "\"122924-XtwCzQHKGfBj4yjLa6Hs/n8f/PE\"",
-    "mtime": "2026-05-01T16:44:45.058Z",
+    "mtime": "2026-05-13T19:24:11.979Z",
     "size": 1190180,
     "path": "../public/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png"
-  },
-  "/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png": {
-    "type": "image/png",
-    "etag": "\"1381de-QdbAltqQNo9BrbZzxKU3JdN83jw\"",
-    "mtime": "2026-05-01T16:44:45.058Z",
-    "size": 1278430,
-    "path": "../public/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png"
   },
   "/_nuxt/payment.CPXVp06Q.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"845-yEGNzGX/dnxZ25aGy1uktx60CIE\"",
-    "mtime": "2026-05-01T16:44:45.061Z",
+    "mtime": "2026-05-13T19:24:11.983Z",
     "size": 2117,
     "path": "../public/_nuxt/payment.CPXVp06Q.css"
+  },
+  "/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png": {
+    "type": "image/png",
+    "etag": "\"f05f9-rTB5AQAPkQp9fWfDnP4xucGtV6U\"",
+    "mtime": "2026-05-13T19:24:11.983Z",
+    "size": 984569,
+    "path": "../public/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png"
   },
   "/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png": {
     "type": "image/png",
     "etag": "\"ef2e1-U1EIsAOt7xKod2tw9L328UEWxuo\"",
-    "mtime": "2026-05-01T16:44:45.061Z",
+    "mtime": "2026-05-13T19:24:11.983Z",
     "size": 979681,
     "path": "../public/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png"
+  },
+  "/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png": {
+    "type": "image/png",
+    "etag": "\"1381de-QdbAltqQNo9BrbZzxKU3JdN83jw\"",
+    "mtime": "2026-05-13T19:24:11.979Z",
+    "size": 1278430,
+    "path": "../public/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png"
   },
   "/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png": {
     "type": "image/png",
     "etag": "\"cb64d-AccAjd5fD6gzJAS6aRM3hWSO370\"",
-    "mtime": "2026-05-01T16:44:45.065Z",
+    "mtime": "2026-05-13T19:24:11.987Z",
     "size": 833101,
     "path": "../public/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png"
-  },
-  "/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png": {
-    "type": "image/png",
-    "etag": "\"ed5a8-3gqMT6SJwRA3CDK4rnqpeVvg9GU\"",
-    "mtime": "2026-05-01T16:44:45.065Z",
-    "size": 972200,
-    "path": "../public/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png"
-  },
-  "/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png": {
-    "type": "image/png",
-    "etag": "\"102705-Kt6BfU8yL0+4ETJxCKuYg/g0Z/c\"",
-    "mtime": "2026-05-01T16:44:45.061Z",
-    "size": 1058565,
-    "path": "../public/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png"
   },
   "/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png": {
     "type": "image/png",
     "etag": "\"13fbdb-+T5Tu9sY6BR9fmMOHSmHyoUIC/s\"",
-    "mtime": "2026-05-01T16:44:45.061Z",
+    "mtime": "2026-05-13T19:24:11.987Z",
     "size": 1309659,
     "path": "../public/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png"
+  },
+  "/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png": {
+    "type": "image/png",
+    "etag": "\"ed5a8-3gqMT6SJwRA3CDK4rnqpeVvg9GU\"",
+    "mtime": "2026-05-13T19:24:11.987Z",
+    "size": 972200,
+    "path": "../public/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png"
   },
   "/_nuxt/polyester_grommets_60x90_single.MOirczvX.png": {
     "type": "image/png",
     "etag": "\"f3975-ympc+goWybiiU2a/q6wZl8RxDuw\"",
-    "mtime": "2026-05-01T16:44:45.069Z",
+    "mtime": "2026-05-13T19:24:11.987Z",
     "size": 997749,
     "path": "../public/_nuxt/polyester_grommets_60x90_single.MOirczvX.png"
   },
   "/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png": {
     "type": "image/png",
     "etag": "\"f32f6-Xz2DavSitbi8RxKBXOIINRhKSxk\"",
-    "mtime": "2026-05-01T16:44:45.065Z",
+    "mtime": "2026-05-13T19:24:11.990Z",
     "size": 996086,
     "path": "../public/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png"
+  },
+  "/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png": {
+    "type": "image/png",
+    "etag": "\"102705-Kt6BfU8yL0+4ETJxCKuYg/g0Z/c\"",
+    "mtime": "2026-05-13T19:24:11.983Z",
+    "size": 1058565,
+    "path": "../public/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png"
   },
   "/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png": {
     "type": "image/png",
     "etag": "\"b8553-WzUniAyA7kugCNTak18gkF/lJ3E\"",
-    "mtime": "2026-05-01T16:44:45.069Z",
+    "mtime": "2026-05-13T19:24:11.987Z",
     "size": 755027,
     "path": "../public/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png"
   },
   "/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png": {
     "type": "image/png",
     "etag": "\"d86ae-GjS3RmAtTiTfefVL4c2CKd0Oqtk\"",
-    "mtime": "2026-05-01T16:44:45.069Z",
+    "mtime": "2026-05-13T19:24:11.990Z",
     "size": 886446,
     "path": "../public/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png"
   },
   "/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png": {
     "type": "image/png",
     "etag": "\"a6a05-zHQ5JUB5vQWBn4bmOkonjmrZ3Ac\"",
-    "mtime": "2026-05-01T16:44:45.069Z",
+    "mtime": "2026-05-13T19:24:11.990Z",
     "size": 682501,
     "path": "../public/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png"
-  },
-  "/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png": {
-    "type": "image/png",
-    "etag": "\"a378f-4IYJ/g2b9b7+PdhoFv4LJCq3T4k\"",
-    "mtime": "2026-05-01T16:44:45.073Z",
-    "size": 669583,
-    "path": "../public/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png"
   },
   "/_nuxt/polyester_grommets_90x135_single_fringe.sevc2bgj.png": {
     "type": "image/png",
     "etag": "\"e9938-9Gcnas2YPWAro+VYRSG+O5aTQ9I\"",
-    "mtime": "2026-05-01T16:44:45.073Z",
+    "mtime": "2026-05-13T19:24:11.990Z",
     "size": 956728,
     "path": "../public/_nuxt/polyester_grommets_90x135_single_fringe.sevc2bgj.png"
+  },
+  "/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png": {
+    "type": "image/png",
+    "etag": "\"a378f-4IYJ/g2b9b7+PdhoFv4LJCq3T4k\"",
+    "mtime": "2026-05-13T19:24:11.990Z",
+    "size": 669583,
+    "path": "../public/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png"
   },
   "/_nuxt/polyester_sleeve_60x90_double_fringe.D5RRAdln.png": {
     "type": "image/png",
     "etag": "\"e5dfc-U+PIG4wh5pswa0Z2gkDBInftvYQ\"",
-    "mtime": "2026-05-01T16:44:45.073Z",
+    "mtime": "2026-05-13T19:24:11.994Z",
     "size": 941564,
     "path": "../public/_nuxt/polyester_sleeve_60x90_double_fringe.D5RRAdln.png"
   },
   "/_nuxt/privacy-policy.CyfpbZ6y.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"e85-yQnd66mtqESRG8Jq1F31yV8ldFY\"",
-    "mtime": "2026-05-01T16:44:45.077Z",
+    "mtime": "2026-05-13T19:24:11.998Z",
     "size": 3717,
     "path": "../public/_nuxt/privacy-policy.CyfpbZ6y.css"
-  },
-  "/_nuxt/profile.BKD3DO3S.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"1a0ca-arqZgPCj9yOv6epaJYIcpabBE8E\"",
-    "mtime": "2026-05-01T16:44:45.081Z",
-    "size": 106698,
-    "path": "../public/_nuxt/profile.BKD3DO3S.css"
   },
   "/_nuxt/polyester_sleeve_60x90_single.C7RVHdnM.png": {
     "type": "image/png",
     "etag": "\"cb680-QMmugOdQscuZwV/uGJyrkbGwxas\"",
-    "mtime": "2026-05-01T16:44:45.073Z",
+    "mtime": "2026-05-13T19:24:11.994Z",
     "size": 833152,
     "path": "../public/_nuxt/polyester_sleeve_60x90_single.C7RVHdnM.png"
   },
   "/_nuxt/polyester_sleeve_90x135_double.C2ikPQO1.png": {
     "type": "image/png",
     "etag": "\"d798d-y5DfsOIq6SvRIi4Prj4yfuFS0kQ\"",
-    "mtime": "2026-05-01T16:44:45.077Z",
+    "mtime": "2026-05-13T19:24:11.994Z",
     "size": 883085,
     "path": "../public/_nuxt/polyester_sleeve_90x135_double.C2ikPQO1.png"
   },
   "/_nuxt/polyester_sleeve_90x135_double_fringe.UUtANBuN.png": {
     "type": "image/png",
     "etag": "\"ec8ce-bXDQpn+MKNkHul4Yrt4e08SOjTo\"",
-    "mtime": "2026-05-01T16:44:45.077Z",
+    "mtime": "2026-05-13T19:24:11.998Z",
     "size": 968910,
     "path": "../public/_nuxt/polyester_sleeve_90x135_double_fringe.UUtANBuN.png"
   },
   "/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png": {
     "type": "image/png",
     "etag": "\"b90e9-iczceUWC1MO8ZH1l6cUVA8djbzo\"",
-    "mtime": "2026-05-01T16:44:45.077Z",
+    "mtime": "2026-05-13T19:24:11.998Z",
     "size": 757993,
     "path": "../public/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png"
   },
   "/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png": {
     "type": "image/png",
     "etag": "\"def1b-MCtCC+FIb8bV9WljcuIAaEgFl9I\"",
-    "mtime": "2026-05-01T16:44:45.081Z",
+    "mtime": "2026-05-13T19:24:11.998Z",
     "size": 913179,
     "path": "../public/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png"
   },
   "/_nuxt/satin_grommets_60x90_double.C8GIQrJU.png": {
     "type": "image/png",
     "etag": "\"b0692-VvIhoC2HzI7kw087DdrXVw/1Q9w\"",
-    "mtime": "2026-05-01T16:44:45.081Z",
+    "mtime": "2026-05-13T19:24:11.998Z",
     "size": 722578,
     "path": "../public/_nuxt/satin_grommets_60x90_double.C8GIQrJU.png"
+  },
+  "/_nuxt/satin_grommets_60x90_single.-INYcgSl.png": {
+    "type": "image/png",
+    "etag": "\"ad2a5-6ZKaUShk7qklp1/ft90nm72W8ww\"",
+    "mtime": "2026-05-13T19:24:12.001Z",
+    "size": 709285,
+    "path": "../public/_nuxt/satin_grommets_60x90_single.-INYcgSl.png"
   },
   "/_nuxt/satin_grommets_60x90_double_fringe.CRifW5D4.png": {
     "type": "image/png",
     "etag": "\"de611-yZCDteaYoLXqAlRBLeOwKC1Ll90\"",
-    "mtime": "2026-05-01T16:44:45.081Z",
+    "mtime": "2026-05-13T19:24:12.001Z",
     "size": 910865,
     "path": "../public/_nuxt/satin_grommets_60x90_double_fringe.CRifW5D4.png"
   },
   "/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png": {
     "type": "image/png",
     "etag": "\"10cdc4-mpGEmUNiqetuLz2SpKLVH89y5PY\"",
-    "mtime": "2026-05-01T16:44:45.077Z",
+    "mtime": "2026-05-13T19:24:11.998Z",
     "size": 1101252,
     "path": "../public/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png"
-  },
-  "/_nuxt/satin_grommets_60x90_single.-INYcgSl.png": {
-    "type": "image/png",
-    "etag": "\"ad2a5-6ZKaUShk7qklp1/ft90nm72W8ww\"",
-    "mtime": "2026-05-01T16:44:45.081Z",
-    "size": 709285,
-    "path": "../public/_nuxt/satin_grommets_60x90_single.-INYcgSl.png"
   },
   "/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png": {
     "type": "image/png",
     "etag": "\"e51a3-nXlTU08nBJ0fBPqR5ZcwOnNN/Y4\"",
-    "mtime": "2026-05-01T16:44:45.085Z",
+    "mtime": "2026-05-13T19:24:12.001Z",
     "size": 938403,
     "path": "../public/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png"
   },
   "/_nuxt/satin_grommets_90x135_double.CeveyNnt.png": {
     "type": "image/png",
     "etag": "\"a2330-4hE9FreV+uTOOZ7zJLbwuFN8Ki8\"",
-    "mtime": "2026-05-01T16:44:45.085Z",
+    "mtime": "2026-05-13T19:24:12.001Z",
     "size": 664368,
     "path": "../public/_nuxt/satin_grommets_90x135_double.CeveyNnt.png"
-  },
-  "/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png": {
-    "type": "image/png",
-    "etag": "\"e8927-Z7fFGSlVDw9VZaifLis437urM1o\"",
-    "mtime": "2026-05-01T16:44:45.085Z",
-    "size": 952615,
-    "path": "../public/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png"
-  },
-  "/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png": {
-    "type": "image/png",
-    "etag": "\"ba0bd-47+Amr5hWKSBzbQhribYCDZ77C4\"",
-    "mtime": "2026-05-01T16:44:45.089Z",
-    "size": 762045,
-    "path": "../public/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png"
-  },
-  "/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png": {
-    "type": "image/png",
-    "etag": "\"c5286-+GJiujJs0Ilt4OapGvHIUnU3TCs\"",
-    "mtime": "2026-05-01T16:44:45.089Z",
-    "size": 807558,
-    "path": "../public/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png"
-  },
-  "/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png": {
-    "type": "image/png",
-    "etag": "\"d0386-2eI7F0JMJ6QCK69GGZW02R/MTDI\"",
-    "mtime": "2026-05-01T16:44:45.089Z",
-    "size": 852870,
-    "path": "../public/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png"
   },
   "/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png": {
     "type": "image/png",
     "etag": "\"95a0a-fv885rf4Vx92DCE2vZrgPa19imM\"",
-    "mtime": "2026-05-01T16:44:45.089Z",
+    "mtime": "2026-05-13T19:24:12.005Z",
     "size": 612874,
     "path": "../public/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png"
   },
-  "/_nuxt/user-agreement.CCKUbKOn.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"be8-EJSDmWhZ2vUFBl2Y6se1vZVTzfs\"",
-    "mtime": "2026-05-01T16:44:45.093Z",
-    "size": 3048,
-    "path": "../public/_nuxt/user-agreement.CCKUbKOn.css"
+  "/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png": {
+    "type": "image/png",
+    "etag": "\"ba0bd-47+Amr5hWKSBzbQhribYCDZ77C4\"",
+    "mtime": "2026-05-13T19:24:12.005Z",
+    "size": 762045,
+    "path": "../public/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png"
+  },
+  "/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png": {
+    "type": "image/png",
+    "etag": "\"d0386-2eI7F0JMJ6QCK69GGZW02R/MTDI\"",
+    "mtime": "2026-05-13T19:24:12.005Z",
+    "size": 852870,
+    "path": "../public/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png"
+  },
+  "/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png": {
+    "type": "image/png",
+    "etag": "\"e8927-Z7fFGSlVDw9VZaifLis437urM1o\"",
+    "mtime": "2026-05-13T19:24:12.005Z",
+    "size": 952615,
+    "path": "../public/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png"
   },
   "/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png": {
     "type": "image/png",
     "etag": "\"8ce33-/RIbujU9cWx3axHUtzDoiiSBPwA\"",
-    "mtime": "2026-05-01T16:44:45.093Z",
+    "mtime": "2026-05-13T19:24:12.012Z",
     "size": 577075,
     "path": "../public/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png"
+  },
+  "/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png": {
+    "type": "image/png",
+    "etag": "\"c5286-+GJiujJs0Ilt4OapGvHIUnU3TCs\"",
+    "mtime": "2026-05-13T19:24:12.012Z",
+    "size": 807558,
+    "path": "../public/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png"
   },
   "/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png": {
     "type": "image/png",
     "etag": "\"fe4b9-Ty8Joy7bz3xKgyQZislTdbT9ZPw\"",
-    "mtime": "2026-05-01T16:44:45.093Z",
+    "mtime": "2026-05-13T19:24:12.012Z",
     "size": 1041593,
     "path": "../public/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png"
-  },
-  "/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png": {
-    "type": "image/png",
-    "etag": "\"d2f2e-SfgOjN2hCEydf47UXfFpFZKtJCA\"",
-    "mtime": "2026-05-01T16:44:45.093Z",
-    "size": 864046,
-    "path": "../public/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png"
-  },
-  "/_nuxt/builds/latest.json": {
-    "type": "application/json",
-    "etag": "\"47-IuZYI2AhvZiNUt4Z89qxn7nNmWA\"",
-    "mtime": "2026-05-01T16:44:44.909Z",
-    "size": 71,
-    "path": "../public/_nuxt/builds/latest.json"
-  },
-  "/_nuxt/builds/meta/5b06df70-cd28-4f25-838b-3c255dfd4beb.json": {
-    "type": "application/json",
-    "etag": "\"5b-Kz06O1boYfAP5yMby5psdlpOeVM\"",
-    "mtime": "2026-05-01T16:44:44.902Z",
-    "size": 91,
-    "path": "../public/_nuxt/builds/meta/5b06df70-cd28-4f25-838b-3c255dfd4beb.json"
-  },
-  "/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png": {
-    "type": "image/png",
-    "etag": "\"10f3fe-dAm0UZTUnnhtFzCmfzcKmt0nCqs\"",
-    "mtime": "2026-05-01T16:44:45.089Z",
-    "size": 1111038,
-    "path": "../public/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png"
   },
   "/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png": {
     "type": "image/png",
     "etag": "\"baef8-tAlxFs9fCrvQj0ErrKRF7uFzuSw\"",
-    "mtime": "2026-05-01T16:44:45.093Z",
+    "mtime": "2026-05-13T19:24:12.012Z",
     "size": 765688,
     "path": "../public/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png"
+  },
+  "/_nuxt/textile-caps.BA0R0Z1M.png": {
+    "type": "image/png",
+    "etag": "\"169a2-3zIcb2eXwveZXW70/E7uSKvAseM\"",
+    "mtime": "2026-05-13T19:24:12.012Z",
+    "size": 92578,
+    "path": "../public/_nuxt/textile-caps.BA0R0Z1M.png"
+  },
+  "/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png": {
+    "type": "image/png",
+    "etag": "\"d2f2e-SfgOjN2hCEydf47UXfFpFZKtJCA\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 864046,
+    "path": "../public/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png"
+  },
+  "/_nuxt/textile-embroidery-clothes.DDD3s30Y.png": {
+    "type": "image/png",
+    "etag": "\"271a0-o3+Mh+dGgY+uae1hCzLZudYdwnE\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 160160,
+    "path": "../public/_nuxt/textile-embroidery-clothes.DDD3s30Y.png"
+  },
+  "/_nuxt/textile-embroidery-patches.BI_T9z9c.png": {
+    "type": "image/png",
+    "etag": "\"22c14-V1mIH5fJiFyynbkbJLSWiuKoqt0\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 142356,
+    "path": "../public/_nuxt/textile-embroidery-patches.BI_T9z9c.png"
+  },
+  "/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png": {
+    "type": "image/png",
+    "etag": "\"10f3fe-dAm0UZTUnnhtFzCmfzcKmt0nCqs\"",
+    "mtime": "2026-05-13T19:24:12.012Z",
+    "size": 1111038,
+    "path": "../public/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png"
+  },
+  "/_nuxt/textile-flags.CpmamLaJ.png": {
+    "type": "image/png",
+    "etag": "\"1d82b-nn9sxwOLEuOWB0ly34dBcDZDkg8\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 120875,
+    "path": "../public/_nuxt/textile-flags.CpmamLaJ.png"
   },
   "/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png": {
     "type": "image/png",
     "etag": "\"f5cee-FlH7q5JBu3V8Lb0CNG6EFAvEmOU\"",
-    "mtime": "2026-05-01T16:44:45.100Z",
+    "mtime": "2026-05-13T19:24:12.020Z",
     "size": 1006830,
     "path": "../public/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png"
+  },
+  "/_nuxt/textile-print-pillow.BE0p2UrK.png": {
+    "type": "image/png",
+    "etag": "\"1f8e2-LETLl3mNK9vs6+jJhR9diK6HS7g\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 129250,
+    "path": "../public/_nuxt/textile-print-pillow.BE0p2UrK.png"
+  },
+  "/_nuxt/textile-print-tshirt.DSQ8CFf8.png": {
+    "type": "image/png",
+    "etag": "\"1a6a8-iRWO/8odDtQKvAArnQ0ITOyz2Lk\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 108200,
+    "path": "../public/_nuxt/textile-print-tshirt.DSQ8CFf8.png"
+  },
+  "/_nuxt/textile-ribbon-print.-15G9hIc.png": {
+    "type": "image/png",
+    "etag": "\"134d6-MCOFnbNlAt6X7klT1339OcHhe1Y\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 79062,
+    "path": "../public/_nuxt/textile-ribbon-print.-15G9hIc.png"
+  },
+  "/_nuxt/textile-shopper.ITFXD2Li.png": {
+    "type": "image/png",
+    "etag": "\"1cc49-VBW9gIn00sdlFDYzHta3spK0M+Q\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 117833,
+    "path": "../public/_nuxt/textile-shopper.ITFXD2Li.png"
+  },
+  "/_nuxt/ubmSjj1R.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"b1d-21wnAFoXeC/ikzl0Rcwx4QK1yec\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 2845,
+    "path": "../public/_nuxt/ubmSjj1R.js"
+  },
+  "/_nuxt/user-agreement.CCKUbKOn.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"be8-EJSDmWhZ2vUFBl2Y6se1vZVTzfs\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 3048,
+    "path": "../public/_nuxt/user-agreement.CCKUbKOn.css"
+  },
+  "/_nuxt/wOhysslo.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"64e-dBOlG+D1gLIIL5wPycSyVMbsKjw\"",
+    "mtime": "2026-05-13T19:24:12.016Z",
+    "size": 1614,
+    "path": "../public/_nuxt/wOhysslo.js"
+  },
+  "/_nuxt/builds/latest.json": {
+    "type": "application/json",
+    "etag": "\"47-VBkIxiee28fML3gjoDjIWIkmA6E\"",
+    "mtime": "2026-05-13T19:24:11.796Z",
+    "size": 71,
+    "path": "../public/_nuxt/builds/latest.json"
+  },
+  "/_nuxt/builds/meta/5fcb047f-9576-4379-8243-98279473d98a.json": {
+    "type": "application/json",
+    "etag": "\"5b-J8AoBFe+z+K2fTPfWFcASNatPHs\"",
+    "mtime": "2026-05-13T19:24:11.785Z",
+    "size": 91,
+    "path": "../public/_nuxt/builds/meta/5fcb047f-9576-4379-8243-98279473d98a.json"
   }
 };
 
@@ -6126,19 +6232,35 @@ function isValidEmail(value) {
   });
 }
 
+function getRussianSecondsWord(value) {
+  const absoluteValue = Math.abs(value);
+  const lastTwo = absoluteValue % 100;
+  if (lastTwo >= 11 && lastTwo <= 14) {
+    return "\u0441\u0435\u043A\u0443\u043D\u0434";
+  }
+  const lastDigit = absoluteValue % 10;
+  if (lastDigit === 1) {
+    return "\u0441\u0435\u043A\u0443\u043D\u0434\u0443";
+  }
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return "\u0441\u0435\u043A\u0443\u043D\u0434\u044B";
+  }
+  return "\u0441\u0435\u043A\u0443\u043D\u0434";
+}
+
 let database;
-const readEnv$2 = (name) => {
+const readEnv$3 = (name) => {
   var _a, _b;
   return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
 };
 const readNumberEnv = (name, fallback) => {
-  const value = Number(readEnv$2(name));
+  const value = Number(readEnv$3(name));
   return Number.isFinite(value) ? value : fallback;
 };
 const DEFAULT_CONNECT_TIMEOUT = 5e3;
 const DEFAULT_CONNECTION_LIMIT = 10;
 const getDatabaseUrl = () => {
-  const databaseUrl = readEnv$2("DATABASE_URL");
+  const databaseUrl = readEnv$3("DATABASE_URL");
   if (!databaseUrl) {
     throw createError$1({
       statusCode: 500,
@@ -6164,6 +6286,388 @@ const useDatabase = () => {
   return database;
 };
 
+const DEFAULT_API_BASE_URL = "https://api.notificore.ru";
+const DEFAULT_ONE_API_BASE_URL = "https://one-api.notificore.ru";
+const DEFAULT_EMAIL_API_BASE_URL = DEFAULT_ONE_API_BASE_URL;
+const DEFAULT_AUTH_TIMEOUT_MS = 2e4;
+const DEFAULT_OTP_TIMEOUT_MS = 3e4;
+const DEFAULT_VERIFY_TIMEOUT_MS = 2e4;
+const DEFAULT_EMAIL_TIMEOUT_MS = 2e4;
+const stripWrappingQuotes = (value) => value.length >= 2 && (value.startsWith('"') && value.endsWith('"') || value.startsWith("'") && value.endsWith("'")) ? value.slice(1, -1).trim() : value;
+const readEnv$2 = (name) => {
+  var _a, _b;
+  return stripWrappingQuotes((_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "");
+};
+const readNumber = (value, fallback) => {
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) ? numberValue : fallback;
+};
+const readPositiveNumber = (value, fallback) => {
+  const numberValue = readNumber(value, fallback);
+  return numberValue > 0 ? numberValue : fallback;
+};
+const getRuntimeString$1 = (value) => typeof value === "string" ? value.trim() : "";
+const normalizeOneApiBaseUrl = (value) => value.replace(/^http:\/\/one-api\.notificore\.ru/i, "https://one-api.notificore.ru").replace(/\/$/, "");
+const getNotificoreConfig = () => {
+  var _a;
+  const config = useRuntimeConfig();
+  const notificore = (_a = config.notificore) != null ? _a : {};
+  const apiKey = getRuntimeString$1(notificore.apiKey) || readEnv$2("NOTIFICORE_API_KEY");
+  const sender = getRuntimeString$1(notificore.sender) || readEnv$2("NOTIFICORE_OTP_SENDER");
+  const otpTemplateId = getRuntimeString$1(notificore.otpTemplateId) || readEnv$2("NOTIFICORE_OTP_TEMPLATE_ID");
+  const templateId = readNumber(otpTemplateId, Number.NaN);
+  const apiBaseUrl = (getRuntimeString$1(notificore.apiBaseUrl) || readEnv$2("NOTIFICORE_API_BASE_URL") || DEFAULT_API_BASE_URL).replace(/\/$/, "");
+  const oneApiBaseUrl = normalizeOneApiBaseUrl(
+    getRuntimeString$1(notificore.oneApiBaseUrl) || readEnv$2("NOTIFICORE_ONE_API_BASE_URL") || DEFAULT_ONE_API_BASE_URL
+  );
+  if (!apiKey) {
+    throw createError$1({
+      statusCode: 500,
+      statusMessage: "Notificore is not configured",
+      message: "Missing NOTIFICORE_API_KEY"
+    });
+  }
+  if (!sender || !Number.isInteger(templateId)) {
+    throw createError$1({
+      statusCode: 500,
+      statusMessage: "Notificore is not configured",
+      message: "Missing NOTIFICORE_OTP_SENDER or integer NOTIFICORE_OTP_TEMPLATE_ID"
+    });
+  }
+  return {
+    apiKey,
+    apiBaseUrl,
+    oneApiBaseUrl,
+    sender,
+    otpTemplateId: templateId,
+    codeDigits: readNumber(notificore.codeDigits || readEnv$2("NOTIFICORE_OTP_CODE_DIGITS"), 5),
+    codeLifetime: readNumber(notificore.codeLifetime || readEnv$2("NOTIFICORE_OTP_CODE_LIFETIME"), 300),
+    codeMaxTries: readNumber(notificore.codeMaxTries || readEnv$2("NOTIFICORE_OTP_CODE_MAX_TRIES"), 3),
+    authTimeout: readPositiveNumber(
+      notificore.authTimeout || readEnv$2("NOTIFICORE_AUTH_TIMEOUT_MS"),
+      DEFAULT_AUTH_TIMEOUT_MS
+    ),
+    otpTimeout: readPositiveNumber(
+      notificore.otpTimeout || readEnv$2("NOTIFICORE_OTP_TIMEOUT_MS"),
+      DEFAULT_OTP_TIMEOUT_MS
+    ),
+    verifyTimeout: readPositiveNumber(
+      notificore.verifyTimeout || readEnv$2("NOTIFICORE_VERIFY_TIMEOUT_MS"),
+      DEFAULT_VERIFY_TIMEOUT_MS
+    )
+  };
+};
+const fetchNotificoreBearer = async ({ apiKey, apiBaseUrl, timeout, scope }) => {
+  const response = await $fetch(`${apiBaseUrl}/api/auth/login`, {
+    method: "POST",
+    timeout,
+    body: {
+      api_key: apiKey
+    }
+  });
+  if (!response.bearer) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: `Notificore ${scope} auth failed`,
+      message: `Notificore ${scope} auth did not return bearer token`
+    });
+  }
+  return response.bearer;
+};
+const parseMaybeJson = (value) => {
+  if (typeof value !== "string") {
+    return value;
+  }
+  try {
+    return JSON.parse(value);
+  } catch {
+    return value;
+  }
+};
+const getNotificoreAuthenticationPayload = (result) => {
+  var _a, _b, _c;
+  const parsedResult = parseMaybeJson(result);
+  return (_c = parseMaybeJson((_b = (_a = parsedResult == null ? void 0 : parsedResult.data) != null ? _a : parsedResult == null ? void 0 : parsedResult.result) != null ? _b : parsedResult)) != null ? _c : {};
+};
+const getNotificoreAuthenticationId = (data) => {
+  var _a, _b, _c, _d, _e, _f;
+  return (_f = (_e = (_d = (_c = (_b = (_a = data.id) != null ? _a : data.authenticationId) != null ? _b : data.authentication_id) != null ? _c : data.authId) != null ? _d : data.auth_id) != null ? _e : data.uuid) != null ? _f : null;
+};
+const assertSuccessfulNotificoreOtpResponse = (data) => {
+  var _a;
+  const error = String((_a = data.error) != null ? _a : "").trim();
+  if (error && error !== "0") {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "Notificore request failed",
+      message: data.errorDescription || data.error_description || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u0434 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F"
+    });
+  }
+  if (!getNotificoreAuthenticationId(data)) {
+    console.error("[notificore/otp] Authentication id is missing in response:", data);
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "Notificore request failed",
+      message: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043A\u043E\u0434 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u044F"
+    });
+  }
+};
+const buildNotificoreOtpBody = ({ config, recipient, stringifyValues = false }) => {
+  const formatValue = (value) => stringifyValues ? String(value) : value;
+  return {
+    recipient,
+    channel: "sms",
+    sender: config.sender,
+    template_id: formatValue(config.otpTemplateId),
+    code_digits: formatValue(config.codeDigits),
+    code_lifetime: formatValue(config.codeLifetime),
+    code_max_tries: formatValue(config.codeMaxTries)
+  };
+};
+const sendNotificoreOneApiOtp = async ({ config, recipient }) => {
+  const bearer = await fetchNotificoreBearer({
+    apiKey: config.apiKey,
+    apiBaseUrl: config.oneApiBaseUrl,
+    timeout: config.authTimeout,
+    scope: "otp"
+  });
+  const url = `${config.oneApiBaseUrl}/api/2fa/authentications/otp`;
+  const body = buildNotificoreOtpBody({ config, recipient });
+  console.info("[notificore/otp/one-api] Request:", {
+    method: "POST",
+    url,
+    headers: {
+      Authorization: "Bearer <redacted>",
+      ContentType: "application/json"
+    },
+    body
+  });
+  try {
+    const response = await $fetch.raw(url, {
+      method: "POST",
+      timeout: config.otpTimeout,
+      headers: {
+        "Authorization": `Bearer ${bearer}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body
+    });
+    const headers = Object.fromEntries(response.headers.entries());
+    console.info("[notificore/otp/one-api] Response:", {
+      status: response.status,
+      statusText: response.statusText,
+      headers: {
+        contentType: headers["content-type"],
+        contentLength: headers["content-length"]
+      },
+      data: response._data
+    });
+    return response._data;
+  } catch (error) {
+    console.error("[notificore/otp/one-api] Response error:", {
+      status: (error == null ? void 0 : error.status) || (error == null ? void 0 : error.statusCode),
+      statusMessage: error == null ? void 0 : error.statusMessage,
+      data: error == null ? void 0 : error.data
+    });
+    throw error;
+  }
+};
+const sendNotificoreLegacyOtp = async ({ config, recipient }) => {
+  const url = `${config.apiBaseUrl}/api/2fa/authentications/otp`;
+  const body = buildNotificoreOtpBody({ config, recipient, stringifyValues: true });
+  console.info("[notificore/otp] Request:", {
+    method: "POST",
+    url,
+    headers: {
+      "X-API-KEY": config.apiKey,
+      "ContentType": "application/json"
+    },
+    body
+  });
+  try {
+    const response = await $fetch.raw(url, {
+      method: "POST",
+      timeout: config.otpTimeout,
+      headers: {
+        "X-API-KEY": config.apiKey,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body
+    });
+    const headers = Object.fromEntries(response.headers.entries());
+    console.info("[notificore/otp] Response:", {
+      status: response.status,
+      statusText: response.statusText,
+      headers: {
+        contentType: headers["content-type"],
+        contentLength: headers["content-length"]
+      },
+      data: response._data
+    });
+    return response._data;
+  } catch (error) {
+    console.error("[notificore/otp] Response error:", {
+      status: (error == null ? void 0 : error.status) || (error == null ? void 0 : error.statusCode),
+      statusMessage: error == null ? void 0 : error.statusMessage,
+      data: error == null ? void 0 : error.data
+    });
+    throw error;
+  }
+};
+const sendNotificoreOtp = async ({ phone }) => {
+  const config = getNotificoreConfig();
+  const recipient = String(phone != null ? phone : "").replace(/\D/g, "");
+  try {
+    return await sendNotificoreOneApiOtp({ config, recipient });
+  } catch (error) {
+    console.error("[notificore/otp] One API failed, falling back to legacy API:", {
+      status: (error == null ? void 0 : error.status) || (error == null ? void 0 : error.statusCode),
+      statusMessage: error == null ? void 0 : error.statusMessage,
+      data: error == null ? void 0 : error.data
+    });
+  }
+  return await sendNotificoreLegacyOtp({ config, recipient });
+};
+const verifyNotificoreOtp = async ({ authenticationId, code }) => {
+  const config = getNotificoreConfig();
+  try {
+    const bearer = await fetchNotificoreBearer({
+      apiKey: config.apiKey,
+      apiBaseUrl: config.oneApiBaseUrl,
+      timeout: config.authTimeout,
+      scope: "otp"
+    });
+    return await $fetch(
+      `${config.oneApiBaseUrl}/api/2fa/authentications/otp/${encodeURIComponent(authenticationId)}/verify`,
+      {
+        method: "POST",
+        timeout: config.verifyTimeout,
+        headers: {
+          Authorization: `Bearer ${bearer}`
+        },
+        body: {
+          access_code: code
+        }
+      }
+    );
+  } catch (error) {
+    console.error("[notificore/otp/one-api/verify] Response error, falling back to legacy API:", {
+      status: (error == null ? void 0 : error.status) || (error == null ? void 0 : error.statusCode),
+      statusMessage: error == null ? void 0 : error.statusMessage,
+      data: error == null ? void 0 : error.data
+    });
+  }
+  return await $fetch(
+    `${config.apiBaseUrl}/api/2fa/authentications/otp/${encodeURIComponent(authenticationId)}/verify`,
+    {
+      method: "POST",
+      timeout: config.verifyTimeout,
+      headers: {
+        "X-API-KEY": config.apiKey
+      },
+      body: {
+        access_code: code
+      }
+    }
+  );
+};
+const getNotificoreEmailConfig = () => {
+  var _a;
+  const config = useRuntimeConfig();
+  const notificore = (_a = config.notificore) != null ? _a : {};
+  const apiKey = getRuntimeString$1(notificore.emailApiKey) || readEnv$2("NOTIFICORE_EMAIL_API_KEY") || getRuntimeString$1(notificore.apiKey) || readEnv$2("NOTIFICORE_API_KEY");
+  const from = getRuntimeString$1(notificore.emailFrom) || readEnv$2("NOTIFICORE_EMAIL_FROM");
+  const emailTemplateId = getRuntimeString$1(notificore.confirmationEmailTemplateId) || readEnv$2("NOTIFICORE_CONFIRMATION_EMAIL_TEMPLATE_ID") || getRuntimeString$1(notificore.emailTemplateId) || readEnv$2("NOTIFICORE_EMAIL_TEMPLATE_ID");
+  const templateId = readNumber(emailTemplateId, Number.NaN);
+  const apiBaseUrl = getRuntimeString$1(notificore.emailApiBaseUrl) || readEnv$2("NOTIFICORE_EMAIL_API_BASE_URL") || DEFAULT_EMAIL_API_BASE_URL;
+  if (!apiKey || !from || !Number.isInteger(templateId)) {
+    throw createError$1({
+      statusCode: 500,
+      statusMessage: "Notificore email is not configured",
+      message: "Missing NOTIFICORE_EMAIL_API_KEY/NOTIFICORE_API_KEY, NOTIFICORE_EMAIL_FROM or integer NOTIFICORE_CONFIRMATION_EMAIL_TEMPLATE_ID"
+    });
+  }
+  return {
+    apiKey,
+    from,
+    templateId,
+    apiBaseUrl: normalizeOneApiBaseUrl(apiBaseUrl),
+    emailTimeout: readPositiveNumber(
+      notificore.emailTimeout || readEnv$2("NOTIFICORE_EMAIL_TIMEOUT_MS"),
+      DEFAULT_EMAIL_TIMEOUT_MS
+    )
+  };
+};
+const sendNotificoreEmail = async ({ to, subject, templateContent = {}, inlines = [] }) => {
+  const config = getNotificoreEmailConfig();
+  const bearer = await fetchNotificoreBearer({
+    apiKey: config.apiKey,
+    apiBaseUrl: config.apiBaseUrl,
+    timeout: config.emailTimeout,
+    scope: "email"
+  });
+  const recipients = Array.isArray(to) ? to : [to];
+  const payload = {
+    to: recipients,
+    from: config.from,
+    template_id: config.templateId,
+    subject,
+    template_content: templateContent
+  };
+  if (inlines.length) {
+    payload.inlines = inlines;
+  }
+  const url = `${config.apiBaseUrl}/api/email/send-template-emails`;
+  console.info("[notificore/email] Send request:", {
+    method: "POST",
+    url,
+    headers: {
+      Authorization: "Bearer <redacted>"
+    },
+    body: payload
+  });
+  let response;
+  try {
+    response = await $fetch.raw(url, {
+      method: "POST",
+      timeout: config.emailTimeout,
+      headers: {
+        Authorization: `Bearer ${bearer}`
+      },
+      body: payload
+    });
+  } catch (error) {
+    console.error("[notificore/email] Send failed:", {
+      status: (error == null ? void 0 : error.status) || (error == null ? void 0 : error.statusCode),
+      statusMessage: error == null ? void 0 : error.statusMessage,
+      data: error == null ? void 0 : error.data,
+      request: {
+        method: "POST",
+        url,
+        headers: {
+          Authorization: "Bearer <redacted>"
+        },
+        body: payload
+      }
+    });
+    throw error;
+  }
+  return {
+    status: response.status,
+    statusText: response.statusText,
+    data: response._data,
+    to: recipients,
+    from: config.from,
+    templateId: config.templateId
+  };
+};
+const isNotificoreTimeoutError = (error) => {
+  var _a, _b;
+  return (error == null ? void 0 : error.name) === "TimeoutError" || (error == null ? void 0 : error.code) === 23 || ((_a = error == null ? void 0 : error.cause) == null ? void 0 : _a.name) === "TimeoutError" || ((_b = error == null ? void 0 : error.cause) == null ? void 0 : _b.code) === 23;
+};
+
 var _a, _b;
 const runtimeConfig = useRuntimeConfig();
 const betterAuthUrl = ((_a = runtimeConfig.betterAuth) == null ? void 0 : _a.url) || "";
@@ -6177,7 +6681,20 @@ const auth = betterAuth({
   baseURL: betterAuthUrl || void 0,
   secret: betterAuthSecret || void 0,
   emailAndPassword: {
-    enabled: true
+    enabled: true,
+    sendResetPassword: async ({ user, url, token }) => {
+      const resetUrl = new URL("/profile", url);
+      resetUrl.searchParams.set("passwordReset", "1");
+      resetUrl.searchParams.set("token", token);
+      await sendNotificoreEmail({
+        to: [user.email],
+        subject: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0430\u0440\u043E\u043B\u044F \u0418\u043D\u0434\u0438\u0433\u043E",
+        templateContent: {
+          confirmationUrl: resetUrl.href,
+          profileUrl: resetUrl.href
+        }
+      });
+    }
   },
   plugins: [
     phoneNumber({
@@ -6188,6 +6705,9 @@ const auth = betterAuth({
     })
   ],
   user: {
+    deleteUser: {
+      enabled: true
+    },
     additionalFields: {
       phoneNumber: {
         type: "string",
@@ -6212,13 +6732,13 @@ const readEnv$1 = (name) => {
   var _a, _b;
   return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
 };
-const getRuntimeString$1 = (value) => typeof value === "string" ? value.trim() : "";
+const getRuntimeString = (value) => typeof value === "string" ? value.trim() : "";
 const getDadataConfig = () => {
   var _a;
   const config = useRuntimeConfig();
   const dadata = (_a = config.dadata) != null ? _a : {};
-  const apiKey = getRuntimeString$1(dadata.apiKey) || readEnv$1("DADATA_API_KEY");
-  const suggestUrl = getRuntimeString$1(dadata.suggestUrl) || readEnv$1("DADATA_SUGGEST_URL") || DEFAULT_SUGGEST_URL;
+  const apiKey = getRuntimeString(dadata.apiKey) || readEnv$1("DADATA_API_KEY");
+  const suggestUrl = getRuntimeString(dadata.suggestUrl) || readEnv$1("DADATA_SUGGEST_URL") || DEFAULT_SUGGEST_URL;
   if (!apiKey) {
     throw createError$1({
       statusCode: 500,
@@ -6268,119 +6788,62 @@ const suggestDadataParties = async ({ query, count = 5 }) => {
   return ((_a = response.suggestions) != null ? _a : []).map(mapPartySuggestion);
 };
 
-const DEFAULT_API_BASE_URL = "https://one-api.notificore.ru";
-const DEFAULT_AUTH_TIMEOUT_MS = 2e4;
-const DEFAULT_OTP_TIMEOUT_MS = 3e4;
-const DEFAULT_VERIFY_TIMEOUT_MS = 2e4;
-const readEnv = (name) => {
-  var _a, _b;
-  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
-};
-const readNumber = (value, fallback) => {
-  const numberValue = Number(value);
-  return Number.isFinite(numberValue) ? numberValue : fallback;
-};
-const readPositiveNumber = (value, fallback) => {
-  const numberValue = readNumber(value, fallback);
-  return numberValue > 0 ? numberValue : fallback;
-};
-const getRuntimeString = (value) => typeof value === "string" ? value.trim() : "";
-const getNotificoreConfig = () => {
-  var _a;
-  const config = useRuntimeConfig();
-  const notificore = (_a = config.notificore) != null ? _a : {};
-  const apiKey = getRuntimeString(notificore.apiKey) || readEnv("NOTIFICORE_API_KEY");
-  const sender = getRuntimeString(notificore.sender) || readEnv("NOTIFICORE_OTP_SENDER");
-  const otpTemplateId = getRuntimeString(notificore.otpTemplateId) || readEnv("NOTIFICORE_OTP_TEMPLATE_ID");
-  const templateId = readNumber(otpTemplateId, Number.NaN);
-  const apiBaseUrl = (getRuntimeString(notificore.apiBaseUrl) || readEnv("NOTIFICORE_API_BASE_URL") || DEFAULT_API_BASE_URL).replace(/\/$/, "");
-  if (!apiKey || !sender || !Number.isInteger(templateId)) {
-    throw createError$1({
-      statusCode: 500,
-      statusMessage: "Notificore is not configured",
-      message: "Missing NOTIFICORE_API_KEY, NOTIFICORE_OTP_SENDER or integer NOTIFICORE_OTP_TEMPLATE_ID"
-    });
-  }
-  return {
-    apiKey,
-    apiBaseUrl,
-    sender,
-    otpTemplateId: templateId,
-    codeDigits: readNumber(notificore.codeDigits || readEnv("NOTIFICORE_OTP_CODE_DIGITS"), 5),
-    codeLifetime: readNumber(notificore.codeLifetime || readEnv("NOTIFICORE_OTP_CODE_LIFETIME"), 300),
-    codeMaxTries: readNumber(notificore.codeMaxTries || readEnv("NOTIFICORE_OTP_CODE_MAX_TRIES"), 3),
-    authTimeout: readPositiveNumber(
-      notificore.authTimeout || readEnv("NOTIFICORE_AUTH_TIMEOUT_MS"),
-      DEFAULT_AUTH_TIMEOUT_MS
-    ),
-    otpTimeout: readPositiveNumber(
-      notificore.otpTimeout || readEnv("NOTIFICORE_OTP_TIMEOUT_MS"),
-      DEFAULT_OTP_TIMEOUT_MS
-    ),
-    verifyTimeout: readPositiveNumber(
-      notificore.verifyTimeout || readEnv("NOTIFICORE_VERIFY_TIMEOUT_MS"),
-      DEFAULT_VERIFY_TIMEOUT_MS
-    )
+const PAYMENT_PROVIDER = "vtb_sbp";
+function toJson(value) {
+  return JSON.stringify(value != null ? value : null);
+}
+function normalizePaymentStatus(status) {
+  return ["pending", "paid", "failed", "expired", "cancelled"].includes(status) ? status : "pending";
+}
+async function getOrderPayment(database, paymentId) {
+  return database.selectFrom("order_payments").selectAll().where("id", "=", paymentId).executeTakeFirst();
+}
+async function updateOrderPaymentStatus(database, paymentId, status, patch = {}) {
+  const normalizedStatus = normalizePaymentStatus(status);
+  const now = /* @__PURE__ */ new Date();
+  const update = {
+    ...patch,
+    status: normalizedStatus,
+    last_checked_at: now,
+    updated_at: now
   };
-};
-const fetchNotificoreBearer = async (config) => {
-  const response = await $fetch(`${config.apiBaseUrl}/api/auth/login`, {
-    method: "POST",
-    timeout: config.authTimeout,
-    body: {
-      api_key: config.apiKey
-    }
-  });
-  if (!response.bearer) {
-    throw createError$1({
-      statusCode: 502,
-      statusMessage: "Notificore auth failed",
-      message: "Notificore did not return bearer token"
-    });
+  if (normalizedStatus === "paid" && !patch.paid_at) {
+    update.paid_at = now;
   }
-  return response.bearer;
-};
-const sendNotificoreOtp = async ({ phone }) => {
-  const config = getNotificoreConfig();
-  const bearer = await fetchNotificoreBearer(config);
-  return await $fetch(`${config.apiBaseUrl}/api/2fa/authentications/otp`, {
-    method: "POST",
-    timeout: config.otpTimeout,
-    headers: {
-      Authorization: `Bearer ${bearer}`
-    },
-    body: {
-      recipient: phone,
-      channel: "sms",
-      sender: config.sender,
-      template_id: config.otpTemplateId,
-      code_digits: config.codeDigits,
-      code_lifetime: config.codeLifetime,
-      code_max_tries: config.codeMaxTries
-    }
-  });
-};
-const verifyNotificoreOtp = async ({ authenticationId, code }) => {
-  const config = getNotificoreConfig();
-  const bearer = await fetchNotificoreBearer(config);
-  return await $fetch(
-    `${config.apiBaseUrl}/api/2fa/authentications/otp/${encodeURIComponent(authenticationId)}/verify`,
-    {
-      method: "POST",
-      timeout: config.verifyTimeout,
-      headers: {
-        Authorization: `Bearer ${bearer}`
-      },
-      body: {
-        access_code: code
-      }
-    }
-  );
-};
-const isNotificoreTimeoutError = (error) => {
-  var _a, _b;
-  return (error == null ? void 0 : error.name) === "TimeoutError" || (error == null ? void 0 : error.code) === 23 || ((_a = error == null ? void 0 : error.cause) == null ? void 0 : _a.name) === "TimeoutError" || ((_b = error == null ? void 0 : error.cause) == null ? void 0 : _b.code) === 23;
-};
+  await database.updateTable("order_payments").set(update).where("id", "=", paymentId).execute();
+}
+async function saveVtbRegistration(database, paymentId, response) {
+  var _a;
+  await database.updateTable("order_payments").set({
+    vtb_md_order: response.orderId,
+    vtb_form_url: (_a = response.formUrl) != null ? _a : null,
+    vtb_register_response: toJson(response),
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", paymentId).execute();
+}
+async function saveVtbQr(database, paymentId, response, expiresAt) {
+  var _a, _b, _c, _d;
+  await database.updateTable("order_payments").set({
+    vtb_qr_id: response.qrId,
+    vtb_qr_payload: (_a = response.payload) != null ? _a : null,
+    vtb_qr_image: (_b = response.renderedQr) != null ? _b : null,
+    vtb_qr_status: (_d = (_c = response.qrStatus) != null ? _c : response.status) != null ? _d : null,
+    vtb_qr_response: toJson(response),
+    expires_at: expiresAt,
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", paymentId).execute();
+}
+async function createPendingOrderPayment(database, { orderId, orderNumber, amount }) {
+  const result = await database.insertInto("order_payments").values({
+    order_id: orderId,
+    provider: PAYMENT_PROVIDER,
+    status: "pending",
+    amount,
+    currency: "RUB",
+    order_number: orderNumber
+  }).executeTakeFirst();
+  return Number(result.insertId);
+}
 
 const ACTIVE_STATUS = "active";
 const SUPPORTED_RULE_TYPES = /* @__PURE__ */ new Set([
@@ -6782,6 +7245,177 @@ function assertRateLimit(key, windowMs = 6e4) {
   attempts.set(key, now);
 }
 
+const DEFAULT_BASE_URL = "https://vtb.rbsuat.com/payment/rest/";
+const DEFAULT_QR_TTL_SECONDS = 900;
+const PAID_QR_STATUSES = /* @__PURE__ */ new Set(["ACCEPTED", "ACWP"]);
+const FAILED_QR_STATUSES = /* @__PURE__ */ new Set(["REJECTED", "RJCT", "REJECTED_BY_USER"]);
+const readEnv = (name) => {
+  var _a, _b;
+  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
+};
+function readConfigValue(config, key, envName) {
+  var _a;
+  return readEnv(envName) || ((_a = config.vtbPayment) == null ? void 0 : _a[key]) || "";
+}
+function getVtbPaymentConfig() {
+  const config = useRuntimeConfig();
+  const baseUrl = readConfigValue(config, "baseUrl", "VTB_PAYMENT_BASE_URL") || DEFAULT_BASE_URL;
+  const qrTtlSeconds = Number(readConfigValue(config, "qrTtlSeconds", "VTB_PAYMENT_QR_TTL_SECONDS"));
+  return {
+    baseUrl: baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`,
+    token: readConfigValue(config, "token", "VTB_PAYMENT_TOKEN"),
+    userName: readConfigValue(config, "userName", "VTB_PAYMENT_USERNAME"),
+    password: readConfigValue(config, "password", "VTB_PAYMENT_PASSWORD"),
+    returnUrl: readConfigValue(config, "returnUrl", "VTB_PAYMENT_RETURN_URL"),
+    failUrl: readConfigValue(config, "failUrl", "VTB_PAYMENT_FAIL_URL"),
+    callbackUrl: readConfigValue(config, "callbackUrl", "VTB_PAYMENT_CALLBACK_URL"),
+    qrTtlSeconds: Number.isFinite(qrTtlSeconds) && qrTtlSeconds > 0 ? qrTtlSeconds : DEFAULT_QR_TTL_SECONDS
+  };
+}
+function getAuthParams(config) {
+  if (config.token) {
+    return { token: config.token };
+  }
+  return getPasswordAuthParams(config);
+}
+function getPasswordAuthParams(config) {
+  if (config.userName && config.password) {
+    return {
+      userName: config.userName,
+      password: config.password
+    };
+  }
+  throw createError$1({
+    statusCode: 500,
+    statusMessage: "VTB payment is not configured",
+    message: "\u041D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u044B \u0440\u0435\u043A\u0432\u0438\u0437\u0438\u0442\u044B \u0412\u0422\u0411 \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B"
+  });
+}
+function assertReturnUrls(config) {
+  if (!config.returnUrl) {
+    throw createError$1({
+      statusCode: 500,
+      statusMessage: "VTB return URL is not configured",
+      message: "\u041D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D VTB_PAYMENT_RETURN_URL"
+    });
+  }
+}
+async function requestVtb(method, params, options = {}) {
+  const config = getVtbPaymentConfig();
+  const body = new URLSearchParams();
+  const authParams = options.requirePasswordAuth ? getPasswordAuthParams(config) : getAuthParams(config);
+  for (const [key, value] of Object.entries({ ...authParams, ...params })) {
+    if (value !== void 0 && value !== null && value !== "") {
+      body.append(key, String(value));
+    }
+  }
+  const response = await fetch(`${config.baseUrl}${method}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+  const text = await response.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = { raw: text };
+  }
+  if (!response.ok) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB request failed",
+      message: `\u0412\u0422\u0411 \u0432\u0435\u0440\u043D\u0443\u043B HTTP ${response.status}`,
+      data
+    });
+  }
+  return data;
+}
+function assertVtbSuccess(data, fallbackMessage) {
+  const hasErrorCode = (data == null ? void 0 : data.errorCode) !== void 0 && (data == null ? void 0 : data.errorCode) !== null;
+  const isError = (data == null ? void 0 : data.success) === false || hasErrorCode && String(data.errorCode) !== "0";
+  if (isError) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB payment failed",
+      message: (data == null ? void 0 : data.errorMessage) || fallbackMessage,
+      data
+    });
+  }
+}
+function getPaymentStatusFromVtbQr(qrStatus, transactionState) {
+  const normalizedQrStatus = String(qrStatus || "").toUpperCase();
+  const normalizedTransactionState = String(transactionState || "").toUpperCase();
+  if (PAID_QR_STATUSES.has(normalizedQrStatus) || normalizedTransactionState === "DEPOSITED") {
+    return "paid";
+  }
+  if (FAILED_QR_STATUSES.has(normalizedQrStatus)) {
+    return "failed";
+  }
+  return "pending";
+}
+function getVtbQrExpiresAt() {
+  const config = getVtbPaymentConfig();
+  return new Date(Date.now() + config.qrTtlSeconds * 1e3);
+}
+async function registerVtbOrder({ orderNumber, amountMinor, description, ip }) {
+  const config = getVtbPaymentConfig();
+  assertReturnUrls(config);
+  const data = await requestVtb("register.do", {
+    orderNumber,
+    amount: amountMinor,
+    currency: "643",
+    returnUrl: config.returnUrl,
+    failUrl: config.failUrl,
+    dynamicCallbackUrl: config.callbackUrl,
+    description,
+    language: "ru",
+    ip
+  });
+  assertVtbSuccess(data, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0437\u0430\u043A\u0430\u0437 \u0432 \u0412\u0422\u0411");
+  if (!data.orderId) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB order id is missing",
+      message: "\u0412\u0422\u0411 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440 \u0437\u0430\u043A\u0430\u0437\u0430",
+      data
+    });
+  }
+  return data;
+}
+async function getVtbDynamicQr(mdOrder) {
+  const data = await requestVtb("sbp/c2b/qr/dynamic/get.do", {
+    mdOrder,
+    qrHeight: 512,
+    qrWidth: 512,
+    qrFormat: "image"
+  }, {
+    requirePasswordAuth: true
+  });
+  assertVtbSuccess(data, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C QR-\u043A\u043E\u0434 \u0421\u0411\u041F");
+  if (!data.qrId || !data.renderedQr && !data.payload) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB QR payload is missing",
+      message: "\u0412\u0422\u0411 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B \u0434\u0430\u043D\u043D\u044B\u0435 QR-\u043A\u043E\u0434\u0430",
+      data
+    });
+  }
+  return data;
+}
+async function getVtbDynamicQrStatus({ mdOrder, qrId }) {
+  const data = await requestVtb("sbp/c2b/qr/status.do", {
+    mdOrder,
+    qrId
+  }, {
+    requirePasswordAuth: true
+  });
+  assertVtbSuccess(data, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0441\u0442\u0430\u0442\u0443\u0441 QR-\u043A\u043E\u0434\u0430 \u0421\u0411\u041F");
+  return data;
+}
+
 const collections = {
   'lucide': () => import('../_/icons.mjs').then(m => m.default),
   'simple-icons': () => import('../_/icons2.mjs').then(m => m.default),
@@ -6840,16 +7474,24 @@ const _nTbyxj = defineCachedEventHandler(async (event) => {
 
 const _lazy_tcfQPD = () => import('../routes/api/auth-identifier.post.mjs');
 const _lazy_7dwPcY = () => import('../routes/api/auth/_...all_.mjs');
+const _lazy_x8S6Z5 = () => import('../routes/api/auth/password-recovery/request-code.post.mjs');
 const _lazy_iM6PMI = () => import('../routes/api/auth/request-code.post.mjs');
 const _lazy_7yraPe = () => import('../routes/api/auth/verify-code.post.mjs');
 const _lazy_LBdnb_ = () => import('../routes/api/dadata/party-suggest.post.mjs');
 const _lazy_v0T1U7 = () => import('../routes/api/organizations.post.mjs');
 const _lazy_hYnqLN = () => import('../routes/api/organizations/_organizationId_.delete.mjs');
 const _lazy_u6U_ey = () => import('../routes/api/organizations/_organizationId/active.patch.mjs');
+const _lazy__RsLdI = () => import('../routes/api/payments/_paymentId/status.get.mjs');
+const _lazy_mZH6FC = () => import('../routes/api/payments/vtb-sbp/callback.get.mjs');
+const _lazy_LNpv6e = () => import('../routes/api/payments/vtb-sbp/start.post.mjs');
 const _lazy_nUlvZH = () => import('../routes/api/products/_slug_.get.mjs');
 const _lazy_grurLT = () => import('../routes/api/products/_slug/calculate.post.mjs');
 const _lazy_vBnjRi = () => import('../routes/api/index.get.mjs');
 const _lazy_9g1lXD = () => import('../routes/api/profile.get.mjs');
+const _lazy_wG8ueg = () => import('../routes/api/profile.patch.mjs');
+const _lazy_58UI9t = () => import('../routes/api/profile/email.patch.mjs');
+const _lazy_SuV5P9 = () => import('../routes/api/profile/email/confirm.get.mjs');
+const _lazy_5QpC0U = () => import('../routes/api/profile/email/confirmation.post.mjs');
 const _lazy_GaJmRW = () => import('../routes/api/profile/phone.patch.mjs');
 const _lazy_cPKJ1M = () => import('../routes/api/profile/phone/request-code.post.mjs');
 const _lazy_w7b8m7 = () => import('../routes/api/profile/recipients.post.mjs');
@@ -6861,16 +7503,24 @@ const handlers = [
   { route: '', handler: _bqhKCW, lazy: false, middleware: true, method: undefined },
   { route: '/api/auth-identifier', handler: _lazy_tcfQPD, lazy: true, middleware: false, method: "post" },
   { route: '/api/auth/**:all', handler: _lazy_7dwPcY, lazy: true, middleware: false, method: undefined },
+  { route: '/api/auth/password-recovery/request-code', handler: _lazy_x8S6Z5, lazy: true, middleware: false, method: "post" },
   { route: '/api/auth/request-code', handler: _lazy_iM6PMI, lazy: true, middleware: false, method: "post" },
   { route: '/api/auth/verify-code', handler: _lazy_7yraPe, lazy: true, middleware: false, method: "post" },
   { route: '/api/dadata/party-suggest', handler: _lazy_LBdnb_, lazy: true, middleware: false, method: "post" },
   { route: '/api/organizations', handler: _lazy_v0T1U7, lazy: true, middleware: false, method: "post" },
   { route: '/api/organizations/:organizationId', handler: _lazy_hYnqLN, lazy: true, middleware: false, method: "delete" },
   { route: '/api/organizations/:organizationId/active', handler: _lazy_u6U_ey, lazy: true, middleware: false, method: "patch" },
+  { route: '/api/payments/:paymentId/status', handler: _lazy__RsLdI, lazy: true, middleware: false, method: "get" },
+  { route: '/api/payments/vtb-sbp/callback', handler: _lazy_mZH6FC, lazy: true, middleware: false, method: "get" },
+  { route: '/api/payments/vtb-sbp/start', handler: _lazy_LNpv6e, lazy: true, middleware: false, method: "post" },
   { route: '/api/products/:slug', handler: _lazy_nUlvZH, lazy: true, middleware: false, method: "get" },
   { route: '/api/products/:slug/calculate', handler: _lazy_grurLT, lazy: true, middleware: false, method: "post" },
   { route: '/api/products', handler: _lazy_vBnjRi, lazy: true, middleware: false, method: "get" },
   { route: '/api/profile', handler: _lazy_9g1lXD, lazy: true, middleware: false, method: "get" },
+  { route: '/api/profile', handler: _lazy_wG8ueg, lazy: true, middleware: false, method: "patch" },
+  { route: '/api/profile/email', handler: _lazy_58UI9t, lazy: true, middleware: false, method: "patch" },
+  { route: '/api/profile/email/confirm', handler: _lazy_SuV5P9, lazy: true, middleware: false, method: "get" },
+  { route: '/api/profile/email/confirmation', handler: _lazy_5QpC0U, lazy: true, middleware: false, method: "post" },
   { route: '/api/profile/phone', handler: _lazy_GaJmRW, lazy: true, middleware: false, method: "patch" },
   { route: '/api/profile/phone/request-code', handler: _lazy_cPKJ1M, lazy: true, middleware: false, method: "post" },
   { route: '/api/profile/recipients', handler: _lazy_w7b8m7, lazy: true, middleware: false, method: "post" },
@@ -7295,5 +7945,5 @@ trapUnhandledNodeErrors();
 setupGracefulShutdown(listener, nitroApp);
 const nodeServer = {};
 
-export { $fetch$1 as $, getResponseStatusText as A, getResponseStatus as B, defineRenderHandler as C, publicAssetsURL as D, destr as E, getRouteRules as F, joinURL as G, useNitroApp as H, serialize$1 as I, defu as J, hasProtocol as K, isScriptProtocol as L, parseQuery as M, klona as N, withQuery as O, sanitizeStatusCode as P, parseURL as Q, encodePath as R, decodePath as S, defuFn as T, isEqual as U, getContext as V, withTrailingSlash as W, withoutTrailingSlash as X, baseURL as Y, createHooks as Z, isPhoneLike as _, auth as a, getIdentifierError as a0, getRegistrationEmailError as a1, formatCompactPhone as a2, formatPhone as a3, unmaskPhoneToEmail as a4, executeAsync as a5, hash$1 as a6, nodeServer as a7, normalizePhoneDigits as b, createError$1 as c, defineEventHandler as d, assertRateLimit as e, sendNotificoreOtp as f, setResponseStatus as g, suggestDadataParties as h, isNotificoreTimeoutError as i, getRequestHeaders as j, getRouterParam as k, getProductBySlug as l, calculateProductPrice as m, normalizeAuthIdentifier as n, getQuery as o, getProducts as p, formatAuthPhone as q, readBody as r, sendWebResponse as s, toWebRequest as t, useDatabase as u, verifyNotificoreOtp as v, isAuthPhone as w, defineCachedFunction as x, buildAssetsURL as y, useRuntimeConfig as z };
+export { hasProtocol as $, createPendingOrderPayment as A, registerVtbOrder as B, getRequestIP as C, saveVtbRegistration as D, getVtbDynamicQr as E, getVtbQrExpiresAt as F, saveVtbQr as G, getProductBySlug as H, calculateProductPrice as I, getProducts as J, getRegistrationEmailError as K, sendRedirect as L, getRequestURL as M, sendNotificoreEmail as N, isAuthPhone as O, defineCachedFunction as P, buildAssetsURL as Q, useRuntimeConfig as R, getResponseStatusText as S, getResponseStatus as T, defineRenderHandler as U, publicAssetsURL as V, destr as W, getRouteRules as X, joinURL as Y, useNitroApp as Z, serialize$1 as _, auth as a, isScriptProtocol as a0, parseQuery as a1, klona as a2, defu as a3, withQuery as a4, sanitizeStatusCode as a5, parseURL as a6, encodePath as a7, decodePath as a8, defuFn as a9, getContext as aa, isEqual as ab, withTrailingSlash as ac, withoutTrailingSlash as ad, $fetch$1 as ae, baseURL as af, hash$1 as ag, isPhoneLike as ah, getIdentifierError as ai, getRussianSecondsWord as aj, formatCompactPhone as ak, formatPhone as al, unmaskPhoneToEmail as am, executeAsync as an, nodeServer as ao, normalizePhoneDigits as b, createError$1 as c, defineEventHandler as d, assertRateLimit as e, formatAuthPhone as f, sendNotificoreOtp as g, getNotificoreAuthenticationPayload as h, assertSuccessfulNotificoreOtpResponse as i, setResponseStatus as j, getNotificoreAuthenticationId as k, isNotificoreTimeoutError as l, suggestDadataParties as m, normalizeAuthIdentifier as n, getRequestHeaders as o, getRouterParam as p, getOrderPayment as q, readBody as r, sendWebResponse as s, toWebRequest as t, useDatabase as u, verifyNotificoreOtp as v, updateOrderPaymentStatus as w, getVtbDynamicQrStatus as x, getPaymentStatusFromVtbQr as y, getQuery as z };
 //# sourceMappingURL=nitro.mjs.map

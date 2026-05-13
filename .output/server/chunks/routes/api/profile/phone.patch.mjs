@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, j as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, q as formatAuthPhone, v as verifyNotificoreOtp, i as isNotificoreTimeoutError, u as useDatabase } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, o as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, f as formatAuthPhone, v as verifyNotificoreOtp, l as isNotificoreTimeoutError, u as useDatabase } from '../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -117,7 +117,8 @@ const phone_patch = defineEventHandler(async (event) => {
     "email",
     "emailVerified",
     "phoneNumber",
-    "phoneNumberVerified"
+    "phoneNumberVerified",
+    "additionalContact"
   ]).where("id", "=", session.user.id).executeTakeFirst();
   return {
     user: user != null ? user : null

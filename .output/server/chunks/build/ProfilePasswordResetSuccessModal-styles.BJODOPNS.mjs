@@ -1,0 +1,8 @@
+const ProfilePasswordResetSuccessModal_vue_vue_type_style_index_0_scoped_ddcc7a47_lang = ".password-reset-success-modal[data-v-ddcc7a47]{align-items:flex-start;background:#fff;border-radius:2rem;box-shadow:0 .5rem 1.5rem #0000001f;display:flex;flex-direction:column;gap:2rem;overflow:hidden;padding:2rem 1.5rem;position:relative;width:min(100dvw - 2rem,23.8125rem)}.password-reset-success-modal__close[data-v-ddcc7a47]{align-items:center;background:transparent;border:0;border-radius:.75rem;color:#04121ba3;cursor:pointer;display:flex;height:1.5rem;justify-content:center;padding:.25rem;position:absolute;right:1rem;top:1rem;transition:background-color .15s,color .15s;width:1.5rem}.password-reset-success-modal__close[data-v-ddcc7a47]:hover{background:#04121b0a;color:#04121b}.password-reset-success-modal__close-icon[data-v-ddcc7a47]{display:block;height:1rem;width:1rem}.password-reset-success-modal__content[data-v-ddcc7a47]{display:flex;flex-direction:column;gap:.75rem;padding-right:1.5rem;width:100%}.password-reset-success-modal__icon[data-v-ddcc7a47]{background:#04121b3d;border-radius:.75rem;height:2.5rem;width:2.5rem}.password-reset-success-modal__text-block[data-v-ddcc7a47]{color:#04121b;display:flex;flex-direction:column;gap:.5rem}.password-reset-success-modal__title[data-v-ddcc7a47]{font-size:1.5rem;font-weight:700;line-height:2.25rem;margin:0}.password-reset-success-modal__text[data-v-ddcc7a47]{font-size:1rem;font-weight:600;line-height:1.43;margin:0}";
+
+const ProfilePasswordResetSuccessModalStyles_BJODOPNS = [
+  ProfilePasswordResetSuccessModal_vue_vue_type_style_index_0_scoped_ddcc7a47_lang
+];
+
+export { ProfilePasswordResetSuccessModalStyles_BJODOPNS as default };
+//# sourceMappingURL=ProfilePasswordResetSuccessModal-styles.BJODOPNS.mjs.map

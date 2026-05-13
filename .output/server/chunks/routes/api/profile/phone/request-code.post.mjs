@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, j as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, e as assertRateLimit, f as sendNotificoreOtp, g as setResponseStatus, i as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, o as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, e as assertRateLimit, g as sendNotificoreOtp, h as getNotificoreAuthenticationPayload, i as assertSuccessfulNotificoreOtpResponse, j as setResponseStatus, k as getNotificoreAuthenticationId, l as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -16,7 +16,7 @@ import 'consola';
 
 const isHttpError = (error) => typeof error === "object" && error !== null && "statusCode" in error;
 const requestCode_post = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d, _e, _f;
+  var _a, _b, _c, _d;
   const session = await auth.api.getSession({
     headers: getRequestHeaders(event)
   });
@@ -39,13 +39,14 @@ const requestCode_post = defineEventHandler(async (event) => {
   assertRateLimit(`profile-phone-otp:${session.user.id}:${phone}`, 6e4);
   try {
     const result = await sendNotificoreOtp({ phone });
-    const data = (_b = result.data) != null ? _b : {};
+    const data = getNotificoreAuthenticationPayload(result);
+    assertSuccessfulNotificoreOtpResponse(data);
     setResponseStatus(event, 201);
     return {
-      authenticationId: (_c = data.id) != null ? _c : null,
-      status: (_d = data.status) != null ? _d : "pending",
-      recipient: (_e = data.recipient) != null ? _e : phone,
-      expiredAt: (_f = data.expired_at) != null ? _f : null
+      authenticationId: getNotificoreAuthenticationId(data),
+      status: (_b = data.status) != null ? _b : "pending",
+      recipient: (_c = data.recipient) != null ? _c : phone,
+      expiredAt: (_d = data.expired_at) != null ? _d : null
     };
   } catch (error) {
     console.error("[profile/phone/request-code] Notificore error:", error);

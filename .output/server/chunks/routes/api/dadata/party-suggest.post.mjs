@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, h as suggestDadataParties, c as createError } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, m as suggestDadataParties, c as createError } from '../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

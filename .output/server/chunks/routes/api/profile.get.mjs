@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, j as getRequestHeaders, c as createError, u as useDatabase } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, o as getRequestHeaders, c as createError, u as useDatabase } from '../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -35,7 +35,8 @@ const profile_get = defineEventHandler(async (event) => {
       "email",
       "emailVerified",
       "phoneNumber",
-      "phoneNumberVerified"
+      "phoneNumberVerified",
+      "additionalContact"
     ]).where("id", "=", userId).executeTakeFirst(),
     database.selectFrom("userOrganization").select([
       "id",

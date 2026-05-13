@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, b as normalizePhoneDigits, c as createError, e as assertRateLimit, f as sendNotificoreOtp, g as setResponseStatus, i as isNotificoreTimeoutError } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, b as normalizePhoneDigits, c as createError, e as assertRateLimit, g as sendNotificoreOtp, h as getNotificoreAuthenticationPayload, i as assertSuccessfulNotificoreOtpResponse, j as setResponseStatus, k as getNotificoreAuthenticationId, l as isNotificoreTimeoutError } from '../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -16,7 +16,7 @@ import 'consola';
 
 const isHttpError = (error) => typeof error === "object" && error !== null && "statusCode" in error;
 const requestCode_post = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d, _e;
+  var _a, _b, _c;
   const body = await readBody(event);
   const phone = normalizePhoneDigits(body.phone);
   if (phone.length !== 11) {
@@ -36,13 +36,14 @@ const requestCode_post = defineEventHandler(async (event) => {
   assertRateLimit(`otp:${phone}`, 6e4);
   try {
     const result = await sendNotificoreOtp({ phone });
-    const data = (_a = result.data) != null ? _a : {};
+    const data = getNotificoreAuthenticationPayload(result);
+    assertSuccessfulNotificoreOtpResponse(data);
     setResponseStatus(event, 201);
     return {
-      authenticationId: (_b = data.id) != null ? _b : null,
-      status: (_c = data.status) != null ? _c : "pending",
-      recipient: (_d = data.recipient) != null ? _d : phone,
-      expiredAt: (_e = data.expired_at) != null ? _e : null
+      authenticationId: getNotificoreAuthenticationId(data),
+      status: (_a = data.status) != null ? _a : "pending",
+      recipient: (_b = data.recipient) != null ? _b : phone,
+      expiredAt: (_c = data.expired_at) != null ? _c : null
     };
   } catch (error) {
     console.error("[request-code] Notificore error:", error);
