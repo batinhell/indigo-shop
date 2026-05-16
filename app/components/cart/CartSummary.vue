@@ -1,26 +1,51 @@
 <script setup>
+import helpMailIcon from '~/assets/icons/cart-help-mail.svg'
+import helpPhoneIcon from '~/assets/icons/cart-help-phone.svg'
 import { formatPriceRaw } from '~/utils/format'
-
-defineProps({
-  totalItems: { type: Number, default: 0 },
-  totalPrice: { type: Number, default: 0 },
-  payDisabled: { type: Boolean, default: false }
-})
 
 const emit = defineEmits(['pay'])
 
-const promoCode = ref('')
+const props = defineProps({
+  totalItems: { type: Number, default: 0 },
+  totalPrice: { type: Number, default: 0 },
+  payDisabled: { type: Boolean, default: false },
+  payAsLegal: { type: Boolean, default: false }
+})
+
+const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по счету' : 'Оплатить по СБП')
 </script>
 
 <template>
   <div class="sidebar-sticky">
     <!-- Summary Card -->
-    <div class="summary-card">
-      <p class="section-title">Товары</p>
+    <div
+      v-if="totalItems === 0"
+      class="summary-card summary-card--empty"
+    >
+      <p class="section-title">
+        Пусто
+      </p>
+
+      <button
+        class="pay-btn pay-btn--empty"
+        type="button"
+        disabled
+      >
+        Оплатить заказ
+      </button>
+    </div>
+
+    <div
+      v-else
+      class="summary-card"
+    >
+      <p class="section-title">
+        Товары
+      </p>
 
       <div class="summary-rows">
         <div class="summary-row">
-          <span class="summary-row__label">Тиражи ({{ totalItems }} шт)</span>
+          <span class="summary-row__label">Товары ({{ totalItems }})</span>
           <span class="summary-row__value">{{ formatPriceRaw(totalPrice) }} &#8381;</span>
         </div>
         <div class="summary-row">
@@ -36,48 +61,70 @@ const promoCode = ref('')
         <span class="summary-total__value">{{ formatPriceRaw(totalPrice) }} &#8381;</span>
       </div>
 
-      <!-- Promo Code -->
-      <div class="promo-section">
-        <div class="promo-row">
-          <AppInput v-model="promoCode" placeholder="Введите промокод" />
-          <button class="promo-btn">Применить</button>
-        </div>
-      </div>
-
-      <!-- Pay Button -->
-      <button class="pay-btn" :disabled="payDisabled" @click="emit('pay')">
-        Оплатить заказ
+      <button
+        class="pay-btn"
+        :disabled="payDisabled"
+        @click="emit('pay')"
+      >
+        {{ payButtonLabel }}
       </button>
 
-      <!-- Trust Badges -->
-      <div class="trust-badges">
-        <div class="trust-badge">
-          <svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" /></svg>
-          <span class="trust-badge__text">Безопасная оплата</span>
-        </div>
-        <div class="trust-badge">
-          <svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" /></svg>
-          <span class="trust-badge__text">Оплата СБП или по счёту</span>
-        </div>
-        <div class="trust-badge">
-          <svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" /></svg>
-          <span class="trust-badge__text">Самовывоз из Донецка</span>
-        </div>
-      </div>
+      <p class="summary-consent">
+        Нажимая на кнопку, вы соглашаетесь
+        <NuxtLink
+          to="/privacy-policy"
+          class="summary-consent__link"
+        >
+          с Условиями обработки персональных данных,
+        </NuxtLink>
+        а также
+        <NuxtLink
+          to="/user-agreement"
+          class="summary-consent__link"
+        >
+          с Пользовательским соглашением
+        </NuxtLink>
+      </p>
     </div>
 
     <!-- Help Card -->
     <div class="help-card">
       <div class="help-card__info">
-        <div class="help-card__avatar" />
         <div class="help-card__text">
-          <p class="help-card__title">Нужна помощь?</p>
-          <p class="help-card__subtitle">Позвоните в поддержку.</p>
+          <p class="help-card__title">
+            Нужна помощь с заказом?
+          </p>
+          <p class="help-card__subtitle">
+            Напишите нам на почту или позвоните администратору
+          </p>
         </div>
       </div>
-      <a href="tel:+78001234567" class="help-card__call-btn" aria-label="Позвонить в поддержку">
-        <svg class="help-card__call-icon" viewBox="0 0 23 9" fill="none"><path d="M18.187 0H19.5458C19.9537 0 20.1577 0 20.3219 0.0181341C21.8931 0.191675 23.06 1.55458 22.9896 3.13374C22.9822 3.29873 22.9508 3.50026 22.888 3.90328L22.888 3.90341C22.8643 4.0556 22.9236 3.67511 22.8733 3.89107C22.5263 5.3836 20.4307 7.7069 18.9818 8.20556C18.7721 8.27771 19.9455 7.96861 19.4761 8.09225C17.7018 8.55968 15.0794 9 11.4963 9C7.91323 9 5.29085 8.55968 3.51648 8.09225C3.04715 7.96861 4.22048 8.27771 4.01084 8.20556C2.56189 7.7069 0.466323 5.3836 0.119262 3.89107C0.069047 3.67512 0.128344 4.0556 0.104625 3.90341C0.0418033 3.5003 0.0103925 3.29875 0.00302911 3.13374C-0.0674374 1.55458 1.09952 0.191675 2.67069 0.0181341C2.83487 0 3.03886 0 3.44683 0H4.80565C6.05418 0 7.15861 0.809421 7.53458 2C7.91055 3.19058 9.01498 4 10.2635 4H12.7291C13.9776 4 15.0821 3.19058 15.458 2C15.834 0.809421 16.9384 0 18.187 0Z" fill="currentColor" /></svg>
-      </a>
+      <div class="help-card__actions">
+        <a
+          href="mailto:info@indigo-mail.ru"
+          class="help-card__action help-card__action--mail"
+          aria-label="Написать на почту"
+        >
+          <img
+            :src="helpMailIcon"
+            class="help-card__icon"
+            alt=""
+            aria-hidden="true"
+          >
+        </a>
+        <a
+          href="tel:+79491314544"
+          class="help-card__action help-card__action--phone"
+          aria-label="Позвонить администратору"
+        >
+          <img
+            :src="helpPhoneIcon"
+            class="help-card__icon"
+            alt=""
+            aria-hidden="true"
+          >
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -101,11 +148,15 @@ const promoCode = ref('')
 
 .summary-card {
   background: white;
-  border-radius: $radius-main;
-  padding: 3rem 1.5rem 2rem;
+  border-radius: 2rem;
+  padding: 2rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
+
+  &--empty {
+    justify-content: center;
+  }
 }
 
 .summary-rows {
@@ -190,7 +241,7 @@ const promoCode = ref('')
 .pay-btn {
   width: 100%;
   height: 3.25rem;
-  background: $color-primary;
+  background: #de7aff;
   border-radius: $radius-control;
   font-size: 1.25rem;
   font-weight: 700;
@@ -200,17 +251,38 @@ const promoCode = ref('')
   transition: background-color 0.2s;
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
-  &:hover { background: #e38fff; }
-  &:active { background: #c000ff; }
+  &:not(:disabled):hover { background: #e38fff; }
+  &:not(:disabled):active { background: #c000ff; }
 
   &:disabled {
     background: rgba($color-primary, 0.32);
     cursor: not-allowed;
   }
 
-  &:disabled:hover,
-  &:disabled:active {
-    background: rgba($color-primary, 0.32);
+  &--empty,
+  &--empty:disabled {
+    background: rgba($color-base, 0.04);
+    color: rgba($color-base, 0.24);
+  }
+}
+
+.summary-consent {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1rem;
+  color: rgba($color-base, 0.52);
+  font-feature-settings: 'lnum' 1, 'pnum' 1;
+
+  &__link {
+    color: #de7aff;
+    text-decoration: underline;
+    text-decoration-thickness: 0.0625rem;
+    text-underline-offset: 0.125rem;
+    transition: color 0.15s;
+
+    &:hover {
+      color: #c925ff;
+    }
   }
 }
 
@@ -243,23 +315,18 @@ const promoCode = ref('')
 
 .help-card {
   background: white;
-  border-radius: $radius-main;
-  padding: 1.5rem;
+  border-radius: 1rem;
+  padding: 1.5rem 1.25rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 1rem;
 
   &__info {
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-  }
-
-  &__avatar {
-    width: 2.5rem;
-    height: 2.5rem;
-    background: #d8d8d8;
-    flex-shrink: 0;
   }
 
   &__text {
@@ -271,37 +338,56 @@ const promoCode = ref('')
   &__title {
     font-size: 1rem;
     font-weight: 800;
-    line-height: 1.5rem;
+    line-height: 1.25rem;
     letter-spacing: -0.01em;
     color: $color-base;
+    text-box: cap alphabetic;
   }
 
   &__subtitle {
     font-size: 0.75rem;
     font-weight: 600;
-    line-height: 1.125rem;
-    color: rgba($color-base, 0.45);
+    line-height: 1rem;
+    color: rgba($color-base, 0.38);
   }
 
-  &__call-btn {
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  &__action {
     width: 2.5rem;
     height: 2.5rem;
-    background: $color-primary-bg;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    color: $color-primary;
+    border-radius: $radius-control;
     transition: background-color 0.15s;
-
-    &:hover { background: rgba($color-primary, 0.15); }
   }
 
-  &__call-icon {
-    width: 1.25rem;
-    height: 0.5rem;
-    transform: rotate(45deg);
+  &__action--mail {
+    background: rgba(222, 122, 255, 0.3);
+    color: #de7aff;
+
+    &:hover {
+      background: rgba(222, 122, 255, 0.38);
+    }
+  }
+
+  &__action--phone {
+    background: #de7aff;
+    color: white;
+
+    &:hover {
+      background: #e38fff;
+    }
+  }
+
+  &__icon {
+    width: 1rem;
+    height: 1rem;
   }
 }
 </style>

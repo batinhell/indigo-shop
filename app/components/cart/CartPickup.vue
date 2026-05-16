@@ -2,7 +2,9 @@
   <div class="card card--bottom">
     <div class="card__inner">
       <div class="pickup-header">
-        <p class="section-title">Откуда забрать заказ</p>
+        <p class="section-title">
+          Откуда забрать заказ
+        </p>
         <div class="pickup-address">
           <a
             href="https://yandex.ru/maps/-/CHEbFD2T"
@@ -13,7 +15,9 @@
             ДНР, Донецк, ул. Постышева, дом 60
             <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none"><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" /></svg>
           </a>
-          <p class="pickup-schedule">Пн–Пт 9:00–18:00, Сб 10:00–15:00</p>
+          <p class="pickup-schedule">
+            Пн–Пт 9:00–18:00, Сб 10:00–15:00
+          </p>
         </div>
       </div>
 
@@ -37,7 +41,7 @@
 <style lang="scss" scoped>
 .card--bottom {
   background: white;
-  border-radius: $radius-card $radius-card $radius-main $radius-main;
+  border-radius: 2rem;
 }
 
 .card__inner {

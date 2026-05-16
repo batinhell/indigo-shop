@@ -1,10 +1,17 @@
 <script setup>
+import { authClient } from '~/utils/auth-client.js'
+
 const isOpen = defineModel({ required: true })
 const emit = defineEmits(['pay', 'continue-shopping'])
 
 const { items: cartItems, updateQuantity, removeItems, updateItem } = useCart()
+const session = authClient.useSession()
 
 const selectedItems = computed(() => cartItems.value.filter(item => item.selected))
+const sessionUser = computed(() => session.value?.data?.user ?? null)
+const isSessionPending = computed(() => session.value?.isPending ?? true)
+const isAuthEntryOpen = ref(false)
+const payAsLegal = ref(false)
 
 // Selection
 const allSelected = computed({
@@ -62,6 +69,10 @@ function onPay() {
   if (selectedItems.value.length === 0) return
   emit('pay', selectedItems.value)
 }
+
+async function refreshSession() {
+  await session.value?.refetch?.()
+}
 </script>
 
 <template>
@@ -76,19 +87,59 @@ function onPay() {
     <div class="modal-content">
       <!-- Left Column -->
       <div class="left-column">
+        <div
+          v-if="!sessionUser && !isSessionPending"
+          class="auth-prompt"
+        >
+          <p class="auth-prompt__title">
+            Войдите или зарегистрируйтесь
+          </p>
+          <p class="auth-prompt__text">
+            Вы сможете отслеживать статус заказа<br>
+            и пользоваться преимуществами личного кабинета
+          </p>
+          <button
+            class="auth-prompt__button"
+            type="button"
+            @click="isAuthEntryOpen = true"
+          >
+            Вход или регистрация
+          </button>
+        </div>
+
         <!-- Empty state -->
-        <div v-if="cartItems.length === 0" class="card card--top">
+        <div
+          v-if="cartItems.length === 0"
+          class="card"
+          :class="!sessionUser && !isSessionPending ? 'card--mid' : 'card--top'"
+        >
           <div class="card__inner empty-state">
-            <p class="empty-state__title">Корзина пуста</p>
-            <p class="empty-state__subtitle">Воспользуйтесь каталогом, чтобы найти всё что нужно</p>
-            <button class="empty-state__btn" type="button" @click="emit('continue-shopping')">Начать покупки</button>
+            <p class="empty-state__title">
+              Корзина пуста
+            </p>
+            <p class="empty-state__subtitle">
+              Воспользуйтесь каталогом, чтобы найти всё что нужно
+            </p>
+            <button
+              class="empty-state__btn"
+              type="button"
+              @click="emit('continue-shopping')"
+            >
+              Начать покупки
+            </button>
           </div>
         </div>
 
         <!-- Products Section -->
-        <div v-else class="card card--top">
+        <div
+          v-else
+          class="card"
+          :class="!sessionUser && !isSessionPending ? 'card--mid' : 'card--top'"
+        >
           <div class="card__inner">
-            <p class="section-title">Товары</p>
+            <p class="section-title">
+              Товары
+            </p>
 
             <!-- Select all / Delete header -->
             <div class="items-header">
@@ -121,8 +172,11 @@ function onPay() {
           </div>
         </div>
 
-        <CartRecipient />
-        <CartPickup />
+        <CartRecipient
+          v-if="cartItems.length > 0"
+          v-model:pay-as-legal="payAsLegal"
+        />
+        <CartPickup v-if="cartItems.length > 0" />
       </div>
 
       <!-- Right Column (Sidebar) -->
@@ -130,15 +184,76 @@ function onPay() {
         <CartSummary
           :total-items="selectedTotalItems"
           :total-price="selectedTotalPrice"
+          :pay-as-legal="payAsLegal"
           :pay-disabled="selectedItems.length === 0"
           @pay="onPay"
         />
       </div>
     </div>
+
+    <AuthEntryModal
+      v-model="isAuthEntryOpen"
+      @complete-login="refreshSession"
+      @complete-registration="refreshSession"
+    />
   </BaseModal>
 </template>
 
 <style lang="scss" scoped>
+$cart-card-radius: 2rem;
+
+.auth-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  background: white;
+  border-radius: $cart-card-radius;
+
+  &__title {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.75rem;
+    letter-spacing: -0.02em;
+    color: $color-base;
+    text-box: cap alphabetic;
+  }
+
+  &__text {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    letter-spacing: -0.01em;
+    color: $color-base-secondary;
+    text-box: cap alphabetic;
+  }
+
+  &__button {
+    height: 2.5rem;
+    padding: 0.5rem 1.125rem 0.5625rem;
+    background: #de7aff;
+    border-radius: $radius-control;
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-feature-settings: 'lnum' 1, 'pnum' 1;
+
+    &:hover {
+      background: #e38fff;
+    }
+
+    &:active {
+      background: #c925ff;
+    }
+  }
+}
+
 .empty-state {
   &__title {
     font-size: 1.625rem;
@@ -229,7 +344,11 @@ function onPay() {
   background: white;
 
   &--top {
-    border-radius: $radius-main $radius-main $radius-card $radius-card;
+    border-radius: $cart-card-radius;
+  }
+
+  &--mid {
+    border-radius: $cart-card-radius;
   }
 
   &__inner {
