@@ -1,0 +1,1 @@
+import{X as s,Y as n,E as o,Z as u,n as i}from"./BvVWBX5q.js";const c=s(async()=>{let e,t;const{data:a}=([e,t]=n(()=>o.useSession(u)),e=await e,t(),e);if(!a.value)return i("/")});export{c as default};

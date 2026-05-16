@@ -6,7 +6,7 @@ import { debounce } from 'perfect-debounce';
 import { isPlainObject } from '@vue/shared';
 import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
-import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderAttrs, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrGetDynamicModelProps, ssrIncludeBooleanAttr, ssrLooseContain, ssrRenderSuspense } from 'vue/server-renderer';
+import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderAttrs, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrGetDynamicModelProps, ssrIncludeBooleanAttr, ssrLooseContain, ssrRenderSuspense, ssrLooseEqual } from 'vue/server-renderer';
 import { useForwardProps, useForwardPropsEmits, DialogRoot, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, DialogTrigger, DialogPortal, DialogOverlay, createContext, Primitive, Slot, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
 import { reactivePick, createReusableTemplate, reactiveOmit, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
@@ -772,7 +772,7 @@ const _routes = [
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-Cx2WiM2w.mjs')
+    component: () => import('./index-B-9LKX2s.mjs')
   },
   {
     name: "user-agreement",
@@ -7423,7 +7423,7 @@ _sfc_main$j.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
   return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
-const __nuxt_component_6$1 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e42088da"]]);
+const __nuxt_component_6$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e42088da"]]);
 const _sfc_main$i = {
   __name: "AppCheckbox",
   __ssrInlineRender: true,
@@ -8006,7 +8006,7 @@ function useAuthEntryFlow({
   const organizationSaveError = ref("");
   const SMS_CODE_LENGTH = 4;
   const MIN_PASSWORD_LENGTH = 8;
-  const ORGANIZATION_SUGGEST_DELAY = 350;
+  const ORGANIZATION_SUGGEST_DELAY2 = 350;
   let resendTimerId;
   let organizationSuggestTimerId;
   let organizationSuggestRequestId = 0;
@@ -8189,7 +8189,7 @@ function useAuthEntryFlow({
       isOrganizationSuggestPending.value = false;
       return;
     }
-    organizationSuggestTimerId = setTimeout(fetchOrganizationSuggestions, ORGANIZATION_SUGGEST_DELAY);
+    organizationSuggestTimerId = setTimeout(fetchOrganizationSuggestions, ORGANIZATION_SUGGEST_DELAY2);
   }
   function resetAuthFlow() {
     step.value = "entry";
@@ -8786,7 +8786,7 @@ function useAuthEntryFlow({
     // constants
     SMS_CODE_LENGTH,
     MIN_PASSWORD_LENGTH,
-    ORGANIZATION_SUGGEST_DELAY,
+    ORGANIZATION_SUGGEST_DELAY: ORGANIZATION_SUGGEST_DELAY2,
     // computed
     hasIdentifier,
     isPhoneMode,
@@ -8914,7 +8914,7 @@ const _sfc_main$e = {
       const _component_AuthEntryForm = __nuxt_component_3$1;
       const _component_AuthLoginForm = __nuxt_component_4$2;
       const _component_AuthPasswordRecoveryForm = __nuxt_component_5$2;
-      const _component_AuthPasswordRecoverySentView = __nuxt_component_6$1;
+      const _component_AuthPasswordRecoverySentView = __nuxt_component_6$2;
       const _component_AuthRegisterStartForm = __nuxt_component_7;
       const _component_AuthRegisterCompleteForm = __nuxt_component_8;
       const _component_AuthLegalForm = __nuxt_component_9;
@@ -9075,7 +9075,7 @@ _sfc_main$e.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
   return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const __nuxt_component_2$2 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$e, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
+const __nuxt_component_6$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$e, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
@@ -9537,7 +9537,7 @@ const _sfc_main$d = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_NuxtLink = __nuxt_component_0$5;
       const _component_AppIcon = __nuxt_component_1$3;
-      const _component_AuthEntryModal = __nuxt_component_2$2;
+      const _component_AuthEntryModal = __nuxt_component_6$1;
       _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-052ad214><div class="header__container" data-v-052ad214><div class="header__inner" data-v-052ad214>`);
       _push(ssrRenderComponent(_component_NuxtLink, {
         to: "/",
@@ -10251,93 +10251,277 @@ _sfc_main$7.setup = (props, ctx) => {
   return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
 const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-84c8a38d"]]);
+const ORGANIZATION_SUGGEST_DELAY = 350;
 const _sfc_main$6 = {
   __name: "CartRecipient",
   __ssrInlineRender: true,
+  props: {
+    "payAsLegal": { type: Boolean, default: false },
+    "payAsLegalModifiers": {}
+  },
+  emits: ["update:payAsLegal"],
   setup(__props) {
-    const recipientName = ref("");
-    const recipientPhone = ref("");
-    const recipientEmail = ref("");
+    const profileStore = useProfileStore();
+    const { user, organizations } = storeToRefs(profileStore);
+    const userName = ref("");
+    const userPhone = ref("");
+    const userEmail = ref("");
+    const isUserEmailTouched = ref(false);
+    const userContact = ref("");
     const anotherPerson = ref(false);
     const anotherName = ref("");
     const anotherPhone = ref("");
-    const emailError = computed(() => {
-      if (!recipientEmail.value) return "";
-      const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return pattern.test(recipientEmail.value) ? "" : "Некорректный email";
+    const payAsLegal = useModel(__props, "payAsLegal");
+    const selectedOrganizationId = ref("");
+    const organizationInn = ref("");
+    const organizationSuggestions = ref([]);
+    const organizationSuggestError = ref("");
+    const isOrganizationSuggestPending = ref(false);
+    const isOrganizationSuggestionsOpen = ref(false);
+    const isAddOrganizationMode = ref(false);
+    ref(false);
+    const addOrganizationInput = ref(null);
+    let organizationSuggestTimerId;
+    let organizationSuggestRequestId = 0;
+    const isAuthenticated = computed(() => Boolean(user.value));
+    const userEmailError = computed(() => {
+      if (!isUserEmailTouched.value || !userEmail.value.trim()) {
+        return "";
+      }
+      return getRegistrationEmailError(userEmail.value);
     });
-    const phoneError = computed(() => {
-      if (!recipientPhone.value) return "";
-      const digits = recipientPhone.value.replace(/\D/g, "");
-      return digits.length >= 11 ? "" : "Введите полный номер";
+    const displayOrganizations = computed(() => {
+      const hasExplicitActive = organizations.value.some((organization) => organization.isActive);
+      return organizations.value.map((organization, index2) => ({
+        ...organization,
+        active: hasExplicitActive ? Boolean(organization.isActive) : index2 === 0,
+        innLabel: organization.inn ? `ИНН ${organization.inn}` : ""
+      }));
     });
-    const anotherPhoneError = computed(() => {
-      if (!anotherPhone.value) return "";
-      const digits = anotherPhone.value.replace(/\D/g, "");
-      return digits.length >= 11 ? "" : "Введите полный номер";
-    });
+    const shouldShowOrganizationList = computed(() => isAuthenticated.value && displayOrganizations.value.length > 0);
+    const shouldShowOrganizationSuggestions = computed(() => isOrganizationSuggestionsOpen.value && (isOrganizationSuggestPending.value || Boolean(organizationSuggestError.value) || organizationSuggestions.value.length > 0));
+    watch(
+      displayOrganizations,
+      (items) => {
+        if (!items.length) {
+          selectedOrganizationId.value = "";
+          return;
+        }
+        if (!items.some((organization) => organization.id === selectedOrganizationId.value)) {
+          selectedOrganizationId.value = items.find((organization) => organization.active)?.id ?? items[0].id;
+        }
+      },
+      { immediate: true }
+    );
+    const stopOrganizationSuggestTimer = () => {
+      if (organizationSuggestTimerId) {
+        clearTimeout(organizationSuggestTimerId);
+        organizationSuggestTimerId = void 0;
+      }
+    };
+    const getOrganizationSuggestErrorMessage = (error) => {
+      if (error?.data?.message) {
+        return error.data.message;
+      }
+      if (error?.message) {
+        return error.message;
+      }
+      return "Не удалось получить данные организации";
+    };
+    const fetchOrganizationSuggestions = async () => {
+      const query = organizationInn.value;
+      if (query.length < 3) {
+        organizationSuggestions.value = [];
+        return;
+      }
+      const requestId = organizationSuggestRequestId + 1;
+      organizationSuggestRequestId = requestId;
+      isOrganizationSuggestPending.value = true;
+      organizationSuggestError.value = "";
+      try {
+        const result = await $fetch("/api/dadata/party-suggest", {
+          method: "POST",
+          timeout: 1e4,
+          body: { query }
+        });
+        if (requestId !== organizationSuggestRequestId) {
+          return;
+        }
+        organizationSuggestions.value = result.suggestions ?? [];
+        isOrganizationSuggestionsOpen.value = true;
+      } catch (error) {
+        if (requestId !== organizationSuggestRequestId) {
+          return;
+        }
+        organizationSuggestions.value = [];
+        organizationSuggestError.value = getOrganizationSuggestErrorMessage(error);
+      } finally {
+        if (requestId === organizationSuggestRequestId) {
+          isOrganizationSuggestPending.value = false;
+        }
+      }
+    };
+    const scheduleOrganizationSuggest = () => {
+      stopOrganizationSuggestTimer();
+      if (organizationInn.value.length < 3) {
+        organizationSuggestions.value = [];
+        isOrganizationSuggestPending.value = false;
+        return;
+      }
+      organizationSuggestTimerId = setTimeout(fetchOrganizationSuggestions, ORGANIZATION_SUGGEST_DELAY);
+    };
+    const onOrganizationInnInput = (value) => {
+      organizationInn.value = String(value ?? "").replace(/\D/g, "").slice(0, 12);
+      organizationSuggestError.value = "";
+      isOrganizationSuggestionsOpen.value = true;
+      scheduleOrganizationSuggest();
+    };
+    const onOrganizationInnFocus = () => {
+      if (organizationSuggestions.value.length > 0 || organizationInn.value.length >= 3) {
+        isOrganizationSuggestionsOpen.value = true;
+      }
+    };
+    const onOrganizationInnBlur = () => {
+      setTimeout(() => {
+        isOrganizationSuggestionsOpen.value = false;
+      }, 120);
+    };
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppInput = __nuxt_component_0$2;
       const _component_AppSwitch = __nuxt_component_0;
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "card card--mid" }, _attrs))} data-v-7c4f2694><div class="card__inner" data-v-7c4f2694><div class="recipient-header" data-v-7c4f2694><p class="section-title" data-v-7c4f2694>Данные получателя</p><div class="recipient-links" data-v-7c4f2694><a href="#" class="ext-link ext-link--muted" data-v-7c4f2694> Добавить организацию <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-7c4f2694><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-7c4f2694></path></svg></a><a href="#" class="ext-link ext-link--muted" data-v-7c4f2694> Добавить получателя <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-7c4f2694><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-7c4f2694></path></svg></a></div></div><div class="form-fields" data-v-7c4f2694><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Имя</label>`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "personal-data-card" }, _attrs))} data-v-44cf82d1><div class="personal-data-card__inner" data-v-44cf82d1><p class="section-title" data-v-44cf82d1> Данные пользователя </p><div class="personal-data-form" data-v-44cf82d1><div class="field-list" data-v-44cf82d1><div class="field-row" data-v-44cf82d1><label class="field-label" data-v-44cf82d1>Имя</label>`);
       _push(ssrRenderComponent(_component_AppInput, {
-        modelValue: unref(recipientName),
-        "onUpdate:modelValue": ($event) => isRef(recipientName) ? recipientName.value = $event : null,
-        placeholder: "Иван"
+        modelValue: unref(userName),
+        "onUpdate:modelValue": ($event) => isRef(userName) ? userName.value = $event : null
       }, null, _parent));
-      _push(`</div><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Номер телефона</label><div class="field-col" data-v-7c4f2694>`);
+      _push(`</div><div class="field-row" data-v-44cf82d1><label class="field-label" data-v-44cf82d1>Номер телефона</label>`);
       _push(ssrRenderComponent(_component_AppInput, {
-        modelValue: unref(recipientPhone),
-        "onUpdate:modelValue": ($event) => isRef(recipientPhone) ? recipientPhone.value = $event : null,
-        mask: "+7(###)-###-##-##",
-        placeholder: "+7(___)-___-__-__"
+        modelValue: unref(userPhone),
+        "onUpdate:modelValue": ($event) => isRef(userPhone) ? userPhone.value = $event : null,
+        class: "field-input field-input--phone",
+        mask: "+7(###)-###-##-##"
       }, null, _parent));
-      if (unref(phoneError)) {
-        _push(`<span class="field-error" data-v-7c4f2694>${ssrInterpolate(unref(phoneError))}</span>`);
+      _push(`</div><div class="field-row" data-v-44cf82d1><label class="field-label" data-v-44cf82d1>Электронная почта</label><div class="field-control" data-v-44cf82d1>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        modelValue: unref(userEmail),
+        "onUpdate:modelValue": ($event) => isRef(userEmail) ? userEmail.value = $event : null,
+        type: "text",
+        placeholder: "mail@example.com",
+        autocomplete: "email",
+        inputmode: "email",
+        "aria-invalid": Boolean(unref(userEmailError)),
+        "aria-describedby": unref(userEmailError) ? "cart-user-email-error" : void 0,
+        onBlur: ($event) => isUserEmailTouched.value = true
+      }, null, _parent));
+      if (unref(userEmailError)) {
+        _push(`<p id="cart-user-email-error" class="field-error" data-v-44cf82d1>${ssrInterpolate(unref(userEmailError))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div></div><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Электропочта</label><div class="field-col" data-v-7c4f2694>`);
+      _push(`</div></div><div class="field-row" data-v-44cf82d1><label class="field-label" data-v-44cf82d1>Дополнительный контакт</label>`);
       _push(ssrRenderComponent(_component_AppInput, {
-        modelValue: unref(recipientEmail),
-        "onUpdate:modelValue": ($event) => isRef(recipientEmail) ? recipientEmail.value = $event : null,
-        placeholder: "mail@example.com"
+        modelValue: unref(userContact),
+        "onUpdate:modelValue": ($event) => isRef(userContact) ? userContact.value = $event : null
       }, null, _parent));
-      if (unref(emailError)) {
-        _push(`<span class="field-error" data-v-7c4f2694>${ssrInterpolate(unref(emailError))}</span>`);
+      _push(`</div></div><div class="switch-row" data-v-44cf82d1><span class="switch-row__label" data-v-44cf82d1>Заберёт другой человек</span>`);
+      _push(ssrRenderComponent(_component_AppSwitch, {
+        modelValue: unref(anotherPerson),
+        "onUpdate:modelValue": ($event) => isRef(anotherPerson) ? anotherPerson.value = $event : null
+      }, null, _parent));
+      _push(`</div>`);
+      if (unref(anotherPerson)) {
+        _push(`<div class="field-list" data-v-44cf82d1><div class="field-row" data-v-44cf82d1><label class="field-label" data-v-44cf82d1>Имя</label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          modelValue: unref(anotherName),
+          "onUpdate:modelValue": ($event) => isRef(anotherName) ? anotherName.value = $event : null
+        }, null, _parent));
+        _push(`</div><div class="field-row" data-v-44cf82d1><label class="field-label" data-v-44cf82d1>Номер телефона</label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          modelValue: unref(anotherPhone),
+          "onUpdate:modelValue": ($event) => isRef(anotherPhone) ? anotherPhone.value = $event : null,
+          class: "field-input field-input--phone",
+          mask: "+7(###)-###-##-##"
+        }, null, _parent));
+        _push(`</div></div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<div class="switch-row" data-v-44cf82d1><span class="switch-row__label" data-v-44cf82d1>Оплатить как Юрлицо</span>`);
+      _push(ssrRenderComponent(_component_AppSwitch, {
+        modelValue: payAsLegal.value,
+        "onUpdate:modelValue": ($event) => payAsLegal.value = $event
+      }, null, _parent));
+      _push(`</div>`);
+      if (payAsLegal.value) {
+        _push(`<div class="legal-section" data-v-44cf82d1>`);
+        if (unref(shouldShowOrganizationList)) {
+          _push(`<div class="organization-row" data-v-44cf82d1><p class="field-label organization-row__label" data-v-44cf82d1> Выбрать организацию </p><div class="organization-list" data-v-44cf82d1><!--[-->`);
+          ssrRenderList(unref(displayOrganizations), (organization) => {
+            _push(`<label class="${ssrRenderClass([{ "organization-option--active": unref(selectedOrganizationId) === organization.id }, "organization-option"])}" data-v-44cf82d1><input${ssrIncludeBooleanAttr(ssrLooseEqual(unref(selectedOrganizationId), organization.id)) ? " checked" : ""} class="organization-option__input" type="radio"${ssrRenderAttr("value", organization.id)} data-v-44cf82d1><span class="organization-option__top" data-v-44cf82d1><span class="organization-option__radio" data-v-44cf82d1></span><button class="organization-option__remove" type="button" data-v-44cf82d1> Удалить </button></span><span class="organization-option__content" data-v-44cf82d1><span class="organization-option__name" data-v-44cf82d1>${ssrInterpolate(organization.name)}</span><span class="organization-option__meta" data-v-44cf82d1>${ssrInterpolate(organization.innLabel)}</span>`);
+            if (organization.address) {
+              _push(`<span class="organization-option__meta" data-v-44cf82d1>${ssrInterpolate(organization.address)}</span>`);
+            } else {
+              _push(`<!---->`);
+            }
+            _push(`</span></label>`);
+          });
+          _push(`<!--]--></div></div>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`<div class="add-organization" data-v-44cf82d1><div class="add-organization__text" data-v-44cf82d1><p class="add-organization__title" data-v-44cf82d1> Добавить организацию </p><p class="add-organization__subtitle" data-v-44cf82d1> Чтобы платить безналом<br data-v-44cf82d1> и пользоваться ЭДО </p></div>`);
+        if (!unref(isAddOrganizationMode)) {
+          _push(`<button class="add-button" type="button" data-v-44cf82d1><span class="add-button__icon" data-v-44cf82d1>+</span><span data-v-44cf82d1>Добавить</span></button>`);
+        } else {
+          _push(`<div class="add-organization__control" data-v-44cf82d1>`);
+          _push(ssrRenderComponent(_component_AppInput, {
+            ref_key: "addOrganizationInput",
+            ref: addOrganizationInput,
+            "model-value": unref(organizationInn),
+            type: "text",
+            placeholder: "Введите ИНН компании",
+            autocomplete: "off",
+            inputmode: "numeric",
+            maxlength: "12",
+            "onUpdate:modelValue": onOrganizationInnInput,
+            onFocus: onOrganizationInnFocus,
+            onBlur: onOrganizationInnBlur
+          }, null, _parent));
+          if (unref(shouldShowOrganizationSuggestions)) {
+            _push(`<div class="add-organization__options" data-v-44cf82d1>`);
+            if (unref(isOrganizationSuggestPending)) {
+              _push(`<p class="add-organization__status" data-v-44cf82d1> Ищем организацию </p>`);
+            } else if (unref(organizationSuggestError)) {
+              _push(`<p class="add-organization__status add-organization__status--error" data-v-44cf82d1>${ssrInterpolate(unref(organizationSuggestError))}</p>`);
+            } else {
+              _push(`<!--[-->`);
+              ssrRenderList(unref(organizationSuggestions), (suggestion) => {
+                _push(`<button type="button" class="add-organization__option" data-v-44cf82d1><span class="add-organization__option-name" data-v-44cf82d1>${ssrInterpolate(suggestion.name)}</span>`);
+                if (suggestion.inn) {
+                  _push(`<span class="add-organization__option-meta" data-v-44cf82d1> ИНН ${ssrInterpolate(suggestion.inn)}</span>`);
+                } else {
+                  _push(`<!---->`);
+                }
+                if (suggestion.address) {
+                  _push(`<span class="add-organization__option-meta" data-v-44cf82d1>${ssrInterpolate(suggestion.address)}</span>`);
+                } else {
+                  _push(`<!---->`);
+                }
+                _push(`</button>`);
+              });
+              _push(`<!--]-->`);
+            }
+            _push(`</div>`);
+          } else {
+            _push(`<!---->`);
+          }
+          _push(`</div>`);
+        }
+        _push(`</div></div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div></div></div>`);
-      _push(ssrRenderComponent(_component_AppSwitch, {
-        modelValue: unref(anotherPerson),
-        "onUpdate:modelValue": ($event) => isRef(anotherPerson) ? anotherPerson.value = $event : null,
-        label: "Заберёт другой человек"
-      }, null, _parent));
-      if (unref(anotherPerson)) {
-        _push(`<div class="form-fields" data-v-7c4f2694><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Имя</label>`);
-        _push(ssrRenderComponent(_component_AppInput, {
-          modelValue: unref(anotherName),
-          "onUpdate:modelValue": ($event) => isRef(anotherName) ? anotherName.value = $event : null,
-          placeholder: "Иван"
-        }, null, _parent));
-        _push(`</div><div class="field-row" data-v-7c4f2694><label class="field-label" data-v-7c4f2694>Номер телефона</label><div class="field-col" data-v-7c4f2694>`);
-        _push(ssrRenderComponent(_component_AppInput, {
-          modelValue: unref(anotherPhone),
-          "onUpdate:modelValue": ($event) => isRef(anotherPhone) ? anotherPhone.value = $event : null,
-          mask: "+7(###)-###-##-##",
-          placeholder: "+7(___)-___-__-__"
-        }, null, _parent));
-        if (unref(anotherPhoneError)) {
-          _push(`<span class="field-error" data-v-7c4f2694>${ssrInterpolate(unref(anotherPhoneError))}</span>`);
-        } else {
-          _push(`<!---->`);
-        }
-        _push(`</div></div></div>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</div></div>`);
     };
   }
 };
@@ -10347,10 +10531,10 @@ _sfc_main$6.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartRecipient.vue");
   return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
-const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-7c4f2694"]]);
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-44cf82d1"]]);
 const _sfc_main$5 = {};
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-  _push(`<div${ssrRenderAttrs(mergeProps({ class: "card card--bottom" }, _attrs))} data-v-a007ae44><div class="card__inner" data-v-a007ae44><div class="pickup-header" data-v-a007ae44><p class="section-title" data-v-a007ae44>Откуда забрать заказ</p><div class="pickup-address" data-v-a007ae44><a href="https://yandex.ru/maps/-/CHEbFD2T" target="_blank" rel="noopener noreferrer" class="ext-link" data-v-a007ae44> ДНР, Донецк, ул. Постышева, дом 60 <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-a007ae44><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-a007ae44></path></svg></a><p class="pickup-schedule" data-v-a007ae44>Пн–Пт 9:00–18:00, Сб 10:00–15:00</p></div></div><div class="map-container" data-v-a007ae44><iframe src="https://yandex.ru/map-widget/v1/?ll=37.802556%2C48.002076&amp;z=12&amp;pt=37.802556%2C48.002076%2Cpm2rdm" class="map-iframe" sandbox="allow-scripts allow-same-origin" allowfullscreen title="Карта с адресом самовывоза" data-v-a007ae44></iframe></div><p class="pickup-note" data-v-a007ae44> Для онлайн заказов доступна только доставка самовывозом. Мы работаем над тем чтобы организовать курьерскую доставку. </p></div></div>`);
+  _push(`<div${ssrRenderAttrs(mergeProps({ class: "card card--bottom" }, _attrs))} data-v-201390ef><div class="card__inner" data-v-201390ef><div class="pickup-header" data-v-201390ef><p class="section-title" data-v-201390ef> Откуда забрать заказ </p><div class="pickup-address" data-v-201390ef><a href="https://yandex.ru/maps/-/CHEbFD2T" target="_blank" rel="noopener noreferrer" class="ext-link" data-v-201390ef> ДНР, Донецк, ул. Постышева, дом 60 <svg class="ext-link__icon" viewBox="0 0 12 12" fill="none" data-v-201390ef><path d="M2.619 6.261a.804.804 0 0 1-1.17 0 .805.805 0 0 1-.001-.826L5.526 1.698H2.95a.569.569 0 0 1-.568-.572c.002-.312.256-.564.568-.564h4.288c.138 0 .25.112.25.25v4.285a.571.571 0 0 1-1.142 0l.007-2.572L2.619 6.26Z" fill="currentColor" data-v-201390ef></path></svg></a><p class="pickup-schedule" data-v-201390ef> Пн–Пт 9:00–18:00, Сб 10:00–15:00 </p></div></div><div class="map-container" data-v-201390ef><iframe src="https://yandex.ru/map-widget/v1/?ll=37.802556%2C48.002076&amp;z=12&amp;pt=37.802556%2C48.002076%2Cpm2rdm" class="map-iframe" sandbox="allow-scripts allow-same-origin" allowfullscreen title="Карта с адресом самовывоза" data-v-201390ef></iframe></div><p class="pickup-note" data-v-201390ef> Для онлайн заказов доступна только доставка самовывозом. Мы работаем над тем чтобы организовать курьерскую доставку. </p></div></div>`);
 }
 const _sfc_setup$5 = _sfc_main$5.setup;
 _sfc_main$5.setup = (props, ctx) => {
@@ -10358,27 +10542,63 @@ _sfc_main$5.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartPickup.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_4 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-a007ae44"]]), { __name: "CartPickup" });
+const __nuxt_component_4 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-201390ef"]]), { __name: "CartPickup" });
+const helpMailIcon = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2016%2013.9999'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Icon'%3e%3cpath%20d='M0%205.85492C0%205.47251%200.411829%205.23165%200.745131%205.41914L7.01948%208.94846C7.6283%209.29092%208.3717%209.29092%208.98052%208.94846L15.2549%205.41914C15.5882%205.23165%2016%205.47251%2016%205.85492V10.9999C16%2012.6568%2014.6569%2013.9999%2013%2013.9999H3C1.34315%2013.9999%200%2012.6568%200%2010.9999V5.85492Z'%20fill='%23DE7AFF'/%3e%3cpath%20d='M1.93435%200H14.0656C15.134%200%2016%200.866038%2016%201.93435C16%202.28376%2015.8115%202.60601%2015.507%202.77732L8.49026%206.72423C8.18585%206.89546%207.81415%206.89546%207.50974%206.72423L0.493007%202.77732C0.188465%202.60601%200%202.28376%200%201.93435C0%200.866038%200.866038%200%201.93435%200Z'%20fill='%23DE7AFF'/%3e%3c/g%3e%3c/svg%3e";
+const helpPhoneIcon = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2014.8414%2014.8414'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Icon'%20d='M13.1029%209.37002L13.8779%2010.145C14.1105%2010.3776%2014.2269%2010.494%2014.3102%2010.598C15.1072%2011.593%2014.9955%2013.0358%2014.0547%2013.8962C13.9564%2013.9861%2013.8235%2014.0832%2013.5578%2014.2772C13.4575%2014.3505%2013.7083%2014.1673%2013.5565%2014.2618C12.5073%2014.9151%209.98721%2015.045%208.87646%2014.503C8.71575%2014.4246%209.5612%2014.9175%209.22302%2014.7204C7.94449%2013.975%206.1978%2012.7305%204.15432%2010.6871C2.11085%208.64359%200.866399%206.8969%200.121036%205.61837C-0.0761173%205.28019%200.416766%206.12564%200.33835%205.96493C-0.203614%204.85418%20-0.073733%202.33405%200.579545%201.28491C0.674066%201.13311%200.490888%201.38392%200.564159%201.2836C0.758227%201.01787%200.855262%200.885011%200.945172%200.786703C1.8056%20-0.154097%203.24841%20-0.265849%204.24344%200.531237C4.34741%200.614528%204.46375%200.730864%204.69642%200.963535L5.47137%201.73849C6.18343%202.45054%206.35167%203.54203%205.88709%204.43546C5.42251%205.32888%205.59076%206.42037%206.30281%207.13243L7.70896%208.53858C8.42102%209.25063%209.51251%209.41888%2010.4059%208.9543C11.2994%208.48972%2012.3908%208.65796%2013.1029%209.37002Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e";
 const _sfc_main$4 = {
   __name: "CartSummary",
   __ssrInlineRender: true,
   props: {
     totalItems: { type: Number, default: 0 },
     totalPrice: { type: Number, default: 0 },
-    payDisabled: { type: Boolean, default: false }
+    payDisabled: { type: Boolean, default: false },
+    payAsLegal: { type: Boolean, default: false }
   },
   emits: ["pay"],
   setup(__props, { emit: __emit }) {
-    const promoCode = ref("");
+    const props = __props;
+    const payButtonLabel = computed(() => props.payAsLegal ? "Оплатить по счету" : "Оплатить по СБП");
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0$2;
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "sidebar-sticky" }, _attrs))} data-v-3dd90177><div class="summary-card" data-v-3dd90177><p class="section-title" data-v-3dd90177>Товары</p><div class="summary-rows" data-v-3dd90177><div class="summary-row" data-v-3dd90177><span class="summary-row__label" data-v-3dd90177>Тиражи (${ssrInterpolate(__props.totalItems)} шт)</span><span class="summary-row__value" data-v-3dd90177>${ssrInterpolate(unref(formatPriceRaw)(__props.totalPrice))} ₽</span></div><div class="summary-row" data-v-3dd90177><span class="summary-row__label" data-v-3dd90177>Доставка</span><span class="summary-row__value" data-v-3dd90177>Самовывоз</span></div></div><div class="summary-divider" data-v-3dd90177></div><div class="summary-total" data-v-3dd90177><span class="summary-total__label" data-v-3dd90177>К оплате</span><span class="summary-total__value" data-v-3dd90177>${ssrInterpolate(unref(formatPriceRaw)(__props.totalPrice))} ₽</span></div><div class="promo-section" data-v-3dd90177><div class="promo-row" data-v-3dd90177>`);
-      _push(ssrRenderComponent(_component_AppInput, {
-        modelValue: unref(promoCode),
-        "onUpdate:modelValue": ($event) => isRef(promoCode) ? promoCode.value = $event : null,
-        placeholder: "Введите промокод"
-      }, null, _parent));
-      _push(`<button class="promo-btn" data-v-3dd90177>Применить</button></div></div><button class="pay-btn"${ssrIncludeBooleanAttr(__props.payDisabled) ? " disabled" : ""} data-v-3dd90177> Оплатить заказ </button><div class="trust-badges" data-v-3dd90177><div class="trust-badge" data-v-3dd90177><svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none" data-v-3dd90177><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" data-v-3dd90177></circle></svg><span class="trust-badge__text" data-v-3dd90177>Безопасная оплата</span></div><div class="trust-badge" data-v-3dd90177><svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none" data-v-3dd90177><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" data-v-3dd90177></circle></svg><span class="trust-badge__text" data-v-3dd90177>Оплата СБП или по счёту</span></div><div class="trust-badge" data-v-3dd90177><svg class="trust-badge__icon" viewBox="0 0 16 16" fill="none" data-v-3dd90177><circle cx="8" cy="8" r="6" fill="currentColor" fill-opacity="0.64" data-v-3dd90177></circle></svg><span class="trust-badge__text" data-v-3dd90177>Самовывоз из Донецка</span></div></div></div><div class="help-card" data-v-3dd90177><div class="help-card__info" data-v-3dd90177><div class="help-card__avatar" data-v-3dd90177></div><div class="help-card__text" data-v-3dd90177><p class="help-card__title" data-v-3dd90177>Нужна помощь?</p><p class="help-card__subtitle" data-v-3dd90177>Позвоните в поддержку.</p></div></div><a href="tel:+78001234567" class="help-card__call-btn" aria-label="Позвонить в поддержку" data-v-3dd90177><svg class="help-card__call-icon" viewBox="0 0 23 9" fill="none" data-v-3dd90177><path d="M18.187 0H19.5458C19.9537 0 20.1577 0 20.3219 0.0181341C21.8931 0.191675 23.06 1.55458 22.9896 3.13374C22.9822 3.29873 22.9508 3.50026 22.888 3.90328L22.888 3.90341C22.8643 4.0556 22.9236 3.67511 22.8733 3.89107C22.5263 5.3836 20.4307 7.7069 18.9818 8.20556C18.7721 8.27771 19.9455 7.96861 19.4761 8.09225C17.7018 8.55968 15.0794 9 11.4963 9C7.91323 9 5.29085 8.55968 3.51648 8.09225C3.04715 7.96861 4.22048 8.27771 4.01084 8.20556C2.56189 7.7069 0.466323 5.3836 0.119262 3.89107C0.069047 3.67512 0.128344 4.0556 0.104625 3.90341C0.0418033 3.5003 0.0103925 3.29875 0.00302911 3.13374C-0.0674374 1.55458 1.09952 0.191675 2.67069 0.0181341C2.83487 0 3.03886 0 3.44683 0H4.80565C6.05418 0 7.15861 0.809421 7.53458 2C7.91055 3.19058 9.01498 4 10.2635 4H12.7291C13.9776 4 15.0821 3.19058 15.458 2C15.834 0.809421 16.9384 0 18.187 0Z" fill="currentColor" data-v-3dd90177></path></svg></a></div></div>`);
+      const _component_NuxtLink = __nuxt_component_0$5;
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "sidebar-sticky" }, _attrs))} data-v-a6bfacfb>`);
+      if (__props.totalItems === 0) {
+        _push(`<div class="summary-card summary-card--empty" data-v-a6bfacfb><p class="section-title" data-v-a6bfacfb> Пусто </p><button class="pay-btn pay-btn--empty" type="button" disabled data-v-a6bfacfb> Оплатить заказ </button></div>`);
+      } else {
+        _push(`<div class="summary-card" data-v-a6bfacfb><p class="section-title" data-v-a6bfacfb> Товары </p><div class="summary-rows" data-v-a6bfacfb><div class="summary-row" data-v-a6bfacfb><span class="summary-row__label" data-v-a6bfacfb>Товары (${ssrInterpolate(__props.totalItems)})</span><span class="summary-row__value" data-v-a6bfacfb>${ssrInterpolate(unref(formatPriceRaw)(__props.totalPrice))} ₽</span></div><div class="summary-row" data-v-a6bfacfb><span class="summary-row__label" data-v-a6bfacfb>Доставка</span><span class="summary-row__value" data-v-a6bfacfb>Самовывоз</span></div></div><div class="summary-divider" data-v-a6bfacfb></div><div class="summary-total" data-v-a6bfacfb><span class="summary-total__label" data-v-a6bfacfb>К оплате</span><span class="summary-total__value" data-v-a6bfacfb>${ssrInterpolate(unref(formatPriceRaw)(__props.totalPrice))} ₽</span></div><button class="pay-btn"${ssrIncludeBooleanAttr(__props.payDisabled) ? " disabled" : ""} data-v-a6bfacfb>${ssrInterpolate(unref(payButtonLabel))}</button><p class="summary-consent" data-v-a6bfacfb> Нажимая на кнопку, вы соглашаетесь `);
+        _push(ssrRenderComponent(_component_NuxtLink, {
+          to: "/privacy-policy",
+          class: "summary-consent__link"
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(` с Условиями обработки персональных данных, `);
+            } else {
+              return [
+                createTextVNode(" с Условиями обработки персональных данных, ")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(` а также `);
+        _push(ssrRenderComponent(_component_NuxtLink, {
+          to: "/user-agreement",
+          class: "summary-consent__link"
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(` с Пользовательским соглашением `);
+            } else {
+              return [
+                createTextVNode(" с Пользовательским соглашением ")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(`</p></div>`);
+      }
+      _push(`<div class="help-card" data-v-a6bfacfb><div class="help-card__info" data-v-a6bfacfb><div class="help-card__text" data-v-a6bfacfb><p class="help-card__title" data-v-a6bfacfb> Нужна помощь с заказом? </p><p class="help-card__subtitle" data-v-a6bfacfb> Напишите нам на почту или позвоните администратору </p></div></div><div class="help-card__actions" data-v-a6bfacfb><a href="mailto:info@indigo-mail.ru" class="help-card__action help-card__action--mail" aria-label="Написать на почту" data-v-a6bfacfb><img${ssrRenderAttr("src", unref(helpMailIcon))} class="help-card__icon" alt="" aria-hidden="true" data-v-a6bfacfb></a><a href="tel:+79491314544" class="help-card__action help-card__action--phone" aria-label="Позвонить администратору" data-v-a6bfacfb><img${ssrRenderAttr("src", unref(helpPhoneIcon))} class="help-card__icon" alt="" aria-hidden="true" data-v-a6bfacfb></a></div></div></div>`);
     };
   }
 };
@@ -10388,7 +10608,7 @@ _sfc_main$4.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/cart/CartSummary.vue");
   return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
 };
-const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-3dd90177"]]);
+const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-a6bfacfb"]]);
 const _sfc_main$3 = {
   __name: "CartModal",
   __ssrInlineRender: true,
@@ -10401,7 +10621,12 @@ const _sfc_main$3 = {
     const isOpen = useModel(__props, "modelValue");
     const emit = __emit;
     const { items: cartItems, updateQuantity, removeItems, updateItem } = useCart();
+    const session = authClient.useSession();
     const selectedItems = computed(() => cartItems.value.filter((item) => item.selected));
+    const sessionUser = computed(() => session.value?.data?.user ?? null);
+    const isSessionPending = computed(() => session.value?.isPending ?? true);
+    const isAuthEntryOpen = ref(false);
+    const payAsLegal = ref(false);
     const allSelected = computed({
       get: () => cartItems.value.length > 0 && cartItems.value.every((i) => i.selected),
       set: (val) => {
@@ -10446,6 +10671,9 @@ const _sfc_main$3 = {
       if (selectedItems.value.length === 0) return;
       emit("pay", selectedItems.value);
     }
+    async function refreshSession() {
+      await session.value?.refetch?.();
+    }
     return (_ctx, _push, _parent, _attrs) => {
       const _component_BaseModal = __nuxt_component_0$1;
       const _component_AppCheckbox = __nuxt_component_1$1;
@@ -10453,6 +10681,7 @@ const _sfc_main$3 = {
       const _component_CartRecipient = __nuxt_component_3;
       const _component_CartPickup = __nuxt_component_4;
       const _component_CartSummary = __nuxt_component_5;
+      const _component_AuthEntryModal = __nuxt_component_6$1;
       _push(ssrRenderComponent(_component_BaseModal, mergeProps({
         modelValue: isOpen.value,
         "onUpdate:modelValue": ($event) => isOpen.value = $event,
@@ -10461,7 +10690,7 @@ const _sfc_main$3 = {
       }, _attrs), {
         "header-left": withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<button class="back-link" data-v-0fb587ff${_scopeId}><svg class="back-link__icon" viewBox="0 0 16 16" fill="none" data-v-0fb587ff${_scopeId}><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-0fb587ff${_scopeId}></path></svg><span class="back-link__text" data-v-0fb587ff${_scopeId}>Продолжить покупки</span></button>`);
+            _push2(`<button class="back-link" data-v-b5d1c0cb${_scopeId}><svg class="back-link__icon" viewBox="0 0 16 16" fill="none" data-v-b5d1c0cb${_scopeId}><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-v-b5d1c0cb${_scopeId}></path></svg><span class="back-link__text" data-v-b5d1c0cb${_scopeId}>Продолжить покупки</span></button>`);
           } else {
             return [
               createVNode("button", {
@@ -10488,16 +10717,21 @@ const _sfc_main$3 = {
         }),
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="modal-content" data-v-0fb587ff${_scopeId}><div class="left-column" data-v-0fb587ff${_scopeId}>`);
-            if (unref(cartItems).length === 0) {
-              _push2(`<div class="card card--top" data-v-0fb587ff${_scopeId}><div class="card__inner empty-state" data-v-0fb587ff${_scopeId}><p class="empty-state__title" data-v-0fb587ff${_scopeId}>Корзина пуста</p><p class="empty-state__subtitle" data-v-0fb587ff${_scopeId}>Воспользуйтесь каталогом, чтобы найти всё что нужно</p><button class="empty-state__btn" type="button" data-v-0fb587ff${_scopeId}>Начать покупки</button></div></div>`);
+            _push2(`<div class="modal-content" data-v-b5d1c0cb${_scopeId}><div class="left-column" data-v-b5d1c0cb${_scopeId}>`);
+            if (!unref(sessionUser) && !unref(isSessionPending)) {
+              _push2(`<div class="auth-prompt" data-v-b5d1c0cb${_scopeId}><p class="auth-prompt__title" data-v-b5d1c0cb${_scopeId}> Войдите или зарегистрируйтесь </p><p class="auth-prompt__text" data-v-b5d1c0cb${_scopeId}> Вы сможете отслеживать статус заказа<br data-v-b5d1c0cb${_scopeId}> и пользоваться преимуществами личного кабинета </p><button class="auth-prompt__button" type="button" data-v-b5d1c0cb${_scopeId}> Вход или регистрация </button></div>`);
             } else {
-              _push2(`<div class="card card--top" data-v-0fb587ff${_scopeId}><div class="card__inner" data-v-0fb587ff${_scopeId}><p class="section-title" data-v-0fb587ff${_scopeId}>Товары</p><div class="items-header" data-v-0fb587ff${_scopeId}><div class="items-header__left" data-v-0fb587ff${_scopeId}>`);
+              _push2(`<!---->`);
+            }
+            if (unref(cartItems).length === 0) {
+              _push2(`<div class="${ssrRenderClass([!unref(sessionUser) && !unref(isSessionPending) ? "card--mid" : "card--top", "card"])}" data-v-b5d1c0cb${_scopeId}><div class="card__inner empty-state" data-v-b5d1c0cb${_scopeId}><p class="empty-state__title" data-v-b5d1c0cb${_scopeId}> Корзина пуста </p><p class="empty-state__subtitle" data-v-b5d1c0cb${_scopeId}> Воспользуйтесь каталогом, чтобы найти всё что нужно </p><button class="empty-state__btn" type="button" data-v-b5d1c0cb${_scopeId}> Начать покупки </button></div></div>`);
+            } else {
+              _push2(`<div class="${ssrRenderClass([!unref(sessionUser) && !unref(isSessionPending) ? "card--mid" : "card--top", "card"])}" data-v-b5d1c0cb${_scopeId}><div class="card__inner" data-v-b5d1c0cb${_scopeId}><p class="section-title" data-v-b5d1c0cb${_scopeId}> Товары </p><div class="items-header" data-v-b5d1c0cb${_scopeId}><div class="items-header__left" data-v-b5d1c0cb${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppCheckbox, {
                 modelValue: unref(allSelected),
                 "onUpdate:modelValue": ($event) => isRef(allSelected) ? allSelected.value = $event : null
               }, null, _parent2, _scopeId));
-              _push2(`<span class="items-header__count" data-v-0fb587ff${_scopeId}>${ssrInterpolate(unref(cartItems).length)} ${ssrInterpolate(pluralItems(unref(cartItems).length))}</span></div><button class="items-header__delete" aria-label="Удалить выбранные тиражи" data-v-0fb587ff${_scopeId}><svg class="items-header__delete-icon" viewBox="0 0 16 16" fill="none" data-v-0fb587ff${_scopeId}><path d="M2 7H14L13.4744 11.7301C13.3067 13.24 13.2228 13.995 12.8745 14.5647C12.5677 15.0666 12.1201 15.4672 11.5874 15.7168C10.9826 16 10.223 16 8.70379 16H7.29621C5.77697 16 5.01735 16 4.41263 15.7168C3.87993 15.4672 3.43233 15.0666 3.12552 14.5647C2.77722 13.995 2.69333 13.24 2.52556 11.7301L2 7Z" fill="currentColor" fill-opacity="0.64" data-v-0fb587ff${_scopeId}></path><path d="M1 3.5C1 2.67157 1.67157 2 2.5 2C3.32843 2 3.97177 1.24281 4.53657 0.636766C4.90168 0.244995 5.42223 0 6 0H10C10.5778 0 11.0983 0.244995 11.4634 0.636766C12.0282 1.24281 12.6716 2 13.5 2C14.3284 2 15 2.67157 15 3.5C15 4.32843 14.3284 5 13.5 5H2.5C1.67157 5 1 4.32843 1 3.5Z" fill="currentColor" fill-opacity="0.64" data-v-0fb587ff${_scopeId}></path></svg><span data-v-0fb587ff${_scopeId}>Удалить</span></button></div><div class="items-list" data-v-0fb587ff${_scopeId}><!--[-->`);
+              _push2(`<span class="items-header__count" data-v-b5d1c0cb${_scopeId}>${ssrInterpolate(unref(cartItems).length)} ${ssrInterpolate(pluralItems(unref(cartItems).length))}</span></div><button class="items-header__delete" aria-label="Удалить выбранные тиражи" data-v-b5d1c0cb${_scopeId}><svg class="items-header__delete-icon" viewBox="0 0 16 16" fill="none" data-v-b5d1c0cb${_scopeId}><path d="M2 7H14L13.4744 11.7301C13.3067 13.24 13.2228 13.995 12.8745 14.5647C12.5677 15.0666 12.1201 15.4672 11.5874 15.7168C10.9826 16 10.223 16 8.70379 16H7.29621C5.77697 16 5.01735 16 4.41263 15.7168C3.87993 15.4672 3.43233 15.0666 3.12552 14.5647C2.77722 13.995 2.69333 13.24 2.52556 11.7301L2 7Z" fill="currentColor" fill-opacity="0.64" data-v-b5d1c0cb${_scopeId}></path><path d="M1 3.5C1 2.67157 1.67157 2 2.5 2C3.32843 2 3.97177 1.24281 4.53657 0.636766C4.90168 0.244995 5.42223 0 6 0H10C10.5778 0 11.0983 0.244995 11.4634 0.636766C12.0282 1.24281 12.6716 2 13.5 2C14.3284 2 15 2.67157 15 3.5C15 4.32843 14.3284 5 13.5 5H2.5C1.67157 5 1 4.32843 1 3.5Z" fill="currentColor" fill-opacity="0.64" data-v-b5d1c0cb${_scopeId}></path></svg><span data-v-b5d1c0cb${_scopeId}>Удалить</span></button></div><div class="items-list" data-v-b5d1c0cb${_scopeId}><!--[-->`);
               ssrRenderList(unref(cartItems), (item) => {
                 _push2(ssrRenderComponent(_component_CartItemRow, {
                   key: item.id,
@@ -10512,39 +10746,73 @@ const _sfc_main$3 = {
               });
               _push2(`<!--]--></div></div></div>`);
             }
-            _push2(ssrRenderComponent(_component_CartRecipient, null, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(_component_CartPickup, null, null, _parent2, _scopeId));
-            _push2(`</div><div class="right-column" data-v-0fb587ff${_scopeId}>`);
+            if (unref(cartItems).length > 0) {
+              _push2(ssrRenderComponent(_component_CartRecipient, {
+                "pay-as-legal": unref(payAsLegal),
+                "onUpdate:payAsLegal": ($event) => isRef(payAsLegal) ? payAsLegal.value = $event : null
+              }, null, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            if (unref(cartItems).length > 0) {
+              _push2(ssrRenderComponent(_component_CartPickup, null, null, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div><div class="right-column" data-v-b5d1c0cb${_scopeId}>`);
             _push2(ssrRenderComponent(_component_CartSummary, {
               "total-items": unref(selectedTotalItems),
               "total-price": unref(selectedTotalPrice),
+              "pay-as-legal": unref(payAsLegal),
               "pay-disabled": unref(selectedItems).length === 0,
               onPay
             }, null, _parent2, _scopeId));
             _push2(`</div></div>`);
+            _push2(ssrRenderComponent(_component_AuthEntryModal, {
+              modelValue: unref(isAuthEntryOpen),
+              "onUpdate:modelValue": ($event) => isRef(isAuthEntryOpen) ? isAuthEntryOpen.value = $event : null,
+              onCompleteLogin: refreshSession,
+              onCompleteRegistration: refreshSession
+            }, null, _parent2, _scopeId));
           } else {
             return [
               createVNode("div", { class: "modal-content" }, [
                 createVNode("div", { class: "left-column" }, [
-                  unref(cartItems).length === 0 ? (openBlock(), createBlock("div", {
+                  !unref(sessionUser) && !unref(isSessionPending) ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "card card--top"
+                    class: "auth-prompt"
+                  }, [
+                    createVNode("p", { class: "auth-prompt__title" }, " Войдите или зарегистрируйтесь "),
+                    createVNode("p", { class: "auth-prompt__text" }, [
+                      createTextVNode(" Вы сможете отслеживать статус заказа"),
+                      createVNode("br"),
+                      createTextVNode(" и пользоваться преимуществами личного кабинета ")
+                    ]),
+                    createVNode("button", {
+                      class: "auth-prompt__button",
+                      type: "button",
+                      onClick: ($event) => isAuthEntryOpen.value = true
+                    }, " Вход или регистрация ", 8, ["onClick"])
+                  ])) : createCommentVNode("", true),
+                  unref(cartItems).length === 0 ? (openBlock(), createBlock("div", {
+                    key: 1,
+                    class: ["card", !unref(sessionUser) && !unref(isSessionPending) ? "card--mid" : "card--top"]
                   }, [
                     createVNode("div", { class: "card__inner empty-state" }, [
-                      createVNode("p", { class: "empty-state__title" }, "Корзина пуста"),
-                      createVNode("p", { class: "empty-state__subtitle" }, "Воспользуйтесь каталогом, чтобы найти всё что нужно"),
+                      createVNode("p", { class: "empty-state__title" }, " Корзина пуста "),
+                      createVNode("p", { class: "empty-state__subtitle" }, " Воспользуйтесь каталогом, чтобы найти всё что нужно "),
                       createVNode("button", {
                         class: "empty-state__btn",
                         type: "button",
                         onClick: ($event) => emit("continue-shopping")
-                      }, "Начать покупки", 8, ["onClick"])
+                      }, " Начать покупки ", 8, ["onClick"])
                     ])
-                  ])) : (openBlock(), createBlock("div", {
-                    key: 1,
-                    class: "card card--top"
+                  ], 2)) : (openBlock(), createBlock("div", {
+                    key: 2,
+                    class: ["card", !unref(sessionUser) && !unref(isSessionPending) ? "card--mid" : "card--top"]
                   }, [
                     createVNode("div", { class: "card__inner" }, [
-                      createVNode("p", { class: "section-title" }, "Товары"),
+                      createVNode("p", { class: "section-title" }, " Товары "),
                       createVNode("div", { class: "items-header" }, [
                         createVNode("div", { class: "items-header__left" }, [
                           createVNode(_component_AppCheckbox, {
@@ -10592,19 +10860,30 @@ const _sfc_main$3 = {
                         }), 128))
                       ])
                     ])
-                  ])),
-                  createVNode(_component_CartRecipient),
-                  createVNode(_component_CartPickup)
+                  ], 2)),
+                  unref(cartItems).length > 0 ? (openBlock(), createBlock(_component_CartRecipient, {
+                    key: 3,
+                    "pay-as-legal": unref(payAsLegal),
+                    "onUpdate:payAsLegal": ($event) => isRef(payAsLegal) ? payAsLegal.value = $event : null
+                  }, null, 8, ["pay-as-legal", "onUpdate:payAsLegal"])) : createCommentVNode("", true),
+                  unref(cartItems).length > 0 ? (openBlock(), createBlock(_component_CartPickup, { key: 4 })) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "right-column" }, [
                   createVNode(_component_CartSummary, {
                     "total-items": unref(selectedTotalItems),
                     "total-price": unref(selectedTotalPrice),
+                    "pay-as-legal": unref(payAsLegal),
                     "pay-disabled": unref(selectedItems).length === 0,
                     onPay
-                  }, null, 8, ["total-items", "total-price", "pay-disabled"])
+                  }, null, 8, ["total-items", "total-price", "pay-as-legal", "pay-disabled"])
                 ])
-              ])
+              ]),
+              createVNode(_component_AuthEntryModal, {
+                modelValue: unref(isAuthEntryOpen),
+                "onUpdate:modelValue": ($event) => isRef(isAuthEntryOpen) ? isAuthEntryOpen.value = $event : null,
+                onCompleteLogin: refreshSession,
+                onCompleteRegistration: refreshSession
+              }, null, 8, ["modelValue", "onUpdate:modelValue"])
             ];
           }
         }),
@@ -10619,7 +10898,7 @@ _sfc_main$3.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/CartModal.vue");
   return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
 };
-const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-0fb587ff"]]);
+const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-b5d1c0cb"]]);
 const title = "Indigo — Печать флагов на заказ";
 const description = "Типография Indigo: печать флагов любых размеров и конфигураций. Конструктор флагов, быстрый заказ, доставка по России.";
 const _sfc_main$2 = {
