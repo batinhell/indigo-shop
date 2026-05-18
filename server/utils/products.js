@@ -84,29 +84,7 @@ function mapPriceRule(rule) {
   }
 }
 
-function mapProductOption(option, values) {
-  return {
-    id: Number(option.id),
-    key: option.key,
-    label: option.label,
-    type: option.type,
-    is_required: Boolean(option.is_required),
-    affects_price: Boolean(option.affects_price),
-    help_text: toNullableString(option.help_text),
-    sort: Number(option.sort ?? 0),
-    is_active: Boolean(option.is_active),
-    values: values.map(value => ({
-      id: Number(value.id),
-      key: value.key,
-      label: value.label,
-      sort: Number(value.sort ?? 0),
-      is_active: Boolean(value.is_active),
-      metadata: parseJsonValue(value.metadata)
-    }))
-  }
-}
-
-function mapProduct(product, priceRules, options = []) {
+function mapProduct(product, priceRules) {
   return {
     id: Number(product.id),
     category: product.category,
@@ -129,7 +107,6 @@ function mapProduct(product, priceRules, options = []) {
       title: toNullableString(product.seo_title),
       description: toNullableString(product.seo_description)
     },
-    options,
     price_rules: priceRules.map(mapPriceRule)
   }
 }
@@ -177,72 +154,6 @@ async function listProductRules(database, productIds) {
   return grouped
 }
 
-async function listProductOptions(database, productIds) {
-  if (!productIds.length) {
-    return new Map()
-  }
-
-  const options = await database
-    .selectFrom('product_options')
-    .select([
-      'id',
-      'product_id',
-      'key',
-      'label',
-      'type',
-      'is_required',
-      'affects_price',
-      'help_text',
-      'sort',
-      'is_active'
-    ])
-    .where('is_active', '=', true)
-    .where('product_id', 'in', productIds)
-    .orderBy('product_id', 'asc')
-    .orderBy('sort', 'asc')
-    .orderBy('id', 'asc')
-    .execute()
-
-  const optionIds = options.map(option => Number(option.id))
-  const values = optionIds.length
-    ? await database
-        .selectFrom('product_option_values')
-        .select([
-          'id',
-          'product_option_id',
-          'key',
-          'label',
-          'sort',
-          'is_active',
-          'metadata'
-        ])
-        .where('is_active', '=', true)
-        .where('product_option_id', 'in', optionIds)
-        .orderBy('product_option_id', 'asc')
-        .orderBy('sort', 'asc')
-        .orderBy('id', 'asc')
-        .execute()
-    : []
-
-  const valuesByOptionId = new Map()
-  for (const value of values) {
-    const key = Number(value.product_option_id)
-    const current = valuesByOptionId.get(key) ?? []
-    current.push(value)
-    valuesByOptionId.set(key, current)
-  }
-
-  const grouped = new Map()
-  for (const option of options) {
-    const productId = Number(option.product_id)
-    const current = grouped.get(productId) ?? []
-    current.push(mapProductOption(option, valuesByOptionId.get(Number(option.id)) ?? []))
-    grouped.set(productId, current)
-  }
-
-  return grouped
-}
-
 export async function getProducts(database, category) {
   try {
     let query = database
@@ -281,12 +192,10 @@ export async function getProducts(database, category) {
 
     const productIds = products.map(product => Number(product.id))
     const rulesByProductId = await listProductRules(database, productIds)
-    const optionsByProductId = await listProductOptions(database, productIds)
 
     return products.map(product => mapProduct(
       product,
-      rulesByProductId.get(Number(product.id)) ?? [],
-      optionsByProductId.get(Number(product.id)) ?? []
+      rulesByProductId.get(Number(product.id)) ?? []
     ))
   } catch (error) {
     assertProductsTableExists(error)
@@ -327,11 +236,9 @@ export async function getProductBySlug(database, slug) {
     }
 
     const rulesByProductId = await listProductRules(database, [Number(product.id)])
-    const optionsByProductId = await listProductOptions(database, [Number(product.id)])
     return mapProduct(
       product,
-      rulesByProductId.get(Number(product.id)) ?? [],
-      optionsByProductId.get(Number(product.id)) ?? []
+      rulesByProductId.get(Number(product.id)) ?? []
     )
   } catch (error) {
     assertProductsTableExists(error)
