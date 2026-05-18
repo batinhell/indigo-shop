@@ -14,7 +14,7 @@ const favoriteProducts = computed(() => (
 </script>
 
 <template>
-  <section class="profile-favorites">
+  <section class="profile-favorites app-card">
     <div class="profile-favorites__header">
       <h2 class="profile-favorites__title">
         Избранное
@@ -85,8 +85,6 @@ const favoriteProducts = computed(() => (
 .profile-favorites {
   width: 100%;
   padding: 2rem 1.5rem;
-  border-radius: $radius-main $radius-main $radius-card $radius-card;
-  background: #ffffff;
 
   &__header {
     display: flex;

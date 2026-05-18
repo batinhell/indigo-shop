@@ -101,7 +101,7 @@ onBeforeUnmount(clearCountdown)
 </script>
 
 <template>
-  <section class="profile-danger">
+  <section class="profile-danger app-card">
     <h2 class="profile-danger__title">
       Опасная зона
     </h2>
@@ -247,8 +247,6 @@ $color-negative: #ed5c68;
 .profile-danger {
   width: 100%;
   padding: 2rem 1.5rem;
-  border-radius: 2rem;
-  background: #ffffff;
 
   &__title {
     min-width: 100%;

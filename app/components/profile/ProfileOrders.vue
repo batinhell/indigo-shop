@@ -33,7 +33,7 @@ const orders = [
 </script>
 
 <template>
-  <section class="profile-orders">
+  <section class="profile-orders app-card">
     <h2 class="profile-orders__title">
       Заказы
     </h2>
@@ -69,8 +69,6 @@ const orders = [
 
 <style lang="scss" scoped>
 .profile-orders {
-  background: #ffffff;
-  border-radius: $radius-main;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

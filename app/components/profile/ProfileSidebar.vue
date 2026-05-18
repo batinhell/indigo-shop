@@ -39,7 +39,7 @@ async function logout() {
 </script>
 
 <template>
-  <aside class="profile-sidebar">
+  <aside class="profile-sidebar app-card">
     <nav class="profile-sidebar__nav">
       <button
         v-for="item in navItems"
@@ -76,11 +76,9 @@ async function logout() {
 
 <style lang="scss" scoped>
 .profile-sidebar {
-  background: #ffffff;
-  border-radius: 1rem;
   box-sizing: border-box;
   padding: 0.75rem;
-  width: 17.5rem;
+  width: 22.5rem;
 
   &__nav {
     display: flex;
@@ -151,15 +149,18 @@ async function logout() {
   }
 
   &__badge {
+    align-items: center;
+    display: inline-flex;
+    flex-shrink: 0;
     font-family: 'Manrope', sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    line-height: 1rem;
-    min-height: 1.25rem;
-    padding: 0.0625rem 0.5rem 0.1875rem;
+    height: 1.25rem;
+    justify-content: center;
+    line-height: 1;
+    padding: 0 0.5rem;
     border-radius: 0.375rem;
     white-space: nowrap;
-    flex-shrink: 0;
     font-feature-settings: 'lnum' 1, 'pnum' 1;
     text-align: center;
 
@@ -179,16 +180,9 @@ async function logout() {
     }
 
     &--favorite-count {
-      align-items: center;
       background: rgba(255, 235, 245, 0.5);
       color: #ff6bbf;
-      display: inline-flex;
-      height: 1.25rem;
-      justify-content: center;
       min-width: 1.25rem;
-      min-height: 1.25rem;
-      padding: 0 0.5rem;
-      text-align: center;
     }
   }
 

@@ -20,7 +20,7 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
     <!-- Summary Card -->
     <div
       v-if="totalItems === 0"
-      class="summary-card summary-card--empty"
+      class="summary-card summary-card--empty app-card"
     >
       <p class="section-title">
         Пусто
@@ -37,7 +37,7 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
 
     <div
       v-else
-      class="summary-card"
+      class="summary-card app-card"
     >
       <p class="section-title">
         Товары
@@ -88,7 +88,7 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
     </div>
 
     <!-- Help Card -->
-    <div class="help-card">
+    <div class="help-card app-card">
       <div class="help-card__info">
         <div class="help-card__text">
           <p class="help-card__title">
@@ -147,8 +147,6 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
 }
 
 .summary-card {
-  background: white;
-  border-radius: 2rem;
   padding: 2rem 1.25rem;
   display: flex;
   flex-direction: column;
@@ -314,8 +312,6 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
 }
 
 .help-card {
-  background: white;
-  border-radius: 1rem;
   padding: 1.5rem 1.25rem;
   display: flex;
   align-items: flex-start;

@@ -55,7 +55,7 @@ function backToOrders() {
 
       <div class="order-page__layout">
         <div class="order-page__main">
-          <section class="order-info">
+          <section class="order-info app-card">
             <article class="order-info__card">
               <div class="order-info__card-header">
                 <h2 class="order-info__card-title">
@@ -93,7 +93,7 @@ function backToOrders() {
             </article>
           </section>
 
-          <section class="order-items">
+          <section class="order-items app-card">
             <article
               v-for="item in orderItems"
               :key="item.id"
@@ -132,7 +132,7 @@ function backToOrders() {
         </div>
 
         <aside class="order-page__sidebar">
-          <section class="order-summary">
+          <section class="order-summary app-card">
             <h2 class="order-summary__title">
               Оплачено
             </h2>
@@ -166,7 +166,7 @@ function backToOrders() {
             </a>
           </section>
 
-          <section class="order-side-card">
+          <section class="order-side-card app-card">
             <div class="order-side-card__copy">
               <h2 class="order-side-card__title">
                 Нужна помощь с заказом?
@@ -193,7 +193,7 @@ function backToOrders() {
             </div>
           </section>
 
-          <section class="order-side-card">
+          <section class="order-side-card app-card">
             <div class="order-side-card__copy">
               <h2 class="order-side-card__title">
                 Хотите отменить заказ?
@@ -279,8 +279,6 @@ function backToOrders() {
 }
 
 .order-info {
-  background: #ffffff;
-  border-radius: $radius-main $radius-main $radius-card $radius-card;
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -342,8 +340,6 @@ function backToOrders() {
 }
 
 .order-items {
-  background: #ffffff;
-  border-radius: $radius-card $radius-card $radius-main $radius-main;
   padding: 1.5rem;
 }
 
@@ -435,12 +431,10 @@ function backToOrders() {
 
 .order-summary,
 .order-side-card {
-  background: #ffffff;
   width: 100%;
 }
 
 .order-summary {
-  border-radius: $radius-main;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -517,7 +511,6 @@ function backToOrders() {
 
 .order-side-card {
   align-items: flex-start;
-  border-radius: $radius-card;
   display: flex;
   gap: 1rem;
   padding: 1.5rem 1.25rem;

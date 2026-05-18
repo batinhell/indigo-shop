@@ -1,4 +1,6 @@
 <script setup>
+import onlineOrderIcon from '~/assets/icons/catalog-online-order.svg'
+
 const props = defineProps({
   image: {
     type: String,
@@ -50,7 +52,7 @@ const props = defineProps({
   },
   typeText: {
     type: String,
-    default: 'Онлайн-заказ'
+    default: ''
   },
   isFavorite: {
     type: Boolean,
@@ -90,7 +92,14 @@ function setActiveImage(index) {
 </script>
 
 <template>
-  <article class="catalog-product-card">
+  <article
+    class="catalog-product-card"
+    role="button"
+    tabindex="0"
+    @click="$emit('select')"
+    @keydown.enter="$emit('select')"
+    @keydown.space.prevent="$emit('select')"
+  >
     <div class="catalog-product-card__media">
       <img
         v-if="activeImage"
@@ -109,6 +118,7 @@ function setActiveImage(index) {
         <div class="catalog-product-card__media-top">
           <AppFavoriteButton
             :active="isFavorite"
+            @click.stop
             @change="$emit('toggle-favorite', $event)"
           />
         </div>
@@ -134,6 +144,7 @@ function setActiveImage(index) {
               class="catalog-product-card__dot"
               :class="{ 'catalog-product-card__dot--active': index === activeImageIndex }"
               tabindex="-1"
+              @click.stop
               @mouseenter="setActiveImage(index)"
               @focus="setActiveImage(index)"
             />
@@ -143,12 +154,27 @@ function setActiveImage(index) {
     </div>
 
     <div class="catalog-product-card__content">
-      <div class="catalog-product-card__main">
+      <div class="catalog-product-card__badges">
         <ProductTermBadge
           :text="deliveryText"
           :timing="deliveryTiming"
         />
 
+        <div
+          v-if="typeText"
+          class="catalog-product-card__type-badge"
+        >
+          <img
+            :src="onlineOrderIcon"
+            alt=""
+            class="catalog-product-card__type-icon"
+            aria-hidden="true"
+          >
+          <span>{{ typeText }}</span>
+        </div>
+      </div>
+
+      <div class="catalog-product-card__main">
         <h3 class="catalog-product-card__title">
           {{ title }}
         </h3>
@@ -187,9 +213,17 @@ function setActiveImage(index) {
   box-shadow: inset 0 0 1.5rem rgba(4, 18, 27, 0.04);
 }
 
+.catalog-product-card {
+  cursor: pointer;
+}
+
+.catalog-product-card:focus-visible {
+  outline: 0.125rem solid rgba(102, 54, 255, 0.45);
+  outline-offset: 0.1875rem;
+}
+
 .catalog-product-card__media {
   border-radius: 1.5rem;
-  cursor: pointer;
   height: 16.25rem;
   overflow: hidden;
   position: relative;
@@ -275,6 +309,40 @@ function setActiveImage(index) {
   flex-direction: column;
   gap: 0.75rem;
   padding: 1rem 1rem 1.5rem;
+}
+
+.catalog-product-card__badges {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.catalog-product-card__type-badge {
+  align-items: center;
+  background: #efeaff;
+  border-radius: 0.375rem;
+  color: #6636ff;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 0.25rem;
+  justify-content: center;
+  padding: 0.25rem 0.375rem;
+}
+
+.catalog-product-card__type-badge span {
+  font-feature-settings: 'lnum' 1, 'pnum' 1;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 0.75rem;
+  white-space: nowrap;
+}
+
+.catalog-product-card__type-icon {
+  display: block;
+  flex-shrink: 0;
+  height: 0.75rem;
+  width: 0.75rem;
 }
 
 .catalog-product-card__main {

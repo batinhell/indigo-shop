@@ -1,5 +1,5 @@
 <template>
-  <div class="card card--bottom">
+  <div class="card card--bottom app-card">
     <div class="card__inner">
       <div class="pickup-header">
         <p class="section-title">
@@ -39,11 +39,6 @@
 </template>
 
 <style lang="scss" scoped>
-.card--bottom {
-  background: white;
-  border-radius: 2rem;
-}
-
 .card__inner {
   display: flex;
   flex-direction: column;

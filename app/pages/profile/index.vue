@@ -277,7 +277,7 @@ $color-base: #04121b;
 
   &__title {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 800;
     line-height: 2.5rem;
     color: $color-base;
     margin: 1.5rem 0 2rem;
@@ -286,13 +286,13 @@ $color-base: #04121b;
 
   &__layout {
     display: flex;
-    gap: 1.5rem;
+    gap: 0.375rem;
     align-items: flex-start;
   }
 
   &__sidebar {
     flex-shrink: 0;
-    width: 280px;
+    width: 22.5rem;
   }
 
   &__content {

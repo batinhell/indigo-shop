@@ -20,7 +20,7 @@ const activeImage = computed(() => props.images.find(Boolean) || props.image || 
 </script>
 
 <template>
-  <article class="profile-favorite-card">
+  <article class="profile-favorite-card app-card">
     <div class="profile-favorite-card__media">
       <img
         v-if="activeImage"
@@ -53,8 +53,6 @@ const activeImage = computed(() => props.images.find(Boolean) || props.image || 
 
 <style scoped>
 .profile-favorite-card {
-  background: #ffffff;
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   min-width: 0;

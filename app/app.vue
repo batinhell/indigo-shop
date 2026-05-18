@@ -5,7 +5,6 @@ import { authClient } from '~/utils/auth-client.js'
 const title = 'Indigo — Печать флагов на заказ'
 const description = 'Типография Indigo: печать флагов любых размеров и конфигураций. Конструктор флагов, быстрый заказ, доставка по России.'
 const route = useRoute()
-const isCartOpen = ref(false)
 const session = authClient.useSession()
 const profileStore = useProfileStore()
 const { isLoaded: isProfileLoaded } = storeToRefs(profileStore)
@@ -31,15 +30,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-function openCart() {
-  isCartOpen.value = true
-}
-
-function continueShopping() {
-  isCartOpen.value = false
-  navigateTo('/catalog')
-}
-
 watch(
   sessionUser,
   (user) => {
@@ -60,17 +50,12 @@ watch(
   <UApp>
     <DevGridOverlay v-if="isGridEnabled" />
 
-    <AppHeader @open-cart="openCart" />
+    <AppHeader />
 
     <UMain>
       <NuxtPage />
     </UMain>
 
     <AppFooter />
-
-    <CartModal
-      v-model="isCartOpen"
-      @continue-shopping="continueShopping"
-    />
   </UApp>
 </template>

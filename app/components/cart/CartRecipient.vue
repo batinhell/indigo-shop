@@ -219,7 +219,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="personal-data-card">
+  <div class="personal-data-card app-card">
     <div class="personal-data-card__inner">
       <p class="section-title">
         Данные пользователя
@@ -442,9 +442,6 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 .personal-data-card {
-  background: white;
-  border-radius: 2rem;
-
   &__inner {
     display: flex;
     flex-direction: column;

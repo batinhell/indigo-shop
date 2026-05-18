@@ -4,7 +4,7 @@ const smsNotifications = ref(false)
 </script>
 
 <template>
-  <section class="profile-notifications">
+  <section class="profile-notifications app-card">
     <h2 class="profile-notifications__title">
       Настройка уведомлений
     </h2>
@@ -53,8 +53,6 @@ $color-base: #04121b;
 .profile-notifications {
   width: 100%;
   padding: 2rem 1.5rem;
-  border-radius: 2rem;
-  background: #ffffff;
 
   &__title {
     width: 100%;

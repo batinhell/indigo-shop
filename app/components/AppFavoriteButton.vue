@@ -19,6 +19,8 @@ watch(() => props.active, (value) => {
 })
 
 function onToggle(event) {
+  event.stopPropagation()
+
   const nextValue = !isActive.value
   isActive.value = nextValue
 

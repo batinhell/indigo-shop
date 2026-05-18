@@ -225,7 +225,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="profile-organizations">
+  <section class="profile-organizations app-card">
     <h2 class="profile-organizations__title">
       Организации
     </h2>
@@ -289,7 +289,7 @@ onBeforeUnmount(() => {
         <div class="profile-organizations__add-copy">
           <span class="profile-organizations__add-title">Добавить организацию</span>
           <span class="profile-organizations__add-text">
-            Чтобы платить безналом и пользоваться ЭДО
+            Чтобы платить безналом и&nbsp;пользоваться ЭДО
           </span>
         </div>
 
@@ -388,8 +388,6 @@ $color-purple: #de7aff;
 .profile-organizations {
   width: 100%;
   padding: 2rem 1.5rem;
-  border-radius: 2rem;
-  background: #ffffff;
 
   &__title {
     width: 100%;

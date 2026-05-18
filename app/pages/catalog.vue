@@ -1,4 +1,5 @@
 <script setup>
+import progressSmile from '~/assets/icons/landing-progress-smile.svg'
 import { catalogCategoryItems, catalogProducts } from '~/constants/catalog-products.js'
 
 const title = 'Каталог — Indigo'
@@ -19,7 +20,11 @@ const collapsedCategories = reactive(
   Object.fromEntries(catalogCategoryItems.map(category => [category.id, false]))
 )
 
+const isConstructorOpen = ref(false)
+const isManagerOrderOpen = ref(false)
+const selectedManagerOrderProduct = ref(null)
 const { isFavorite, toggleItem } = useFavorites()
+const { addItem } = useCart()
 
 function normalizeFavoriteProduct(product) {
   return {
@@ -41,6 +46,21 @@ function toggleFavorite(product) {
 
 function toggleCategory(categoryId) {
   collapsedCategories[categoryId] = !collapsedCategories[categoryId]
+}
+
+function openConstructor(product) {
+  if (product.orderType === 'online') {
+    isConstructorOpen.value = true
+    return
+  }
+
+  selectedManagerOrderProduct.value = product
+  isManagerOrderOpen.value = true
+}
+
+function addConstructorItemToCart(item) {
+  addItem(item)
+  isConstructorOpen.value = false
 }
 
 useSeoMeta({
@@ -114,8 +134,10 @@ useSeoMeta({
             :discount="item.discount"
             :delivery-text="item.deliveryText"
             :delivery-timing="item.deliveryTiming"
+            :type-text="item.orderType === 'online' ? 'Онлайн-заказ' : ''"
             :show-badge="Boolean(item.discount)"
             :is-favorite="isFavorite(item.id)"
+            @select="openConstructor(item)"
             @toggle-favorite="toggleFavorite(item)"
           />
         </div>
@@ -151,16 +173,29 @@ useSeoMeta({
               над наполнением каталога
             </h2>
             <p class="catalog-page__notice-description">
-              Скоро тут появятся: корпоративная продукция, товары для свадеб и оформления магазинов, фотоальбомы и товары для художников
+              Скоро тут появятся: корпоративная продукция, товары для свадеб и&nbsp;оформления магазинов, фотоальбомы и&nbsp;товары для&nbsp;художников
             </p>
-            <span
+            <img
+              :src="progressSmile"
+              alt=""
               class="catalog-page__notice-arrow"
               aria-hidden="true"
-            >⌣</span>
+            >
           </div>
         </div>
       </section>
     </div>
+
+    <ConstructorModal
+      v-model="isConstructorOpen"
+      @pay="addConstructorItemToCart"
+      @add-to-cart="addConstructorItemToCart"
+    />
+
+    <ManagerOrderModal
+      v-model="isManagerOrderOpen"
+      :product-title="selectedManagerOrderProduct?.title"
+    />
   </main>
 </template>
 
@@ -381,10 +416,9 @@ useSeoMeta({
 }
 
 .catalog-page__notice-arrow {
-  color: #de7aff;
-  font-size: 2.5rem;
-  font-weight: 600;
-  line-height: 1;
+  display: block;
+  height: 2.5rem;
+  width: 3.9375rem;
 }
 
 @media (max-width: 960px) {

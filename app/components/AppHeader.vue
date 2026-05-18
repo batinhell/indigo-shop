@@ -6,8 +6,6 @@ import headerLogoBg4 from '~/assets/icons/header-logo-bg-4.svg'
 import headerLogoText from '~/assets/icons/header-logo-text.svg'
 import { authClient } from '~/utils/auth-client.js'
 
-const emit = defineEmits(['open-cart'])
-
 const navLinks = [
   { label: 'Каталог', to: '/catalog' },
   { label: 'О нас', to: '', hidden: true },
@@ -80,7 +78,7 @@ const isSignOutPending = ref(false)
 
 function onActionClick(item) {
   if (item.key === 'cart') {
-    emit('open-cart')
+    navigateTo('/cart')
     return
   }
 

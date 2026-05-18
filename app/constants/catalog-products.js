@@ -60,7 +60,8 @@ export const catalogProducts = [
     price: 'от 590 ₽',
     discount: '−16% от 100 шт',
     deliveryText: 'от 5 дней',
-    deliveryTiming: 'medium'
+    deliveryTiming: 'medium',
+    orderType: 'online'
   },
   {
     id: 'catalog-textile-5',
@@ -71,7 +72,8 @@ export const catalogProducts = [
     price: 'от 200 ₽',
     discount: '−40% от 100 шт',
     deliveryText: 'от 5 дней',
-    deliveryTiming: 'medium'
+    deliveryTiming: 'medium',
+    orderType: 'online'
   },
   {
     id: 'catalog-textile-6',
@@ -104,7 +106,8 @@ export const catalogProducts = [
     price: 'от 200 ₽',
     discount: '−75% от 300 шт',
     deliveryText: 'от 5 дней',
-    deliveryTiming: 'medium'
+    deliveryTiming: 'medium',
+    orderType: 'online'
   },
   {
     id: 'catalog-textile-9',

@@ -300,7 +300,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="profile-personal">
+  <section class="profile-personal app-card">
     <ProfilePhoneEditModal
       v-model="isPhoneModalOpen"
       :current-phone="phone"
@@ -580,7 +580,7 @@ onBeforeUnmount(() => {
           <div class="profile-recipient__toggle-copy">
             <span class="profile-recipient__toggle-title">Добавить получателя</span>
             <span class="profile-recipient__toggle-text">
-              Добавьте людей, которые могут получить заказ за вас
+              Добавьте людей, которые могут&nbsp;получить заказ за вас
             </span>
           </div>
 
@@ -609,8 +609,6 @@ $color-purple: #de7aff;
 .profile-personal {
   width: 100%;
   padding: 2rem 1.5rem;
-  border-radius: 2rem;
-  background: #ffffff;
 
   &__title {
     width: 100%;

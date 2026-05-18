@@ -3,14 +3,14 @@ import footerLogo from '~/assets/icons/footer-logo.svg'
 import footerSbp from '~/assets/icons/footer-sbp.svg'
 
 const catalogLinks = [
-  { label: 'Художникам', to: '' },
-  { label: 'Свадебное', to: '' },
-  { label: 'Фотоальбомы', to: '' },
-  { label: 'Текстиль', to: '' },
-  { label: 'Оформление магазинов', to: '' },
-  { label: 'Подарки', to: '' },
-  { label: 'Корпоративная продукция', to: '' },
-  { label: 'К мероприятиям', to: '' }
+  { label: 'Художникам', to: '/catalog' },
+  { label: 'Свадебное', to: '/catalog' },
+  { label: 'Фотоальбомы', to: '/catalog' },
+  { label: 'Текстиль', to: '/catalog' },
+  { label: 'Оформление магазинов', to: '/catalog' },
+  { label: 'Подарки', to: '/catalog' },
+  { label: 'Корпоративная продукция', to: '/catalog' },
+  { label: 'К мероприятиям', to: '/catalog' }
 ]
 
 const companyLinks = [
@@ -146,11 +146,13 @@ const bottomItems = [
 
         <div class="footer__info">
           <div class="footer__info-column">
-            <img
-              :src="footerLogo"
-              alt="Типография Индиго"
-              class="footer__logo"
-            >
+            <div class="footer__info-media">
+              <img
+                :src="footerLogo"
+                alt="Типография Индиго"
+                class="footer__logo"
+              >
+            </div>
             <p class="footer__legal-text">
               ИП РУЧКО АНАСТАСИЯ ВИКТОРОВНА<br>
               ИНН 930900107014<br>
@@ -160,18 +162,22 @@ const bottomItems = [
           </div>
 
           <div class="footer__info-column">
-            <img
-              :src="footerSbp"
-              alt="СБП"
-              class="footer__sbp"
-            >
-            <p class="footer__legal-text footer__legal-text_gap">
-              Безналичный расчет<br>
-              для юридических лиц и ИП.
-            </p>
-            <p class="footer__legal-text">
-              Информация по приказу Минцифры #511 от 02.06.2025
-            </p>
+            <div class="footer__info-media">
+              <img
+                :src="footerSbp"
+                alt="СБП"
+                class="footer__sbp"
+              >
+            </div>
+            <div class="footer__payment-info">
+              <p class="footer__legal-text">
+                Безналичный расчет<br>
+                для юридических лиц и ИП.
+              </p>
+              <p class="footer__legal-text">
+                Информация по приказу Минцифры #511 от 02.06.2025
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -363,6 +369,12 @@ const bottomItems = [
   gap: 0.75rem;
 }
 
+.footer__info-media {
+  align-items: center;
+  display: flex;
+  height: 48px;
+}
+
 .footer__logo {
   height: 45px;
   width: 117px;
@@ -370,8 +382,13 @@ const bottomItems = [
 
 .footer__sbp {
   height: 32px;
-  margin-top: 0.5rem;
   width: 53px;
+}
+
+.footer__payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
 }
 
 .footer__legal-text {
@@ -380,10 +397,6 @@ const bottomItems = [
   font-weight: 600;
   line-height: 1.125rem;
   margin: 0;
-}
-
-.footer__legal-text_gap {
-  margin-top: 0.375rem;
 }
 
 .footer__bottom {

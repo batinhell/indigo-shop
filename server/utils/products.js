@@ -12,6 +12,17 @@ function toNullableString(value) {
   return value == null ? null : String(value)
 }
 
+function parseJsonValue(value) {
+  if (value == null || value === '') return null
+  if (typeof value === 'object') return value
+
+  try {
+    return JSON.parse(String(value))
+  } catch {
+    return null
+  }
+}
+
 function parseDecimalToMinorUnits(value) {
   if (value == null || value === '') {
     return null
@@ -61,22 +72,50 @@ function mapPriceRule(rule) {
     key: toNullableString(rule.key),
     label: rule.label,
     size: toNullableString(rule.size),
+    conditions: parseJsonValue(rule.conditions),
     min_quantity: rule.min_quantity == null ? null : Number(rule.min_quantity),
     max_quantity: rule.max_quantity == null ? null : Number(rule.max_quantity),
     price: rule.price == null ? null : String(rule.price),
     percent: rule.percent == null ? null : String(rule.percent),
     factor: rule.factor == null ? null : String(rule.factor),
+    amount_scope: toNullableString(rule.amount_scope) ?? 'per_unit',
+    is_active: Boolean(rule.is_active ?? true),
     sort: Number(rule.sort ?? 0)
   }
 }
 
-function mapProduct(product, priceRules) {
+function mapProductOption(option, values) {
+  return {
+    id: Number(option.id),
+    key: option.key,
+    label: option.label,
+    type: option.type,
+    is_required: Boolean(option.is_required),
+    affects_price: Boolean(option.affects_price),
+    help_text: toNullableString(option.help_text),
+    sort: Number(option.sort ?? 0),
+    is_active: Boolean(option.is_active),
+    values: values.map(value => ({
+      id: Number(value.id),
+      key: value.key,
+      label: value.label,
+      sort: Number(value.sort ?? 0),
+      is_active: Boolean(value.is_active),
+      metadata: parseJsonValue(value.metadata)
+    }))
+  }
+}
+
+function mapProduct(product, priceRules, options = []) {
   return {
     id: Number(product.id),
     category: product.category,
     name: product.name,
     slug: product.slug,
     status: product.status,
+    online_order_enabled: Boolean(product.online_order_enabled),
+    calculator_type: toNullableString(product.calculator_type) ?? 'none',
+    sort: Number(product.sort ?? 0),
     price_from: toNullableString(product.price_from),
     price_unit: toNullableString(product.price_unit),
     min_circulation: toNullableString(product.min_circulation),
@@ -90,6 +129,7 @@ function mapProduct(product, priceRules) {
       title: toNullableString(product.seo_title),
       description: toNullableString(product.seo_description)
     },
+    options,
     price_rules: priceRules.map(mapPriceRule)
   }
 }
@@ -108,13 +148,17 @@ async function listProductRules(database, productIds) {
       'key',
       'label',
       'size',
+      'conditions',
       'min_quantity',
       'max_quantity',
       'price',
       'percent',
       'factor',
+      'amount_scope',
+      'is_active',
       'sort'
     ])
+    .where('is_active', '=', true)
     .where('product_id', 'in', productIds)
     .orderBy('product_id', 'asc')
     .orderBy('sort', 'asc')
@@ -133,6 +177,72 @@ async function listProductRules(database, productIds) {
   return grouped
 }
 
+async function listProductOptions(database, productIds) {
+  if (!productIds.length) {
+    return new Map()
+  }
+
+  const options = await database
+    .selectFrom('product_options')
+    .select([
+      'id',
+      'product_id',
+      'key',
+      'label',
+      'type',
+      'is_required',
+      'affects_price',
+      'help_text',
+      'sort',
+      'is_active'
+    ])
+    .where('is_active', '=', true)
+    .where('product_id', 'in', productIds)
+    .orderBy('product_id', 'asc')
+    .orderBy('sort', 'asc')
+    .orderBy('id', 'asc')
+    .execute()
+
+  const optionIds = options.map(option => Number(option.id))
+  const values = optionIds.length
+    ? await database
+        .selectFrom('product_option_values')
+        .select([
+          'id',
+          'product_option_id',
+          'key',
+          'label',
+          'sort',
+          'is_active',
+          'metadata'
+        ])
+        .where('is_active', '=', true)
+        .where('product_option_id', 'in', optionIds)
+        .orderBy('product_option_id', 'asc')
+        .orderBy('sort', 'asc')
+        .orderBy('id', 'asc')
+        .execute()
+    : []
+
+  const valuesByOptionId = new Map()
+  for (const value of values) {
+    const key = Number(value.product_option_id)
+    const current = valuesByOptionId.get(key) ?? []
+    current.push(value)
+    valuesByOptionId.set(key, current)
+  }
+
+  const grouped = new Map()
+  for (const option of options) {
+    const productId = Number(option.product_id)
+    const current = grouped.get(productId) ?? []
+    current.push(mapProductOption(option, valuesByOptionId.get(Number(option.id)) ?? []))
+    grouped.set(productId, current)
+  }
+
+  return grouped
+}
+
 export async function getProducts(database, category) {
   try {
     let query = database
@@ -143,6 +253,9 @@ export async function getProducts(database, category) {
         'name',
         'slug',
         'status',
+        'online_order_enabled',
+        'calculator_type',
+        'sort',
         'price_from',
         'price_unit',
         'min_circulation',
@@ -168,8 +281,13 @@ export async function getProducts(database, category) {
 
     const productIds = products.map(product => Number(product.id))
     const rulesByProductId = await listProductRules(database, productIds)
+    const optionsByProductId = await listProductOptions(database, productIds)
 
-    return products.map(product => mapProduct(product, rulesByProductId.get(Number(product.id)) ?? []))
+    return products.map(product => mapProduct(
+      product,
+      rulesByProductId.get(Number(product.id)) ?? [],
+      optionsByProductId.get(Number(product.id)) ?? []
+    ))
   } catch (error) {
     assertProductsTableExists(error)
   }
@@ -185,6 +303,9 @@ export async function getProductBySlug(database, slug) {
         'name',
         'slug',
         'status',
+        'online_order_enabled',
+        'calculator_type',
+        'sort',
         'price_from',
         'price_unit',
         'min_circulation',
@@ -206,7 +327,12 @@ export async function getProductBySlug(database, slug) {
     }
 
     const rulesByProductId = await listProductRules(database, [Number(product.id)])
-    return mapProduct(product, rulesByProductId.get(Number(product.id)) ?? [])
+    const optionsByProductId = await listProductOptions(database, [Number(product.id)])
+    return mapProduct(
+      product,
+      rulesByProductId.get(Number(product.id)) ?? [],
+      optionsByProductId.get(Number(product.id)) ?? []
+    )
   } catch (error) {
     assertProductsTableExists(error)
   }
@@ -227,9 +353,60 @@ function matchesQuantity(rule, quantity) {
   return true
 }
 
-function pickBasePriceRule(priceRules, quantity, size) {
-  const baseRules = priceRules.filter(rule => rule.type === 'base_price')
-  const tierRules = priceRules.filter(rule => rule.type === 'tier_price')
+function getPayloadOptionValues(payload, size) {
+  const values = { size }
+  const options = payload?.options
+
+  if (Array.isArray(options)) {
+    for (const key of options) {
+      values[String(key)] = true
+    }
+  } else if (options && typeof options === 'object') {
+    for (const [key, value] of Object.entries(options)) {
+      values[key] = value
+    }
+  }
+
+  return values
+}
+
+function matchesConditions(rule, optionValues) {
+  const conditions = rule.conditions
+
+  if (!conditions || typeof conditions !== 'object' || Array.isArray(conditions)) {
+    return true
+  }
+
+  return Object.entries(conditions).every(([key, expected]) => {
+    const actual = optionValues[key]
+
+    if (typeof expected === 'boolean') {
+      return Boolean(actual) === expected
+    }
+
+    return String(actual ?? '') === String(expected)
+  })
+}
+
+function hasConditions(rule) {
+  const conditions = rule.conditions
+  return Boolean(
+    conditions
+    && typeof conditions === 'object'
+    && !Array.isArray(conditions)
+    && Object.keys(conditions).length
+  )
+}
+
+function pickBasePriceRule(priceRules, quantity, size, optionValues) {
+  const baseRules = priceRules.filter(rule => (
+    rule.type === 'base_price'
+    && matchesConditions(rule, optionValues)
+  ))
+  const tierRules = priceRules.filter(rule => (
+    rule.type === 'tier_price'
+    && matchesConditions(rule, optionValues)
+  ))
 
   const hasSizedBaseRules = baseRules.some(rule => rule.size)
   let selectedBaseRule = null
@@ -299,15 +476,19 @@ function pickBasePriceRule(priceRules, quantity, size) {
   }
 }
 
-function getSelectedOptionRules(priceRules, optionKeys) {
+function getSelectedOptionRules(priceRules, optionKeys, optionValues) {
   const selectedKeys = new Set(optionKeys)
 
   return priceRules.filter((rule) => {
-    if (!selectedKeys.has(rule.key)) {
+    if (!['fixed_option', 'percent_option', 'multiplier'].includes(rule.type)) {
       return false
     }
 
-    return ['fixed_option', 'percent_option', 'multiplier'].includes(rule.type)
+    if (hasConditions(rule) && matchesConditions(rule, optionValues)) {
+      return true
+    }
+
+    return selectedKeys.has(rule.key)
   })
 }
 
@@ -330,6 +511,7 @@ export function calculateProductPrice(product, payload) {
   const optionKeys = Array.isArray(payload?.options)
     ? payload.options.map(option => String(option))
     : []
+  const optionValues = getPayloadOptionValues(payload, size)
 
   if (!Number.isInteger(quantity) || quantity < 1) {
     throw createError({
@@ -349,7 +531,7 @@ export function calculateProductPrice(product, payload) {
     })
   }
 
-  const { effectiveRule, unitPrice } = pickBasePriceRule(product.price_rules, quantity, size)
+  const { effectiveRule, unitPrice } = pickBasePriceRule(product.price_rules, quantity, size, optionValues)
   const lines = []
   let subtotal = unitPrice * quantity
 
@@ -358,13 +540,17 @@ export function calculateProductPrice(product, payload) {
     amount: toMoneyResponse(subtotal)
   })
 
-  const selectedOptionRules = getSelectedOptionRules(product.price_rules, optionKeys)
+  const selectedOptionRules = getSelectedOptionRules(product.price_rules, optionKeys, optionValues)
   assertKnownOptions(selectedOptionRules, optionKeys)
 
   const fixedOptionRules = selectedOptionRules.filter(rule => rule.type === 'fixed_option')
   const percentOptionRules = selectedOptionRules.filter(rule => rule.type === 'percent_option')
   const multiplierRules = selectedOptionRules.filter(rule => rule.type === 'multiplier')
-  const discountRules = product.price_rules.filter(rule => rule.type === 'discount' && matchesQuantity(rule, quantity))
+  const discountRules = product.price_rules.filter(rule => (
+    rule.type === 'discount'
+    && matchesQuantity(rule, quantity)
+    && matchesConditions(rule, optionValues)
+  ))
 
   for (const rule of fixedOptionRules) {
     const optionPrice = parseDecimalToMinorUnits(rule.price)
@@ -377,7 +563,7 @@ export function calculateProductPrice(product, payload) {
       })
     }
 
-    const amount = optionPrice * quantity
+    const amount = rule.amount_scope === 'per_order' ? optionPrice : optionPrice * quantity
     subtotal += amount
     lines.push({
       label: rule.label,

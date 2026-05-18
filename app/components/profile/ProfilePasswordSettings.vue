@@ -242,7 +242,7 @@ async function savePassword() {
 </script>
 
 <template>
-  <section class="profile-password">
+  <section class="profile-password app-card">
     <h2 class="profile-password__title">
       Пароль
     </h2>
@@ -431,10 +431,9 @@ $color-error-bg: #ffebed;
   flex-direction: column;
   gap: 3rem;
   align-items: flex-start;
-  width: 100%;
+  max-width: calc(100vw - 2rem);
+  width: 51.25rem;
   padding: 2rem 1.5rem;
-  border-radius: 2rem;
-  background: #ffffff;
 
   &__title {
     width: 100%;
@@ -645,6 +644,7 @@ $color-error-bg: #ffebed;
     gap: 2rem;
     min-height: auto;
     padding: 1.5rem 1rem;
+    width: 100%;
   }
 
   .profile-password-change {

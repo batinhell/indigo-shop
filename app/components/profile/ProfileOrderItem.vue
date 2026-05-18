@@ -57,7 +57,7 @@ const statusMap = {
 <template>
   <NuxtLink
     :to="to"
-    class="profile-order-item"
+    class="profile-order-item app-card"
   >
     <div class="profile-order-item__top">
       <div class="profile-order-item__details">
@@ -132,8 +132,6 @@ const statusMap = {
 
 <style lang="scss" scoped>
 .profile-order-item {
-  background: #ffffff;
-  border-radius: $radius-card;
   cursor: pointer;
   display: flex;
   flex-direction: column;

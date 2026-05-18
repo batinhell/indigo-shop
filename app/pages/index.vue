@@ -1,4 +1,5 @@
 <script setup>
+import progressSmile from '~/assets/icons/landing-progress-smile.svg'
 import heroPattern from '~/assets/images/landing-hero-pattern.svg'
 
 const title = 'Типография Индиго'
@@ -92,10 +93,12 @@ useSeoMeta({
           Скоро тут появятся: информация о нас, примеры готовых работ,
           ответы на частые вопросы и блок о проектной работе
         </p>
-        <span
+        <img
+          :src="progressSmile"
+          alt=""
           class="landing-placeholder__smile"
           aria-hidden="true"
-        >⌣</span>
+        >
       </div>
     </section>
   </main>
@@ -269,12 +272,11 @@ useSeoMeta({
 }
 
 .landing-placeholder__smile {
-  color: #de7aff;
-  display: inline-block;
-  font-size: 3rem;
-  font-weight: 800;
-  line-height: 1;
+  display: block;
+  height: 2.5rem;
   margin-top: 1.625rem;
+  margin-inline: auto;
+  width: 3.9375rem;
 }
 
 @media (max-width: 768px) {

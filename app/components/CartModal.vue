@@ -89,7 +89,7 @@ async function refreshSession() {
       <div class="left-column">
         <div
           v-if="!sessionUser && !isSessionPending"
-          class="auth-prompt"
+          class="auth-prompt app-card"
         >
           <p class="auth-prompt__title">
             Войдите или зарегистрируйтесь
@@ -110,7 +110,7 @@ async function refreshSession() {
         <!-- Empty state -->
         <div
           v-if="cartItems.length === 0"
-          class="card"
+          class="card app-card"
           :class="!sessionUser && !isSessionPending ? 'card--mid' : 'card--top'"
         >
           <div class="card__inner empty-state">
@@ -133,7 +133,7 @@ async function refreshSession() {
         <!-- Products Section -->
         <div
           v-else
-          class="card"
+          class="card app-card"
           :class="!sessionUser && !isSessionPending ? 'card--mid' : 'card--top'"
         >
           <div class="card__inner">
@@ -200,16 +200,12 @@ async function refreshSession() {
 </template>
 
 <style lang="scss" scoped>
-$cart-card-radius: 2rem;
-
 .auth-prompt {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
   padding: 2rem 1.5rem;
-  background: white;
-  border-radius: $cart-card-radius;
 
   &__title {
     font-size: 1.625rem;
@@ -341,16 +337,6 @@ $cart-card-radius: 2rem;
 }
 
 .card {
-  background: white;
-
-  &--top {
-    border-radius: $cart-card-radius;
-  }
-
-  &--mid {
-    border-radius: $cart-card-radius;
-  }
-
   &__inner {
     display: flex;
     flex-direction: column;
