@@ -87,7 +87,7 @@ function createHead(options = {}) {
 const NUXT_PAYLOAD_INLINE = false;
 const NUXT_RUNTIME_PAYLOAD_EXTRACTION = false;
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[{"rel":"icon","href":"/favicon.ico"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"ru"}};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[{"rel":"icon","href":"/favicon/favicon.ico","sizes":"any"},{"rel":"icon","type":"image/png","sizes":"32x32","href":"/favicon/favicon-32x32.png"},{"rel":"icon","type":"image/png","sizes":"16x16","href":"/favicon/favicon-16x16.png"},{"rel":"apple-touch-icon","sizes":"180x180","href":"/favicon/apple-touch-icon.png"},{"rel":"manifest","href":"/favicon/site.webmanifest"}],"style":[],"script":[],"noscript":[],"htmlAttrs":{"lang":"ru"}};
 
 const appRootTag = "div";
 
