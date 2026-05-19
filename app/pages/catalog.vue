@@ -22,6 +22,7 @@ const collapsedCategories = reactive(
 
 const isConstructorOpen = ref(false)
 const isManagerOrderOpen = ref(false)
+const selectedOnlineOrderProduct = ref(null)
 const selectedManagerOrderProduct = ref(null)
 const { isFavorite, toggleItem } = useFavorites()
 const { addItem } = useCart()
@@ -50,6 +51,7 @@ function toggleCategory(categoryId) {
 
 function openConstructor(product) {
   if (product.orderType === 'online') {
+    selectedOnlineOrderProduct.value = product
     isConstructorOpen.value = true
     return
   }
@@ -188,6 +190,7 @@ useSeoMeta({
 
     <ConstructorModal
       v-model="isConstructorOpen"
+      :product-id="selectedOnlineOrderProduct?.productId"
       @pay="addConstructorItemToCart"
       @add-to-cart="addConstructorItemToCart"
     />

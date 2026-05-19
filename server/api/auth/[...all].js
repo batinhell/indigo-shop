@@ -1,6 +1,8 @@
 import { defineEventHandler, sendWebResponse, toWebRequest } from 'h3'
 
 import { auth } from '../../utils/auth.js'
+import { useDatabase } from '../../utils/database.js'
+import { ensureSiteClient } from '../../utils/site-client.js'
 
 const EMAIL_EXISTS_MESSAGE = 'Пользователь с такой почтой уже есть. Проверьте пароль или используйте другую почту.'
 const EMAIL_ALREADY_EXISTS_CODES = new Set([
@@ -49,13 +51,29 @@ async function normalizeSignUpEmailError(response) {
 
 export default defineEventHandler(async (event) => {
   const request = toWebRequest(event)
-  let response = await auth.handler(request)
-
   const requestPath = new URL(request.url).pathname
   const isSignUpEmailRequest = request.method === 'POST' && requestPath.endsWith('/sign-up/email')
+  const signUpBody = isSignUpEmailRequest
+    ? await request.clone().json().catch(() => null)
+    : null
+
+  let response = await auth.handler(request)
 
   if (isSignUpEmailRequest) {
     response = await normalizeSignUpEmailError(response)
+
+    if (response.status < 400 && signUpBody) {
+      const database = useDatabase()
+      const user = await database
+        .selectFrom('user')
+        .select(['id', 'name', 'email', 'phoneNumber'])
+        .where('email', '=', String(signUpBody.email ?? '').trim())
+        .executeTakeFirst()
+
+      if (user) {
+        await ensureSiteClient(database, user)
+      }
+    }
   }
 
   return sendWebResponse(event, response)

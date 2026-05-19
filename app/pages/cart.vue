@@ -12,6 +12,10 @@ const sessionUser = computed(() => session.value?.data?.user ?? null)
 const isSessionPending = computed(() => session.value?.isPending ?? true)
 const isAuthEntryOpen = ref(false)
 const payAsLegal = ref(false)
+const isPaymentQrOpen = ref(false)
+const payment = ref(null)
+const paymentStatus = ref('idle')
+const paymentError = ref('')
 
 const allSelected = computed({
   get: () => cartItems.value.length > 0 && cartItems.value.every(i => i.selected),
@@ -67,8 +71,28 @@ function continueShopping() {
   navigateTo('/catalog')
 }
 
-function onPay() {
+async function onPay() {
   if (selectedItems.value.length === 0) return
+
+  paymentStatus.value = 'loading'
+  paymentError.value = ''
+  isPaymentQrOpen.value = true
+
+  try {
+    const result = await $fetch('/api/payments/vtb-sbp/start', {
+      method: 'POST',
+      body: {
+        items: selectedItems.value,
+        amount: selectedTotalPrice.value
+      }
+    })
+
+    payment.value = result.payment
+    paymentStatus.value = result.payment?.status ?? 'pending'
+  } catch (error) {
+    paymentStatus.value = 'failed'
+    paymentError.value = error?.data?.message || error?.message || 'Не удалось создать оплату'
+  }
 }
 
 async function refreshSession() {
@@ -236,6 +260,15 @@ useSeoMeta({
       v-model="isAuthEntryOpen"
       @complete-login="refreshSession"
       @complete-registration="refreshSession"
+    />
+
+    <PaymentQrModal
+      v-model="isPaymentQrOpen"
+      :amount="payment?.amount ?? selectedTotalPrice"
+      :qr-image="payment?.qrImage ?? ''"
+      :qr-payload="payment?.qrPayload ?? ''"
+      :status="paymentStatus"
+      :error="paymentError"
     />
   </main>
 </template>

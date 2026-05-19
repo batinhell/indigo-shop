@@ -1,5 +1,6 @@
 import { auth } from '../utils/auth.js'
 import { useDatabase } from '../utils/database.js'
+import { ensureSiteClient } from '../utils/site-client.js'
 
 export default defineEventHandler(async (event) => {
   const session = await auth.api.getSession({
@@ -62,6 +63,10 @@ export default defineEventHandler(async (event) => {
       .orderBy('createdAt', 'asc')
       .execute()
   ])
+
+  if (user) {
+    await ensureSiteClient(database, user)
+  }
 
   return {
     profile: {

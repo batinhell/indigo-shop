@@ -31,7 +31,7 @@ function generateId() {
 export function useCart() {
   const items = useState('cart-items', () => [])
 
-  function addItem({ fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description }) {
+  function addItem({ productId, fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description }) {
     const image = resolveImage(fabric, mounting, size, doubleSided, hasFringe)
     const itemDescription = buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign })
     const customerComment = description?.trim() ?? ''
@@ -40,6 +40,7 @@ export function useCart() {
     const item = {
       id: generateId(),
       name: `Флаг из ${genitive}`,
+      productId: productId ?? null,
       description: itemDescription,
       customerComment,
       image,
@@ -112,6 +113,7 @@ export function useCart() {
       return {
         ...item,
         name: `Флаг из ${fabricGenitive}`,
+        productId: item.productId ?? null,
         description,
         image,
         unitPrice,

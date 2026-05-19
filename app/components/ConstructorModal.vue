@@ -3,6 +3,12 @@ import { FABRICS, MOUNTINGS, SIZES, FABRIC_IMAGE_MAP, MOUNTING_IMAGE_MAP, ALLOWE
 
 const isOpen = defineModel({ required: true })
 const emit = defineEmits(['pay', 'add-to-cart'])
+const props = defineProps({
+  productId: {
+    type: Number,
+    default: null
+  }
+})
 
 const selectedFabric = ref('mesh')
 const selectedMounting = ref('pocket')
@@ -101,6 +107,7 @@ const productImage = computed(() => {
 
 function getCurrentItem() {
   return {
+    productId: props.productId,
     fabric: selectedFabric.value,
     fabricLabel: fabricLabel.value,
     fabricGenitive: fabricGenitive.value,

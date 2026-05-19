@@ -1,9 +1,11 @@
 import { useDatabase } from '../../../utils/database.js'
+import { auth } from '../../../utils/auth.js'
 import {
   createPendingOrderPayment,
   saveVtbQr,
   saveVtbRegistration
 } from '../../../utils/order-payment.js'
+import { ensureSiteClient } from '../../../utils/site-client.js'
 import {
   getVtbDynamicQr,
   getVtbQrExpiresAt,
@@ -31,11 +33,13 @@ function normalizeItems(items) {
     const quantity = Math.max(1, Number.parseInt(item?.quantity, 10) || 1)
     const unitPrice = normalizeAmount(item?.unitPrice) ?? 0
     const designPrice = normalizeAmount(item?.designPrice) ?? 0
+    const productId = Number.parseInt(item?.productId, 10)
     const name = String(item?.name || `Позиция ${index + 1}`).slice(0, 255)
     const description = String(item?.description || '').trim()
 
     return {
       name,
+      productId: Number.isInteger(productId) && productId > 0 ? productId : null,
       description,
       quantity,
       unitPrice,
@@ -54,12 +58,22 @@ function createOrderNumber(orderId) {
   return `SITE-${orderId}-${suffix}`.slice(0, 36)
 }
 
-async function createSiteOrder(database, items, amount) {
+async function createSiteOrder(database, items, amount, clientId) {
   const now = new Date()
+  const productIds = [...new Set(items.map(item => item.productId).filter(Boolean))]
+  const existingProductIds = productIds.length
+    ? new Set((await database
+        .selectFrom('products')
+        .select(['id'])
+        .where('id', 'in', productIds)
+        .execute()).map(product => Number(product.id)))
+    : new Set()
+
   const result = await database
     .insertInto('orders')
     .values({
       name: 'Заказ с сайта',
+      client_id: clientId,
       sum: String(amount),
       status: '0',
       info: JSON.stringify({ source: 'site', items }),
@@ -83,6 +97,7 @@ async function createSiteOrder(database, items, amount) {
       .insertInto('order_positions')
       .values(items.map(item => ({
         order_id: orderId,
+        product_id: existingProductIds.has(item.productId) ? item.productId : null,
         name: [item.name, item.description].filter(Boolean).join(', ').slice(0, 255),
         status: 0,
         created_at: now,
@@ -94,11 +109,16 @@ async function createSiteOrder(database, items, amount) {
   return orderId
 }
 
-async function resolveOrder(database, body, items, amount) {
+async function resolveOrder(event, database, body, items, amount) {
   const orderId = Number(body?.orderId)
 
   if (!Number.isInteger(orderId) || orderId <= 0) {
-    return createSiteOrder(database, items, amount)
+    const session = await auth.api.getSession({
+      headers: getRequestHeaders(event)
+    })
+    const clientId = session?.user ? await ensureSiteClient(database, session.user) : null
+
+    return createSiteOrder(database, items, amount, clientId)
   }
 
   const order = await database
@@ -134,7 +154,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const database = useDatabase()
-  const orderId = await resolveOrder(database, body, items, amount)
+  const orderId = await resolveOrder(event, database, body, items, amount)
   const orderNumber = createOrderNumber(orderId)
   const paymentId = await createPendingOrderPayment(database, {
     orderId,

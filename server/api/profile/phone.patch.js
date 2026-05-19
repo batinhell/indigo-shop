@@ -2,6 +2,7 @@ import { formatAuthPhone, normalizePhoneDigits } from '~~/shared/utils/auth-iden
 import { auth } from '../../utils/auth.js'
 import { isNotificoreTimeoutError, verifyNotificoreOtp } from '../../utils/notificore.js'
 import { useDatabase } from '../../utils/database.js'
+import { ensureSiteClient } from '../../utils/site-client.js'
 
 const isHttpError = error => (
   typeof error === 'object'
@@ -147,6 +148,10 @@ export default defineEventHandler(async (event) => {
     ])
     .where('id', '=', session.user.id)
     .executeTakeFirst()
+
+  if (user) {
+    await ensureSiteClient(database, user)
+  }
 
   return {
     user: user ?? null

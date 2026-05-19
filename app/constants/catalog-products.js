@@ -55,6 +55,7 @@ export const catalogProducts = [
     id: 'catalog-textile-4',
     category: 'textile',
     images: [textileFlagsImage],
+    productId: 23,
     title: 'Изготовление флагов',
     subtitle: 'Пять материалов и два размера на выбор',
     price: 'от 590 ₽',
@@ -72,8 +73,7 @@ export const catalogProducts = [
     price: 'от 200 ₽',
     discount: '−40% от 100 шт',
     deliveryText: 'от 5 дней',
-    deliveryTiming: 'medium',
-    orderType: 'online'
+    deliveryTiming: 'medium'
   },
   {
     id: 'catalog-textile-6',
@@ -106,8 +106,7 @@ export const catalogProducts = [
     price: 'от 200 ₽',
     discount: '−75% от 300 шт',
     deliveryText: 'от 5 дней',
-    deliveryTiming: 'medium',
-    orderType: 'online'
+    deliveryTiming: 'medium'
   },
   {
     id: 'catalog-textile-9',
