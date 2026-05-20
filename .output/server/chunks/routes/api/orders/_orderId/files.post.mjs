@@ -1,4 +1,4 @@
-import { d as defineEventHandler, p as getRouterParam, c as createError, q as readMultipartFormData, u as useDatabase, w as getOwnedSiteOrder } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, p as getRouterParam, c as createError, q as readMultipartFormData, u as useDatabase, w as getOwnedSiteOrder, x as useRuntimeConfig } from '../../../../nitro/nitro.mjs';
 import { extname } from 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
@@ -20,7 +20,7 @@ function sanitizeFileName(name) {
   return String(name || "file").replace(/[\\/\0]/g, "_").slice(0, 180);
 }
 const files_post = defineEventHandler(async (event) => {
-  var _a, _b;
+  var _a, _b, _c, _d;
   const orderId = Number(getRouterParam(event, "orderId"));
   if (!Number.isInteger(orderId) || orderId <= 0) {
     throw createError({
@@ -37,7 +37,9 @@ const files_post = defineEventHandler(async (event) => {
   }
   const database = useDatabase();
   await getOwnedSiteOrder(database, event, orderId, accessToken);
-  const crmBaseUrl = String(process.env.CRM_API_BASE_URL || "").replace(/\/$/, "");
+  const runtimeConfig = useRuntimeConfig();
+  const crmBaseUrl = String(((_c = runtimeConfig.crmApi) == null ? void 0 : _c.baseUrl) || process.env.CRM_API_BASE_URL || "").replace(/\/$/, "");
+  const crmApiToken = ((_d = runtimeConfig.crmApi) == null ? void 0 : _d.token) || process.env.CRM_API_TOKEN || "";
   if (!crmBaseUrl) {
     throw createError({
       statusCode: 500,
@@ -67,7 +69,7 @@ const files_post = defineEventHandler(async (event) => {
   }
   return $fetch(`${crmBaseUrl}/api/site-orders/${orderId}/files`, {
     method: "POST",
-    headers: process.env.CRM_API_TOKEN ? { Authorization: `Bearer ${process.env.CRM_API_TOKEN}` } : void 0,
+    headers: crmApiToken ? { Authorization: `Bearer ${crmApiToken}` } : void 0,
     body: crmFormData
   });
 });

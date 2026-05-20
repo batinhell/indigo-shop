@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, A as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, f as formatAuthPhone, v as verifyNotificoreOtp, m as isNotificoreTimeoutError, u as useDatabase, e as ensureSiteClient } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, B as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, f as formatAuthPhone, v as verifyNotificoreOtp, m as isNotificoreTimeoutError, u as useDatabase, e as ensureSiteClient } from '../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

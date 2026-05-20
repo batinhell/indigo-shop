@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, A as getRequestHeaders, c as createError, u as useDatabase, S as getRequestURL, T as sendNotificoreEmail, m as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, B as getRequestHeaders, c as createError, u as useDatabase, T as getRequestURL, U as sendNotificoreEmail, m as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
 import { randomUUID, randomBytes, createHash } from 'node:crypto';
 import 'better-auth';
 import 'better-auth/plugins';

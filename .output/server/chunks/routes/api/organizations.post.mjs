@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, A as getRequestHeaders, c as createError, r as readBody, u as useDatabase } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, B as getRequestHeaders, c as createError, r as readBody, u as useDatabase } from '../../nitro/nitro.mjs';
 import { randomUUID } from 'node:crypto';
 import 'better-auth';
 import 'better-auth/plugins';

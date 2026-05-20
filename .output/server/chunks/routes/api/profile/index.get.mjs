@@ -1,4 +1,4 @@
-import { d as defineEventHandler, U as getCurrentSiteUser, u as useDatabase } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, V as getCurrentSiteUser, u as useDatabase } from '../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

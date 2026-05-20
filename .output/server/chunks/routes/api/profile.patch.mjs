@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, A as getRequestHeaders, c as createError, r as readBody, u as useDatabase, e as ensureSiteClient } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, B as getRequestHeaders, c as createError, r as readBody, u as useDatabase, e as ensureSiteClient } from '../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

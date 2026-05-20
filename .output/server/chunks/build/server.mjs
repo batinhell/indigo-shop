@@ -1,5 +1,5 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, mergeModels, useAttrs, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
-import { a5 as serialize, a6 as hasProtocol, a7 as isScriptProtocol, a3 as joinURL, a8 as parseQuery, a9 as withQuery, aa as sanitizeStatusCode, ab as parseURL, ac as encodePath, ad as decodePath, ae as klona, af as defu, ag as defuFn, ah as isPhoneLike, ai as getIdentifierError, Q as getRegistrationEmailError, b as normalizePhoneDigits, aj as getRussianSecondsWord, ak as formatCompactPhone, al as getContext, am as isEqual, A as getRequestHeaders, f as formatAuthPhone, an as formatPhone, ao as unmaskPhoneToEmail, ap as withTrailingSlash, aq as withoutTrailingSlash, c as createError$1, ar as $fetch$1, as as baseURL, at as hash, au as executeAsync } from '../nitro/nitro.mjs';
+import { a5 as serialize, a6 as hasProtocol, a7 as isScriptProtocol, a3 as joinURL, a8 as parseQuery, a9 as withQuery, aa as sanitizeStatusCode, ab as parseURL, ac as encodePath, ad as decodePath, ae as klona, af as defu, ag as defuFn, ah as isPhoneLike, ai as getIdentifierError, R as getRegistrationEmailError, b as normalizePhoneDigits, aj as getRussianSecondsWord, ak as formatCompactPhone, al as getContext, am as isEqual, B as getRequestHeaders, f as formatAuthPhone, an as formatPhone, ao as unmaskPhoneToEmail, ap as withTrailingSlash, aq as withoutTrailingSlash, c as createError$1, ar as $fetch$1, as as baseURL, at as hash, au as executeAsync } from '../nitro/nitro.mjs';
 import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { debounce } from 'perfect-debounce';
@@ -741,12 +741,12 @@ const _routes = [
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-CVfSXaEC.mjs')
+    component: () => import('./cart-DQsPriAU.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-CjiD_vIU.mjs')
+    component: () => import('./catalog-CvHB9yTx.mjs')
   },
   {
     name: "cookie-policy",
@@ -777,7 +777,7 @@ const _routes = [
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-BN56hZLD.mjs')
+    component: () => import('./index-DWLkQjzr.mjs')
   },
   {
     name: "user-agreement",
