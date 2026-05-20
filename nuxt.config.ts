@@ -49,6 +49,10 @@ export default defineNuxtConfig({
       apiKey: '',
       suggestUrl: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party'
     },
+    crmApi: {
+      baseUrl: '',
+      token: ''
+    },
     vtbPayment: {
       baseUrl: 'https://vtb.rbsuat.com/payment/rest/',
       token: '',

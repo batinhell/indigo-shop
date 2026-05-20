@@ -31,7 +31,9 @@ export default defineEventHandler(async (event) => {
   const database = useDatabase()
   await getOwnedSiteOrder(database, event, orderId, accessToken)
 
-  const crmBaseUrl = String(process.env.CRM_API_BASE_URL || '').replace(/\/$/, '')
+  const runtimeConfig = useRuntimeConfig()
+  const crmBaseUrl = String(runtimeConfig.crmApi?.baseUrl || process.env.CRM_API_BASE_URL || '').replace(/\/$/, '')
+  const crmApiToken = runtimeConfig.crmApi?.token || process.env.CRM_API_TOKEN || ''
 
   if (!crmBaseUrl) {
     throw createError({
@@ -68,8 +70,8 @@ export default defineEventHandler(async (event) => {
 
   return $fetch(`${crmBaseUrl}/api/site-orders/${orderId}/files`, {
     method: 'POST',
-    headers: process.env.CRM_API_TOKEN
-      ? { Authorization: `Bearer ${process.env.CRM_API_TOKEN}` }
+    headers: crmApiToken
+      ? { Authorization: `Bearer ${crmApiToken}` }
       : undefined,
     body: crmFormData
   })
