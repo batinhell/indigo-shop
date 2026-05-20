@@ -5,6 +5,18 @@ const FAILED_QR_STATUSES = new Set(['REJECTED', 'RJCT', 'REJECTED_BY_USER'])
 
 const readEnv = name => process.env[name]?.trim() ?? ''
 
+function isVtbPaymentMockEnabled() {
+  const mode = readEnv('VTB_PAYMENT_MODE').toLowerCase()
+  const mock = readEnv('VTB_PAYMENT_MOCK').toLowerCase()
+
+  return mode === 'mock' || ['1', 'true', 'yes', 'on'].includes(mock)
+}
+
+function getMockPaymentStatus() {
+  const status = readEnv('VTB_PAYMENT_MOCK_STATUS').toLowerCase()
+  return ['pending', 'paid', 'failed'].includes(status) ? status : 'pending'
+}
+
 function readConfigValue(config, key, envName) {
   return readEnv(envName) || config.vtbPayment?.[key] || ''
 }
@@ -136,6 +148,17 @@ export function getVtbQrExpiresAt() {
 }
 
 export async function registerVtbOrder({ orderNumber, amountMinor, description, ip }) {
+  if (isVtbPaymentMockEnabled()) {
+    return {
+      orderId: `MOCK-${orderNumber}`.slice(0, 36),
+      formUrl: null,
+      amount: amountMinor,
+      description,
+      ip,
+      mock: true
+    }
+  }
+
   const config = getVtbPaymentConfig()
   assertReturnUrls(config)
 
@@ -166,6 +189,16 @@ export async function registerVtbOrder({ orderNumber, amountMinor, description, 
 }
 
 export async function getVtbDynamicQr(mdOrder) {
+  if (isVtbPaymentMockEnabled()) {
+    return {
+      qrId: `MOCK-QR-${Date.now()}`,
+      payload: `https://example.local/mock-payment/${encodeURIComponent(mdOrder)}`,
+      renderedQr: null,
+      qrStatus: 'PENDING',
+      mock: true
+    }
+  }
+
   const data = await requestVtb('sbp/c2b/qr/dynamic/get.do', {
     mdOrder,
     qrHeight: 512,
@@ -190,6 +223,18 @@ export async function getVtbDynamicQr(mdOrder) {
 }
 
 export async function getVtbDynamicQrStatus({ mdOrder, qrId }) {
+  if (isVtbPaymentMockEnabled()) {
+    const status = getMockPaymentStatus()
+
+    return {
+      mdOrder,
+      qrId,
+      qrStatus: status === 'paid' ? 'ACCEPTED' : status === 'failed' ? 'REJECTED' : 'PENDING',
+      transactionState: status === 'paid' ? 'DEPOSITED' : null,
+      mock: true
+    }
+  }
+
   const data = await requestVtb('sbp/c2b/qr/status.do', {
     mdOrder,
     qrId

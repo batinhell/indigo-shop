@@ -1,12 +1,20 @@
 <script setup>
-defineProps({
+const props = defineProps({
   to: {
     type: String,
     default: '#'
   },
   status: {
     type: String,
-    default: 'done'
+    default: 'review'
+  },
+  statusLabel: {
+    type: String,
+    default: ''
+  },
+  statusTone: {
+    type: String,
+    default: ''
   },
   number: {
     type: String,
@@ -34,6 +42,8 @@ defineProps({
   }
 })
 
+const emit = defineEmits(['repeat'])
+
 const statusMap = {
   review: {
     label: 'На проверке',
@@ -50,7 +60,41 @@ const statusMap = {
   finished: {
     label: 'Завершен',
     tone: 'positive'
+  },
+  pending: {
+    label: 'Ожидает оплаты',
+    tone: 'secondary'
+  },
+  paid: {
+    label: 'Оплачен',
+    tone: 'purple'
+  },
+  failed: {
+    label: 'Оплата не прошла',
+    tone: 'danger'
+  },
+  expired: {
+    label: 'Оплата истекла',
+    tone: 'danger'
+  },
+  cancelled: {
+    label: 'Отменен',
+    tone: 'secondary'
   }
+}
+
+const itemsScroller = ref(null)
+const statusLabelText = computed(() => props.statusLabel || statusMap[props.status]?.label || statusMap.review.label)
+const statusToneName = computed(() => props.statusTone || statusMap[props.status]?.tone || 'secondary')
+
+function onItemsWheel(event) {
+  const scroller = itemsScroller.value
+
+  if (!scroller || scroller.scrollWidth <= scroller.clientWidth) return
+
+  const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY
+  scroller.scrollLeft += delta
+  event.preventDefault()
 }
 </script>
 
@@ -64,9 +108,9 @@ const statusMap = {
         <div class="profile-order-item__title-row">
           <span
             class="profile-order-item__status"
-            :class="`profile-order-item__status--${statusMap[status]?.tone || 'secondary'}`"
+            :class="`profile-order-item__status--${statusToneName}`"
           >
-            {{ statusMap[status]?.label || statusMap.review.label }}
+            {{ statusLabelText }}
           </span>
           <span class="profile-order-item__number">
             {{ number }}
@@ -81,13 +125,14 @@ const statusMap = {
       </div>
 
       <div class="profile-order-item__actions">
-        <span
+        <button
+          type="button"
           class="profile-order-item__button profile-order-item__button--secondary"
-          role="button"
-          tabindex="0"
+          @click.prevent.stop="emit('repeat')"
+          @mousedown.stop
         >
           Повторить
-        </span>
+        </button>
         <span
           class="profile-order-item__button profile-order-item__button--primary"
         >
@@ -97,8 +142,15 @@ const statusMap = {
     </div>
 
     <div class="profile-order-item__bottom">
-      <div class="profile-order-item__items-wrap">
-        <div class="profile-order-item__items">
+      <div
+        class="profile-order-item__items-wrap"
+        @click.stop
+        @wheel.stop="onItemsWheel"
+      >
+        <div
+          ref="itemsScroller"
+          class="profile-order-item__items"
+        >
           <div
             v-for="(item, index) in items"
             :key="`${item.name}-${index}`"
@@ -108,9 +160,9 @@ const statusMap = {
               {{ item.name }}
             </div>
             <div class="profile-order-product__options">
-              <span>{{ item.size }}</span>
+              <span>{{ item.size || item.sizeLabel || '—' }}</span>
               <span aria-hidden="true">·</span>
-              <span>{{ item.quantity }}</span>
+              <span>{{ item.quantity || item.quantityLabel }}</span>
             </div>
           </div>
         </div>
@@ -192,6 +244,10 @@ const statusMap = {
     color: #0abd5d;
   }
 
+  &__status--danger {
+    color: #ed5c68;
+  }
+
   &__number {
     color: $color-base;
   }
@@ -260,25 +316,43 @@ const statusMap = {
 
   &__bottom {
     align-items: center;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 5.75rem;
     position: relative;
     width: 100%;
   }
 
   &__items-wrap {
-    flex: 1;
     min-width: 0;
     overflow: hidden;
+    position: relative;
+    z-index: 2;
+
+    &::after {
+      background: linear-gradient(90deg, rgba(252, 252, 252, 0) 0%, #ffffff 86%);
+      content: '';
+      height: 3rem;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 4rem;
+      z-index: 1;
+    }
   }
 
   &__items {
     display: flex;
     gap: 0.75rem;
+    max-width: 100%;
     overflow-x: auto;
-    padding-bottom: 0.125rem;
+    overscroll-behavior-x: contain;
+    padding: 0 4rem 0.125rem 0;
+    position: relative;
     scrollbar-width: none;
+    touch-action: pan-x;
     white-space: nowrap;
+    z-index: 0;
 
     &::-webkit-scrollbar {
       display: none;
@@ -286,13 +360,7 @@ const statusMap = {
   }
 
   &__fade {
-    background: linear-gradient(90deg, rgba(252, 252, 252, 0) 0%, #ffffff 86%);
-    height: 3rem;
-    pointer-events: none;
-    position: absolute;
-    right: 5.75rem;
-    top: 0;
-    width: min(34.5rem, 70%);
+    display: none;
   }
 
   &__price {
@@ -358,9 +426,14 @@ const statusMap = {
   .profile-order-item {
     padding: 1rem;
 
-    &__top,
+    &__top {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
     &__bottom {
       align-items: flex-start;
+      display: flex;
       flex-direction: column;
     }
 

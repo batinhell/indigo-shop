@@ -1,36 +1,68 @@
 <script setup>
 import productImage from '~/assets/images/mesh_sleeve_90x135_single_fringe.png'
+import { resolveCartItemImage } from '~/composables/useCart.js'
 
 definePageMeta({
   middleware: ['auth']
 })
 
 const route = useRoute()
-const orderNumber = computed(() => String(route.params.orderId || '97194154-0050'))
+const orderId = computed(() => String(route.params.orderId || ''))
+const { data, pending, error } = await useFetch(() => `/api/profile/orders/${orderId.value}`, {
+  default: () => ({ order: null })
+})
 
-const orderItems = [
-  {
-    id: 'tirage-1',
-    image: productImage,
-    title: 'Флаг из флажной сетки',
-    description: 'Флажная сетка, под древко, 90×135 см, бахрома, печать с двух сторон',
-    quantity: '10 000 шт',
-    price: '4 800 ₽',
-    unitPrice: '2 400 ₽ / шт'
-  },
-  {
-    id: 'tirage-2',
-    image: productImage,
-    title: 'Флаг из флажной сетки',
-    description: 'Флажная сетка, под древко, 90×135 см, бахрома, печать с двух сторон',
-    quantity: '10 000 шт',
-    price: '4 800 ₽',
-    unitPrice: '2 400 ₽ / шт'
-  }
-]
+const order = computed(() => data.value?.order || null)
+const orderNumber = computed(() => order.value?.publicNumber || orderId.value)
+const orderItems = computed(() => order.value?.items || [])
+const { addExistingItem } = useCart()
+const titleLabel = computed(() => order.value?.titleLabel || `Заказ №${orderNumber.value}`)
+const summary = computed(() => order.value?.summary || {})
+const isMapOpen = ref(false)
+const recipientName = computed(() => order.value?.recipient?.name || 'Получатель не указан')
+const recipientPhone = computed(() => order.value?.recipient?.phone || 'Телефон не указан')
+const summaryTitle = computed(() => {
+  if (order.value?.paymentStatus === 'paid') return 'Оплачено'
+  if (order.value?.paymentStatus === 'failed') return 'Оплата не прошла'
+  if (order.value?.paymentStatus === 'expired') return 'Оплата истекла'
+  if (order.value?.paymentStatus === 'cancelled') return 'Отменен'
+  return 'Ожидает оплаты'
+})
+function getItemImage(item) {
+  return resolveCartItemImage(item?.config) || productImage
+}
+
+const itemCountLabel = computed(() => {
+  const count = Number(summary.value.itemsCount || orderItems.value.length || 0)
+  return `${count} ${count === 1 ? 'позиция' : 'поз.'}`
+})
+
+useSeoMeta({
+  title: () => `${titleLabel.value} | Indigo`,
+  description: () => `Детали заказа ${orderNumber.value}`
+})
 
 function backToOrders() {
   navigateTo('/profile?tab=orders')
+}
+
+function repeatOrder() {
+  if (!orderItems.value.length) return
+
+  orderItems.value.forEach((item) => {
+    addExistingItem({
+      productId: item.productId ?? null,
+      name: item.title,
+      description: item.description || '',
+      quantity: item.quantity || 1,
+      unitPrice: item.unitPrice || 0,
+      designPrice: item.designPrice || 0,
+      customerComment: item.customerComment || '',
+      config: item.config || {}
+    })
+  })
+
+  navigateTo('/cart')
 }
 </script>
 
@@ -50,27 +82,43 @@ function backToOrders() {
       </button>
 
       <h1 class="order-page__title">
-        Заказ от 23 марта №{{ orderNumber }}
+        {{ titleLabel }}
       </h1>
 
-      <div class="order-page__layout">
+      <p
+        v-if="pending"
+        class="order-page__state"
+      >
+        Загружаем заказ…
+      </p>
+      <p
+        v-else-if="error || !order"
+        class="order-page__state order-page__state--error"
+      >
+        Не удалось загрузить заказ
+      </p>
+
+      <div
+        v-else
+        class="order-page__layout"
+      >
         <div class="order-page__main">
           <section class="order-info app-card">
             <article class="order-info__card">
               <div class="order-info__card-header">
                 <h2 class="order-info__card-title">
-                  Самовывоз
+                  {{ order.delivery?.type || 'Самовывоз' }}
                 </h2>
                 <button
                   type="button"
                   class="order-info__small-button"
+                  @click="isMapOpen = true"
                 >
                   Карта
                 </button>
               </div>
               <p class="order-info__text">
-                ДНР, Донецк,<br>
-                ул. Постышева, дом 60
+                {{ order.delivery?.address || 'ДНР, Донецк, ул. Постышева, дом 60' }}
               </p>
             </article>
 
@@ -82,13 +130,14 @@ function backToOrders() {
                 <button
                   type="button"
                   class="order-info__small-button"
+                  disabled
                 >
                   Изменить
                 </button>
               </div>
               <p class="order-info__text">
-                Имя<br>
-                Номер телефона
+                {{ recipientName }}<br>
+                {{ recipientPhone }}
               </p>
             </article>
           </section>
@@ -101,7 +150,7 @@ function backToOrders() {
             >
               <div class="order-item-row__image-wrap">
                 <img
-                  :src="item.image"
+                  :src="getItemImage(item)"
                   :alt="item.title"
                   class="order-item-row__image"
                 >
@@ -115,16 +164,16 @@ function backToOrders() {
                   {{ item.description }}
                 </p>
                 <p class="order-item-row__quantity">
-                  {{ item.quantity }}
+                  {{ item.quantityLabel }}
                 </p>
               </div>
 
               <div class="order-item-row__price">
                 <span class="order-item-row__price-value">
-                  {{ item.price }}
+                  {{ item.totalPriceLabel }}
                 </span>
                 <span class="order-item-row__price-caption">
-                  {{ item.unitPrice }}
+                  {{ item.unitPriceLabel }}
                 </span>
               </div>
             </article>
@@ -134,33 +183,37 @@ function backToOrders() {
         <aside class="order-page__sidebar">
           <section class="order-summary app-card">
             <h2 class="order-summary__title">
-              Оплачено
+              {{ summaryTitle }}
             </h2>
 
             <div class="order-summary__rows">
               <div class="order-summary__row">
-                <span>2 тиража</span>
-                <strong>13 900 ₽</strong>
+                <span>{{ itemCountLabel }}</span>
+                <strong>{{ summary.totalLabel || order.totalPriceLabel }}</strong>
               </div>
               <div class="order-summary__row order-summary__row--muted">
                 <span>Доставка</span>
-                <span>Самовывоз</span>
+                <span>{{ order.delivery?.type || 'Самовывоз' }}</span>
               </div>
             </div>
 
             <div class="order-summary__divider" />
 
             <button
+              v-if="order.canRepeat"
               type="button"
               class="order-summary__repeat"
+              @click="repeatOrder"
             >
               Повторить заказ
             </button>
 
             <a
-              href="#"
+              v-if="order.receiptUrl"
+              :href="order.receiptUrl"
               class="order-summary__receipt"
-              @click.prevent
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Чек об оплате
             </a>
@@ -193,7 +246,10 @@ function backToOrders() {
             </div>
           </section>
 
-          <section class="order-side-card app-card">
+          <section
+            v-if="order.canCancel"
+            class="order-side-card app-card"
+          >
             <div class="order-side-card__copy">
               <h2 class="order-side-card__title">
                 Хотите отменить заказ?
@@ -217,6 +273,25 @@ function backToOrders() {
         </aside>
       </div>
     </div>
+
+    <BaseModal
+      v-model="isMapOpen"
+      title="Пункт самовывоза"
+      max-width="42rem"
+    >
+      <section class="pickup-map-modal">
+        <div class="pickup-map-modal__map">
+          <iframe
+            title="Пункт самовывоза Indigo"
+            src="https://yandex.ru/map-widget/v1/?ll=37.802850%2C48.015884&z=16&pt=37.802850,48.015884,pm2rdm"
+            loading="lazy"
+          />
+        </div>
+        <p class="pickup-map-modal__address">
+          {{ order?.delivery?.address || 'ДНР, Донецк, ул. Постышева, дом 60' }}
+        </p>
+      </section>
+    </BaseModal>
   </main>
 </template>
 
@@ -254,6 +329,17 @@ function backToOrders() {
     font-weight: 800;
     line-height: 3.25rem;
     margin: 0 0 1.5rem;
+  }
+
+  &__state {
+    color: rgba($color-base, 0.52);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+
+    &--error {
+      color: #ed5c68;
+    }
   }
 
   &__layout {
@@ -599,6 +685,34 @@ function backToOrders() {
       background: #ffc5cb;
       color: #e12e3c;
     }
+  }
+}
+
+.pickup-map-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1.5rem 1.5rem;
+
+  &__map {
+    border-radius: 1rem;
+    height: 24rem;
+    overflow: hidden;
+    width: 100%;
+
+    iframe {
+      border: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__address {
+    color: $color-base;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    margin: 0;
   }
 }
 

@@ -24,6 +24,12 @@ const navItems = computed(() => [
     badgeType: 'warning'
   },
   {
+    key: 'orders',
+    label: 'Заказы',
+    badge: '',
+    badgeType: 'positive'
+  },
+  {
     key: 'favorites',
     label: 'Избранное',
     badge: favoriteTotalItems.value ? String(favoriteTotalItems.value) : 'Пока ничего :(',

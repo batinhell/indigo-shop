@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   const database = useDatabase()
   const payment = await database
-    .selectFrom('order_payments')
+    .selectFrom('site_orders')
     .selectAll()
     .where((eb) => {
       const conditions = []
@@ -50,10 +50,7 @@ export default defineEventHandler(async (event) => {
 
   const now = new Date()
   const update = {
-    status: paymentStatus,
-    vtb_error_code: nspkCode || null,
-    vtb_status_response: JSON.stringify(query),
-    last_checked_at: now,
+    payment_status: paymentStatus,
     updated_at: now
   }
 
@@ -62,7 +59,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await database
-    .updateTable('order_payments')
+    .updateTable('site_orders')
     .set(update)
     .where('id', '=', payment.id)
     .execute()

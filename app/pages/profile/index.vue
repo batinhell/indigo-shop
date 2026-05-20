@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 const route = useRoute()
-const availableProfileTabs = ['data', 'favorites']
+const availableProfileTabs = ['data', 'orders', 'favorites']
 
 function normalizeProfileTab(tab) {
   const value = Array.isArray(tab) ? tab[0] : tab
@@ -255,6 +255,8 @@ const onProfileUpdated = async (updatedUser) => {
               @save="saveProfileChanges"
             />
           </template>
+
+          <ProfileOrders v-else-if="activeProfileTab === 'orders'" />
 
           <ProfileFavorites v-else-if="activeProfileTab === 'favorites'" />
         </div>

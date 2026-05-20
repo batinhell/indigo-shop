@@ -15,6 +15,7 @@ const anotherPerson = ref(false)
 const anotherName = ref('')
 const anotherPhone = ref('')
 const payAsLegal = defineModel('payAsLegal', { type: Boolean, default: false })
+const checkoutData = defineModel('checkoutData', { type: Object, default: () => ({}) })
 const selectedOrganizationId = ref('')
 const organizationInn = ref('')
 const organizationSuggestions = ref([])
@@ -53,6 +54,10 @@ const shouldShowOrganizationList = computed(() => (
   isAuthenticated.value && displayOrganizations.value.length > 0
 ))
 
+const selectedOrganization = computed(() => (
+  displayOrganizations.value.find(organization => organization.id === selectedOrganizationId.value) || null
+))
+
 const shouldShowOrganizationSuggestions = computed(() => (
   isOrganizationSuggestionsOpen.value
   && (
@@ -61,6 +66,13 @@ const shouldShowOrganizationSuggestions = computed(() => (
     || organizationSuggestions.value.length > 0
   )
 ))
+
+watch(user, (value) => {
+  userName.value = value?.name || ''
+  userPhone.value = value?.phoneNumber || ''
+  userEmail.value = value?.email || ''
+  userContact.value = value?.additionalContact || ''
+}, { immediate: true })
 
 watch(
   displayOrganizations,
@@ -212,6 +224,50 @@ const selectOrganization = async (organization) => {
     isOrganizationSavePending.value = false
   }
 }
+
+watch([
+  userName,
+  userPhone,
+  userEmail,
+  userContact,
+  anotherPerson,
+  anotherName,
+  anotherPhone,
+  payAsLegal,
+  selectedOrganization,
+], () => {
+  checkoutData.value = {
+    customer: {
+      name: userName.value.trim(),
+      phone: userPhone.value.trim(),
+      email: userEmail.value.trim(),
+      additionalContact: userContact.value.trim()
+    },
+    recipient: {
+      type: anotherPerson.value ? 'another' : 'self',
+      name: anotherPerson.value ? anotherName.value.trim() : userName.value.trim(),
+      phone: anotherPerson.value ? anotherPhone.value.trim() : userPhone.value.trim()
+    },
+    organization: payAsLegal.value && selectedOrganization.value
+      ? {
+          id: selectedOrganization.value.id,
+          name: selectedOrganization.value.name,
+          inn: selectedOrganization.value.inn,
+          kpp: selectedOrganization.value.kpp,
+          address: selectedOrganization.value.address
+        }
+      : null,
+    payment: {
+      payerType: payAsLegal.value ? 'legal' : 'person'
+    }
+  }
+}, { immediate: true, deep: true })
+
+onMounted(() => {
+  if (isAuthenticated.value && !profileStore.isLoaded) {
+    profileStore.fetchProfileOnce().catch(() => {})
+  }
+})
 
 onBeforeUnmount(() => {
   stopOrganizationSuggestTimer()

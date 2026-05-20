@@ -4,7 +4,7 @@ import { authClient } from '~/utils/auth-client.js'
 const title = 'Корзина — Indigo'
 const description = 'Корзина заказов типографии Indigo.'
 
-const { items: cartItems, updateQuantity, removeItems, updateItem } = useCart()
+const { items: cartItems, updateQuantity, removeItems, updateItem, clearCart } = useCart()
 const session = authClient.useSession()
 
 const selectedItems = computed(() => cartItems.value.filter(item => item.selected))
@@ -16,6 +16,7 @@ const isPaymentQrOpen = ref(false)
 const payment = ref(null)
 const paymentStatus = ref('idle')
 const paymentError = ref('')
+const checkoutData = ref({})
 
 const allSelected = computed({
   get: () => cartItems.value.length > 0 && cartItems.value.every(i => i.selected),
@@ -71,6 +72,24 @@ function continueShopping() {
   navigateTo('/catalog')
 }
 
+async function uploadOrderFiles(order) {
+  const files = selectedItems.value.flatMap(item => Array.isArray(item.uploadedFiles) ? item.uploadedFiles : [])
+
+  if (!files.length) return
+
+  const formData = new FormData()
+  formData.append('accessToken', order.accessToken || '')
+
+  files.forEach((file) => {
+    formData.append('files', file)
+  })
+
+  await $fetch(`/api/orders/${order.id}/files`, {
+    method: 'POST',
+    body: formData
+  })
+}
+
 async function onPay() {
   if (selectedItems.value.length === 0) return
 
@@ -79,16 +98,29 @@ async function onPay() {
   isPaymentQrOpen.value = true
 
   try {
-    const result = await $fetch('/api/payments/vtb-sbp/start', {
+    const orderResult = await $fetch('/api/orders', {
       method: 'POST',
       body: {
         items: selectedItems.value,
-        amount: selectedTotalPrice.value
+        amount: selectedTotalPrice.value,
+        checkout: checkoutData.value
+      }
+    })
+
+    await uploadOrderFiles(orderResult.order)
+
+    const result = await $fetch('/api/payments/vtb-sbp/start', {
+      method: 'POST',
+      body: {
+        orderId: orderResult.order.id,
+        accessToken: orderResult.order.accessToken,
+        amount: orderResult.order.amount
       }
     })
 
     payment.value = result.payment
     paymentStatus.value = result.payment?.status ?? 'pending'
+    clearCart()
   } catch (error) {
     paymentStatus.value = 'failed'
     paymentError.value = error?.data?.message || error?.message || 'Не удалось создать оплату'
@@ -240,6 +272,7 @@ useSeoMeta({
           <CartRecipient
             v-if="cartItems.length > 0"
             v-model:pay-as-legal="payAsLegal"
+            v-model:checkout-data="checkoutData"
           />
           <CartPickup v-if="cartItems.length > 0" />
         </div>

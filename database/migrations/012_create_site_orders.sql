@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS `site_orders` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` bigint unsigned NULL,
+  `site_user_id` varchar(255) NULL,
+  `order_number` varchar(36) NULL,
+  `amount` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `currency` varchar(3) NOT NULL DEFAULT 'RUB',
+  `payment_provider` varchar(32) NULL,
+  `payment_status` varchar(32) NOT NULL DEFAULT 'pending',
+  `vtb_md_order` varchar(36) NULL,
+  `vtb_qr_id` varchar(128) NULL,
+  `paid_at` timestamp NULL,
+  `expires_at` timestamp NULL,
+  `payload` json NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `site_orders_order_number_unique` (`order_number`),
+  KEY `site_orders_client_id_idx` (`client_id`),
+  KEY `site_orders_site_user_id_idx` (`site_user_id`),
+  KEY `site_orders_payment_status_idx` (`payment_status`),
+  KEY `site_orders_vtb_md_order_idx` (`vtb_md_order`),
+  KEY `site_orders_vtb_qr_id_idx` (`vtb_qr_id`),
+  CONSTRAINT `site_orders_client_id_fk`
+    FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE SET NULL
+);

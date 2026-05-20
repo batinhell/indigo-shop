@@ -1,149 +1,45 @@
 import { useDatabase } from '../../../utils/database.js'
-import { auth } from '../../../utils/auth.js'
 import {
-  createPendingOrderPayment,
+  createPendingSiteOrderPayment,
   saveVtbQr,
   saveVtbRegistration
 } from '../../../utils/order-payment.js'
-import { ensureSiteClient } from '../../../utils/site-client.js'
+import {
+  createSiteOrder,
+  getOwnedSiteOrder,
+  getSiteOrderItemsAmount,
+  normalizeSiteOrderItems
+} from '../../../utils/site-orders.js'
 import {
   getVtbDynamicQr,
   getVtbQrExpiresAt,
   registerVtbOrder
 } from '../../../utils/vtb-payment.js'
 
-const MAX_ITEMS = 100
-
-function normalizeAmount(value) {
-  const amount = Number(value)
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-    return null
-  }
-
-  return Math.round(amount * 100) / 100
-}
-
-function normalizeItems(items) {
-  if (!Array.isArray(items)) {
-    return []
-  }
-
-  return items.slice(0, MAX_ITEMS).map((item, index) => {
-    const quantity = Math.max(1, Number.parseInt(item?.quantity, 10) || 1)
-    const unitPrice = normalizeAmount(item?.unitPrice) ?? 0
-    const designPrice = normalizeAmount(item?.designPrice) ?? 0
-    const productId = Number.parseInt(item?.productId, 10)
-    const name = String(item?.name || `Позиция ${index + 1}`).slice(0, 255)
-    const description = String(item?.description || '').trim()
-
-    return {
-      name,
-      productId: Number.isInteger(productId) && productId > 0 ? productId : null,
-      description,
-      quantity,
-      unitPrice,
-      designPrice,
-      total: Math.round((unitPrice * quantity + designPrice) * 100) / 100
-    }
-  }).filter(item => item.total > 0)
-}
-
-function getItemsAmount(items) {
-  return Math.round(items.reduce((sum, item) => sum + item.total, 0) * 100) / 100
-}
 
 function createOrderNumber(orderId) {
   const suffix = Date.now().toString(36).toUpperCase()
   return `SITE-${orderId}-${suffix}`.slice(0, 36)
 }
 
-async function createSiteOrder(database, items, amount, clientId) {
-  const now = new Date()
-  const productIds = [...new Set(items.map(item => item.productId).filter(Boolean))]
-  const existingProductIds = productIds.length
-    ? new Set((await database
-        .selectFrom('products')
-        .select(['id'])
-        .where('id', 'in', productIds)
-        .execute()).map(product => Number(product.id)))
-    : new Set()
-
-  const result = await database
-    .insertInto('orders')
-    .values({
-      name: 'Заказ с сайта',
-      client_id: clientId,
-      sum: String(amount),
-      status: '0',
-      info: JSON.stringify({ source: 'site', items }),
-      created_at: now,
-      updated_at: now
-    })
-    .executeTakeFirst()
-
-  const orderId = Number(result.insertId)
-
-  if (!orderId) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Order was not created',
-      message: 'Не удалось создать заказ'
-    })
-  }
-
-  if (items.length) {
-    await database
-      .insertInto('order_positions')
-      .values(items.map(item => ({
-        order_id: orderId,
-        product_id: existingProductIds.has(item.productId) ? item.productId : null,
-        name: [item.name, item.description].filter(Boolean).join(', ').slice(0, 255),
-        status: 0,
-        created_at: now,
-        updated_at: now
-      })))
-      .execute()
-  }
-
-  return orderId
-}
-
 async function resolveOrder(event, database, body, items, amount) {
   const orderId = Number(body?.orderId)
 
   if (!Number.isInteger(orderId) || orderId <= 0) {
-    const session = await auth.api.getSession({
-      headers: getRequestHeaders(event)
-    })
-    const clientId = session?.user ? await ensureSiteClient(database, session.user) : null
-
-    return createSiteOrder(database, items, amount, clientId)
+    const order = await createSiteOrder(database, event, { items, amount })
+    return order.id
   }
 
-  const order = await database
-    .selectFrom('orders')
-    .select(['id', 'sum'])
-    .where('id', '=', orderId)
-    .executeTakeFirst()
-
-  if (!order) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Order not found',
-      message: 'Заказ не найден'
-    })
-  }
-
+  const order = await getOwnedSiteOrder(database, event, orderId, body?.accessToken)
   return Number(order.id)
 }
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const items = normalizeItems(body?.items)
-  const bodyAmount = normalizeAmount(body?.amount)
-  const itemsAmount = getItemsAmount(items)
-  const amount = bodyAmount ?? itemsAmount
+  const items = normalizeSiteOrderItems(body?.items)
+  const bodyAmount = Number(body?.amount)
+  const itemsAmount = getSiteOrderItemsAmount(items)
+  const amount = Number.isFinite(bodyAmount) && bodyAmount > 0 ? Math.round(bodyAmount * 100) / 100 : itemsAmount
 
   if (!amount) {
     throw createError({
@@ -156,8 +52,8 @@ export default defineEventHandler(async (event) => {
   const database = useDatabase()
   const orderId = await resolveOrder(event, database, body, items, amount)
   const orderNumber = createOrderNumber(orderId)
-  const paymentId = await createPendingOrderPayment(database, {
-    orderId,
+  const paymentId = await createPendingSiteOrderPayment(database, {
+    siteOrderId: orderId,
     orderNumber,
     amount
   })
@@ -192,11 +88,13 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error) {
     await database
-      .updateTable('order_payments')
+      .updateTable('site_orders')
       .set({
-        status: 'failed',
-        vtb_error_code: error?.data?.errorCode ? String(error.data.errorCode) : null,
-        vtb_error_message: error?.data?.errorMessage || error?.message || 'VTB payment failed',
+        payment_status: 'failed',
+        payload: JSON.stringify({
+          errorCode: error?.data?.errorCode ? String(error.data.errorCode) : null,
+          errorMessage: error?.data?.errorMessage || error?.message || 'VTB payment failed'
+        }),
         updated_at: new Date()
       })
       .where('id', '=', paymentId)

@@ -2,6 +2,7 @@
 import { FABRICS, MOUNTINGS, SIZES, getFabricLabel } from '~/constants/product'
 import { calcUnitPrice, calcDesignPrice } from '~/composables/usePricing'
 import { formatPriceRaw } from '~/utils/format'
+import fallbackProductImage from '~/assets/images/mesh_sleeve_90x135_single_fringe.png'
 
 const props = defineProps({
   item: { type: Object, required: true },
@@ -54,6 +55,8 @@ function closeDropdowns() {
   openDropdown.value = null
 }
 
+const itemImage = computed(() => props.item.image || fallbackProductImage)
+
 const previewPrice = computed(() => {
   if (!editDraft.value) return null
   const fabricLabel = getFabricLabel(editDraft.value.fabric)
@@ -77,7 +80,7 @@ const previewPrice = computed(() => {
     <AppCheckbox :model-value="item.selected" @update:model-value="emit('toggle')" />
     <div class="item-row__product">
       <div class="item-row__image-wrap">
-        <img :src="item.image" :alt="item.name" class="item-row__image">
+        <img :src="itemImage" :alt="item.name" class="item-row__image">
       </div>
       <div class="item-row__details">
         <div class="item-row__top">
@@ -88,6 +91,7 @@ const previewPrice = computed(() => {
             <div v-if="!editing" class="item-row__meta">
               <p class="item-row__desc">{{ item.description }}</p>
               <p v-if="item.customerComment" class="item-row__note">{{ item.customerComment }}</p>
+
             </div>
 
             <!-- Edit mode: inline selects -->

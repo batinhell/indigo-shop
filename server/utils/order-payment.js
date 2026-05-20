@@ -1,16 +1,12 @@
 const PAYMENT_PROVIDER = 'vtb_sbp'
 
-function toJson(value) {
-  return JSON.stringify(value ?? null)
-}
-
 export function normalizePaymentStatus(status) {
   return ['pending', 'paid', 'failed', 'expired', 'cancelled'].includes(status) ? status : 'pending'
 }
 
 export async function getOrderPayment(database, paymentId) {
   return database
-    .selectFrom('order_payments')
+    .selectFrom('site_orders')
     .selectAll()
     .where('id', '=', paymentId)
     .executeTakeFirst()
@@ -22,8 +18,7 @@ export async function updateOrderPaymentStatus(database, paymentId, status, patc
 
   const update = {
     ...patch,
-    status: normalizedStatus,
-    last_checked_at: now,
+    payment_status: normalizedStatus,
     updated_at: now
   }
 
@@ -32,7 +27,7 @@ export async function updateOrderPaymentStatus(database, paymentId, status, patc
   }
 
   await database
-    .updateTable('order_payments')
+    .updateTable('site_orders')
     .set(update)
     .where('id', '=', paymentId)
     .execute()
@@ -40,11 +35,9 @@ export async function updateOrderPaymentStatus(database, paymentId, status, patc
 
 export async function saveVtbRegistration(database, paymentId, response) {
   await database
-    .updateTable('order_payments')
+    .updateTable('site_orders')
     .set({
       vtb_md_order: response.orderId,
-      vtb_form_url: response.formUrl ?? null,
-      vtb_register_response: toJson(response),
       updated_at: new Date()
     })
     .where('id', '=', paymentId)
@@ -53,13 +46,9 @@ export async function saveVtbRegistration(database, paymentId, response) {
 
 export async function saveVtbQr(database, paymentId, response, expiresAt) {
   await database
-    .updateTable('order_payments')
+    .updateTable('site_orders')
     .set({
       vtb_qr_id: response.qrId,
-      vtb_qr_payload: response.payload ?? null,
-      vtb_qr_image: response.renderedQr ?? null,
-      vtb_qr_status: response.qrStatus ?? response.status ?? null,
-      vtb_qr_response: toJson(response),
       expires_at: expiresAt,
       updated_at: new Date()
     })
@@ -67,18 +56,19 @@ export async function saveVtbQr(database, paymentId, response, expiresAt) {
     .execute()
 }
 
-export async function createPendingOrderPayment(database, { orderId, orderNumber, amount }) {
-  const result = await database
-    .insertInto('order_payments')
-    .values({
-      order_id: orderId,
-      provider: PAYMENT_PROVIDER,
-      status: 'pending',
+export async function createPendingSiteOrderPayment(database, { siteOrderId, orderNumber, amount }) {
+  await database
+    .updateTable('site_orders')
+    .set({
+      order_number: orderNumber,
+      payment_provider: PAYMENT_PROVIDER,
+      payment_status: 'pending',
       amount,
       currency: 'RUB',
-      order_number: orderNumber
+      updated_at: new Date()
     })
-    .executeTakeFirst()
+    .where('id', '=', siteOrderId)
+    .execute()
 
-  return Number(result.insertId)
+  return Number(siteOrderId)
 }

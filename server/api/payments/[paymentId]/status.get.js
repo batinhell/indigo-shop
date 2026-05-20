@@ -30,8 +30,10 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  if (payment.status === 'paid' || payment.status === 'failed' || payment.status === 'cancelled') {
-    return { payment }
+  const paymentStatus = payment.payment_status ?? payment.status
+
+  if (paymentStatus === 'paid' || paymentStatus === 'failed' || paymentStatus === 'cancelled') {
+    return { payment: { ...payment, status: paymentStatus } }
   }
 
   if (payment.expires_at && new Date(payment.expires_at).getTime() < Date.now()) {
@@ -39,13 +41,14 @@ export default defineEventHandler(async (event) => {
     return {
       payment: {
         ...payment,
+        payment_status: 'expired',
         status: 'expired'
       }
     }
   }
 
   if (!payment.vtb_md_order || !payment.vtb_qr_id) {
-    return { payment }
+    return { payment: { ...payment, status: paymentStatus } }
   }
 
   const statusResponse = await getVtbDynamicQrStatus({
@@ -59,14 +62,15 @@ export default defineEventHandler(async (event) => {
   )
 
   await updateOrderPaymentStatus(database, paymentId, status, {
-    vtb_qr_status: statusResponse.qrStatus ?? statusResponse.status ?? null,
-    vtb_transaction_state: statusResponse.transactionState ?? null,
-    vtb_status_response: JSON.stringify(statusResponse)
+    payload: JSON.stringify({ vtbStatusResponse: statusResponse })
   })
 
   const updatedPayment = await getOrderPayment(database, paymentId)
 
   return {
-    payment: updatedPayment
+    payment: {
+      ...updatedPayment,
+      status: updatedPayment?.payment_status ?? status
+    }
   }
 })
