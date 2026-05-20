@@ -1,4 +1,4 @@
-import { d as defineEventHandler, p as getRouterParam, c as createError, u as useDatabase, q as getOrderPayment, w as updateOrderPaymentStatus, x as getVtbDynamicQrStatus, y as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, p as getRouterParam, c as createError, u as useDatabase, B as getOrderPayment, C as updateOrderPaymentStatus, D as getVtbDynamicQrStatus, E as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -15,7 +15,7 @@ import '@iconify/utils';
 import 'consola';
 
 const status_get = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d;
+  var _a, _b, _c;
   const paymentId = Number(getRouterParam(event, "paymentId"));
   if (!Number.isInteger(paymentId) || paymentId <= 0) {
     throw createError({
@@ -33,37 +33,40 @@ const status_get = defineEventHandler(async (event) => {
       message: "\u041F\u043B\u0430\u0442\u0435\u0436 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D"
     });
   }
-  if (payment.status === "paid" || payment.status === "failed" || payment.status === "cancelled") {
-    return { payment };
+  const paymentStatus = (_a = payment.payment_status) != null ? _a : payment.status;
+  if (paymentStatus === "paid" || paymentStatus === "failed" || paymentStatus === "cancelled") {
+    return { payment: { ...payment, status: paymentStatus } };
   }
   if (payment.expires_at && new Date(payment.expires_at).getTime() < Date.now()) {
     await updateOrderPaymentStatus(database, paymentId, "expired");
     return {
       payment: {
         ...payment,
+        payment_status: "expired",
         status: "expired"
       }
     };
   }
   if (!payment.vtb_md_order || !payment.vtb_qr_id) {
-    return { payment };
+    return { payment: { ...payment, status: paymentStatus } };
   }
   const statusResponse = await getVtbDynamicQrStatus({
     mdOrder: payment.vtb_md_order,
     qrId: payment.vtb_qr_id
   });
   const status = getPaymentStatusFromVtbQr(
-    (_a = statusResponse.qrStatus) != null ? _a : statusResponse.status,
+    (_b = statusResponse.qrStatus) != null ? _b : statusResponse.status,
     statusResponse.transactionState
   );
   await updateOrderPaymentStatus(database, paymentId, status, {
-    vtb_qr_status: (_c = (_b = statusResponse.qrStatus) != null ? _b : statusResponse.status) != null ? _c : null,
-    vtb_transaction_state: (_d = statusResponse.transactionState) != null ? _d : null,
-    vtb_status_response: JSON.stringify(statusResponse)
+    payload: JSON.stringify({ vtbStatusResponse: statusResponse })
   });
   const updatedPayment = await getOrderPayment(database, paymentId);
   return {
-    payment: updatedPayment
+    payment: {
+      ...updatedPayment,
+      status: (_c = updatedPayment == null ? void 0 : updatedPayment.payment_status) != null ? _c : status
+    }
   };
 });
 

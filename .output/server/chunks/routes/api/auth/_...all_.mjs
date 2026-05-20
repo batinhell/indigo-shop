@@ -1,4 +1,4 @@
-import { d as defineEventHandler, t as toWebRequest, a as auth, s as sendWebResponse } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, t as toWebRequest, a as auth, u as useDatabase, e as ensureSiteClient, s as sendWebResponse } from '../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -51,12 +51,21 @@ async function normalizeSignUpEmailError(response) {
   });
 }
 const ____all_ = defineEventHandler(async (event) => {
+  var _a;
   const request = toWebRequest(event);
-  let response = await auth.handler(request);
   const requestPath = new URL(request.url).pathname;
   const isSignUpEmailRequest = request.method === "POST" && requestPath.endsWith("/sign-up/email");
+  const signUpBody = isSignUpEmailRequest ? await request.clone().json().catch(() => null) : null;
+  let response = await auth.handler(request);
   if (isSignUpEmailRequest) {
     response = await normalizeSignUpEmailError(response);
+    if (response.status < 400 && signUpBody) {
+      const database = useDatabase();
+      const user = await database.selectFrom("user").select(["id", "name", "email", "phoneNumber"]).where("email", "=", String((_a = signUpBody.email) != null ? _a : "").trim()).executeTakeFirst();
+      if (user) {
+        await ensureSiteClient(database, user);
+      }
+    }
   }
   return sendWebResponse(event, response);
 });

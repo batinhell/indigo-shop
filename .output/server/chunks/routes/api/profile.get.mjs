@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, o as getRequestHeaders, c as createError, u as useDatabase } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, A as getRequestHeaders, c as createError, u as useDatabase, e as ensureSiteClient } from '../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -58,6 +58,9 @@ const profile_get = defineEventHandler(async (event) => {
       "updatedAt"
     ]).where("userId", "=", userId).orderBy("createdAt", "asc").execute()
   ]);
+  if (user) {
+    await ensureSiteClient(database, user);
+  }
   return {
     profile: {
       user: user != null ? user : null,

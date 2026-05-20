@@ -1,0 +1,1 @@
+import{bq as s,br as n,Y as o,n as u,p as i}from"./DnZF7Zop.js";const c=s(async()=>{let e,t;const{data:a}=([e,t]=n(()=>o.useSession(u)),e=await e,t(),e);if(!a.value)return i("/")});export{c as default};

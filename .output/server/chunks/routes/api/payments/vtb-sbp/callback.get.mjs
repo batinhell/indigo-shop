@@ -1,4 +1,4 @@
-import { d as defineEventHandler, z as getQuery, u as useDatabase, y as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, F as getQuery, u as useDatabase, E as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -25,7 +25,7 @@ const callback_get = defineEventHandler(async (event) => {
     return { ok: true };
   }
   const database = useDatabase();
-  const payment = await database.selectFrom("order_payments").selectAll().where((eb) => {
+  const payment = await database.selectFrom("site_orders").selectAll().where((eb) => {
     const conditions = [];
     if (mdOrder) {
       conditions.push(eb("vtb_md_order", "=", mdOrder));
@@ -48,16 +48,13 @@ const callback_get = defineEventHandler(async (event) => {
   }
   const now = /* @__PURE__ */ new Date();
   const update = {
-    status: paymentStatus,
-    vtb_error_code: nspkCode || null,
-    vtb_status_response: JSON.stringify(query),
-    last_checked_at: now,
+    payment_status: paymentStatus,
     updated_at: now
   };
   if (paymentStatus === "paid") {
     update.paid_at = now;
   }
-  await database.updateTable("order_payments").set(update).where("id", "=", payment.id).execute();
+  await database.updateTable("site_orders").set(update).where("id", "=", payment.id).execute();
   return { ok: true };
 });
 

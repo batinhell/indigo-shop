@@ -1,4 +1,4 @@
-import { d as defineEventHandler, z as getQuery, L as sendRedirect, u as useDatabase, M as getRequestURL } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, F as getQuery, R as sendRedirect, u as useDatabase, S as getRequestURL } from '../../../../nitro/nitro.mjs';
 import { createHash } from 'node:crypto';
 import 'better-auth';
 import 'better-auth/plugins';

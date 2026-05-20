@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, o as getRequestHeaders, c as createError, r as readBody, u as useDatabase } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, A as getRequestHeaders, c as createError, r as readBody, u as useDatabase, e as ensureSiteClient } from '../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
@@ -56,6 +56,9 @@ const profile_patch = defineEventHandler(async (event) => {
     "phoneNumberVerified",
     "additionalContact"
   ]).where("id", "=", session.user.id).executeTakeFirst();
+  if (user) {
+    await ensureSiteClient(database, user);
+  }
   return {
     user: user != null ? user : null
   };

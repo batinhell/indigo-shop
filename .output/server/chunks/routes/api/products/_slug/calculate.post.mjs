@@ -1,4 +1,4 @@
-import { d as defineEventHandler, p as getRouterParam, c as createError, u as useDatabase, H as getProductBySlug, r as readBody, I as calculateProductPrice } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, p as getRouterParam, c as createError, u as useDatabase, N as getProductBySlug, r as readBody, O as calculateProductPrice } from '../../../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';

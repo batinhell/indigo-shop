@@ -1,1 +1,0 @@
-import{bn as s,bo as n,R as o,bp as u,n as i}from"./vIpft52u.js";const c=s(async()=>{let e,t;const{data:a}=([e,t]=n(()=>o.useSession(u)),e=await e,t(),e);if(!a.value)return i("/")});export{c as default};

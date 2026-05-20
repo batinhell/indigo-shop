@@ -1,0 +1,46 @@
+import { d as defineEventHandler, r as readBody, x as normalizeSiteOrderItems, y as getSiteOrderItemsAmount, c as createError, u as useDatabase, z as createSiteOrder } from '../../nitro/nitro.mjs';
+import 'better-auth';
+import 'better-auth/plugins';
+import 'kysely';
+import 'mysql2';
+import 'node:http';
+import 'node:https';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:path';
+import 'node:crypto';
+import 'node:url';
+import '@iconify/utils';
+import 'consola';
+
+const index_post = defineEventHandler(async (event) => {
+  const body = await readBody(event);
+  const items = normalizeSiteOrderItems(body == null ? void 0 : body.items);
+  const itemsAmount = getSiteOrderItemsAmount(items);
+  const amount = itemsAmount || Number(body == null ? void 0 : body.amount);
+  if (!items.length || !amount) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid order",
+      message: "\u041D\u0435 \u043F\u0435\u0440\u0435\u0434\u0430\u043D\u044B \u043F\u043E\u0437\u0438\u0446\u0438\u0438 \u0437\u0430\u043A\u0430\u0437\u0430"
+    });
+  }
+  const database = useDatabase();
+  const order = await createSiteOrder(database, event, {
+    items,
+    amount,
+    checkout: body == null ? void 0 : body.checkout
+  });
+  return {
+    order: {
+      id: order.id,
+      accessToken: order.accessToken,
+      amount: order.amount,
+      status: "pending"
+    }
+  };
+});
+
+export { index_post as default };
+//# sourceMappingURL=index.post.mjs.map

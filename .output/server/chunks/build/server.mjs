@@ -1,5 +1,5 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, mergeProps, unref, createVNode, resolveDynamicComponent, ref, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, mergeModels, useAttrs, provide, watch, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
-import { _ as serialize, $ as hasProtocol, a0 as isScriptProtocol, Y as joinURL, a1 as parseQuery, a2 as withQuery, a3 as sanitizeStatusCode, a4 as parseURL, a5 as encodePath, a6 as decodePath, a7 as klona, a8 as defu, a9 as isPhoneLike, aa as getIdentifierError, K as getRegistrationEmailError, b as normalizePhoneDigits, ab as getRussianSecondsWord, ac as formatCompactPhone, ad as defuFn, ae as getContext, o as getRequestHeaders, f as formatAuthPhone, af as formatPhone, ag as unmaskPhoneToEmail, ah as isEqual, ai as withTrailingSlash, aj as withoutTrailingSlash, c as createError$1, ak as $fetch$1, al as baseURL, am as hash, an as executeAsync } from '../nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, mergeModels, useAttrs, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
+import { a5 as serialize, a6 as hasProtocol, a7 as isScriptProtocol, a3 as joinURL, a8 as parseQuery, a9 as withQuery, aa as sanitizeStatusCode, ab as parseURL, ac as encodePath, ad as decodePath, ae as klona, af as defu, ag as defuFn, ah as isPhoneLike, ai as getIdentifierError, Q as getRegistrationEmailError, b as normalizePhoneDigits, aj as getRussianSecondsWord, ak as formatCompactPhone, al as getContext, am as isEqual, A as getRequestHeaders, f as formatAuthPhone, an as formatPhone, ao as unmaskPhoneToEmail, ap as withTrailingSlash, aq as withoutTrailingSlash, c as createError$1, ar as $fetch$1, as as baseURL, at as hash, au as executeAsync } from '../nitro/nitro.mjs';
 import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { debounce } from 'perfect-debounce';
@@ -736,58 +736,58 @@ const _routes = [
     name: "profile-orders-orderId",
     path: "/profile/orders/:orderId()",
     meta: { "middleware": ["auth"] },
-    component: () => import('./_orderId_-BVJ1nSgI.mjs')
+    component: () => import('./_orderId_-D2SgmBqd.mjs')
   },
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-2jLYjMjY.mjs')
+    component: () => import('./cart-CVfSXaEC.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-DW5qHY9m.mjs')
+    component: () => import('./catalog-CjiD_vIU.mjs')
   },
   {
     name: "cookie-policy",
     path: "/cookie-policy",
-    component: () => import('./cookie-policy-C3xSUypV.mjs')
+    component: () => import('./cookie-policy-Jo5zst2l.mjs')
   },
   {
     name: "delivery",
     path: "/delivery",
-    component: () => import('./delivery-CF2ns8t4.mjs')
+    component: () => import('./delivery-CJF0Mr9v.mjs')
   },
   {
     name: "legal-information",
     path: "/legal-information",
-    component: () => import('./legal-information-Br_0-uX0.mjs')
+    component: () => import('./legal-information-ClXgNLu8.mjs')
   },
   {
     name: "payment",
     path: "/payment",
-    component: () => import('./payment-D54IO5XE.mjs')
+    component: () => import('./payment-D0L9-Gkw.mjs')
   },
   {
     name: "privacy-policy",
     path: "/privacy-policy",
-    component: () => import('./privacy-policy-Cfy2AzHb.mjs')
+    component: () => import('./privacy-policy-DX5AvrY1.mjs')
   },
   {
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-Dr7vejDk.mjs')
+    component: () => import('./index-BN56hZLD.mjs')
   },
   {
     name: "user-agreement",
     path: "/user-agreement",
-    component: () => import('./user-agreement-BFNdmIPY.mjs')
+    component: () => import('./user-agreement-CeJ9GVa0.mjs')
   },
   {
     name: "index",
     path: "/",
-    component: () => import('./index-BaIkHNhH.mjs')
+    component: () => import('./index-ZQOpYUvS.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -913,7 +913,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./auth-ypTCQvju.mjs')
+  auth: () => import('./auth-u1DOwyuS.mjs')
 };
 const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -9308,7 +9308,8 @@ function getSizeLabel(value) {
   return SIZES.find((s) => s.value === value)?.label ?? "";
 }
 const imageModules = /* @__PURE__ */ Object.assign({ "/assets/images/catalog_slider_1.png": __vite_glob_0_0, "/assets/images/catalog_slider_2.png": __vite_glob_0_1, "/assets/images/catalog_slider_3.png": __vite_glob_0_2, "/assets/images/catalog_slider_4.png": __vite_glob_0_3, "/assets/images/catalog_slider_5.png": __vite_glob_0_4, "/assets/images/dense_polyester_grommets_60x90_double.png": __vite_glob_0_5, "/assets/images/dense_polyester_grommets_60x90_double_fringe.png": __vite_glob_0_6, "/assets/images/dense_polyester_grommets_60x90_single.png": __vite_glob_0_7, "/assets/images/dense_polyester_grommets_60x90_single_fringe.png": __vite_glob_0_8, "/assets/images/dense_polyester_grommets_90x135_double.png": __vite_glob_0_9, "/assets/images/dense_polyester_grommets_90x135_double_fringe.png": __vite_glob_0_10, "/assets/images/dense_polyester_grommets_90x135_single.png": __vite_glob_0_11, "/assets/images/dense_polyester_grommets_90x135_single_fringe.png": __vite_glob_0_12, "/assets/images/dense_polyester_sleeve_60x90_double.png": __vite_glob_0_13, "/assets/images/dense_polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_14, "/assets/images/dense_polyester_sleeve_60x90_single.png": __vite_glob_0_15, "/assets/images/dense_polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_16, "/assets/images/dense_polyester_sleeve_90x135_double.png": __vite_glob_0_17, "/assets/images/dense_polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_18, "/assets/images/dense_polyester_sleeve_90x135_single.png": __vite_glob_0_19, "/assets/images/dense_polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_20, "/assets/images/mesh_grommets_60x90_double.png": __vite_glob_0_21, "/assets/images/mesh_grommets_60x90_double_fringe.png": __vite_glob_0_22, "/assets/images/mesh_grommets_60x90_single.png": __vite_glob_0_23, "/assets/images/mesh_grommets_60x90_single_fringe.png": __vite_glob_0_24, "/assets/images/mesh_grommets_90x135_double.png": __vite_glob_0_25, "/assets/images/mesh_grommets_90x135_double_fringe.png": __vite_glob_0_26, "/assets/images/mesh_grommets_90x135_single.png": __vite_glob_0_27, "/assets/images/mesh_grommets_90x135_single_fringe.png": __vite_glob_0_28, "/assets/images/mesh_sleeve_60x90_double.png": __vite_glob_0_29, "/assets/images/mesh_sleeve_60x90_double_fringe.png": __vite_glob_0_30, "/assets/images/mesh_sleeve_60x90_single.png": __vite_glob_0_31, "/assets/images/mesh_sleeve_60x90_single_fringe.png": __vite_glob_0_32, "/assets/images/mesh_sleeve_90x135_double.png": __vite_glob_0_33, "/assets/images/mesh_sleeve_90x135_double_fringe.png": __vite_glob_0_34, "/assets/images/mesh_sleeve_90x135_single.png": __vite_glob_0_35, "/assets/images/mesh_sleeve_90x135_single_fringe.png": __vite_glob_0_36, "/assets/images/polyester_grommets_60x90_double.png": __vite_glob_0_37, "/assets/images/polyester_grommets_60x90_double_fringe.png": __vite_glob_0_38, "/assets/images/polyester_grommets_60x90_single.png": __vite_glob_0_39, "/assets/images/polyester_grommets_60x90_single_fringe.png": __vite_glob_0_40, "/assets/images/polyester_grommets_90x135_double.png": __vite_glob_0_41, "/assets/images/polyester_grommets_90x135_double_fringe.png": __vite_glob_0_42, "/assets/images/polyester_grommets_90x135_single.png": __vite_glob_0_43, "/assets/images/polyester_grommets_90x135_single_fringe.png": __vite_glob_0_44, "/assets/images/polyester_sleeve_60x90_double.png": __vite_glob_0_45, "/assets/images/polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_46, "/assets/images/polyester_sleeve_60x90_single.png": __vite_glob_0_47, "/assets/images/polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_48, "/assets/images/polyester_sleeve_90x135_double.png": __vite_glob_0_49, "/assets/images/polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_50, "/assets/images/polyester_sleeve_90x135_single.png": __vite_glob_0_51, "/assets/images/polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_52, "/assets/images/satin_grommets_60x90_double.png": __vite_glob_0_53, "/assets/images/satin_grommets_60x90_double_fringe.png": __vite_glob_0_54, "/assets/images/satin_grommets_60x90_single.png": __vite_glob_0_55, "/assets/images/satin_grommets_60x90_single_fringe.png": __vite_glob_0_56, "/assets/images/satin_grommets_90x135_double.png": __vite_glob_0_57, "/assets/images/satin_grommets_90x135_double_fringe.png": __vite_glob_0_58, "/assets/images/satin_grommets_90x135_single.png": __vite_glob_0_59, "/assets/images/satin_grommets_90x135_single_fringe.png": __vite_glob_0_60, "/assets/images/satin_sleeve_60x90_double.png": __vite_glob_0_61, "/assets/images/satin_sleeve_60x90_double_fringe.png": __vite_glob_0_62, "/assets/images/satin_sleeve_60x90_single.png": __vite_glob_0_63, "/assets/images/satin_sleeve_60x90_single_fringe.png": __vite_glob_0_64, "/assets/images/satin_sleeve_90x135_double.png": __vite_glob_0_65, "/assets/images/satin_sleeve_90x135_double_fringe.png": __vite_glob_0_66, "/assets/images/satin_sleeve_90x135_single.png": __vite_glob_0_67, "/assets/images/satin_sleeve_90x135_single_fringe.png": __vite_glob_0_68 });
-function resolveImage(fabric, mounting, size, doubleSided, hasFringe) {
+function resolveCartItemImage(config = {}) {
+  const { fabric, mounting, size, doubleSided, hasFringe } = config;
   const fabricKey = FABRIC_IMAGE_MAP[fabric] || "mesh";
   const mountingKey = MOUNTING_IMAGE_MAP[mounting] || "sleeve";
   const sided = doubleSided ? "double" : "single";
@@ -9316,6 +9317,9 @@ function resolveImage(fabric, mounting, size, doubleSided, hasFringe) {
   const filename = `${fabricKey}_${mountingKey}_${size}_${sided}${fringe}.png`;
   const key = Object.keys(imageModules).find((k) => k.endsWith(`/${filename}`));
   return key ? imageModules[key] : "";
+}
+function resolveImage(fabric, mounting, size, doubleSided, hasFringe) {
+  return resolveCartItemImage({ fabric, mounting, size, doubleSided, hasFringe });
 }
 function buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign }) {
   const parts = [fabricLabel];
@@ -9332,7 +9336,14 @@ function generateId() {
 }
 function useCart() {
   const items = useState("cart-items", () => []);
-  function addItem({ fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description: description2 }) {
+  const isReady = useState("cart-items-ready", () => false);
+  watch(items, (nextItems) => {
+    if (!isReady.value) return;
+  }, { deep: true });
+  function persist(nextItems) {
+    items.value = nextItems;
+  }
+  function addItem({ productId, fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description: description2, uploadedFiles = [] }) {
     const image = resolveImage(fabric, mounting, size, doubleSided, hasFringe);
     const itemDescription = buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign });
     const customerComment = description2?.trim() ?? "";
@@ -9340,27 +9351,48 @@ function useCart() {
     const item = {
       id: generateId(),
       name: `Флаг из ${genitive}`,
+      productId: productId ?? null,
       description: itemDescription,
       customerComment,
       image,
       quantity,
       unitPrice,
       designPrice: designPrice || 0,
+      uploadedFiles: Array.isArray(uploadedFiles) ? uploadedFiles : [],
+      uploadedFileNames: Array.isArray(uploadedFiles) ? uploadedFiles.map((file) => file.name) : [],
       selected: true,
       config: { fabric, mounting, size, quantity, hasFringe, doubleSided, orderDesign }
     };
-    items.value = [...items.value, item];
+    persist([...items.value, item]);
     return item;
   }
+  function addExistingItem(item) {
+    const quantity = Math.max(1, Number.parseInt(item?.quantity, 10) || 1);
+    const cartItem = {
+      id: generateId(),
+      name: item?.name || "Позиция заказа",
+      productId: item?.productId ?? null,
+      description: item?.description || "",
+      customerComment: item?.customerComment || "",
+      image: item?.image || resolveCartItemImage(item?.config) || __vite_glob_0_36,
+      quantity,
+      unitPrice: Number(item?.unitPrice) || 0,
+      designPrice: Number(item?.designPrice) || 0,
+      selected: true,
+      config: item?.config || {}
+    };
+    persist([...items.value, cartItem]);
+    return cartItem;
+  }
   function removeItem(id) {
-    items.value = items.value.filter((item) => item.id !== id);
+    persist(items.value.filter((item) => item.id !== id));
   }
   function removeItems(ids) {
     const idSet = new Set(ids);
-    items.value = items.value.filter((item) => !idSet.has(item.id));
+    persist(items.value.filter((item) => !idSet.has(item.id)));
   }
   function updateQuantity(id, quantity) {
-    items.value = items.value.map((item) => {
+    const nextItems = items.value.map((item) => {
       if (item.id !== id) return item;
       const nextQuantity = Math.max(1, quantity);
       const fabricLabel = getFabricLabel(item.config.fabric);
@@ -9381,9 +9413,10 @@ function useCart() {
         }
       };
     });
+    persist(nextItems);
   }
   function updateItem(id, config) {
-    items.value = items.value.map((item) => {
+    const nextItems = items.value.map((item) => {
       if (item.id !== id) return item;
       const image = resolveImage(config.fabric, config.mounting, config.size, config.doubleSided, config.hasFringe);
       const fabricLabel = getFabricLabel(config.fabric);
@@ -9402,6 +9435,7 @@ function useCart() {
       return {
         ...item,
         name: `Флаг из ${fabricGenitive}`,
+        productId: item.productId ?? null,
         description: description2,
         image,
         unitPrice,
@@ -9409,15 +9443,17 @@ function useCart() {
         config: { ...config }
       };
     });
+    persist(nextItems);
   }
   function clearCart() {
-    items.value = [];
+    persist([]);
   }
   const totalItems = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0));
   const totalPrice = computed(() => items.value.reduce((sum, item) => sum + item.unitPrice * item.quantity + item.designPrice, 0));
   return {
     items,
     addItem,
+    addExistingItem,
     removeItem,
     removeItems,
     updateItem,
@@ -10175,5 +10211,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { __vite_glob_0_40 as $, __vite_glob_0_63 as A, __vite_glob_0_62 as B, __vite_glob_0_61 as C, __vite_glob_0_60 as D, __vite_glob_0_59 as E, FABRICS as F, __vite_glob_0_58 as G, __vite_glob_0_57 as H, __vite_glob_0_56 as I, __vite_glob_0_55 as J, __vite_glob_0_54 as K, __vite_glob_0_53 as L, MOUNTINGS as M, __vite_glob_0_52 as N, __vite_glob_0_51 as O, __vite_glob_0_50 as P, __vite_glob_0_49 as Q, __vite_glob_0_48 as R, SIZES as S, __vite_glob_0_47 as T, __vite_glob_0_46 as U, __vite_glob_0_45 as V, __vite_glob_0_44 as W, __vite_glob_0_43 as X, __vite_glob_0_42 as Y, __vite_glob_0_41 as Z, _export_sfc as _, __nuxt_component_0$3 as a, __vite_glob_0_39 as a0, __vite_glob_0_38 as a1, __vite_glob_0_37 as a2, __vite_glob_0_35 as a3, __vite_glob_0_34 as a4, __vite_glob_0_33 as a5, __vite_glob_0_32 as a6, __vite_glob_0_31 as a7, __vite_glob_0_30 as a8, __vite_glob_0_29 as a9, __vite_glob_0_2 as aA, __vite_glob_0_1 as aB, __vite_glob_0_0 as aC, MAX_UPLOAD_SIZE as aD, ALLOWED_EXTENSIONS as aE, RASTER_EXTENSIONS as aF, useFavorites as aG, setInterval as aH, navigateTo as aI, defineNuxtRouteMiddleware as aJ, useFetch as aK, __vite_glob_0_28 as aa, __vite_glob_0_27 as ab, __vite_glob_0_26 as ac, __vite_glob_0_25 as ad, __vite_glob_0_24 as ae, __vite_glob_0_23 as af, __vite_glob_0_22 as ag, __vite_glob_0_21 as ah, __vite_glob_0_20 as ai, __vite_glob_0_19 as aj, __vite_glob_0_18 as ak, __vite_glob_0_17 as al, __vite_glob_0_16 as am, __vite_glob_0_15 as an, __vite_glob_0_14 as ao, __vite_glob_0_13 as ap, __vite_glob_0_12 as aq, __vite_glob_0_11 as ar, __vite_glob_0_10 as as, __vite_glob_0_9 as at, __vite_glob_0_8 as au, __vite_glob_0_7 as av, __vite_glob_0_6 as aw, __vite_glob_0_5 as ax, __vite_glob_0_4 as ay, __vite_glob_0_3 as az, useRoute as b, __nuxt_component_1$1 as c, __vite_glob_0_36 as d, entry_default as default, _sfc_main$u as e, calcUnitPrice as f, getFabricLabel as g, calcDesignPrice as h, __nuxt_component_3 as i, formatPriceRaw as j, useProfileStore as k, __nuxt_component_0 as l, useCart as m, authClient as n, useSeoMeta as o, __nuxt_component_5$1 as p, _sfc_main$h as q, usePricing as r, FABRIC_IMAGE_MAP as s, MOUNTING_IMAGE_MAP as t, useHead as u, __vite_glob_0_68 as v, __vite_glob_0_67 as w, __vite_glob_0_66 as x, __vite_glob_0_65 as y, __vite_glob_0_64 as z };
+export { __vite_glob_0_42 as $, __vite_glob_0_65 as A, __vite_glob_0_64 as B, __vite_glob_0_63 as C, __vite_glob_0_62 as D, __vite_glob_0_61 as E, FABRICS as F, __vite_glob_0_60 as G, __vite_glob_0_59 as H, __vite_glob_0_58 as I, __vite_glob_0_57 as J, __vite_glob_0_56 as K, __vite_glob_0_55 as L, MOUNTINGS as M, __vite_glob_0_54 as N, __vite_glob_0_53 as O, __vite_glob_0_52 as P, __vite_glob_0_51 as Q, __vite_glob_0_50 as R, SIZES as S, __vite_glob_0_49 as T, __vite_glob_0_48 as U, __vite_glob_0_47 as V, __vite_glob_0_46 as W, __vite_glob_0_45 as X, __vite_glob_0_44 as Y, __vite_glob_0_43 as Z, _export_sfc as _, __nuxt_component_0$3 as a, __vite_glob_0_41 as a0, __vite_glob_0_40 as a1, __vite_glob_0_39 as a2, __vite_glob_0_38 as a3, __vite_glob_0_37 as a4, __vite_glob_0_35 as a5, __vite_glob_0_34 as a6, __vite_glob_0_33 as a7, __vite_glob_0_32 as a8, __vite_glob_0_31 as a9, __vite_glob_0_4 as aA, __vite_glob_0_3 as aB, __vite_glob_0_2 as aC, __vite_glob_0_1 as aD, __vite_glob_0_0 as aE, MAX_UPLOAD_SIZE as aF, ALLOWED_EXTENSIONS as aG, RASTER_EXTENSIONS as aH, useFavorites as aI, setInterval as aJ, navigateTo as aK, defineNuxtRouteMiddleware as aL, __vite_glob_0_30 as aa, __vite_glob_0_29 as ab, __vite_glob_0_28 as ac, __vite_glob_0_27 as ad, __vite_glob_0_26 as ae, __vite_glob_0_25 as af, __vite_glob_0_24 as ag, __vite_glob_0_23 as ah, __vite_glob_0_22 as ai, __vite_glob_0_21 as aj, __vite_glob_0_20 as ak, __vite_glob_0_19 as al, __vite_glob_0_18 as am, __vite_glob_0_17 as an, __vite_glob_0_16 as ao, __vite_glob_0_15 as ap, __vite_glob_0_14 as aq, __vite_glob_0_13 as ar, __vite_glob_0_12 as as, __vite_glob_0_11 as at, __vite_glob_0_10 as au, __vite_glob_0_9 as av, __vite_glob_0_8 as aw, __vite_glob_0_7 as ax, __vite_glob_0_6 as ay, __vite_glob_0_5 as az, useRoute as b, useFetch as c, useCart as d, entry_default as default, useSeoMeta as e, __nuxt_component_1$1 as f, _sfc_main$u as g, __vite_glob_0_36 as h, _sfc_main$h as i, getFabricLabel as j, calcUnitPrice as k, calcDesignPrice as l, __nuxt_component_3 as m, formatPriceRaw as n, useProfileStore as o, __nuxt_component_0 as p, authClient as q, resolveCartItemImage as r, __nuxt_component_5$1 as s, usePricing as t, useHead as u, FABRIC_IMAGE_MAP as v, MOUNTING_IMAGE_MAP as w, __vite_glob_0_68 as x, __vite_glob_0_67 as y, __vite_glob_0_66 as z };
 //# sourceMappingURL=server.mjs.map

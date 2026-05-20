@@ -1,4 +1,4 @@
-import { d as defineEventHandler, z as getQuery, u as useDatabase, J as getProducts } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, F as getQuery, u as useDatabase, P as getProducts } from '../../nitro/nitro.mjs';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'kysely';
