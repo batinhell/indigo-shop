@@ -1,14 +1,16 @@
 import { d as defineEventHandler, r as readBody, b as normalizePhoneDigits, c as createError, g as assertRateLimit, h as sendNotificoreOtp, i as getNotificoreAuthenticationPayload, j as assertSuccessfulNotificoreOtpResponse, k as setResponseStatus, l as getNotificoreAuthenticationId, m as isNotificoreTimeoutError } from '../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';

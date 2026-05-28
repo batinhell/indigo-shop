@@ -25,6 +25,7 @@ import show16 from '~/assets/icons/system/show-16.svg?raw'
 import termLow12 from '~/assets/icons/system/term-low-12.svg?raw'
 import termMedium12 from '~/assets/icons/system/term-medium-12.svg?raw'
 import termShort12 from '~/assets/icons/system/term-short-12.svg?raw'
+import invoiceTime24 from '~/assets/icons/invoice/time-24.svg?raw'
 
 const ICONS = {
   'account': {
@@ -48,6 +49,12 @@ const ICONS = {
     kind: 'svg',
     svgBySize: {
       16: headerSignOutAuthorized16
+    }
+  },
+  'invoice-time': {
+    kind: 'svg',
+    svgBySize: {
+      24: invoiceTime24
     }
   },
   'favorite': {

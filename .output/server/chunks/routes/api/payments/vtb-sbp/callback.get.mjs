@@ -1,14 +1,16 @@
-import { d as defineEventHandler, G as getQuery, u as useDatabase, F as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, A as getQuery, u as useDatabase, K as getPaymentStatusFromVtbQr, N as settleOrderPayment } from '../../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -46,15 +48,12 @@ const callback_get = defineEventHandler(async (event) => {
   } else {
     paymentStatus = getPaymentStatusFromVtbQr(nspkCode, "");
   }
-  const now = /* @__PURE__ */ new Date();
-  const update = {
-    payment_status: paymentStatus,
-    updated_at: now
-  };
-  if (paymentStatus === "paid") {
-    update.paid_at = now;
-  }
-  await database.updateTable("site_orders").set(update).where("id", "=", payment.id).execute();
+  await settleOrderPayment(
+    database,
+    payment.id,
+    paymentStatus,
+    paymentStatus === "paid" && payment.paid_at ? { paid_at: payment.paid_at } : {}
+  );
   return { ok: true };
 });
 

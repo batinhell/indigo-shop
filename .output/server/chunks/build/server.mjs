@@ -1,12 +1,11 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, mergeModels, useAttrs, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
-import { a5 as serialize, a6 as hasProtocol, a7 as isScriptProtocol, a3 as joinURL, a8 as parseQuery, a9 as withQuery, aa as sanitizeStatusCode, ab as parseURL, ac as encodePath, ad as decodePath, ae as klona, af as defu, ag as defuFn, ah as isPhoneLike, ai as getIdentifierError, R as getRegistrationEmailError, b as normalizePhoneDigits, aj as getRussianSecondsWord, ak as formatCompactPhone, al as getContext, am as isEqual, B as getRequestHeaders, f as formatAuthPhone, an as formatPhone, ao as unmaskPhoneToEmail, ap as withTrailingSlash, aq as withoutTrailingSlash, c as createError$1, ar as $fetch$1, as as baseURL, at as hash, au as executeAsync } from '../nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, useAttrs, mergeModels, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
+import { ak as serialize, al as hasProtocol, am as isScriptProtocol, ai as joinURL, an as parseQuery$1, ao as withQuery, ap as sanitizeStatusCode, aq as parseURL$1, ar as encodePath$1, as as decodePath, at as klona, au as defu, av as defuFn, aw as isPhoneLike, ax as getIdentifierError, Z as getRegistrationEmailError, b as normalizePhoneDigits, ay as getRussianSecondsWord, az as formatCompactPhone, aA as getContext, aB as isEqual, G as getRequestHeaders, f as formatAuthPhone, aC as formatPhone, aD as unmaskPhoneToEmail, aE as withTrailingSlash, aF as withoutTrailingSlash, c as createError$1, aG as $fetch$1, aH as baseURL, aI as hash, aJ as executeAsync } from '../nitro/nitro.mjs';
 import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
-import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { debounce } from 'perfect-debounce';
 import { isPlainObject } from '@vue/shared';
 import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
-import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderAttrs, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrIncludeBooleanAttr, ssrLooseContain, ssrGetDynamicModelProps, ssrRenderSuspense } from 'vue/server-renderer';
+import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderAttrs, ssrGetDynamicModelProps, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrIncludeBooleanAttr, ssrLooseContain, ssrRenderSuspense } from 'vue/server-renderer';
 import { useForwardProps, useForwardPropsEmits, DialogRoot, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, DialogTrigger, DialogPortal, DialogOverlay, createContext, Primitive, Slot, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
 import { reactivePick, createReusableTemplate, reactiveOmit, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
@@ -14,16 +13,18 @@ import { getIconCSS } from '@iconify/utils/lib/css/icon';
 import { createAuthClient } from 'better-auth/vue';
 import { phoneNumberClient } from 'better-auth/client/plugins';
 import { u as useSeoMeta$1, a as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -627,8 +628,8 @@ function encodeURL(location2, isExternalHost = false) {
   return url.toString();
 }
 function encodeRoutePath(url) {
-  const parsed = parseURL(url);
-  return encodePath(decodePath(parsed.pathname)) + parsed.search + parsed.hash;
+  const parsed = parseURL$1(url);
+  return encodePath$1(decodePath(parsed.pathname)) + parsed.search + parsed.hash;
 }
 const NUXT_ERROR_SIGNATURE = "__nuxt_error";
 const useError = /* @__NO_SIDE_EFFECTS__ */ () => toRef(useNuxtApp().payload, "error");
@@ -728,6 +729,1384 @@ const unhead_k2P3m_ZDyjlr2mMYnoDPwavjsDN8hBlk9cFai0bbopU = /* @__PURE__ */ defin
     nuxtApp.vueApp.use(head);
   }
 });
+function isRouteComponent(component) {
+  return typeof component === "object" || "displayName" in component || "props" in component || "__vccOpts" in component;
+}
+function isESModule(obj) {
+  return obj.__esModule || obj[Symbol.toStringTag] === "Module" || obj.default && isRouteComponent(obj.default);
+}
+const assign = Object.assign;
+function applyToParams(fn, params) {
+  const newParams = {};
+  for (const key in params) {
+    const value = params[key];
+    newParams[key] = isArray(value) ? value.map(fn) : fn(value);
+  }
+  return newParams;
+}
+const noop = () => {
+};
+const isArray = Array.isArray;
+function mergeOptions(defaults, partialOptions) {
+  const options = {};
+  for (const key in defaults) options[key] = key in partialOptions ? partialOptions[key] : defaults[key];
+  return options;
+}
+let ErrorTypes = /* @__PURE__ */ (function(ErrorTypes2) {
+  ErrorTypes2[ErrorTypes2["MATCHER_NOT_FOUND"] = 1] = "MATCHER_NOT_FOUND";
+  ErrorTypes2[ErrorTypes2["NAVIGATION_GUARD_REDIRECT"] = 2] = "NAVIGATION_GUARD_REDIRECT";
+  ErrorTypes2[ErrorTypes2["NAVIGATION_ABORTED"] = 4] = "NAVIGATION_ABORTED";
+  ErrorTypes2[ErrorTypes2["NAVIGATION_CANCELLED"] = 8] = "NAVIGATION_CANCELLED";
+  ErrorTypes2[ErrorTypes2["NAVIGATION_DUPLICATED"] = 16] = "NAVIGATION_DUPLICATED";
+  return ErrorTypes2;
+})({});
+const NavigationFailureSymbol = /* @__PURE__ */ Symbol("");
+({
+  [ErrorTypes.MATCHER_NOT_FOUND]({ location, currentLocation }) {
+    return `No match for
+ ${JSON.stringify(location)}${currentLocation ? "\nwhile being at\n" + JSON.stringify(currentLocation) : ""}`;
+  },
+  [ErrorTypes.NAVIGATION_GUARD_REDIRECT]({ from, to }) {
+    return `Redirected from "${from.fullPath}" to "${stringifyRoute(to)}" via a navigation guard.`;
+  },
+  [ErrorTypes.NAVIGATION_ABORTED]({ from, to }) {
+    return `Navigation aborted from "${from.fullPath}" to "${to.fullPath}" via a navigation guard.`;
+  },
+  [ErrorTypes.NAVIGATION_CANCELLED]({ from, to }) {
+    return `Navigation cancelled from "${from.fullPath}" to "${to.fullPath}" with a new navigation.`;
+  },
+  [ErrorTypes.NAVIGATION_DUPLICATED]({ from, to: _to }) {
+    return `Avoided redundant navigation to current location: "${from.fullPath}".`;
+  }
+});
+function createRouterError(type, params) {
+  return assign(/* @__PURE__ */ new Error(), {
+    type,
+    [NavigationFailureSymbol]: true
+  }, params);
+}
+function isNavigationFailure(error, type) {
+  return error instanceof Error && NavigationFailureSymbol in error && (type == null || !!(error.type & type));
+}
+const propertiesToLog = [
+  "params",
+  "query",
+  "hash"
+];
+function stringifyRoute(to) {
+  if (typeof to === "string") return to;
+  if (to.path != null) return to.path;
+  const location = {};
+  for (const key of propertiesToLog) if (key in to) location[key] = to[key];
+  return JSON.stringify(location, null, 2);
+}
+const matchedRouteKey = /* @__PURE__ */ Symbol("");
+const viewDepthKey = /* @__PURE__ */ Symbol("");
+const routerKey = /* @__PURE__ */ Symbol("");
+const routeLocationKey = /* @__PURE__ */ Symbol("");
+const routerViewLocationKey = /* @__PURE__ */ Symbol("");
+const HASH_RE = /#/g;
+const AMPERSAND_RE = /&/g;
+const SLASH_RE = /\//g;
+const EQUAL_RE = /=/g;
+const IM_RE = /\?/g;
+const PLUS_RE = /\+/g;
+const ENC_BRACKET_OPEN_RE = /%5B/g;
+const ENC_BRACKET_CLOSE_RE = /%5D/g;
+const ENC_CARET_RE = /%5E/g;
+const ENC_BACKTICK_RE = /%60/g;
+const ENC_CURLY_OPEN_RE = /%7B/g;
+const ENC_PIPE_RE = /%7C/g;
+const ENC_CURLY_CLOSE_RE = /%7D/g;
+const ENC_SPACE_RE = /%20/g;
+function commonEncode(text) {
+  return text == null ? "" : encodeURI("" + text).replace(ENC_PIPE_RE, "|").replace(ENC_BRACKET_OPEN_RE, "[").replace(ENC_BRACKET_CLOSE_RE, "]");
+}
+function encodeHash(text) {
+  return commonEncode(text).replace(ENC_CURLY_OPEN_RE, "{").replace(ENC_CURLY_CLOSE_RE, "}").replace(ENC_CARET_RE, "^");
+}
+function encodeQueryValue(text) {
+  return commonEncode(text).replace(PLUS_RE, "%2B").replace(ENC_SPACE_RE, "+").replace(HASH_RE, "%23").replace(AMPERSAND_RE, "%26").replace(ENC_BACKTICK_RE, "`").replace(ENC_CURLY_OPEN_RE, "{").replace(ENC_CURLY_CLOSE_RE, "}").replace(ENC_CARET_RE, "^");
+}
+function encodeQueryKey(text) {
+  return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
+}
+function encodePath(text) {
+  return commonEncode(text).replace(HASH_RE, "%23").replace(IM_RE, "%3F");
+}
+function encodeParam(text) {
+  return encodePath(text).replace(SLASH_RE, "%2F");
+}
+function decode(text) {
+  if (text == null) return null;
+  try {
+    return decodeURIComponent("" + text);
+  } catch {
+  }
+  return "" + text;
+}
+const TRAILING_SLASH_RE = /\/$/;
+const removeTrailingSlash = (path) => path.replace(TRAILING_SLASH_RE, "");
+function parseURL(parseQuery2, location, currentLocation = "/") {
+  let path, query = {}, searchString = "", hash2 = "";
+  const hashPos = location.indexOf("#");
+  let searchPos = location.indexOf("?");
+  searchPos = hashPos >= 0 && searchPos > hashPos ? -1 : searchPos;
+  if (searchPos >= 0) {
+    path = location.slice(0, searchPos);
+    searchString = location.slice(searchPos, hashPos > 0 ? hashPos : location.length);
+    query = parseQuery2(searchString.slice(1));
+  }
+  if (hashPos >= 0) {
+    path = path || location.slice(0, hashPos);
+    hash2 = location.slice(hashPos, location.length);
+  }
+  path = resolveRelativePath(path != null ? path : location, currentLocation);
+  return {
+    fullPath: path + searchString + hash2,
+    path,
+    query,
+    hash: decode(hash2)
+  };
+}
+function stringifyURL(stringifyQuery2, location) {
+  const query = location.query ? stringifyQuery2(location.query) : "";
+  return location.path + (query && "?") + query + (location.hash || "");
+}
+function isSameRouteLocation(stringifyQuery2, a, b) {
+  const aLastIndex = a.matched.length - 1;
+  const bLastIndex = b.matched.length - 1;
+  return aLastIndex > -1 && aLastIndex === bLastIndex && isSameRouteRecord(a.matched[aLastIndex], b.matched[bLastIndex]) && isSameRouteLocationParams(a.params, b.params) && stringifyQuery2(a.query) === stringifyQuery2(b.query) && a.hash === b.hash;
+}
+function isSameRouteRecord(a, b) {
+  return (a.aliasOf || a) === (b.aliasOf || b);
+}
+function isSameRouteLocationParams(a, b) {
+  if (Object.keys(a).length !== Object.keys(b).length) return false;
+  for (var key in a) if (!isSameRouteLocationParamsValue(a[key], b[key])) return false;
+  return true;
+}
+function isSameRouteLocationParamsValue(a, b) {
+  return isArray(a) ? isEquivalentArray(a, b) : isArray(b) ? isEquivalentArray(b, a) : (a && a.valueOf()) === (b && b.valueOf());
+}
+function isEquivalentArray(a, b) {
+  return isArray(b) ? a.length === b.length && a.every((value, i) => value === b[i]) : a.length === 1 && a[0] === b;
+}
+function resolveRelativePath(to, from) {
+  if (to.startsWith("/")) return to;
+  if (!to) return from;
+  const fromSegments = from.split("/");
+  const toSegments = to.split("/");
+  const lastToSegment = toSegments[toSegments.length - 1];
+  if (lastToSegment === ".." || lastToSegment === ".") toSegments.push("");
+  let position = fromSegments.length - 1;
+  let toPosition;
+  let segment;
+  for (toPosition = 0; toPosition < toSegments.length; toPosition++) {
+    segment = toSegments[toPosition];
+    if (segment === ".") continue;
+    if (segment === "..") {
+      if (position > 1) position--;
+    } else break;
+  }
+  return fromSegments.slice(0, position).join("/") + "/" + toSegments.slice(toPosition).join("/");
+}
+const START_LOCATION_NORMALIZED = {
+  path: "/",
+  name: void 0,
+  params: {},
+  query: {},
+  hash: "",
+  fullPath: "/",
+  matched: [],
+  meta: {},
+  redirectedFrom: void 0
+};
+let NavigationType = /* @__PURE__ */ (function(NavigationType2) {
+  NavigationType2["pop"] = "pop";
+  NavigationType2["push"] = "push";
+  return NavigationType2;
+})({});
+let NavigationDirection = /* @__PURE__ */ (function(NavigationDirection2) {
+  NavigationDirection2["back"] = "back";
+  NavigationDirection2["forward"] = "forward";
+  NavigationDirection2["unknown"] = "";
+  return NavigationDirection2;
+})({});
+const START = "";
+function normalizeBase(base) {
+  if (!base) base = "/";
+  if (base[0] !== "/" && base[0] !== "#") base = "/" + base;
+  return removeTrailingSlash(base);
+}
+const BEFORE_HASH_RE = /^[^#]+#/;
+function createHref(base, location) {
+  return base.replace(BEFORE_HASH_RE, "#") + location;
+}
+function isRouteLocation(route) {
+  return typeof route === "string" || route && typeof route === "object";
+}
+function isRouteName(name) {
+  return typeof name === "string" || typeof name === "symbol";
+}
+function parseQuery(search) {
+  const query = {};
+  if (search === "" || search === "?") return query;
+  const searchParams = (search[0] === "?" ? search.slice(1) : search).split("&");
+  for (let i = 0; i < searchParams.length; ++i) {
+    const searchParam = searchParams[i].replace(PLUS_RE, " ");
+    const eqPos = searchParam.indexOf("=");
+    const key = decode(eqPos < 0 ? searchParam : searchParam.slice(0, eqPos));
+    const value = eqPos < 0 ? null : decode(searchParam.slice(eqPos + 1));
+    if (key in query) {
+      let currentValue = query[key];
+      if (!isArray(currentValue)) currentValue = query[key] = [currentValue];
+      currentValue.push(value);
+    } else query[key] = value;
+  }
+  return query;
+}
+function stringifyQuery(query) {
+  let search = "";
+  for (let key in query) {
+    const value = query[key];
+    key = encodeQueryKey(key);
+    if (value == null) {
+      if (value !== void 0) search += (search.length ? "&" : "") + key;
+      continue;
+    }
+    (isArray(value) ? value.map((v) => v && encodeQueryValue(v)) : [value && encodeQueryValue(value)]).forEach((value2) => {
+      if (value2 !== void 0) {
+        search += (search.length ? "&" : "") + key;
+        if (value2 != null) search += "=" + value2;
+      }
+    });
+  }
+  return search;
+}
+function normalizeQuery(query) {
+  const normalizedQuery = {};
+  for (const key in query) {
+    const value = query[key];
+    if (value !== void 0) normalizedQuery[key] = isArray(value) ? value.map((v) => v == null ? null : "" + v) : value == null ? value : "" + value;
+  }
+  return normalizedQuery;
+}
+function useCallbacks() {
+  let handlers = [];
+  function add(handler) {
+    handlers.push(handler);
+    return () => {
+      const i = handlers.indexOf(handler);
+      if (i > -1) handlers.splice(i, 1);
+    };
+  }
+  function reset() {
+    handlers = [];
+  }
+  return {
+    add,
+    list: () => handlers.slice(),
+    reset
+  };
+}
+function guardToPromiseFn(guard, to, from, record, name, runWithContext = (fn) => fn()) {
+  const enterCallbackArray = record && (record.enterCallbacks[name] = record.enterCallbacks[name] || []);
+  return () => new Promise((resolve, reject) => {
+    const next = (valid) => {
+      if (valid === false) reject(createRouterError(ErrorTypes.NAVIGATION_ABORTED, {
+        from,
+        to
+      }));
+      else if (valid instanceof Error) reject(valid);
+      else if (isRouteLocation(valid)) reject(createRouterError(ErrorTypes.NAVIGATION_GUARD_REDIRECT, {
+        from: to,
+        to: valid
+      }));
+      else {
+        if (enterCallbackArray && record.enterCallbacks[name] === enterCallbackArray && typeof valid === "function") enterCallbackArray.push(valid);
+        resolve();
+      }
+    };
+    const guardReturn = runWithContext(() => guard.call(record && record.instances[name], to, from, next));
+    let guardCall = Promise.resolve(guardReturn);
+    if (guard.length < 3) guardCall = guardCall.then(next);
+    guardCall.catch((err) => reject(err));
+  });
+}
+function extractComponentsGuards(matched, guardType, to, from, runWithContext = (fn) => fn()) {
+  const guards = [];
+  for (const record of matched) {
+    for (const name in record.components) {
+      let rawComponent = record.components[name];
+      if (guardType !== "beforeRouteEnter" && !record.instances[name]) continue;
+      if (isRouteComponent(rawComponent)) {
+        const guard = (rawComponent.__vccOpts || rawComponent)[guardType];
+        guard && guards.push(guardToPromiseFn(guard, to, from, record, name, runWithContext));
+      } else {
+        let componentPromise = rawComponent();
+        guards.push(() => componentPromise.then((resolved) => {
+          if (!resolved) throw new Error(`Couldn't resolve component "${name}" at "${record.path}"`);
+          const resolvedComponent = isESModule(resolved) ? resolved.default : resolved;
+          record.mods[name] = resolved;
+          record.components[name] = resolvedComponent;
+          const guard = (resolvedComponent.__vccOpts || resolvedComponent)[guardType];
+          return guard && guardToPromiseFn(guard, to, from, record, name, runWithContext)();
+        }));
+      }
+    }
+  }
+  return guards;
+}
+function extractChangingRecords(to, from) {
+  const leavingRecords = [];
+  const updatingRecords = [];
+  const enteringRecords = [];
+  const len = Math.max(from.matched.length, to.matched.length);
+  for (let i = 0; i < len; i++) {
+    const recordFrom = from.matched[i];
+    if (recordFrom) if (to.matched.find((record) => isSameRouteRecord(record, recordFrom))) updatingRecords.push(recordFrom);
+    else leavingRecords.push(recordFrom);
+    const recordTo = to.matched[i];
+    if (recordTo) {
+      if (!from.matched.find((record) => isSameRouteRecord(record, recordTo))) enteringRecords.push(recordTo);
+    }
+  }
+  return [
+    leavingRecords,
+    updatingRecords,
+    enteringRecords
+  ];
+}
+function createMemoryHistory(base = "") {
+  let listeners = [];
+  let queue = [[START, {}]];
+  let position = 0;
+  base = normalizeBase(base);
+  function setLocation(location2, state = {}) {
+    position++;
+    if (position !== queue.length) queue.splice(position);
+    queue.push([location2, state]);
+  }
+  function triggerListeners(to, from, { direction, delta }) {
+    const info = {
+      direction,
+      delta,
+      type: NavigationType.pop
+    };
+    for (const callback of listeners) callback(to, from, info);
+  }
+  const routerHistory = {
+    location: START,
+    state: {},
+    base,
+    createHref: createHref.bind(null, base),
+    replace(to, state) {
+      queue.splice(position--, 1);
+      setLocation(to, state);
+    },
+    push(to, state) {
+      setLocation(to, state);
+    },
+    listen(callback) {
+      listeners.push(callback);
+      return () => {
+        const index2 = listeners.indexOf(callback);
+        if (index2 > -1) listeners.splice(index2, 1);
+      };
+    },
+    destroy() {
+      listeners = [];
+      queue = [[START, {}]];
+      position = 0;
+    },
+    go(delta, shouldTrigger = true) {
+      const from = this.location;
+      const direction = delta < 0 ? NavigationDirection.back : NavigationDirection.forward;
+      position = Math.max(0, Math.min(position + delta, queue.length - 1));
+      if (shouldTrigger) triggerListeners(this.location, from, {
+        direction,
+        delta
+      });
+    }
+  };
+  Object.defineProperty(routerHistory, "location", {
+    enumerable: true,
+    get: () => queue[position][0]
+  });
+  Object.defineProperty(routerHistory, "state", {
+    enumerable: true,
+    get: () => queue[position][1]
+  });
+  return routerHistory;
+}
+let TokenType = /* @__PURE__ */ (function(TokenType2) {
+  TokenType2[TokenType2["Static"] = 0] = "Static";
+  TokenType2[TokenType2["Param"] = 1] = "Param";
+  TokenType2[TokenType2["Group"] = 2] = "Group";
+  return TokenType2;
+})({});
+var TokenizerState = /* @__PURE__ */ (function(TokenizerState2) {
+  TokenizerState2[TokenizerState2["Static"] = 0] = "Static";
+  TokenizerState2[TokenizerState2["Param"] = 1] = "Param";
+  TokenizerState2[TokenizerState2["ParamRegExp"] = 2] = "ParamRegExp";
+  TokenizerState2[TokenizerState2["ParamRegExpEnd"] = 3] = "ParamRegExpEnd";
+  TokenizerState2[TokenizerState2["EscapeNext"] = 4] = "EscapeNext";
+  return TokenizerState2;
+})(TokenizerState || {});
+const ROOT_TOKEN = {
+  type: TokenType.Static,
+  value: ""
+};
+const VALID_PARAM_RE = /[a-zA-Z0-9_]/;
+function tokenizePath(path) {
+  if (!path) return [[]];
+  if (path === "/") return [[ROOT_TOKEN]];
+  if (!path.startsWith("/")) throw new Error(`Invalid path "${path}"`);
+  function crash(message) {
+    throw new Error(`ERR (${state})/"${buffer}": ${message}`);
+  }
+  let state = TokenizerState.Static;
+  let previousState = state;
+  const tokens = [];
+  let segment;
+  function finalizeSegment() {
+    if (segment) tokens.push(segment);
+    segment = [];
+  }
+  let i = 0;
+  let char;
+  let buffer = "";
+  let customRe = "";
+  function consumeBuffer() {
+    if (!buffer) return;
+    if (state === TokenizerState.Static) segment.push({
+      type: TokenType.Static,
+      value: buffer
+    });
+    else if (state === TokenizerState.Param || state === TokenizerState.ParamRegExp || state === TokenizerState.ParamRegExpEnd) {
+      if (segment.length > 1 && (char === "*" || char === "+")) crash(`A repeatable param (${buffer}) must be alone in its segment. eg: '/:ids+.`);
+      segment.push({
+        type: TokenType.Param,
+        value: buffer,
+        regexp: customRe,
+        repeatable: char === "*" || char === "+",
+        optional: char === "*" || char === "?"
+      });
+    } else crash("Invalid state to consume buffer");
+    buffer = "";
+  }
+  function addCharToBuffer() {
+    buffer += char;
+  }
+  while (i < path.length) {
+    char = path[i++];
+    switch (state) {
+      case TokenizerState.Static:
+        if (char === "\\") {
+          previousState = state;
+          state = TokenizerState.EscapeNext;
+        } else if (char === "/") {
+          if (buffer) consumeBuffer();
+          finalizeSegment();
+        } else if (char === ":") {
+          consumeBuffer();
+          state = TokenizerState.Param;
+        } else addCharToBuffer();
+        break;
+      case TokenizerState.EscapeNext:
+        addCharToBuffer();
+        state = previousState;
+        break;
+      case TokenizerState.Param:
+        if (char === "(") state = TokenizerState.ParamRegExp;
+        else if (VALID_PARAM_RE.test(char)) addCharToBuffer();
+        else {
+          consumeBuffer();
+          state = TokenizerState.Static;
+          if (char !== "*" && char !== "?" && char !== "+") i--;
+        }
+        break;
+      case TokenizerState.ParamRegExp:
+        if (char === ")") if (customRe[customRe.length - 1] == "\\") customRe = customRe.slice(0, -1) + char;
+        else state = TokenizerState.ParamRegExpEnd;
+        else customRe += char;
+        break;
+      case TokenizerState.ParamRegExpEnd:
+        consumeBuffer();
+        state = TokenizerState.Static;
+        if (char !== "*" && char !== "?" && char !== "+") i--;
+        customRe = "";
+        break;
+      default:
+        crash("Unknown state");
+        break;
+    }
+  }
+  if (state === TokenizerState.ParamRegExp) crash(`Unfinished custom RegExp for param "${buffer}"`);
+  consumeBuffer();
+  finalizeSegment();
+  return tokens;
+}
+const BASE_PARAM_PATTERN = "[^/]+?";
+const BASE_PATH_PARSER_OPTIONS = {
+  sensitive: false,
+  strict: false,
+  start: true,
+  end: true
+};
+var PathScore = /* @__PURE__ */ (function(PathScore2) {
+  PathScore2[PathScore2["_multiplier"] = 10] = "_multiplier";
+  PathScore2[PathScore2["Root"] = 90] = "Root";
+  PathScore2[PathScore2["Segment"] = 40] = "Segment";
+  PathScore2[PathScore2["SubSegment"] = 30] = "SubSegment";
+  PathScore2[PathScore2["Static"] = 40] = "Static";
+  PathScore2[PathScore2["Dynamic"] = 20] = "Dynamic";
+  PathScore2[PathScore2["BonusCustomRegExp"] = 10] = "BonusCustomRegExp";
+  PathScore2[PathScore2["BonusWildcard"] = -50] = "BonusWildcard";
+  PathScore2[PathScore2["BonusRepeatable"] = -20] = "BonusRepeatable";
+  PathScore2[PathScore2["BonusOptional"] = -8] = "BonusOptional";
+  PathScore2[PathScore2["BonusStrict"] = 0.7000000000000001] = "BonusStrict";
+  PathScore2[PathScore2["BonusCaseSensitive"] = 0.25] = "BonusCaseSensitive";
+  return PathScore2;
+})(PathScore || {});
+const REGEX_CHARS_RE = /[.+*?^${}()[\]/\\]/g;
+function tokensToParser(segments, extraOptions) {
+  const options = assign({}, BASE_PATH_PARSER_OPTIONS, extraOptions);
+  const score = [];
+  let pattern = options.start ? "^" : "";
+  const keys = [];
+  for (const segment of segments) {
+    const segmentScores = segment.length ? [] : [PathScore.Root];
+    if (options.strict && !segment.length) pattern += "/";
+    for (let tokenIndex = 0; tokenIndex < segment.length; tokenIndex++) {
+      const token = segment[tokenIndex];
+      let subSegmentScore = PathScore.Segment + (options.sensitive ? PathScore.BonusCaseSensitive : 0);
+      if (token.type === TokenType.Static) {
+        if (!tokenIndex) pattern += "/";
+        pattern += token.value.replace(REGEX_CHARS_RE, "\\$&");
+        subSegmentScore += PathScore.Static;
+      } else if (token.type === TokenType.Param) {
+        const { value, repeatable, optional, regexp } = token;
+        keys.push({
+          name: value,
+          repeatable,
+          optional
+        });
+        const re2 = regexp ? regexp : BASE_PARAM_PATTERN;
+        if (re2 !== BASE_PARAM_PATTERN) {
+          subSegmentScore += PathScore.BonusCustomRegExp;
+          try {
+            new RegExp(`(${re2})`);
+          } catch (err) {
+            throw new Error(`Invalid custom RegExp for param "${value}" (${re2}): ` + err.message);
+          }
+        }
+        let subPattern = repeatable ? `((?:${re2})(?:/(?:${re2}))*)` : `(${re2})`;
+        if (!tokenIndex) subPattern = optional && segment.length < 2 ? `(?:/${subPattern})` : "/" + subPattern;
+        if (optional) subPattern += "?";
+        pattern += subPattern;
+        subSegmentScore += PathScore.Dynamic;
+        if (optional) subSegmentScore += PathScore.BonusOptional;
+        if (repeatable) subSegmentScore += PathScore.BonusRepeatable;
+        if (re2 === ".*") subSegmentScore += PathScore.BonusWildcard;
+      }
+      segmentScores.push(subSegmentScore);
+    }
+    score.push(segmentScores);
+  }
+  if (options.strict && options.end) {
+    const i = score.length - 1;
+    score[i][score[i].length - 1] += PathScore.BonusStrict;
+  }
+  if (!options.strict) pattern += "/?";
+  if (options.end) pattern += "$";
+  else if (options.strict && !pattern.endsWith("/")) pattern += "(?:/|$)";
+  const re = new RegExp(pattern, options.sensitive ? "" : "i");
+  function parse(path) {
+    const match = path.match(re);
+    const params = {};
+    if (!match) return null;
+    for (let i = 1; i < match.length; i++) {
+      const value = match[i] || "";
+      const key = keys[i - 1];
+      params[key.name] = value && key.repeatable ? value.split("/") : value;
+    }
+    return params;
+  }
+  function stringify(params) {
+    let path = "";
+    let avoidDuplicatedSlash = false;
+    for (const segment of segments) {
+      if (!avoidDuplicatedSlash || !path.endsWith("/")) path += "/";
+      avoidDuplicatedSlash = false;
+      for (const token of segment) if (token.type === TokenType.Static) path += token.value;
+      else if (token.type === TokenType.Param) {
+        const { value, repeatable, optional } = token;
+        const param = value in params ? params[value] : "";
+        if (isArray(param) && !repeatable) throw new Error(`Provided param "${value}" is an array but it is not repeatable (* or + modifiers)`);
+        const text = isArray(param) ? param.join("/") : param;
+        if (!text) if (optional) {
+          if (segment.length < 2) if (path.endsWith("/")) path = path.slice(0, -1);
+          else avoidDuplicatedSlash = true;
+        } else throw new Error(`Missing required param "${value}"`);
+        path += text;
+      }
+    }
+    return path || "/";
+  }
+  return {
+    re,
+    score,
+    keys,
+    parse,
+    stringify
+  };
+}
+function compareScoreArray(a, b) {
+  let i = 0;
+  while (i < a.length && i < b.length) {
+    const diff2 = b[i] - a[i];
+    if (diff2) return diff2;
+    i++;
+  }
+  if (a.length < b.length) return a.length === 1 && a[0] === PathScore.Static + PathScore.Segment ? -1 : 1;
+  else if (a.length > b.length) return b.length === 1 && b[0] === PathScore.Static + PathScore.Segment ? 1 : -1;
+  return 0;
+}
+function comparePathParserScore(a, b) {
+  let i = 0;
+  const aScore = a.score;
+  const bScore = b.score;
+  while (i < aScore.length && i < bScore.length) {
+    const comp = compareScoreArray(aScore[i], bScore[i]);
+    if (comp) return comp;
+    i++;
+  }
+  if (Math.abs(bScore.length - aScore.length) === 1) {
+    if (isLastScoreNegative(aScore)) return 1;
+    if (isLastScoreNegative(bScore)) return -1;
+  }
+  return bScore.length - aScore.length;
+}
+function isLastScoreNegative(score) {
+  const last = score[score.length - 1];
+  return score.length > 0 && last[last.length - 1] < 0;
+}
+const PATH_PARSER_OPTIONS_DEFAULTS = {
+  strict: false,
+  end: true,
+  sensitive: false
+};
+function createRouteRecordMatcher(record, parent, options) {
+  const parser = tokensToParser(tokenizePath(record.path), options);
+  const matcher2 = assign(parser, {
+    record,
+    parent,
+    children: [],
+    alias: []
+  });
+  if (parent) {
+    if (!matcher2.record.aliasOf === !parent.record.aliasOf) parent.children.push(matcher2);
+  }
+  return matcher2;
+}
+function createRouterMatcher(routes2, globalOptions) {
+  const matchers = [];
+  const matcherMap = /* @__PURE__ */ new Map();
+  globalOptions = mergeOptions(PATH_PARSER_OPTIONS_DEFAULTS, globalOptions);
+  function getRecordMatcher(name) {
+    return matcherMap.get(name);
+  }
+  function addRoute(record, parent, originalRecord) {
+    const isRootAdd = !originalRecord;
+    const mainNormalizedRecord = normalizeRouteRecord(record);
+    mainNormalizedRecord.aliasOf = originalRecord && originalRecord.record;
+    const options = mergeOptions(globalOptions, record);
+    const normalizedRecords = [mainNormalizedRecord];
+    if ("alias" in record) {
+      const aliases = typeof record.alias === "string" ? [record.alias] : record.alias;
+      for (const alias of aliases) normalizedRecords.push(normalizeRouteRecord(assign({}, mainNormalizedRecord, {
+        components: originalRecord ? originalRecord.record.components : mainNormalizedRecord.components,
+        path: alias,
+        aliasOf: originalRecord ? originalRecord.record : mainNormalizedRecord
+      })));
+    }
+    let matcher2;
+    let originalMatcher;
+    for (const normalizedRecord of normalizedRecords) {
+      const { path } = normalizedRecord;
+      if (parent && path[0] !== "/") {
+        const parentPath = parent.record.path;
+        const connectingSlash = parentPath[parentPath.length - 1] === "/" ? "" : "/";
+        normalizedRecord.path = parent.record.path + (path && connectingSlash + path);
+      }
+      matcher2 = createRouteRecordMatcher(normalizedRecord, parent, options);
+      if (originalRecord) {
+        originalRecord.alias.push(matcher2);
+      } else {
+        originalMatcher = originalMatcher || matcher2;
+        if (originalMatcher !== matcher2) originalMatcher.alias.push(matcher2);
+        if (isRootAdd && record.name && !isAliasRecord(matcher2)) {
+          removeRoute(record.name);
+        }
+      }
+      if (isMatchable(matcher2)) insertMatcher(matcher2);
+      if (mainNormalizedRecord.children) {
+        const children = mainNormalizedRecord.children;
+        for (let i = 0; i < children.length; i++) addRoute(children[i], matcher2, originalRecord && originalRecord.children[i]);
+      }
+      originalRecord = originalRecord || matcher2;
+    }
+    return originalMatcher ? () => {
+      removeRoute(originalMatcher);
+    } : noop;
+  }
+  function removeRoute(matcherRef) {
+    if (isRouteName(matcherRef)) {
+      const matcher2 = matcherMap.get(matcherRef);
+      if (matcher2) {
+        matcherMap.delete(matcherRef);
+        matchers.splice(matchers.indexOf(matcher2), 1);
+        matcher2.children.forEach(removeRoute);
+        matcher2.alias.forEach(removeRoute);
+      }
+    } else {
+      const index2 = matchers.indexOf(matcherRef);
+      if (index2 > -1) {
+        matchers.splice(index2, 1);
+        if (matcherRef.record.name) matcherMap.delete(matcherRef.record.name);
+        matcherRef.children.forEach(removeRoute);
+        matcherRef.alias.forEach(removeRoute);
+      }
+    }
+  }
+  function getRoutes() {
+    return matchers;
+  }
+  function insertMatcher(matcher2) {
+    const index2 = findInsertionIndex(matcher2, matchers);
+    matchers.splice(index2, 0, matcher2);
+    if (matcher2.record.name && !isAliasRecord(matcher2)) matcherMap.set(matcher2.record.name, matcher2);
+  }
+  function resolve(location2, currentLocation) {
+    let matcher2;
+    let params = {};
+    let path;
+    let name;
+    if ("name" in location2 && location2.name) {
+      matcher2 = matcherMap.get(location2.name);
+      if (!matcher2) throw createRouterError(ErrorTypes.MATCHER_NOT_FOUND, { location: location2 });
+      name = matcher2.record.name;
+      params = assign(pickParams(currentLocation.params, matcher2.keys.filter((k) => !k.optional).concat(matcher2.parent ? matcher2.parent.keys.filter((k) => k.optional) : []).map((k) => k.name)), location2.params && pickParams(location2.params, matcher2.keys.map((k) => k.name)));
+      path = matcher2.stringify(params);
+    } else if (location2.path != null) {
+      path = location2.path;
+      matcher2 = matchers.find((m) => m.re.test(path));
+      if (matcher2) {
+        params = matcher2.parse(path);
+        name = matcher2.record.name;
+        matcher2.keys.forEach((key) => {
+          if (key.optional && !params[key.name]) delete params[key.name];
+        });
+      }
+    } else {
+      matcher2 = currentLocation.name ? matcherMap.get(currentLocation.name) : matchers.find((m) => m.re.test(currentLocation.path));
+      if (!matcher2) throw createRouterError(ErrorTypes.MATCHER_NOT_FOUND, {
+        location: location2,
+        currentLocation
+      });
+      name = matcher2.record.name;
+      params = assign({}, currentLocation.params, location2.params);
+      path = matcher2.stringify(params);
+    }
+    const matched = [];
+    let parentMatcher = matcher2;
+    while (parentMatcher) {
+      matched.unshift(parentMatcher.record);
+      parentMatcher = parentMatcher.parent;
+    }
+    return {
+      name,
+      path,
+      params,
+      matched,
+      meta: mergeMetaFields(matched)
+    };
+  }
+  routes2.forEach((route) => addRoute(route));
+  function clearRoutes() {
+    matchers.length = 0;
+    matcherMap.clear();
+  }
+  return {
+    addRoute,
+    resolve,
+    removeRoute,
+    clearRoutes,
+    getRoutes,
+    getRecordMatcher
+  };
+}
+function pickParams(params, keys) {
+  const newParams = {};
+  for (const key of keys) if (key in params) newParams[key] = params[key];
+  return newParams;
+}
+function normalizeRouteRecord(record) {
+  const normalized = {
+    path: record.path,
+    redirect: record.redirect,
+    name: record.name,
+    meta: record.meta || {},
+    aliasOf: record.aliasOf,
+    beforeEnter: record.beforeEnter,
+    props: normalizeRecordProps(record),
+    children: record.children || [],
+    instances: {},
+    leaveGuards: /* @__PURE__ */ new Set(),
+    updateGuards: /* @__PURE__ */ new Set(),
+    enterCallbacks: {},
+    components: "components" in record ? record.components || null : record.component && { default: record.component }
+  };
+  Object.defineProperty(normalized, "mods", { value: {} });
+  return normalized;
+}
+function normalizeRecordProps(record) {
+  const propsObject = {};
+  const props = record.props || false;
+  if ("component" in record) propsObject.default = props;
+  else for (const name in record.components) propsObject[name] = typeof props === "object" ? props[name] : props;
+  return propsObject;
+}
+function isAliasRecord(record) {
+  while (record) {
+    if (record.record.aliasOf) return true;
+    record = record.parent;
+  }
+  return false;
+}
+function mergeMetaFields(matched) {
+  return matched.reduce((meta, record) => assign(meta, record.meta), {});
+}
+function findInsertionIndex(matcher2, matchers) {
+  let lower = 0;
+  let upper = matchers.length;
+  while (lower !== upper) {
+    const mid = lower + upper >> 1;
+    if (comparePathParserScore(matcher2, matchers[mid]) < 0) upper = mid;
+    else lower = mid + 1;
+  }
+  const insertionAncestor = getInsertionAncestor(matcher2);
+  if (insertionAncestor) {
+    upper = matchers.lastIndexOf(insertionAncestor, upper - 1);
+  }
+  return upper;
+}
+function getInsertionAncestor(matcher2) {
+  let ancestor = matcher2;
+  while (ancestor = ancestor.parent) if (isMatchable(ancestor) && comparePathParserScore(matcher2, ancestor) === 0) return ancestor;
+}
+function isMatchable({ record }) {
+  return !!(record.name || record.components && Object.keys(record.components).length || record.redirect);
+}
+function useLink(props) {
+  const router = inject(routerKey);
+  const currentRoute = inject(routeLocationKey);
+  const route = computed(() => {
+    const to = unref(props.to);
+    return router.resolve(to);
+  });
+  const activeRecordIndex = computed(() => {
+    const { matched } = route.value;
+    const { length } = matched;
+    const routeMatched = matched[length - 1];
+    const currentMatched = currentRoute.matched;
+    if (!routeMatched || !currentMatched.length) return -1;
+    const index2 = currentMatched.findIndex(isSameRouteRecord.bind(null, routeMatched));
+    if (index2 > -1) return index2;
+    const parentRecordPath = getOriginalPath(matched[length - 2]);
+    return length > 1 && getOriginalPath(routeMatched) === parentRecordPath && currentMatched[currentMatched.length - 1].path !== parentRecordPath ? currentMatched.findIndex(isSameRouteRecord.bind(null, matched[length - 2])) : index2;
+  });
+  const isActive = computed(() => activeRecordIndex.value > -1 && includesParams(currentRoute.params, route.value.params));
+  const isExactActive = computed(() => activeRecordIndex.value > -1 && activeRecordIndex.value === currentRoute.matched.length - 1 && isSameRouteLocationParams(currentRoute.params, route.value.params));
+  function navigate(e = {}) {
+    if (guardEvent(e)) {
+      const p = router[unref(props.replace) ? "replace" : "push"](unref(props.to)).catch(noop);
+      if (props.viewTransition && false) ;
+      return p;
+    }
+    return Promise.resolve();
+  }
+  return {
+    route,
+    href: computed(() => route.value.href),
+    isActive,
+    isExactActive,
+    navigate
+  };
+}
+function preferSingleVNode(vnodes) {
+  return vnodes.length === 1 ? vnodes[0] : vnodes;
+}
+const RouterLinkImpl = /* @__PURE__ */ defineComponent({
+  name: "RouterLink",
+  compatConfig: { MODE: 3 },
+  props: {
+    to: {
+      type: [String, Object],
+      required: true
+    },
+    replace: Boolean,
+    activeClass: String,
+    exactActiveClass: String,
+    custom: Boolean,
+    ariaCurrentValue: {
+      type: String,
+      default: "page"
+    },
+    viewTransition: Boolean
+  },
+  useLink,
+  setup(props, { slots }) {
+    const link = reactive(useLink(props));
+    const { options } = inject(routerKey);
+    const elClass = computed(() => ({
+      [getLinkClass(props.activeClass, options.linkActiveClass, "router-link-active")]: link.isActive,
+      [getLinkClass(props.exactActiveClass, options.linkExactActiveClass, "router-link-exact-active")]: link.isExactActive
+    }));
+    return () => {
+      const children = slots.default && preferSingleVNode(slots.default(link));
+      return props.custom ? children : h("a", {
+        "aria-current": link.isExactActive ? props.ariaCurrentValue : null,
+        href: link.href,
+        onClick: link.navigate,
+        class: elClass.value
+      }, children);
+    };
+  }
+});
+const RouterLink = RouterLinkImpl;
+function guardEvent(e) {
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return;
+  if (e.defaultPrevented) return;
+  if (e.button !== void 0 && e.button !== 0) return;
+  if (e.currentTarget && e.currentTarget.getAttribute) {
+    const target = e.currentTarget.getAttribute("target");
+    if (/\b_blank\b/i.test(target)) return;
+  }
+  if (e.preventDefault) e.preventDefault();
+  return true;
+}
+function includesParams(outer, inner) {
+  for (const key in inner) {
+    const innerValue = inner[key];
+    const outerValue = outer[key];
+    if (typeof innerValue === "string") {
+      if (innerValue !== outerValue) return false;
+    } else if (!isArray(outerValue) || outerValue.length !== innerValue.length || innerValue.some((value, i) => value.valueOf() !== outerValue[i].valueOf())) return false;
+  }
+  return true;
+}
+function getOriginalPath(record) {
+  return record ? record.aliasOf ? record.aliasOf.path : record.path : "";
+}
+const getLinkClass = (propClass, globalClass, defaultClass) => propClass != null ? propClass : globalClass != null ? globalClass : defaultClass;
+const RouterViewImpl = /* @__PURE__ */ defineComponent({
+  name: "RouterView",
+  inheritAttrs: false,
+  props: {
+    name: {
+      type: String,
+      default: "default"
+    },
+    route: Object
+  },
+  compatConfig: { MODE: 3 },
+  setup(props, { attrs, slots }) {
+    const injectedRoute = inject(routerViewLocationKey);
+    const routeToDisplay = computed(() => props.route || injectedRoute.value);
+    const injectedDepth = inject(viewDepthKey, 0);
+    const depth = computed(() => {
+      let initialDepth = unref(injectedDepth);
+      const { matched } = routeToDisplay.value;
+      let matchedRoute;
+      while ((matchedRoute = matched[initialDepth]) && !matchedRoute.components) initialDepth++;
+      return initialDepth;
+    });
+    const matchedRouteRef = computed(() => routeToDisplay.value.matched[depth.value]);
+    provide(viewDepthKey, computed(() => depth.value + 1));
+    provide(matchedRouteKey, matchedRouteRef);
+    provide(routerViewLocationKey, routeToDisplay);
+    const viewRef = ref();
+    watch(() => [
+      viewRef.value,
+      matchedRouteRef.value,
+      props.name
+    ], ([instance, to, name], [oldInstance, from, _oldName]) => {
+      if (to) {
+        to.instances[name] = instance;
+        if (from && from !== to && instance && instance === oldInstance) {
+          if (!to.leaveGuards.size) to.leaveGuards = from.leaveGuards;
+          if (!to.updateGuards.size) to.updateGuards = from.updateGuards;
+        }
+      }
+      if (instance && to && (!from || !isSameRouteRecord(to, from) || !oldInstance)) (to.enterCallbacks[name] || []).forEach((callback) => callback(instance));
+    }, { flush: "post" });
+    return () => {
+      const route = routeToDisplay.value;
+      const currentName = props.name;
+      const matchedRoute = matchedRouteRef.value;
+      const ViewComponent = matchedRoute && matchedRoute.components[currentName];
+      if (!ViewComponent) return normalizeSlot$1(slots.default, {
+        Component: ViewComponent,
+        route
+      });
+      const routePropsOption = matchedRoute.props[currentName];
+      const routeProps = routePropsOption ? routePropsOption === true ? route.params : typeof routePropsOption === "function" ? routePropsOption(route) : routePropsOption : null;
+      const onVnodeUnmounted = (vnode) => {
+        if (vnode.component.isUnmounted) matchedRoute.instances[currentName] = null;
+      };
+      const component = h(ViewComponent, assign({}, routeProps, attrs, {
+        onVnodeUnmounted,
+        ref: viewRef
+      }));
+      return normalizeSlot$1(slots.default, {
+        Component: component,
+        route
+      }) || component;
+    };
+  }
+});
+function normalizeSlot$1(slot, data) {
+  if (!slot) return null;
+  const slotContent = slot(data);
+  return slotContent.length === 1 ? slotContent[0] : slotContent;
+}
+const RouterView = RouterViewImpl;
+function createRouter(options) {
+  const matcher2 = createRouterMatcher(options.routes, options);
+  const parseQuery$12 = options.parseQuery || parseQuery;
+  const stringifyQuery$1 = options.stringifyQuery || stringifyQuery;
+  const routerHistory = options.history;
+  const beforeGuards = useCallbacks();
+  const beforeResolveGuards = useCallbacks();
+  const afterGuards = useCallbacks();
+  const currentRoute = shallowRef(START_LOCATION_NORMALIZED);
+  let pendingLocation = START_LOCATION_NORMALIZED;
+  const normalizeParams = applyToParams.bind(null, (paramValue) => "" + paramValue);
+  const encodeParams = applyToParams.bind(null, encodeParam);
+  const decodeParams = applyToParams.bind(null, decode);
+  function addRoute(parentOrRoute, route) {
+    let parent;
+    let record;
+    if (isRouteName(parentOrRoute)) {
+      parent = matcher2.getRecordMatcher(parentOrRoute);
+      record = route;
+    } else record = parentOrRoute;
+    return matcher2.addRoute(record, parent);
+  }
+  function removeRoute(name) {
+    const recordMatcher = matcher2.getRecordMatcher(name);
+    if (recordMatcher) matcher2.removeRoute(recordMatcher);
+  }
+  function getRoutes() {
+    return matcher2.getRoutes().map((routeMatcher) => routeMatcher.record);
+  }
+  function hasRoute(name) {
+    return !!matcher2.getRecordMatcher(name);
+  }
+  function resolve(rawLocation, currentLocation) {
+    currentLocation = assign({}, currentLocation || currentRoute.value);
+    if (typeof rawLocation === "string") {
+      const locationNormalized = parseURL(parseQuery$12, rawLocation, currentLocation.path);
+      const matchedRoute2 = matcher2.resolve({ path: locationNormalized.path }, currentLocation);
+      const href2 = routerHistory.createHref(locationNormalized.fullPath);
+      return assign(locationNormalized, matchedRoute2, {
+        params: decodeParams(matchedRoute2.params),
+        redirectedFrom: void 0,
+        href: href2
+      });
+    }
+    let matcherLocation;
+    if (rawLocation.path != null) {
+      matcherLocation = assign({}, rawLocation, { path: parseURL(parseQuery$12, rawLocation.path, currentLocation.path).path });
+    } else {
+      const targetParams = assign({}, rawLocation.params);
+      for (const key in targetParams) if (targetParams[key] == null) delete targetParams[key];
+      matcherLocation = assign({}, rawLocation, { params: encodeParams(targetParams) });
+      currentLocation.params = encodeParams(currentLocation.params);
+    }
+    const matchedRoute = matcher2.resolve(matcherLocation, currentLocation);
+    const hash2 = rawLocation.hash || "";
+    matchedRoute.params = normalizeParams(decodeParams(matchedRoute.params));
+    const fullPath = stringifyURL(stringifyQuery$1, assign({}, rawLocation, {
+      hash: encodeHash(hash2),
+      path: matchedRoute.path
+    }));
+    const href = routerHistory.createHref(fullPath);
+    return assign({
+      fullPath,
+      hash: hash2,
+      query: stringifyQuery$1 === stringifyQuery ? normalizeQuery(rawLocation.query) : rawLocation.query || {}
+    }, matchedRoute, {
+      redirectedFrom: void 0,
+      href
+    });
+  }
+  function locationAsObject(to) {
+    return typeof to === "string" ? parseURL(parseQuery$12, to, currentRoute.value.path) : assign({}, to);
+  }
+  function checkCanceledNavigation(to, from) {
+    if (pendingLocation !== to) return createRouterError(ErrorTypes.NAVIGATION_CANCELLED, {
+      from,
+      to
+    });
+  }
+  function push(to) {
+    return pushWithRedirect(to);
+  }
+  function replace(to) {
+    return push(assign(locationAsObject(to), { replace: true }));
+  }
+  function handleRedirectRecord(to, from) {
+    const lastMatched = to.matched[to.matched.length - 1];
+    if (lastMatched && lastMatched.redirect) {
+      const { redirect } = lastMatched;
+      let newTargetLocation = typeof redirect === "function" ? redirect(to, from) : redirect;
+      if (typeof newTargetLocation === "string") {
+        newTargetLocation = newTargetLocation.includes("?") || newTargetLocation.includes("#") ? newTargetLocation = locationAsObject(newTargetLocation) : { path: newTargetLocation };
+        newTargetLocation.params = {};
+      }
+      return assign({
+        query: to.query,
+        hash: to.hash,
+        params: newTargetLocation.path != null ? {} : to.params
+      }, newTargetLocation);
+    }
+  }
+  function pushWithRedirect(to, redirectedFrom) {
+    const targetLocation = pendingLocation = resolve(to);
+    const from = currentRoute.value;
+    const data = to.state;
+    const force = to.force;
+    const replace2 = to.replace === true;
+    const shouldRedirect = handleRedirectRecord(targetLocation, from);
+    if (shouldRedirect) return pushWithRedirect(assign(locationAsObject(shouldRedirect), {
+      state: typeof shouldRedirect === "object" ? assign({}, data, shouldRedirect.state) : data,
+      force,
+      replace: replace2
+    }), redirectedFrom || targetLocation);
+    const toLocation = targetLocation;
+    toLocation.redirectedFrom = redirectedFrom;
+    let failure;
+    if (!force && isSameRouteLocation(stringifyQuery$1, from, targetLocation)) {
+      failure = createRouterError(ErrorTypes.NAVIGATION_DUPLICATED, {
+        to: toLocation,
+        from
+      });
+      handleScroll();
+    }
+    return (failure ? Promise.resolve(failure) : navigate(toLocation, from)).catch((error) => isNavigationFailure(error) ? isNavigationFailure(error, ErrorTypes.NAVIGATION_GUARD_REDIRECT) ? error : markAsReady(error) : triggerError(error, toLocation, from)).then((failure2) => {
+      if (failure2) {
+        if (isNavigationFailure(failure2, ErrorTypes.NAVIGATION_GUARD_REDIRECT)) {
+          return pushWithRedirect(assign({ replace: replace2 }, locationAsObject(failure2.to), {
+            state: typeof failure2.to === "object" ? assign({}, data, failure2.to.state) : data,
+            force
+          }), redirectedFrom || toLocation);
+        }
+      } else failure2 = finalizeNavigation(toLocation, from, true, replace2, data);
+      triggerAfterEach(toLocation, from, failure2);
+      return failure2;
+    });
+  }
+  function checkCanceledNavigationAndReject(to, from) {
+    const error = checkCanceledNavigation(to, from);
+    return error ? Promise.reject(error) : Promise.resolve();
+  }
+  function runWithContext(fn) {
+    const app = installedApps.values().next().value;
+    return app && typeof app.runWithContext === "function" ? app.runWithContext(fn) : fn();
+  }
+  function navigate(to, from) {
+    let guards;
+    const [leavingRecords, updatingRecords, enteringRecords] = extractChangingRecords(to, from);
+    guards = extractComponentsGuards(leavingRecords.reverse(), "beforeRouteLeave", to, from);
+    for (const record of leavingRecords) record.leaveGuards.forEach((guard) => {
+      guards.push(guardToPromiseFn(guard, to, from));
+    });
+    const canceledNavigationCheck = checkCanceledNavigationAndReject.bind(null, to, from);
+    guards.push(canceledNavigationCheck);
+    return runGuardQueue(guards).then(() => {
+      guards = [];
+      for (const guard of beforeGuards.list()) guards.push(guardToPromiseFn(guard, to, from));
+      guards.push(canceledNavigationCheck);
+      return runGuardQueue(guards);
+    }).then(() => {
+      guards = extractComponentsGuards(updatingRecords, "beforeRouteUpdate", to, from);
+      for (const record of updatingRecords) record.updateGuards.forEach((guard) => {
+        guards.push(guardToPromiseFn(guard, to, from));
+      });
+      guards.push(canceledNavigationCheck);
+      return runGuardQueue(guards);
+    }).then(() => {
+      guards = [];
+      for (const record of enteringRecords) if (record.beforeEnter) if (isArray(record.beforeEnter)) for (const beforeEnter of record.beforeEnter) guards.push(guardToPromiseFn(beforeEnter, to, from));
+      else guards.push(guardToPromiseFn(record.beforeEnter, to, from));
+      guards.push(canceledNavigationCheck);
+      return runGuardQueue(guards);
+    }).then(() => {
+      to.matched.forEach((record) => record.enterCallbacks = {});
+      guards = extractComponentsGuards(enteringRecords, "beforeRouteEnter", to, from, runWithContext);
+      guards.push(canceledNavigationCheck);
+      return runGuardQueue(guards);
+    }).then(() => {
+      guards = [];
+      for (const guard of beforeResolveGuards.list()) guards.push(guardToPromiseFn(guard, to, from));
+      guards.push(canceledNavigationCheck);
+      return runGuardQueue(guards);
+    }).catch((err) => isNavigationFailure(err, ErrorTypes.NAVIGATION_CANCELLED) ? err : Promise.reject(err));
+  }
+  function triggerAfterEach(to, from, failure) {
+    afterGuards.list().forEach((guard) => runWithContext(() => guard(to, from, failure)));
+  }
+  function finalizeNavigation(toLocation, from, isPush, replace2, data) {
+    const error = checkCanceledNavigation(toLocation, from);
+    if (error) return error;
+    const isFirstNavigation = from === START_LOCATION_NORMALIZED;
+    const state = {};
+    if (isPush) if (replace2 || isFirstNavigation) routerHistory.replace(toLocation.fullPath, assign({ scroll: isFirstNavigation && state && state.scroll }, data));
+    else routerHistory.push(toLocation.fullPath, data);
+    currentRoute.value = toLocation;
+    handleScroll();
+    markAsReady();
+  }
+  let removeHistoryListener;
+  function setupListeners() {
+    if (removeHistoryListener) return;
+    removeHistoryListener = routerHistory.listen((to, _from, info) => {
+      if (!router.listening) return;
+      const toLocation = resolve(to);
+      const shouldRedirect = handleRedirectRecord(toLocation, router.currentRoute.value);
+      if (shouldRedirect) {
+        pushWithRedirect(assign(shouldRedirect, {
+          replace: true,
+          force: true
+        }), toLocation).catch(noop);
+        return;
+      }
+      pendingLocation = toLocation;
+      const from = currentRoute.value;
+      navigate(toLocation, from).catch((error) => {
+        if (isNavigationFailure(error, ErrorTypes.NAVIGATION_ABORTED | ErrorTypes.NAVIGATION_CANCELLED)) return error;
+        if (isNavigationFailure(error, ErrorTypes.NAVIGATION_GUARD_REDIRECT)) {
+          pushWithRedirect(assign(locationAsObject(error.to), { force: true }), toLocation).then((failure) => {
+            if (isNavigationFailure(failure, ErrorTypes.NAVIGATION_ABORTED | ErrorTypes.NAVIGATION_DUPLICATED) && !info.delta && info.type === NavigationType.pop) routerHistory.go(-1, false);
+          }).catch(noop);
+          return Promise.reject();
+        }
+        if (info.delta) routerHistory.go(-info.delta, false);
+        return triggerError(error, toLocation, from);
+      }).then((failure) => {
+        failure = failure || finalizeNavigation(toLocation, from, false);
+        if (failure) {
+          if (info.delta && !isNavigationFailure(failure, ErrorTypes.NAVIGATION_CANCELLED)) routerHistory.go(-info.delta, false);
+          else if (info.type === NavigationType.pop && isNavigationFailure(failure, ErrorTypes.NAVIGATION_ABORTED | ErrorTypes.NAVIGATION_DUPLICATED)) routerHistory.go(-1, false);
+        }
+        triggerAfterEach(toLocation, from, failure);
+      }).catch(noop);
+    });
+  }
+  let readyHandlers = useCallbacks();
+  let errorListeners = useCallbacks();
+  let ready;
+  function triggerError(error, to, from) {
+    markAsReady(error);
+    const list = errorListeners.list();
+    if (list.length) list.forEach((handler) => handler(error, to, from));
+    else {
+      console.error(error);
+    }
+    return Promise.reject(error);
+  }
+  function isReady() {
+    if (ready && currentRoute.value !== START_LOCATION_NORMALIZED) return Promise.resolve();
+    return new Promise((resolve2, reject) => {
+      readyHandlers.add([resolve2, reject]);
+    });
+  }
+  function markAsReady(err) {
+    if (!ready) {
+      ready = !err;
+      setupListeners();
+      readyHandlers.list().forEach(([resolve2, reject]) => err ? reject(err) : resolve2());
+      readyHandlers.reset();
+    }
+    return err;
+  }
+  function handleScroll(to, from, isPush, isFirstNavigation) {
+    const { scrollBehavior } = options;
+    return Promise.resolve();
+  }
+  const go = (delta) => routerHistory.go(delta);
+  const installedApps = /* @__PURE__ */ new Set();
+  const router = {
+    currentRoute,
+    listening: true,
+    addRoute,
+    removeRoute,
+    clearRoutes: matcher2.clearRoutes,
+    hasRoute,
+    getRoutes,
+    resolve,
+    options,
+    push,
+    replace,
+    go,
+    back: () => go(-1),
+    forward: () => go(1),
+    beforeEach: beforeGuards.add,
+    beforeResolve: beforeResolveGuards.add,
+    afterEach: afterGuards.add,
+    onError: errorListeners.add,
+    isReady,
+    install(app) {
+      app.component("RouterLink", RouterLink);
+      app.component("RouterView", RouterView);
+      app.config.globalProperties.$router = router;
+      Object.defineProperty(app.config.globalProperties, "$route", {
+        enumerable: true,
+        get: () => unref(currentRoute)
+      });
+      const reactiveRoute = {};
+      for (const key in START_LOCATION_NORMALIZED) Object.defineProperty(reactiveRoute, key, {
+        get: () => currentRoute.value[key],
+        enumerable: true
+      });
+      app.provide(routerKey, router);
+      app.provide(routeLocationKey, shallowReactive(reactiveRoute));
+      app.provide(routerViewLocationKey, currentRoute);
+      const unmountApp = app.unmount;
+      installedApps.add(app);
+      app.unmount = function() {
+        installedApps.delete(app);
+        if (installedApps.size < 1) {
+          pendingLocation = START_LOCATION_NORMALIZED;
+          removeHistoryListener && removeHistoryListener();
+          removeHistoryListener = null;
+          currentRoute.value = START_LOCATION_NORMALIZED;
+          ready = false;
+        }
+        unmountApp();
+      };
+    }
+  };
+  function runGuardQueue(guards) {
+    return guards.reduce((promise, guard) => promise.then(() => runWithContext(guard)), Promise.resolve());
+  }
+  return router;
+}
+global.__VUE_PROD_DEVTOOLS__ = false;
 function toArray(value) {
   return Array.isArray(value) ? value : [value];
 }
@@ -736,58 +2115,58 @@ const _routes = [
     name: "profile-orders-orderId",
     path: "/profile/orders/:orderId()",
     meta: { "middleware": ["auth"] },
-    component: () => import('./_orderId_-D2SgmBqd.mjs')
+    component: () => import('./_orderId_-Dp7auTni.mjs')
   },
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-DQsPriAU.mjs')
+    component: () => import('./cart-BUASQv8X.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-CvHB9yTx.mjs')
+    component: () => import('./catalog-CxnxJ5xo.mjs')
   },
   {
     name: "cookie-policy",
     path: "/cookie-policy",
-    component: () => import('./cookie-policy-Jo5zst2l.mjs')
+    component: () => import('./cookie-policy-BPwat5PP.mjs')
   },
   {
     name: "delivery",
     path: "/delivery",
-    component: () => import('./delivery-CJF0Mr9v.mjs')
+    component: () => import('./delivery-IspMtGyU.mjs')
   },
   {
     name: "legal-information",
     path: "/legal-information",
-    component: () => import('./legal-information-ClXgNLu8.mjs')
+    component: () => import('./legal-information-DUomjzun.mjs')
   },
   {
     name: "payment",
     path: "/payment",
-    component: () => import('./payment-D0L9-Gkw.mjs')
+    component: () => import('./payment-Bq3AszfY.mjs')
   },
   {
     name: "privacy-policy",
     path: "/privacy-policy",
-    component: () => import('./privacy-policy-DX5AvrY1.mjs')
+    component: () => import('./privacy-policy-CwySkDed.mjs')
   },
   {
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-DWLkQjzr.mjs')
+    component: () => import('./index-C4YN-2LQ.mjs')
   },
   {
     name: "user-agreement",
     path: "/user-agreement",
-    component: () => import('./user-agreement-CeJ9GVa0.mjs')
+    component: () => import('./user-agreement-SU0PuB52.mjs')
   },
   {
     name: "index",
     path: "/",
-    component: () => import('./index-ZQOpYUvS.mjs')
+    component: () => import('./index-90DSJGtY.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -798,7 +2177,7 @@ function generateRouteKey(route) {
   return typeof source === "function" ? source(route) : source;
 }
 function isChangingPage(to, from) {
-  if (to === from || from === START_LOCATION) {
+  if (to === from || from === START_LOCATION_NORMALIZED) {
     return false;
   }
   if (generateRouteKey(to) !== generateRouteKey(from)) {
@@ -829,7 +2208,7 @@ const routerOptions0 = {
     if (routeAllowsScrollToTop === false) {
       return false;
     }
-    if (from === START_LOCATION) {
+    if (from === START_LOCATION_NORMALIZED) {
       return _calculatePosition(to, from, savedPosition, hashScrollBehaviour);
     }
     return new Promise((resolve) => {
@@ -913,7 +2292,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./auth-u1DOwyuS.mjs')
+  auth: () => import('./auth-CinHIBnr.mjs')
 };
 const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -927,7 +2306,7 @@ const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
     const router = createRouter({
       ...routerOptions,
       scrollBehavior: (to, from, savedPosition) => {
-        if (from === START_LOCATION) {
+        if (from === START_LOCATION_NORMALIZED) {
           startPosition = savedPosition;
           return;
         }
@@ -939,7 +2318,7 @@ const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
               (void 0).history.scrollRestoration = "manual";
             });
           }
-          return routerOptions.scrollBehavior(to, START_LOCATION, startPosition || savedPosition);
+          return routerOptions.scrollBehavior(to, START_LOCATION_NORMALIZED, startPosition || savedPosition);
         }
       },
       history,
@@ -1889,7 +3268,7 @@ function defineNuxtLink(options) {
                 path: url.pathname,
                 fullPath: url.pathname,
                 get query() {
-                  return parseQuery(url.search);
+                  return parseQuery$1(url.search);
                 },
                 hash: url.hash,
                 params: {},
@@ -5795,6 +7174,7 @@ const show16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overf
 const termLow12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #ED5C68)"/>\n</svg>\n';
 const termMedium12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
 const termShort12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #0ABD5D)"/>\n</svg>\n';
+const invoiceTime24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24ZM10.5 4.5V12C10.5 12.5383 10.7884 13.0353 11.2558 13.3024L16.5058 16.3024L17.9942 13.6976L13.5 11.1295V4.5H10.5Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
 const _sfc_main$i = {
   __name: "AppIcon",
   __ssrInlineRender: true,
@@ -5847,6 +7227,12 @@ const _sfc_main$i = {
         kind: "svg",
         svgBySize: {
           16: headerSignOutAuthorized16
+        }
+      },
+      "invoice-time": {
+        kind: "svg",
+        svgBySize: {
+          24: invoiceTime24
         }
       },
       "favorite": {
@@ -6199,17 +7585,17 @@ const _sfc_main$i = {
         "aria-hidden": __props.decorative,
         role: __props.decorative ? void 0 : "img",
         "aria-label": unref(ariaLabel)
-      }, _attrs))} data-v-a55e45e6>`);
+      }, _attrs))} data-v-40683738>`);
       if (unref(icon).kind === "path") {
-        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-a55e45e6><!--[-->`);
+        _push(`<svg${ssrRenderAttr("viewBox", unref(icon).viewBox)} fill="none" xmlns="http://www.w3.org/2000/svg" class="app-icon__svg" data-v-40683738><!--[-->`);
         ssrRenderList(unref(icon).paths, (path, index2) => {
-          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-a55e45e6></path>`);
+          _push(`<path${ssrRenderAttr("d", path.d)}${ssrRenderAttr("fill-rule", path.fillRule)}${ssrRenderAttr("clip-rule", path.clipRule)}${ssrRenderAttr("fill", path.fill || (path.stroke ? "none" : "currentColor"))}${ssrRenderAttr("fill-opacity", path.fillOpacity)}${ssrRenderAttr("stroke", path.stroke)}${ssrRenderAttr("stroke-width", path.strokeWidth)}${ssrRenderAttr("stroke-linecap", path.strokeLinecap)}${ssrRenderAttr("stroke-linejoin", path.strokeLinejoin)}${ssrRenderAttr("transform", path.transform)} data-v-40683738></path>`);
         });
         _push(`<!--]--></svg>`);
       } else if (unref(icon).kind === "svg") {
-        _push(`<span class="app-icon__raw" data-v-a55e45e6>${unref(svgMarkup) ?? ""}</span>`);
+        _push(`<span class="app-icon__raw" data-v-40683738>${unref(svgMarkup) ?? ""}</span>`);
       } else {
-        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-a55e45e6></span>`);
+        _push(`<span class="app-icon__dot" style="${ssrRenderStyle({ backgroundColor: unref(icon).color })}" data-v-40683738></span>`);
       }
       _push(`</span>`);
     };
@@ -6221,7 +7607,7 @@ _sfc_main$i.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
   return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-a55e45e6"]]);
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-40683738"]]);
 function pointerDownOutside(e, options = {}) {
   const originalEvent = e.detail.originalEvent;
   const target = originalEvent.target;
@@ -7068,7 +8454,7 @@ const _sfc_main$f = /* @__PURE__ */ Object.assign({
       default: null
     }
   }, {
-    "modelValue": { default: "" },
+    "modelValue": { type: String, default: "" },
     "modelModifiers": {}
   }),
   emits: ["update:modelValue"],
@@ -7094,10 +8480,10 @@ const _sfc_main$f = /* @__PURE__ */ Object.assign({
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["app-input-wrapper", unref(wrapperAttributes).class],
         style: unref(wrapperAttributes).style
-      }, _attrs))} data-v-f8460b1b><div class="${ssrRenderClass([
+      }, _attrs))} data-v-8406adb8><div class="${ssrRenderClass([
         "app-input",
         { "app-input--disabled": __props.disabled }
-      ])}" data-v-f8460b1b>`);
+      ])}" data-v-8406adb8>`);
       if (__props.icon) {
         _push(ssrRenderComponent(_component_UIcon, {
           name: __props.icon,
@@ -7115,16 +8501,16 @@ const _sfc_main$f = /* @__PURE__ */ Object.assign({
         min: __props.min,
         max: __props.max,
         class: "app-input__field"
-      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-f8460b1b>`);
+      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-8406adb8>`);
       ssrRenderSlot(_ctx.$slots, "suffix", {}, null, _push, _parent);
       if (__props.suffix) {
-        _push(`<span class="app-input__suffix" data-v-f8460b1b>${ssrInterpolate(__props.suffix)}</span>`);
+        _push(`<span class="app-input__suffix" data-v-8406adb8>${ssrInterpolate(__props.suffix)}</span>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div>`);
       if (__props.description) {
-        _push(`<p class="app-input-description" data-v-f8460b1b>${ssrInterpolate(__props.description)}</p>`);
+        _push(`<p class="app-input-description" data-v-8406adb8>${ssrInterpolate(__props.description)}</p>`);
       } else {
         _push(`<!---->`);
       }
@@ -7138,7 +8524,7 @@ _sfc_main$f.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
   return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-f8460b1b"]]);
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-8406adb8"]]);
 const _sfc_main$e = {
   __name: "AuthEntryForm",
   __ssrInlineRender: true,
@@ -7956,6 +9342,63 @@ const authClient = createAuthClient({
     phoneNumberClient()
   ]
 });
+const useProfileStore = defineStore("profile", () => {
+  const profileData = ref(null);
+  const isLoading = ref(false);
+  const error = ref(null);
+  let fetchPromise = null;
+  const user = computed(() => profileData.value?.profile?.user ?? null);
+  const organizations = computed(() => profileData.value?.profile?.organizations ?? []);
+  const recipients = computed(() => profileData.value?.profile?.recipients ?? []);
+  const isLoaded = computed(() => Boolean(profileData.value));
+  async function fetchProfile({ force = false } = {}) {
+    if (!force && profileData.value) {
+      return profileData.value;
+    }
+    if (fetchPromise) {
+      return fetchPromise;
+    }
+    isLoading.value = true;
+    error.value = null;
+    fetchPromise = $fetch("/api/profile", {
+      headers: useRequestHeaders(["cookie"])
+    }).then((data) => {
+      profileData.value = data;
+      return data;
+    }).catch((fetchError) => {
+      error.value = fetchError;
+      throw fetchError;
+    }).finally(() => {
+      isLoading.value = false;
+      fetchPromise = null;
+    });
+    return fetchPromise;
+  }
+  function fetchProfileOnce() {
+    return fetchProfile();
+  }
+  function refreshProfile() {
+    return fetchProfile({ force: true });
+  }
+  function clearProfile() {
+    profileData.value = null;
+    error.value = null;
+    isLoading.value = false;
+    fetchPromise = null;
+  }
+  return {
+    profileData,
+    user,
+    organizations,
+    recipients,
+    isLoaded,
+    isLoading,
+    error,
+    fetchProfileOnce,
+    refreshProfile,
+    clearProfile
+  };
+});
 const intervalError = "[nuxt] `setInterval` should not be used on the server. Consider wrapping it with an `onNuxtReady`, `onBeforeMount` or `onMounted` lifecycle hook, or ensure you only call it in the browser by checking `false`.";
 const setInterval = (() => {
   console.error(intervalError);
@@ -7965,6 +9408,7 @@ function useAuthEntryFlow({
   onCompleteLogin,
   onCompleteRegistration
 } = {}) {
+  const profileStore = useProfileStore();
   const step = ref("entry");
   const identifier = ref("");
   const isFieldTouched = ref(false);
@@ -8653,6 +10097,7 @@ function useAuthEntryFlow({
           organization: selectedOrganization.value
         }
       });
+      await profileStore.refreshProfile();
       step.value = "success";
     } catch (error) {
       organizationSaveError.value = getOrganizationSaveErrorMessage(error);
@@ -9086,6 +10531,13 @@ const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg4 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.919%20115.919'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Summertime%20Sadness'%20d='M69.8504%205.45261C59.5645%20-2.97403%2044.3949%20-1.46673%2035.9682%208.81925C27.5415%2019.1054%2029.0489%2034.2748%2039.3349%2042.7015C29.0489%2034.2748%2013.8794%2035.782%205.45266%2046.0681C-2.97411%2056.3543%20-1.46668%2071.5237%208.81931%2079.9503C19.1055%2088.3771%2034.2748%2086.8698%2042.7015%2076.5837C34.2748%2086.8698%2035.782%20102.039%2046.0682%20110.466C56.3543%20118.893%2071.5236%20117.385%2079.9504%20107.099C88.3772%2096.8131%2086.8699%2081.6438%2076.5837%2073.217C86.8699%2081.6438%20102.039%2080.1365%20110.466%2069.8504C118.893%2059.5644%20117.385%2044.3949%20107.099%2035.9682C96.8132%2027.5414%2081.6437%2029.0488%2073.2171%2039.3348C81.6437%2029.0488%2080.1366%2013.8794%2069.8504%205.45261Z'%20fill='var(--fill-0,%20%23F94A4F)'/%3e%3cpath%20id='Star%205'%20d='M70.2645%2014.7376C73.3477%2011.3099%2078.3943%2010.4759%2082.4164%2012.7295V12.7295C83.2834%2013.2153%2084.219%2013.5673%2085.1913%2013.7734V13.7734C89.7013%2014.7297%2092.9469%2018.6832%2093.0063%2023.2932V23.2932C93.0191%2024.287%2093.1821%2025.2732%2093.4897%2026.2182V26.2182C94.9166%2030.6022%2093.1155%2035.3898%2089.1529%2037.7462V37.7462C88.2986%2038.2542%2087.526%2038.8884%2086.8614%2039.6273V39.6273C83.7782%2043.0551%2078.7315%2043.889%2074.7095%2041.6355V41.6355C73.8424%2041.1497%2072.9069%2040.7977%2071.9346%2040.5916V40.5916C67.4245%2039.6353%2064.1789%2035.6818%2064.1195%2031.0718V31.0718C64.1067%2030.078%2063.9438%2029.0918%2063.6362%2028.1467V28.1467C62.2092%2023.7627%2064.0103%2018.9752%2067.973%2016.6188V16.6188C68.8273%2016.1108%2069.5998%2015.4766%2070.2645%2014.7376V14.7376Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoText = "" + __buildAssetsURL("header-logo-text.B_a9knhz.svg");
+function useClientAuthSession() {
+  return ref({
+    data: null,
+    isPending: true,
+    error: null
+  });
+}
 const __vite_glob_0_0 = "" + __buildAssetsURL("catalog_slider_1.BiVYIshC.png");
 const __vite_glob_0_1 = "" + __buildAssetsURL("catalog_slider_2.BH45i3L8.png");
 const __vite_glob_0_2 = "" + __buildAssetsURL("catalog_slider_3.qx5ywKHs.png");
@@ -9107,54 +10559,55 @@ const __vite_glob_0_17 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_do
 const __vite_glob_0_18 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png");
 const __vite_glob_0_19 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_single.051p5EBo.png");
 const __vite_glob_0_20 = "" + __buildAssetsURL("dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png");
-const __vite_glob_0_21 = "" + __buildAssetsURL("mesh_grommets_60x90_double.DUTuOgHv.png");
-const __vite_glob_0_22 = "" + __buildAssetsURL("mesh_grommets_60x90_double_fringe.C-pTSaox.png");
-const __vite_glob_0_23 = "" + __buildAssetsURL("mesh_grommets_60x90_single.CQzq71gw.png");
-const __vite_glob_0_24 = "" + __buildAssetsURL("mesh_grommets_60x90_single_fringe.DU2MNMvp.png");
-const __vite_glob_0_25 = "" + __buildAssetsURL("mesh_grommets_90x135_double.BtL6Voqz.png");
-const __vite_glob_0_26 = "" + __buildAssetsURL("mesh_grommets_90x135_double_fringe.B69a68ry.png");
-const __vite_glob_0_27 = "" + __buildAssetsURL("mesh_grommets_90x135_single.DPD0554Q.png");
-const __vite_glob_0_28 = "" + __buildAssetsURL("mesh_grommets_90x135_single_fringe.DxWtrmVO.png");
-const __vite_glob_0_29 = "" + __buildAssetsURL("mesh_sleeve_60x90_double.AU-psE_l.png");
-const __vite_glob_0_30 = "" + __buildAssetsURL("mesh_sleeve_60x90_double_fringe.SrC3VtWH.png");
-const __vite_glob_0_31 = "" + __buildAssetsURL("mesh_sleeve_60x90_single.CmS-puQr.png");
-const __vite_glob_0_32 = "" + __buildAssetsURL("mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png");
-const __vite_glob_0_33 = "" + __buildAssetsURL("mesh_sleeve_90x135_double.gzM_G-fO.png");
-const __vite_glob_0_34 = "" + __buildAssetsURL("mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png");
-const __vite_glob_0_35 = "" + __buildAssetsURL("mesh_sleeve_90x135_single.BF76aDEu.png");
-const __vite_glob_0_36 = "" + __buildAssetsURL("mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png");
-const __vite_glob_0_37 = "" + __buildAssetsURL("polyester_grommets_60x90_double.D8jS7Lud.png");
-const __vite_glob_0_38 = "" + __buildAssetsURL("polyester_grommets_60x90_double_fringe.DVWDASzD.png");
-const __vite_glob_0_39 = "" + __buildAssetsURL("polyester_grommets_60x90_single.MOirczvX.png");
-const __vite_glob_0_40 = "" + __buildAssetsURL("polyester_grommets_60x90_single_fringe.4fPcYHcK.png");
-const __vite_glob_0_41 = "" + __buildAssetsURL("polyester_grommets_90x135_double.Bc5E38oN.png");
-const __vite_glob_0_42 = "" + __buildAssetsURL("polyester_grommets_90x135_double_fringe.C_votDlE.png");
-const __vite_glob_0_43 = "" + __buildAssetsURL("polyester_grommets_90x135_single.DSceDMP9.png");
-const __vite_glob_0_44 = "" + __buildAssetsURL("polyester_grommets_90x135_single_fringe.sevc2bgj.png");
-const __vite_glob_0_45 = "" + __buildAssetsURL("polyester_sleeve_60x90_double.CuU2f0Nk.png");
-const __vite_glob_0_46 = "" + __buildAssetsURL("polyester_sleeve_60x90_double_fringe.D5RRAdln.png");
-const __vite_glob_0_47 = "" + __buildAssetsURL("polyester_sleeve_60x90_single.C7RVHdnM.png");
-const __vite_glob_0_48 = "" + __buildAssetsURL("polyester_sleeve_60x90_single_fringe.CtfDHoBx.png");
-const __vite_glob_0_49 = "" + __buildAssetsURL("polyester_sleeve_90x135_double.C2ikPQO1.png");
-const __vite_glob_0_50 = "" + __buildAssetsURL("polyester_sleeve_90x135_double_fringe.UUtANBuN.png");
-const __vite_glob_0_51 = "" + __buildAssetsURL("polyester_sleeve_90x135_single.gck03kxQ.png");
-const __vite_glob_0_52 = "" + __buildAssetsURL("polyester_sleeve_90x135_single_fringe.BiFaViDN.png");
-const __vite_glob_0_53 = "" + __buildAssetsURL("satin_grommets_60x90_double.C8GIQrJU.png");
-const __vite_glob_0_54 = "" + __buildAssetsURL("satin_grommets_60x90_double_fringe.CRifW5D4.png");
-const __vite_glob_0_55 = "" + __buildAssetsURL("satin_grommets_60x90_single.-INYcgSl.png");
-const __vite_glob_0_56 = "" + __buildAssetsURL("satin_grommets_60x90_single_fringe.B2c9NQZ0.png");
-const __vite_glob_0_57 = "" + __buildAssetsURL("satin_grommets_90x135_double.CeveyNnt.png");
-const __vite_glob_0_58 = "" + __buildAssetsURL("satin_grommets_90x135_double_fringe.7Iinn9rA.png");
-const __vite_glob_0_59 = "" + __buildAssetsURL("satin_grommets_90x135_single.DjgR8eU2.png");
-const __vite_glob_0_60 = "" + __buildAssetsURL("satin_grommets_90x135_single_fringe.nyG-fLFQ.png");
-const __vite_glob_0_61 = "" + __buildAssetsURL("satin_sleeve_60x90_double.B-d5Istq.png");
-const __vite_glob_0_62 = "" + __buildAssetsURL("satin_sleeve_60x90_double_fringe.mC-RM5cb.png");
-const __vite_glob_0_63 = "" + __buildAssetsURL("satin_sleeve_60x90_single.ByUDhn4E.png");
-const __vite_glob_0_64 = "" + __buildAssetsURL("satin_sleeve_60x90_single_fringe.C2qvKlSZ.png");
-const __vite_glob_0_65 = "" + __buildAssetsURL("satin_sleeve_90x135_double.Cat8n9H4.png");
-const __vite_glob_0_66 = "" + __buildAssetsURL("satin_sleeve_90x135_double_fringe.DUYdMMof.png");
-const __vite_glob_0_67 = "" + __buildAssetsURL("satin_sleeve_90x135_single.BWcmz37Z.png");
-const __vite_glob_0_68 = "" + __buildAssetsURL("satin_sleeve_90x135_single_fringe.00B5d1PG.png");
+const __vite_glob_0_21 = "" + __buildAssetsURL("logo.nBvKnBnY.png");
+const __vite_glob_0_22 = "" + __buildAssetsURL("mesh_grommets_60x90_double.DUTuOgHv.png");
+const __vite_glob_0_23 = "" + __buildAssetsURL("mesh_grommets_60x90_double_fringe.C-pTSaox.png");
+const __vite_glob_0_24 = "" + __buildAssetsURL("mesh_grommets_60x90_single.CQzq71gw.png");
+const __vite_glob_0_25 = "" + __buildAssetsURL("mesh_grommets_60x90_single_fringe.DU2MNMvp.png");
+const __vite_glob_0_26 = "" + __buildAssetsURL("mesh_grommets_90x135_double.BtL6Voqz.png");
+const __vite_glob_0_27 = "" + __buildAssetsURL("mesh_grommets_90x135_double_fringe.B69a68ry.png");
+const __vite_glob_0_28 = "" + __buildAssetsURL("mesh_grommets_90x135_single.DPD0554Q.png");
+const __vite_glob_0_29 = "" + __buildAssetsURL("mesh_grommets_90x135_single_fringe.DxWtrmVO.png");
+const __vite_glob_0_30 = "" + __buildAssetsURL("mesh_sleeve_60x90_double.AU-psE_l.png");
+const __vite_glob_0_31 = "" + __buildAssetsURL("mesh_sleeve_60x90_double_fringe.SrC3VtWH.png");
+const __vite_glob_0_32 = "" + __buildAssetsURL("mesh_sleeve_60x90_single.CmS-puQr.png");
+const __vite_glob_0_33 = "" + __buildAssetsURL("mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png");
+const __vite_glob_0_34 = "" + __buildAssetsURL("mesh_sleeve_90x135_double.gzM_G-fO.png");
+const __vite_glob_0_35 = "" + __buildAssetsURL("mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png");
+const __vite_glob_0_36 = "" + __buildAssetsURL("mesh_sleeve_90x135_single.BF76aDEu.png");
+const __vite_glob_0_37 = "" + __buildAssetsURL("mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png");
+const __vite_glob_0_38 = "" + __buildAssetsURL("polyester_grommets_60x90_double.D8jS7Lud.png");
+const __vite_glob_0_39 = "" + __buildAssetsURL("polyester_grommets_60x90_double_fringe.DVWDASzD.png");
+const __vite_glob_0_40 = "" + __buildAssetsURL("polyester_grommets_60x90_single.MOirczvX.png");
+const __vite_glob_0_41 = "" + __buildAssetsURL("polyester_grommets_60x90_single_fringe.4fPcYHcK.png");
+const __vite_glob_0_42 = "" + __buildAssetsURL("polyester_grommets_90x135_double.Bc5E38oN.png");
+const __vite_glob_0_43 = "" + __buildAssetsURL("polyester_grommets_90x135_double_fringe.C_votDlE.png");
+const __vite_glob_0_44 = "" + __buildAssetsURL("polyester_grommets_90x135_single.DSceDMP9.png");
+const __vite_glob_0_45 = "" + __buildAssetsURL("polyester_grommets_90x135_single_fringe.sevc2bgj.png");
+const __vite_glob_0_46 = "" + __buildAssetsURL("polyester_sleeve_60x90_double.CuU2f0Nk.png");
+const __vite_glob_0_47 = "" + __buildAssetsURL("polyester_sleeve_60x90_double_fringe.D5RRAdln.png");
+const __vite_glob_0_48 = "" + __buildAssetsURL("polyester_sleeve_60x90_single.C7RVHdnM.png");
+const __vite_glob_0_49 = "" + __buildAssetsURL("polyester_sleeve_60x90_single_fringe.CtfDHoBx.png");
+const __vite_glob_0_50 = "" + __buildAssetsURL("polyester_sleeve_90x135_double.C2ikPQO1.png");
+const __vite_glob_0_51 = "" + __buildAssetsURL("polyester_sleeve_90x135_double_fringe.UUtANBuN.png");
+const __vite_glob_0_52 = "" + __buildAssetsURL("polyester_sleeve_90x135_single.gck03kxQ.png");
+const __vite_glob_0_53 = "" + __buildAssetsURL("polyester_sleeve_90x135_single_fringe.BiFaViDN.png");
+const __vite_glob_0_54 = "" + __buildAssetsURL("satin_grommets_60x90_double.C8GIQrJU.png");
+const __vite_glob_0_55 = "" + __buildAssetsURL("satin_grommets_60x90_double_fringe.CRifW5D4.png");
+const __vite_glob_0_56 = "" + __buildAssetsURL("satin_grommets_60x90_single.-INYcgSl.png");
+const __vite_glob_0_57 = "" + __buildAssetsURL("satin_grommets_60x90_single_fringe.B2c9NQZ0.png");
+const __vite_glob_0_58 = "" + __buildAssetsURL("satin_grommets_90x135_double.CeveyNnt.png");
+const __vite_glob_0_59 = "" + __buildAssetsURL("satin_grommets_90x135_double_fringe.7Iinn9rA.png");
+const __vite_glob_0_60 = "" + __buildAssetsURL("satin_grommets_90x135_single.DjgR8eU2.png");
+const __vite_glob_0_61 = "" + __buildAssetsURL("satin_grommets_90x135_single_fringe.nyG-fLFQ.png");
+const __vite_glob_0_62 = "" + __buildAssetsURL("satin_sleeve_60x90_double.B-d5Istq.png");
+const __vite_glob_0_63 = "" + __buildAssetsURL("satin_sleeve_60x90_double_fringe.mC-RM5cb.png");
+const __vite_glob_0_64 = "" + __buildAssetsURL("satin_sleeve_60x90_single.ByUDhn4E.png");
+const __vite_glob_0_65 = "" + __buildAssetsURL("satin_sleeve_60x90_single_fringe.C2qvKlSZ.png");
+const __vite_glob_0_66 = "" + __buildAssetsURL("satin_sleeve_90x135_double.Cat8n9H4.png");
+const __vite_glob_0_67 = "" + __buildAssetsURL("satin_sleeve_90x135_double_fringe.DUYdMMof.png");
+const __vite_glob_0_68 = "" + __buildAssetsURL("satin_sleeve_90x135_single.BWcmz37Z.png");
+const __vite_glob_0_69 = "" + __buildAssetsURL("satin_sleeve_90x135_single_fringe.00B5d1PG.png");
 function formatPrice(value) {
   return value.toLocaleString("ru-RU") + " ₽";
 }
@@ -9307,7 +10760,7 @@ function getFabricGenitive(value) {
 function getSizeLabel(value) {
   return SIZES.find((s) => s.value === value)?.label ?? "";
 }
-const imageModules = /* @__PURE__ */ Object.assign({ "/assets/images/catalog_slider_1.png": __vite_glob_0_0, "/assets/images/catalog_slider_2.png": __vite_glob_0_1, "/assets/images/catalog_slider_3.png": __vite_glob_0_2, "/assets/images/catalog_slider_4.png": __vite_glob_0_3, "/assets/images/catalog_slider_5.png": __vite_glob_0_4, "/assets/images/dense_polyester_grommets_60x90_double.png": __vite_glob_0_5, "/assets/images/dense_polyester_grommets_60x90_double_fringe.png": __vite_glob_0_6, "/assets/images/dense_polyester_grommets_60x90_single.png": __vite_glob_0_7, "/assets/images/dense_polyester_grommets_60x90_single_fringe.png": __vite_glob_0_8, "/assets/images/dense_polyester_grommets_90x135_double.png": __vite_glob_0_9, "/assets/images/dense_polyester_grommets_90x135_double_fringe.png": __vite_glob_0_10, "/assets/images/dense_polyester_grommets_90x135_single.png": __vite_glob_0_11, "/assets/images/dense_polyester_grommets_90x135_single_fringe.png": __vite_glob_0_12, "/assets/images/dense_polyester_sleeve_60x90_double.png": __vite_glob_0_13, "/assets/images/dense_polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_14, "/assets/images/dense_polyester_sleeve_60x90_single.png": __vite_glob_0_15, "/assets/images/dense_polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_16, "/assets/images/dense_polyester_sleeve_90x135_double.png": __vite_glob_0_17, "/assets/images/dense_polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_18, "/assets/images/dense_polyester_sleeve_90x135_single.png": __vite_glob_0_19, "/assets/images/dense_polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_20, "/assets/images/mesh_grommets_60x90_double.png": __vite_glob_0_21, "/assets/images/mesh_grommets_60x90_double_fringe.png": __vite_glob_0_22, "/assets/images/mesh_grommets_60x90_single.png": __vite_glob_0_23, "/assets/images/mesh_grommets_60x90_single_fringe.png": __vite_glob_0_24, "/assets/images/mesh_grommets_90x135_double.png": __vite_glob_0_25, "/assets/images/mesh_grommets_90x135_double_fringe.png": __vite_glob_0_26, "/assets/images/mesh_grommets_90x135_single.png": __vite_glob_0_27, "/assets/images/mesh_grommets_90x135_single_fringe.png": __vite_glob_0_28, "/assets/images/mesh_sleeve_60x90_double.png": __vite_glob_0_29, "/assets/images/mesh_sleeve_60x90_double_fringe.png": __vite_glob_0_30, "/assets/images/mesh_sleeve_60x90_single.png": __vite_glob_0_31, "/assets/images/mesh_sleeve_60x90_single_fringe.png": __vite_glob_0_32, "/assets/images/mesh_sleeve_90x135_double.png": __vite_glob_0_33, "/assets/images/mesh_sleeve_90x135_double_fringe.png": __vite_glob_0_34, "/assets/images/mesh_sleeve_90x135_single.png": __vite_glob_0_35, "/assets/images/mesh_sleeve_90x135_single_fringe.png": __vite_glob_0_36, "/assets/images/polyester_grommets_60x90_double.png": __vite_glob_0_37, "/assets/images/polyester_grommets_60x90_double_fringe.png": __vite_glob_0_38, "/assets/images/polyester_grommets_60x90_single.png": __vite_glob_0_39, "/assets/images/polyester_grommets_60x90_single_fringe.png": __vite_glob_0_40, "/assets/images/polyester_grommets_90x135_double.png": __vite_glob_0_41, "/assets/images/polyester_grommets_90x135_double_fringe.png": __vite_glob_0_42, "/assets/images/polyester_grommets_90x135_single.png": __vite_glob_0_43, "/assets/images/polyester_grommets_90x135_single_fringe.png": __vite_glob_0_44, "/assets/images/polyester_sleeve_60x90_double.png": __vite_glob_0_45, "/assets/images/polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_46, "/assets/images/polyester_sleeve_60x90_single.png": __vite_glob_0_47, "/assets/images/polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_48, "/assets/images/polyester_sleeve_90x135_double.png": __vite_glob_0_49, "/assets/images/polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_50, "/assets/images/polyester_sleeve_90x135_single.png": __vite_glob_0_51, "/assets/images/polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_52, "/assets/images/satin_grommets_60x90_double.png": __vite_glob_0_53, "/assets/images/satin_grommets_60x90_double_fringe.png": __vite_glob_0_54, "/assets/images/satin_grommets_60x90_single.png": __vite_glob_0_55, "/assets/images/satin_grommets_60x90_single_fringe.png": __vite_glob_0_56, "/assets/images/satin_grommets_90x135_double.png": __vite_glob_0_57, "/assets/images/satin_grommets_90x135_double_fringe.png": __vite_glob_0_58, "/assets/images/satin_grommets_90x135_single.png": __vite_glob_0_59, "/assets/images/satin_grommets_90x135_single_fringe.png": __vite_glob_0_60, "/assets/images/satin_sleeve_60x90_double.png": __vite_glob_0_61, "/assets/images/satin_sleeve_60x90_double_fringe.png": __vite_glob_0_62, "/assets/images/satin_sleeve_60x90_single.png": __vite_glob_0_63, "/assets/images/satin_sleeve_60x90_single_fringe.png": __vite_glob_0_64, "/assets/images/satin_sleeve_90x135_double.png": __vite_glob_0_65, "/assets/images/satin_sleeve_90x135_double_fringe.png": __vite_glob_0_66, "/assets/images/satin_sleeve_90x135_single.png": __vite_glob_0_67, "/assets/images/satin_sleeve_90x135_single_fringe.png": __vite_glob_0_68 });
+const imageModules = /* @__PURE__ */ Object.assign({ "/assets/images/catalog_slider_1.png": __vite_glob_0_0, "/assets/images/catalog_slider_2.png": __vite_glob_0_1, "/assets/images/catalog_slider_3.png": __vite_glob_0_2, "/assets/images/catalog_slider_4.png": __vite_glob_0_3, "/assets/images/catalog_slider_5.png": __vite_glob_0_4, "/assets/images/dense_polyester_grommets_60x90_double.png": __vite_glob_0_5, "/assets/images/dense_polyester_grommets_60x90_double_fringe.png": __vite_glob_0_6, "/assets/images/dense_polyester_grommets_60x90_single.png": __vite_glob_0_7, "/assets/images/dense_polyester_grommets_60x90_single_fringe.png": __vite_glob_0_8, "/assets/images/dense_polyester_grommets_90x135_double.png": __vite_glob_0_9, "/assets/images/dense_polyester_grommets_90x135_double_fringe.png": __vite_glob_0_10, "/assets/images/dense_polyester_grommets_90x135_single.png": __vite_glob_0_11, "/assets/images/dense_polyester_grommets_90x135_single_fringe.png": __vite_glob_0_12, "/assets/images/dense_polyester_sleeve_60x90_double.png": __vite_glob_0_13, "/assets/images/dense_polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_14, "/assets/images/dense_polyester_sleeve_60x90_single.png": __vite_glob_0_15, "/assets/images/dense_polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_16, "/assets/images/dense_polyester_sleeve_90x135_double.png": __vite_glob_0_17, "/assets/images/dense_polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_18, "/assets/images/dense_polyester_sleeve_90x135_single.png": __vite_glob_0_19, "/assets/images/dense_polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_20, "/assets/images/logo.png": __vite_glob_0_21, "/assets/images/mesh_grommets_60x90_double.png": __vite_glob_0_22, "/assets/images/mesh_grommets_60x90_double_fringe.png": __vite_glob_0_23, "/assets/images/mesh_grommets_60x90_single.png": __vite_glob_0_24, "/assets/images/mesh_grommets_60x90_single_fringe.png": __vite_glob_0_25, "/assets/images/mesh_grommets_90x135_double.png": __vite_glob_0_26, "/assets/images/mesh_grommets_90x135_double_fringe.png": __vite_glob_0_27, "/assets/images/mesh_grommets_90x135_single.png": __vite_glob_0_28, "/assets/images/mesh_grommets_90x135_single_fringe.png": __vite_glob_0_29, "/assets/images/mesh_sleeve_60x90_double.png": __vite_glob_0_30, "/assets/images/mesh_sleeve_60x90_double_fringe.png": __vite_glob_0_31, "/assets/images/mesh_sleeve_60x90_single.png": __vite_glob_0_32, "/assets/images/mesh_sleeve_60x90_single_fringe.png": __vite_glob_0_33, "/assets/images/mesh_sleeve_90x135_double.png": __vite_glob_0_34, "/assets/images/mesh_sleeve_90x135_double_fringe.png": __vite_glob_0_35, "/assets/images/mesh_sleeve_90x135_single.png": __vite_glob_0_36, "/assets/images/mesh_sleeve_90x135_single_fringe.png": __vite_glob_0_37, "/assets/images/polyester_grommets_60x90_double.png": __vite_glob_0_38, "/assets/images/polyester_grommets_60x90_double_fringe.png": __vite_glob_0_39, "/assets/images/polyester_grommets_60x90_single.png": __vite_glob_0_40, "/assets/images/polyester_grommets_60x90_single_fringe.png": __vite_glob_0_41, "/assets/images/polyester_grommets_90x135_double.png": __vite_glob_0_42, "/assets/images/polyester_grommets_90x135_double_fringe.png": __vite_glob_0_43, "/assets/images/polyester_grommets_90x135_single.png": __vite_glob_0_44, "/assets/images/polyester_grommets_90x135_single_fringe.png": __vite_glob_0_45, "/assets/images/polyester_sleeve_60x90_double.png": __vite_glob_0_46, "/assets/images/polyester_sleeve_60x90_double_fringe.png": __vite_glob_0_47, "/assets/images/polyester_sleeve_60x90_single.png": __vite_glob_0_48, "/assets/images/polyester_sleeve_60x90_single_fringe.png": __vite_glob_0_49, "/assets/images/polyester_sleeve_90x135_double.png": __vite_glob_0_50, "/assets/images/polyester_sleeve_90x135_double_fringe.png": __vite_glob_0_51, "/assets/images/polyester_sleeve_90x135_single.png": __vite_glob_0_52, "/assets/images/polyester_sleeve_90x135_single_fringe.png": __vite_glob_0_53, "/assets/images/satin_grommets_60x90_double.png": __vite_glob_0_54, "/assets/images/satin_grommets_60x90_double_fringe.png": __vite_glob_0_55, "/assets/images/satin_grommets_60x90_single.png": __vite_glob_0_56, "/assets/images/satin_grommets_60x90_single_fringe.png": __vite_glob_0_57, "/assets/images/satin_grommets_90x135_double.png": __vite_glob_0_58, "/assets/images/satin_grommets_90x135_double_fringe.png": __vite_glob_0_59, "/assets/images/satin_grommets_90x135_single.png": __vite_glob_0_60, "/assets/images/satin_grommets_90x135_single_fringe.png": __vite_glob_0_61, "/assets/images/satin_sleeve_60x90_double.png": __vite_glob_0_62, "/assets/images/satin_sleeve_60x90_double_fringe.png": __vite_glob_0_63, "/assets/images/satin_sleeve_60x90_single.png": __vite_glob_0_64, "/assets/images/satin_sleeve_60x90_single_fringe.png": __vite_glob_0_65, "/assets/images/satin_sleeve_90x135_double.png": __vite_glob_0_66, "/assets/images/satin_sleeve_90x135_double_fringe.png": __vite_glob_0_67, "/assets/images/satin_sleeve_90x135_single.png": __vite_glob_0_68, "/assets/images/satin_sleeve_90x135_single_fringe.png": __vite_glob_0_69 });
 function resolveCartItemImage(config = {}) {
   const { fabric, mounting, size, doubleSided, hasFringe } = config;
   const fabricKey = FABRIC_IMAGE_MAP[fabric] || "mesh";
@@ -9374,7 +10827,7 @@ function useCart() {
       productId: item?.productId ?? null,
       description: item?.description || "",
       customerComment: item?.customerComment || "",
-      image: item?.image || resolveCartItemImage(item?.config) || __vite_glob_0_36,
+      image: item?.image || resolveCartItemImage(item?.config) || __vite_glob_0_37,
       quantity,
       unitPrice: Number(item?.unitPrice) || 0,
       designPrice: Number(item?.designPrice) || 0,
@@ -9510,63 +10963,6 @@ function useFavorites() {
     toggleItem
   };
 }
-const useProfileStore = defineStore("profile", () => {
-  const profileData = ref(null);
-  const isLoading = ref(false);
-  const error = ref(null);
-  let fetchPromise = null;
-  const user = computed(() => profileData.value?.profile?.user ?? null);
-  const organizations = computed(() => profileData.value?.profile?.organizations ?? []);
-  const recipients = computed(() => profileData.value?.profile?.recipients ?? []);
-  const isLoaded = computed(() => Boolean(profileData.value));
-  async function fetchProfile({ force = false } = {}) {
-    if (!force && profileData.value) {
-      return profileData.value;
-    }
-    if (fetchPromise) {
-      return fetchPromise;
-    }
-    isLoading.value = true;
-    error.value = null;
-    fetchPromise = $fetch("/api/profile", {
-      headers: useRequestHeaders(["cookie"])
-    }).then((data) => {
-      profileData.value = data;
-      return data;
-    }).catch((fetchError) => {
-      error.value = fetchError;
-      throw fetchError;
-    }).finally(() => {
-      isLoading.value = false;
-      fetchPromise = null;
-    });
-    return fetchPromise;
-  }
-  function fetchProfileOnce() {
-    return fetchProfile();
-  }
-  function refreshProfile() {
-    return fetchProfile({ force: true });
-  }
-  function clearProfile() {
-    profileData.value = null;
-    error.value = null;
-    isLoading.value = false;
-    fetchPromise = null;
-  }
-  return {
-    profileData,
-    user,
-    organizations,
-    recipients,
-    isLoaded,
-    isLoading,
-    error,
-    fetchProfileOnce,
-    refreshProfile,
-    clearProfile
-  };
-});
 const _sfc_main$5 = {
   __name: "AppHeader",
   __ssrInlineRender: true,
@@ -9579,7 +10975,7 @@ const _sfc_main$5 = {
       { label: "Доставка", to: "/delivery" }
     ];
     const visibleNavLinks = computed(() => navLinks.filter((item) => !item.hidden));
-    const session = authClient.useSession();
+    const session = useClientAuthSession();
     const isSessionPending = computed(() => session.value?.isPending ?? true);
     const sessionUser = computed(() => session.value?.data?.user ?? null);
     const accountLabel = computed(() => {
@@ -9643,7 +11039,7 @@ const _sfc_main$5 = {
       const _component_NuxtLink = __nuxt_component_0$3;
       const _component_AppIcon = __nuxt_component_1$1;
       const _component_AuthEntryModal = __nuxt_component_5$1;
-      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-5a0ec00e><div class="header__container" data-v-5a0ec00e><div class="header__inner" data-v-5a0ec00e>`);
+      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-18872f43><div class="header__container" data-v-18872f43><div class="header__inner" data-v-18872f43>`);
       _push(ssrRenderComponent(_component_NuxtLink, {
         to: "/",
         class: "header__logo",
@@ -9651,7 +11047,7 @@ const _sfc_main$5 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="header__logo-cloud" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-5a0ec00e${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-5a0ec00e${_scopeId}>`);
+            _push2(`<div class="header__logo-cloud" data-v-18872f43${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-18872f43${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-18872f43${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-18872f43${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-18872f43${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-18872f43${_scopeId}>`);
           } else {
             return [
               createVNode("div", { class: "header__logo-cloud" }, [
@@ -9686,7 +11082,7 @@ const _sfc_main$5 = {
         }),
         _: 1
       }, _parent));
-      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-5a0ec00e><!--[-->`);
+      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-18872f43><!--[-->`);
       ssrRenderList(unref(visibleNavLinks), (item) => {
         _push(`<!--[-->`);
         if (item.to) {
@@ -9706,32 +11102,32 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-5a0ec00e>${ssrInterpolate(item.label)}</a>`);
+          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-18872f43>${ssrInterpolate(item.label)}</a>`);
         }
         _push(`<!--]-->`);
       });
-      _push(`<!--]--></nav><div class="header__actions" data-v-5a0ec00e><!--[-->`);
+      _push(`<!--]--></nav><div class="header__actions" data-v-18872f43><!--[-->`);
       ssrRenderList(unref(actionItems), (item) => {
-        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-5a0ec00e><span class="header-action__icon-wrap" data-v-5a0ec00e>`);
+        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-18872f43><span class="header-action__icon-wrap" data-v-18872f43>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: item.icon,
           class: ["header-action__icon", item.iconClass]
         }, null, _parent));
         if (item.counter) {
-          _push(`<span class="header-action__counter" data-v-5a0ec00e>${ssrInterpolate(item.counter)}</span>`);
+          _push(`<span class="header-action__counter" data-v-18872f43>${ssrInterpolate(item.counter)}</span>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</span><span class="header-action__label" data-v-5a0ec00e>${ssrInterpolate(item.label)}</span></button>`);
+        _push(`</span><span class="header-action__label" data-v-18872f43>${ssrInterpolate(item.label)}</span></button>`);
       });
       _push(`<!--]-->`);
       if (unref(sessionUser)) {
-        _push(`<div class="header-account-authorized" data-v-5a0ec00e><div class="header-account-authorized__top" data-v-5a0ec00e><span class="header-account-authorized__icon-wrap" data-v-5a0ec00e>`);
+        _push(`<div class="header-account-authorized" data-v-18872f43><div class="header-account-authorized__top" data-v-18872f43><span class="header-account-authorized__icon-wrap" data-v-18872f43>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-account-authorized",
           class: "header-account-authorized__icon"
         }, null, _parent));
-        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-5a0ec00e>`);
+        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-18872f43>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-sign-out-authorized",
           class: "header-account-authorized__sign-out-icon"
@@ -9773,7 +11169,7 @@ _sfc_main$5.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppHeader.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-5a0ec00e"]]);
+const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-18872f43"]]);
 const theme = {
   "base": "min-h-[calc(100vh-var(--ui-header-height))]"
 };
@@ -10031,7 +11427,7 @@ const _sfc_main$2 = {
   __ssrInlineRender: true,
   setup(__props) {
     useRoute();
-    const session = authClient.useSession();
+    const session = useClientAuthSession();
     const profileStore = useProfileStore();
     const { isLoaded: isProfileLoaded } = storeToRefs(profileStore);
     const sessionUser = computed(() => session.value?.data?.user ?? null);
@@ -10129,8 +11525,8 @@ const _sfc_main$1 = {
     const statusText = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description2 = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-BUKDMSaW.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-CtUKToas.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-UqXah273.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-6DKZm413.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ status: unref(status), statusText: unref(statusText), statusCode: unref(status), statusMessage: unref(statusText), description: unref(description2), stack: unref(stack) }, _attrs), null, _parent));
@@ -10211,5 +11607,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { __vite_glob_0_42 as $, __vite_glob_0_65 as A, __vite_glob_0_64 as B, __vite_glob_0_63 as C, __vite_glob_0_62 as D, __vite_glob_0_61 as E, FABRICS as F, __vite_glob_0_60 as G, __vite_glob_0_59 as H, __vite_glob_0_58 as I, __vite_glob_0_57 as J, __vite_glob_0_56 as K, __vite_glob_0_55 as L, MOUNTINGS as M, __vite_glob_0_54 as N, __vite_glob_0_53 as O, __vite_glob_0_52 as P, __vite_glob_0_51 as Q, __vite_glob_0_50 as R, SIZES as S, __vite_glob_0_49 as T, __vite_glob_0_48 as U, __vite_glob_0_47 as V, __vite_glob_0_46 as W, __vite_glob_0_45 as X, __vite_glob_0_44 as Y, __vite_glob_0_43 as Z, _export_sfc as _, __nuxt_component_0$3 as a, __vite_glob_0_41 as a0, __vite_glob_0_40 as a1, __vite_glob_0_39 as a2, __vite_glob_0_38 as a3, __vite_glob_0_37 as a4, __vite_glob_0_35 as a5, __vite_glob_0_34 as a6, __vite_glob_0_33 as a7, __vite_glob_0_32 as a8, __vite_glob_0_31 as a9, __vite_glob_0_4 as aA, __vite_glob_0_3 as aB, __vite_glob_0_2 as aC, __vite_glob_0_1 as aD, __vite_glob_0_0 as aE, MAX_UPLOAD_SIZE as aF, ALLOWED_EXTENSIONS as aG, RASTER_EXTENSIONS as aH, useFavorites as aI, setInterval as aJ, navigateTo as aK, defineNuxtRouteMiddleware as aL, __vite_glob_0_30 as aa, __vite_glob_0_29 as ab, __vite_glob_0_28 as ac, __vite_glob_0_27 as ad, __vite_glob_0_26 as ae, __vite_glob_0_25 as af, __vite_glob_0_24 as ag, __vite_glob_0_23 as ah, __vite_glob_0_22 as ai, __vite_glob_0_21 as aj, __vite_glob_0_20 as ak, __vite_glob_0_19 as al, __vite_glob_0_18 as am, __vite_glob_0_17 as an, __vite_glob_0_16 as ao, __vite_glob_0_15 as ap, __vite_glob_0_14 as aq, __vite_glob_0_13 as ar, __vite_glob_0_12 as as, __vite_glob_0_11 as at, __vite_glob_0_10 as au, __vite_glob_0_9 as av, __vite_glob_0_8 as aw, __vite_glob_0_7 as ax, __vite_glob_0_6 as ay, __vite_glob_0_5 as az, useRoute as b, useFetch as c, useCart as d, entry_default as default, useSeoMeta as e, __nuxt_component_1$1 as f, _sfc_main$u as g, __vite_glob_0_36 as h, _sfc_main$h as i, getFabricLabel as j, calcUnitPrice as k, calcDesignPrice as l, __nuxt_component_3 as m, formatPriceRaw as n, useProfileStore as o, __nuxt_component_0 as p, authClient as q, resolveCartItemImage as r, __nuxt_component_5$1 as s, usePricing as t, useHead as u, FABRIC_IMAGE_MAP as v, MOUNTING_IMAGE_MAP as w, __vite_glob_0_68 as x, __vite_glob_0_67 as y, __vite_glob_0_66 as z };
+export { __vite_glob_0_43 as $, __vite_glob_0_66 as A, __vite_glob_0_65 as B, __vite_glob_0_64 as C, __vite_glob_0_63 as D, __vite_glob_0_62 as E, FABRICS as F, __vite_glob_0_61 as G, __vite_glob_0_60 as H, __vite_glob_0_59 as I, __vite_glob_0_58 as J, __vite_glob_0_57 as K, __vite_glob_0_56 as L, MOUNTINGS as M, __vite_glob_0_55 as N, __vite_glob_0_54 as O, __vite_glob_0_53 as P, __vite_glob_0_52 as Q, __vite_glob_0_51 as R, SIZES as S, __vite_glob_0_50 as T, __vite_glob_0_49 as U, __vite_glob_0_48 as V, __vite_glob_0_47 as W, __vite_glob_0_46 as X, __vite_glob_0_45 as Y, __vite_glob_0_44 as Z, _export_sfc as _, __nuxt_component_0$3 as a, __vite_glob_0_42 as a0, __vite_glob_0_41 as a1, __vite_glob_0_40 as a2, __vite_glob_0_39 as a3, __vite_glob_0_38 as a4, __vite_glob_0_36 as a5, __vite_glob_0_35 as a6, __vite_glob_0_34 as a7, __vite_glob_0_33 as a8, __vite_glob_0_32 as a9, __vite_glob_0_5 as aA, __vite_glob_0_4 as aB, __vite_glob_0_3 as aC, __vite_glob_0_2 as aD, __vite_glob_0_1 as aE, __vite_glob_0_0 as aF, MAX_UPLOAD_SIZE as aG, ALLOWED_EXTENSIONS as aH, RASTER_EXTENSIONS as aI, useFavorites as aJ, setInterval as aK, authClient as aL, navigateTo as aM, defineNuxtRouteMiddleware as aN, __vite_glob_0_31 as aa, __vite_glob_0_30 as ab, __vite_glob_0_29 as ac, __vite_glob_0_28 as ad, __vite_glob_0_27 as ae, __vite_glob_0_26 as af, __vite_glob_0_25 as ag, __vite_glob_0_24 as ah, __vite_glob_0_23 as ai, __vite_glob_0_22 as aj, __vite_glob_0_21 as ak, __vite_glob_0_20 as al, __vite_glob_0_19 as am, __vite_glob_0_18 as an, __vite_glob_0_17 as ao, __vite_glob_0_16 as ap, __vite_glob_0_15 as aq, __vite_glob_0_14 as ar, __vite_glob_0_13 as as, __vite_glob_0_12 as at, __vite_glob_0_11 as au, __vite_glob_0_10 as av, __vite_glob_0_9 as aw, __vite_glob_0_8 as ax, __vite_glob_0_7 as ay, __vite_glob_0_6 as az, __nuxt_component_0 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$u as h, __vite_glob_0_37 as i, _sfc_main$h as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, useClientAuthSession as q, resolveCartItemImage as r, __nuxt_component_5$1 as s, usePricing as t, useHead as u, FABRIC_IMAGE_MAP as v, MOUNTING_IMAGE_MAP as w, __vite_glob_0_69 as x, __vite_glob_0_68 as y, __vite_glob_0_67 as z };
 //# sourceMappingURL=server.mjs.map

@@ -1,14 +1,16 @@
-import { d as defineEventHandler, p as getRouterParam, c as createError, u as useDatabase, w as getOwnedSiteOrder } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, q as getRouterParam, c as createError, u as useDatabase, z as getOwnedSiteOrder, w as getInvoiceByOrderId, a1 as parseSiteOrderPayload, a2 as getSiteOrderWorkflowStatus, y as serializeInvoice, a3 as getSiteOrderStatusLabel, a4 as getSitePaymentStatusLabel, a5 as isSiteOrderInWork } from '../../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -17,23 +19,8 @@ import 'consola';
 function formatMoney(value) {
   return `${Number(value || 0).toLocaleString("ru-RU")} \u20BD`;
 }
-function getStatusLabel(status) {
-  return {
-    pending: "\u041E\u0436\u0438\u0434\u0430\u0435\u0442 \u043E\u043F\u043B\u0430\u0442\u044B",
-    paid: "\u041E\u043F\u043B\u0430\u0447\u0435\u043D",
-    failed: "\u041E\u043F\u043B\u0430\u0442\u0430 \u043D\u0435 \u043F\u0440\u043E\u0448\u043B\u0430",
-    expired: "\u041E\u043F\u043B\u0430\u0442\u0430 \u0438\u0441\u0442\u0435\u043A\u043B\u0430",
-    cancelled: "\u041E\u0442\u043C\u0435\u043D\u0435\u043D"
-  }[status] || "\u041E\u0436\u0438\u0434\u0430\u0435\u0442 \u043E\u043F\u043B\u0430\u0442\u044B";
-}
-function parsePayload(value) {
-  if (!value) return null;
-  if (typeof value === "object") return value;
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
+function canCancelOrder(workflowStatus) {
+  return isSiteOrderInWork(workflowStatus);
 }
 const _orderId__get = defineEventHandler(async (event) => {
   var _a, _b, _c, _d, _e;
@@ -47,7 +34,9 @@ const _orderId__get = defineEventHandler(async (event) => {
   }
   const database = useDatabase();
   const order = await getOwnedSiteOrder(database, event, orderId);
-  const orderPayload = parsePayload(order.payload) || {};
+  const invoice = await getInvoiceByOrderId(database, orderId);
+  const orderPayload = parseSiteOrderPayload(order.payload);
+  const workflowStatus = getSiteOrderWorkflowStatus(order, orderPayload);
   const checkout = orderPayload.checkout || {};
   const items = await database.selectFrom("site_order_items").selectAll().where("site_order_id", "=", orderId).orderBy("id", "asc").execute();
   return {
@@ -56,8 +45,11 @@ const _orderId__get = defineEventHandler(async (event) => {
       publicNumber: order.order_number || `SITE-${order.id}`,
       titleLabel: `\u0417\u0430\u043A\u0430\u0437 ${order.order_number || `SITE-${order.id}`}`,
       status: order.payment_status,
-      statusLabel: getStatusLabel(order.payment_status),
+      statusLabel: getSitePaymentStatusLabel(order.payment_status),
       paymentStatus: order.payment_status,
+      paymentProvider: order.payment_provider || "",
+      workflowStatus,
+      workflowStatusLabel: getSiteOrderStatusLabel(workflowStatus),
       createdAt: order.created_at,
       totalPrice: Number(order.amount || 0),
       totalPriceLabel: formatMoney(order.amount),
@@ -71,7 +63,7 @@ const _orderId__get = defineEventHandler(async (event) => {
         type: ((_e = checkout.recipient) == null ? void 0 : _e.type) || "self"
       },
       items: items.map((item) => {
-        const payload = parsePayload(item.payload) || {};
+        const payload = parseSiteOrderPayload(item.payload);
         return {
           id: Number(item.id),
           productId: item.product_id ? Number(item.product_id) : null,
@@ -94,8 +86,9 @@ const _orderId__get = defineEventHandler(async (event) => {
         total: Number(order.amount || 0),
         totalLabel: formatMoney(order.amount)
       },
-      canCancel: ["pending", "failed", "expired"].includes(order.payment_status),
-      canRepeat: true
+      canCancel: canCancelOrder(workflowStatus),
+      canRepeat: order.payment_status === "paid",
+      invoice: invoice ? serializeInvoice(invoice, order) : null
     }
   };
 });

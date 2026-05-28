@@ -1,4 +1,5 @@
 import { useDatabase } from '../../../utils/database.js'
+import { settleOrderPayment } from '../../../utils/order-payment.js'
 import { getPaymentStatusFromVtbQr } from '../../../utils/vtb-payment.js'
 
 export default defineEventHandler(async (event) => {
@@ -48,21 +49,12 @@ export default defineEventHandler(async (event) => {
     paymentStatus = getPaymentStatusFromVtbQr(nspkCode, '')
   }
 
-  const now = new Date()
-  const update = {
-    payment_status: paymentStatus,
-    updated_at: now
-  }
-
-  if (paymentStatus === 'paid') {
-    update.paid_at = now
-  }
-
-  await database
-    .updateTable('site_orders')
-    .set(update)
-    .where('id', '=', payment.id)
-    .execute()
+  await settleOrderPayment(
+    database,
+    payment.id,
+    paymentStatus,
+    paymentStatus === 'paid' && payment.paid_at ? { paid_at: payment.paid_at } : {}
+  )
 
   return { ok: true }
 })

@@ -40,6 +40,10 @@ export default defineNuxtConfig({
       emailApiBaseUrl: 'https://one-api.notificore.ru',
       emailFrom: '',
       confirmationEmailTemplateId: '',
+      emailLogoUrl: '',
+      emailAvatarUrl: '',
+      supportEmail: '',
+      supportUrl: '',
       codeDigits: 4,
       codeLifetime: 60,
       codeMaxTries: 3,
@@ -53,6 +57,9 @@ export default defineNuxtConfig({
       baseUrl: '',
       token: ''
     },
+    shopApi: {
+      token: ''
+    },
     vtbPayment: {
       baseUrl: 'https://vtb.rbsuat.com/payment/rest/',
       token: '',
@@ -62,6 +69,20 @@ export default defineNuxtConfig({
       failUrl: '',
       callbackUrl: '',
       qrTtlSeconds: 900
+    },
+    rarusKkt: {
+      baseUrl: 'https://kkm.rarus-cloud.ru',
+      apiVersion: '1.1.7',
+      apiKey: '',
+      inn: '6234117358',
+      taxSystem: 'OSN',
+      tax: 'none',
+      paymentAddress: '',
+      paymentPlace: '',
+      senderEmail: '',
+      signMethodCalculation: 'full_prepayment',
+      signCalculationObject: 'commodity',
+      tag1011: 2
     },
     betterAuth: {
       url: '',

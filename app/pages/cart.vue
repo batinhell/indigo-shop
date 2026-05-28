@@ -1,11 +1,9 @@
 <script setup>
-import { authClient } from '~/utils/auth-client.js'
-
 const title = 'Корзина — Indigo'
 const description = 'Корзина заказов типографии Indigo.'
 
 const { items: cartItems, updateQuantity, removeItems, updateItem, clearCart } = useCart()
-const session = authClient.useSession()
+const session = useClientAuthSession()
 
 const selectedItems = computed(() => cartItems.value.filter(item => item.selected))
 const sessionUser = computed(() => session.value?.data?.user ?? null)
@@ -17,6 +15,9 @@ const payment = ref(null)
 const paymentStatus = ref('idle')
 const paymentError = ref('')
 const checkoutData = ref({})
+const isPayPending = ref(false)
+const isInvoiceSuccessOpen = ref(false)
+const invoice = ref(null)
 
 const allSelected = computed({
   get: () => cartItems.value.length > 0 && cartItems.value.every(i => i.selected),
@@ -90,41 +91,81 @@ async function uploadOrderFiles(order) {
   })
 }
 
-async function onPay() {
-  if (selectedItems.value.length === 0) return
+async function createCheckoutOrder() {
+  const result = await $fetch('/api/orders', {
+    method: 'POST',
+    body: {
+      items: selectedItems.value,
+      amount: selectedTotalPrice.value,
+      checkout: checkoutData.value
+    }
+  })
 
-  paymentStatus.value = 'loading'
-  paymentError.value = ''
+  await uploadOrderFiles(result.order)
+  return result.order
+}
+
+async function startInvoicePayment(order) {
+  const result = await $fetch('/api/payments/invoice/start', {
+    method: 'POST',
+    body: {
+      orderId: order.id,
+      accessToken: order.accessToken
+    }
+  })
+
+  invoice.value = result.invoice
+  isInvoiceSuccessOpen.value = true
+  paymentStatus.value = 'pending'
+}
+
+async function startSbpPayment(order) {
   isPaymentQrOpen.value = true
 
+  const result = await $fetch('/api/payments/vtb-sbp/start', {
+    method: 'POST',
+    body: {
+      orderId: order.id,
+      accessToken: order.accessToken,
+      amount: order.amount
+    }
+  })
+
+  payment.value = result.payment
+  paymentStatus.value = result.payment?.status ?? 'pending'
+}
+
+async function startPayment(order) {
+  if (payAsLegal.value) {
+    await startInvoicePayment(order)
+    return
+  }
+
+  await startSbpPayment(order)
+}
+
+async function onPay() {
+  if (selectedItems.value.length === 0 || isPayPending.value) return
+
+  isPayPending.value = true
+  paymentStatus.value = 'loading'
+  paymentError.value = ''
+
   try {
-    const orderResult = await $fetch('/api/orders', {
-      method: 'POST',
-      body: {
-        items: selectedItems.value,
-        amount: selectedTotalPrice.value,
-        checkout: checkoutData.value
-      }
-    })
-
-    await uploadOrderFiles(orderResult.order)
-
-    const result = await $fetch('/api/payments/vtb-sbp/start', {
-      method: 'POST',
-      body: {
-        orderId: orderResult.order.id,
-        accessToken: orderResult.order.accessToken,
-        amount: orderResult.order.amount
-      }
-    })
-
-    payment.value = result.payment
-    paymentStatus.value = result.payment?.status ?? 'pending'
+    const order = await createCheckoutOrder()
+    await startPayment(order)
     clearCart()
   } catch (error) {
     paymentStatus.value = 'failed'
     paymentError.value = error?.data?.message || error?.message || 'Не удалось создать оплату'
+  } finally {
+    isPayPending.value = false
   }
+}
+
+function downloadInvoice() {
+  if (!invoice.value?.downloadUrl) return
+  window.open(invoice.value.downloadUrl, '_blank', 'noopener')
 }
 
 async function refreshSession() {
@@ -283,6 +324,7 @@ useSeoMeta({
             :total-price="selectedTotalPrice"
             :pay-as-legal="payAsLegal"
             :pay-disabled="selectedItems.length === 0"
+            :pay-pending="isPayPending"
             @pay="onPay"
           />
         </div>
@@ -302,6 +344,12 @@ useSeoMeta({
       :qr-payload="payment?.qrPayload ?? ''"
       :status="paymentStatus"
       :error="paymentError"
+    />
+
+    <InvoiceSuccessModal
+      v-model="isInvoiceSuccessOpen"
+      :invoice="invoice"
+      @download="downloadInvoice"
     />
   </main>
 </template>

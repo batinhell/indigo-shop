@@ -1,0 +1,1 @@
+import{bs as a,bt as n,bk as o,v as u,x as i}from"./2OlT4-Vp.js";const c=a(async()=>{let e,t;const{data:s}=([e,t]=n(()=>o.useSession(u)),e=await e,t(),e);if(!s.value)return i("/")});export{c as default};

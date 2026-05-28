@@ -1,14 +1,16 @@
-import { d as defineEventHandler, V as getCurrentSiteUser, u as useDatabase } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a7 as getCurrentSiteUser, u as useDatabase, a1 as parseSiteOrderPayload, a8 as getSitePaymentStatusMeta } from '../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -39,24 +41,6 @@ function getSizeLabel(description) {
   if (sizeMatch) return sizeMatch[0].replace(/\s+/g, " ");
   return value.split(",").map((part) => part.trim()).find((part) => /\d/.test(part)) || "\u2014";
 }
-function parsePayload(value) {
-  if (!value) return null;
-  if (typeof value === "object") return value;
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
-}
-function getStatusMeta(status) {
-  return {
-    pending: { label: "\u041E\u0436\u0438\u0434\u0430\u0435\u0442 \u043E\u043F\u043B\u0430\u0442\u044B", tone: "secondary", group: "review" },
-    paid: { label: "\u041E\u043F\u043B\u0430\u0447\u0435\u043D", tone: "purple", group: "review" },
-    failed: { label: "\u041E\u043F\u043B\u0430\u0442\u0430 \u043D\u0435 \u043F\u0440\u043E\u0448\u043B\u0430", tone: "danger", group: "review" },
-    expired: { label: "\u041E\u043F\u043B\u0430\u0442\u0430 \u0438\u0441\u0442\u0435\u043A\u043B\u0430", tone: "danger", group: "review" },
-    cancelled: { label: "\u041E\u0442\u043C\u0435\u043D\u0435\u043D", tone: "secondary", group: "finished" }
-  }[status] || { label: "\u041E\u0436\u0438\u0434\u0430\u0435\u0442 \u043E\u043F\u043B\u0430\u0442\u044B", tone: "secondary", group: "review" };
-}
 const index_get = defineEventHandler(async (event) => {
   const user = await getCurrentSiteUser(event);
   const database = useDatabase();
@@ -80,7 +64,7 @@ const index_get = defineEventHandler(async (event) => {
   for (const item of itemRows) {
     const key = Number(item.site_order_id);
     const list = itemsByOrderId.get(key) || [];
-    const payload = parsePayload(item.payload) || {};
+    const payload = parseSiteOrderPayload(item.payload);
     list.push({
       name: item.name,
       size: getSizeLabel(item.description),
@@ -100,7 +84,7 @@ const index_get = defineEventHandler(async (event) => {
   }
   return {
     orders: orders.map((order) => {
-      const meta = getStatusMeta(order.payment_status);
+      const meta = getSitePaymentStatusMeta(order.payment_status);
       const count = Number(order.items_count || 0);
       return {
         id: Number(order.id),

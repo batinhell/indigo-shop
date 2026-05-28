@@ -8,6 +8,18 @@ import {
   getVtbDynamicQrStatus
 } from '../../../utils/vtb-payment.js'
 
+function mergePayload(payload, patch) {
+  let base = {}
+
+  try {
+    base = payload ? JSON.parse(payload) : {}
+  } catch {
+    base = {}
+  }
+
+  return JSON.stringify({ ...base, ...patch })
+}
+
 export default defineEventHandler(async (event) => {
   const paymentId = Number(getRouterParam(event, 'paymentId'))
 
@@ -32,7 +44,7 @@ export default defineEventHandler(async (event) => {
 
   const paymentStatus = payment.payment_status ?? payment.status
 
-  if (paymentStatus === 'paid' || paymentStatus === 'failed' || paymentStatus === 'cancelled') {
+  if (paymentStatus === 'paid' || paymentStatus === 'failed' || paymentStatus === 'expired' || paymentStatus === 'cancelled') {
     return { payment: { ...payment, status: paymentStatus } }
   }
 
@@ -62,7 +74,7 @@ export default defineEventHandler(async (event) => {
   )
 
   await updateOrderPaymentStatus(database, paymentId, status, {
-    payload: JSON.stringify({ vtbStatusResponse: statusResponse })
+    payload: mergePayload(payment.payload, { vtbStatusResponse: statusResponse })
   })
 
   const updatedPayment = await getOrderPayment(database, paymentId)

@@ -4,10 +4,44 @@ import { useDatabase } from '../../../utils/database.js'
 import { sendNotificoreEmail, isNotificoreTimeoutError } from '../../../utils/notificore.js'
 
 const TOKEN_TTL_MS = 60 * 60 * 1000
+const DEFAULT_SUPPORT_EMAIL = 'info@indigo-mail.ru'
+const DEFAULT_EMAIL_LOGO_PATH = '/email/logo-indigo.svg'
+const DEFAULT_EMAIL_AVATAR_PATH = '/email/avatar-indigo.svg'
 
 const createToken = () => randomBytes(32).toString('base64url')
 
 const hashToken = token => createHash('sha256').update(token).digest('hex')
+
+const readEnv = name => process.env[name]?.trim() || ''
+
+const getRuntimeString = value => (
+  typeof value === 'string' ? value.trim() : ''
+)
+
+const buildPublicUrl = (origin, value) => {
+  const url = String(value ?? '').trim()
+
+  if (!url) return ''
+  if (/^https?:\/\//i.test(url) || /^mailto:/i.test(url)) return url
+
+  return new URL(url.startsWith('/') ? url : `/${url}`, origin).href
+}
+
+const getTemplateAssetUrl = (origin, configValue, envName, fallbackPath) => (
+  buildPublicUrl(origin, getRuntimeString(configValue) || readEnv(envName) || fallbackPath)
+)
+
+const getFormattedEmailTime = date => new Intl.DateTimeFormat('ru-RU', {
+  timeZone: 'Europe/Moscow',
+  hour: '2-digit',
+  minute: '2-digit'
+}).format(date)
+
+const getDisplayName = user => (
+  String(user?.name ?? '').trim()
+  || String(user?.email ?? '').trim()
+  || 'Клиент Индиго'
+)
 
 const getNotificoreErrorMessage = (error) => {
   const validationMessages = Object.values(error?.data?.errors ?? {})
@@ -56,7 +90,7 @@ export default defineEventHandler(async (event) => {
   const database = useDatabase()
   const user = await database
     .selectFrom('user')
-    .select(['email', 'emailVerified'])
+    .select(['email', 'emailVerified', 'name'])
     .where('id', '=', session.user.id)
     .executeTakeFirst()
 
@@ -75,6 +109,31 @@ export default defineEventHandler(async (event) => {
   const confirmationUrl = `${origin}/api/profile/email/confirm?t=${encodeURIComponent(token)}`
   const now = new Date()
   const expiresAt = new Date(now.getTime() + TOKEN_TTL_MS)
+  const runtimeConfig = useRuntimeConfig()
+  const notificoreConfig = runtimeConfig.notificore ?? {}
+  const supportEmail = getRuntimeString(notificoreConfig.supportEmail)
+    || readEnv('NOTIFICORE_EMAIL_SUPPORT_EMAIL')
+    || DEFAULT_SUPPORT_EMAIL
+  const supportUrl = buildPublicUrl(
+    origin,
+    getRuntimeString(notificoreConfig.supportUrl)
+      || readEnv('NOTIFICORE_EMAIL_SUPPORT_URL')
+      || `mailto:${supportEmail}`
+  )
+  const logoUrl = getTemplateAssetUrl(
+    origin,
+    notificoreConfig.emailLogoUrl,
+    'NOTIFICORE_EMAIL_LOGO_URL',
+    DEFAULT_EMAIL_LOGO_PATH
+  )
+  const avatarUrl = getTemplateAssetUrl(
+    origin,
+    notificoreConfig.emailAvatarUrl,
+    'NOTIFICORE_EMAIL_AVATAR_URL',
+    DEFAULT_EMAIL_AVATAR_PATH
+  )
+  const userName = getDisplayName(user)
+  const headerTime = getFormattedEmailTime(now)
 
   await database
     .updateTable('userEmailConfirmationToken')
@@ -105,7 +164,13 @@ export default defineEventHandler(async (event) => {
       subject: 'Подтверждение почты Индиго',
       templateContent: {
         confirmationUrl,
-        profileUrl: confirmationUrl
+        supportUrl,
+        supportEmail,
+        logoUrl,
+        avatarUrl,
+        userName,
+        userEmail: email,
+        headerTime
       }
     })
 

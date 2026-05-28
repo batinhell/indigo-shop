@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
   return {
     order: {
       id: order.id,
+      orderNumber: order.orderNumber,
       accessToken: order.accessToken,
       amount: order.amount,
       status: 'pending'

@@ -1,5 +1,6 @@
 import { auth } from './auth.js'
 import { ensureSiteClient } from './site-client.js'
+import { isSiteOrderInWork, normalizeSiteOrderStatus } from '~~/shared/utils/site-order-status.js'
 
 const MAX_ITEMS = 100
 
@@ -56,6 +57,11 @@ function createAccessToken() {
   return crypto.randomUUID().replaceAll('-', '') + crypto.randomUUID().replaceAll('-', '')
 }
 
+export function createSiteOrderNumber(orderId) {
+  const suffix = Date.now().toString(36).toUpperCase()
+  return `SITE-${orderId}-${suffix}`.slice(0, 36)
+}
+
 export async function getCurrentSiteUser(event) {
   const user = await getOptionalSiteUser(event)
 
@@ -68,6 +74,32 @@ export async function getCurrentSiteUser(event) {
   }
 
   return user
+}
+
+export function parseSiteOrderPayload(value, fallback = {}) {
+  if (!value) return fallback
+  if (typeof value === 'object') return value
+
+  try {
+    return JSON.parse(value) || fallback
+  } catch {
+    return fallback
+  }
+}
+
+export function getSiteOrderWorkflowStatus(order, payload = parseSiteOrderPayload(order?.payload)) {
+  // These workflow fields are owned by the shared admin database schema. They are
+  // intentionally read here even though this shop project only creates the base
+  // site_orders columns in its local migrations.
+  return normalizeSiteOrderStatus(
+    order?.workflow_status
+    || order?.production_status
+    || order?.status
+    || payload.workflowStatus
+    || payload.productionStatus
+    || payload.orderStatus
+    || ''
+  ).trim()
 }
 
 function normalizeCheckout(checkout) {
@@ -127,56 +159,108 @@ export async function createSiteOrder(database, event, { items, amount, checkout
         .execute()).map(product => Number(product.id)))
     : new Set()
 
-  const result = await database
-    .insertInto('site_orders')
-    .values({
-      client_id: clientId,
-      site_user_id: siteUserId,
-      access_token: accessToken,
-      amount,
-      currency: 'RUB',
-      payment_status: 'pending',
-      payload: JSON.stringify({
-        source: 'site',
-        checkout: normalizedCheckout,
-        orderDescription: buildOrderDescription(normalizedCheckout, items),
-        items
-      }),
-      created_at: now,
-      updated_at: now
-    })
-    .executeTakeFirst()
-
-  const orderId = Number(result.insertId)
-
-  if (!orderId) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Order was not created',
-      message: 'Не удалось создать заказ'
-    })
-  }
-
-  if (items.length) {
-    await database
-      .insertInto('site_order_items')
-      .values(items.map(item => ({
-        site_order_id: orderId,
-        product_id: existingProductIds.has(item.productId) ? item.productId : null,
-        name: item.name,
-        description: item.description || null,
-        quantity: item.quantity,
-        unit_price: item.unitPrice,
-        design_price: item.designPrice,
-        total: item.total,
-        payload: JSON.stringify(item),
+  return database.transaction().execute(async (trx) => {
+    const result = await trx
+      .insertInto('site_orders')
+      .values({
+        client_id: clientId,
+        site_user_id: siteUserId,
+        access_token: accessToken,
+        amount,
+        currency: 'RUB',
+        payment_status: 'pending',
+        payload: JSON.stringify({
+          source: 'site',
+          checkout: normalizedCheckout,
+          orderDescription: buildOrderDescription(normalizedCheckout, items),
+          items
+        }),
         created_at: now,
         updated_at: now
-      })))
+      })
+      .executeTakeFirst()
+
+    const orderId = Number(result.insertId)
+
+    if (!orderId) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Order was not created',
+        message: 'Не удалось создать заказ'
+      })
+    }
+
+    const orderNumber = createSiteOrderNumber(orderId)
+
+    await trx
+      .updateTable('site_orders')
+      .set({
+        order_number: orderNumber,
+        updated_at: now
+      })
+      .where('id', '=', orderId)
       .execute()
+
+    if (items.length) {
+      await trx
+        .insertInto('site_order_items')
+        .values(items.map(item => ({
+          site_order_id: orderId,
+          product_id: existingProductIds.has(item.productId) ? item.productId : null,
+          name: item.name,
+          description: item.description || null,
+          quantity: item.quantity,
+          unit_price: item.unitPrice,
+          design_price: item.designPrice,
+          total: item.total,
+          payload: JSON.stringify(item),
+          created_at: now,
+          updated_at: now
+        })))
+        .execute()
+    }
+
+    return { id: orderId, orderNumber, amount, siteUserId, accessToken }
+  })
+}
+
+export async function updateSiteOrderRecipient(database, event, orderId, recipientPatch) {
+  const order = await getOwnedSiteOrder(database, event, orderId)
+  const payload = parseSiteOrderPayload(order.payload)
+  const workflowStatus = getSiteOrderWorkflowStatus(order, payload)
+
+  if (!isSiteOrderInWork(workflowStatus)) {
+    throw createError({
+      statusCode: 409,
+      statusMessage: 'Order recipient is locked',
+      message: 'Получателя можно изменить только пока заказ в работе'
+    })
   }
 
-  return { id: orderId, amount, siteUserId, accessToken }
+  const checkout = payload.checkout && typeof payload.checkout === 'object' ? payload.checkout : {}
+  const recipient = {
+    ...(checkout.recipient && typeof checkout.recipient === 'object' ? checkout.recipient : {}),
+    type: 'another',
+    ...recipientPatch
+  }
+  const nextPayload = {
+    ...payload,
+    checkout: {
+      ...checkout,
+      recipient
+    }
+  }
+
+  await database
+    .updateTable('site_orders')
+    .set({
+      payload: JSON.stringify(nextPayload),
+      updated_at: new Date()
+    })
+    .where('id', '=', orderId)
+    .execute()
+
+  return recipient
 }
 
 export async function getOwnedSiteOrder(database, event, orderId, accessToken = '') {

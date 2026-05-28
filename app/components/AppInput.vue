@@ -3,7 +3,7 @@ defineOptions({
   inheritAttrs: false
 })
 
-const model = defineModel({ default: '' })
+const model = defineModel({ type: String, default: '' })
 const inputRef = ref(null)
 const attrs = useAttrs()
 let maskInstance = null
@@ -65,7 +65,11 @@ const inputAttributes = computed(() => {
 onMounted(async () => {
   if (inputRef.value && props.mask) {
     const { MaskInput } = await import('maska')
-    maskInstance = new MaskInput(inputRef.value, { mask: props.mask })
+    const target = inputRef.value
+    if (!(target instanceof HTMLInputElement)) return
+    if (model.value == null) model.value = ''
+    target.value = String(model.value)
+    maskInstance = new MaskInput(target, { mask: props.mask })
   }
 })
 
@@ -86,7 +90,11 @@ onBeforeUnmount(() => {
         { 'app-input--disabled': disabled }
       ]"
     >
-      <UIcon v-if="icon" :name="icon" class="app-input__icon" />
+      <UIcon
+        v-if="icon"
+        :name="icon"
+        class="app-input__icon"
+      />
       <input
         ref="inputRef"
         v-model="model"
@@ -99,9 +107,15 @@ onBeforeUnmount(() => {
         v-bind="inputAttributes"
       >
       <slot name="suffix" />
-      <span v-if="suffix" class="app-input__suffix">{{ suffix }}</span>
+      <span
+        v-if="suffix"
+        class="app-input__suffix"
+      >{{ suffix }}</span>
     </div>
-    <p v-if="description" class="app-input-description">
+    <p
+      v-if="description"
+      class="app-input-description"
+    >
       {{ description }}
     </p>
   </div>

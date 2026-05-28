@@ -9,10 +9,14 @@ const props = defineProps({
   totalItems: { type: Number, default: 0 },
   totalPrice: { type: Number, default: 0 },
   payDisabled: { type: Boolean, default: false },
-  payAsLegal: { type: Boolean, default: false }
+  payAsLegal: { type: Boolean, default: false },
+  payPending: { type: Boolean, default: false }
 })
 
-const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по счету' : 'Оплатить по СБП')
+const payButtonLabel = computed(() => {
+  if (props.payPending) return props.payAsLegal ? 'Формируем счёт' : 'Создаём оплату'
+  return props.payAsLegal ? 'Оплатить по счету' : 'Оплатить по СБП'
+})
 </script>
 
 <template>
@@ -63,10 +67,16 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
 
       <button
         class="pay-btn"
-        :disabled="payDisabled"
+        :class="{ 'pay-btn--pending': payPending }"
+        :disabled="payDisabled || payPending"
         @click="emit('pay')"
       >
-        {{ payButtonLabel }}
+        <span
+          v-if="payPending"
+          class="pay-btn__spinner"
+          aria-hidden="true"
+        />
+        <span>{{ payButtonLabel }}</span>
       </button>
 
       <p class="summary-consent">
@@ -257,10 +267,30 @@ const payButtonLabel = computed(() => props.payAsLegal ? 'Оплатить по 
     cursor: not-allowed;
   }
 
+  &--pending:disabled {
+    background: #de7aff;
+    cursor: wait;
+  }
+
+  &__spinner {
+    width: 1rem;
+    height: 1rem;
+    border: 0.125rem solid rgba(255, 255, 255, 0.44);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: cart-pay-spin 0.8s linear infinite;
+  }
+
   &--empty,
   &--empty:disabled {
     background: rgba($color-base, 0.04);
     color: rgba($color-base, 0.24);
+  }
+}
+
+@keyframes cart-pay-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 

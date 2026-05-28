@@ -1,14 +1,16 @@
 import { d as defineEventHandler, t as toWebRequest, a as auth, u as useDatabase, e as ensureSiteClient, s as sendWebResponse } from '../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';

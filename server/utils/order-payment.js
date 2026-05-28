@@ -1,3 +1,5 @@
+import { sendFiscalReceiptForPaidOrder } from './rarus-kkt.js'
+
 const PAYMENT_PROVIDER = 'vtb_sbp'
 
 export function normalizePaymentStatus(status) {
@@ -31,6 +33,19 @@ export async function updateOrderPaymentStatus(database, paymentId, status, patc
     .set(update)
     .where('id', '=', paymentId)
     .execute()
+}
+
+export async function settleOrderPayment(database, paymentId, status, patch = {}) {
+  await updateOrderPaymentStatus(database, paymentId, status, patch)
+
+  const payment = await getOrderPayment(database, paymentId)
+  if (payment?.payment_status === 'paid') {
+    sendFiscalReceiptForPaidOrder(database, payment).catch((error) => {
+      console.error('[rarus-kkt] Async fiscal receipt failed:', error)
+    })
+  }
+
+  return payment
 }
 
 export async function saveVtbRegistration(database, paymentId, response) {

@@ -1,5 +1,6 @@
 import { useDatabase } from '../../../utils/database.js'
-import { getCurrentSiteUser } from '../../../utils/site-orders.js'
+import { getCurrentSiteUser, parseSiteOrderPayload } from '../../../utils/site-orders.js'
+import { getSitePaymentStatusMeta } from '~~/shared/utils/site-payment-status.js'
 
 function formatMoney(value) {
   return `${Number(value || 0).toLocaleString('ru-RU')} ₽`
@@ -33,27 +34,6 @@ function getSizeLabel(description) {
   if (sizeMatch) return sizeMatch[0].replace(/\s+/g, ' ')
 
   return value.split(',').map(part => part.trim()).find(part => /\d/.test(part)) || '—'
-}
-
-function parsePayload(value) {
-  if (!value) return null
-  if (typeof value === 'object') return value
-
-  try {
-    return JSON.parse(value)
-  } catch {
-    return null
-  }
-}
-
-function getStatusMeta(status) {
-  return {
-    pending: { label: 'Ожидает оплаты', tone: 'secondary', group: 'review' },
-    paid: { label: 'Оплачен', tone: 'purple', group: 'review' },
-    failed: { label: 'Оплата не прошла', tone: 'danger', group: 'review' },
-    expired: { label: 'Оплата истекла', tone: 'danger', group: 'review' },
-    cancelled: { label: 'Отменен', tone: 'secondary', group: 'finished' }
-  }[status] || { label: 'Ожидает оплаты', tone: 'secondary', group: 'review' }
 }
 
 export default defineEventHandler(async (event) => {
@@ -97,7 +77,7 @@ export default defineEventHandler(async (event) => {
     const key = Number(item.site_order_id)
     const list = itemsByOrderId.get(key) || []
 
-    const payload = parsePayload(item.payload) || {}
+    const payload = parseSiteOrderPayload(item.payload)
 
     list.push({
       name: item.name,
@@ -120,7 +100,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     orders: orders.map(order => {
-      const meta = getStatusMeta(order.payment_status)
+      const meta = getSitePaymentStatusMeta(order.payment_status)
       const count = Number(order.items_count || 0)
 
       return {

@@ -1,6 +1,8 @@
 <script setup>
 import productImage from '~/assets/images/mesh_sleeve_90x135_single_fringe.png'
 import { resolveCartItemImage } from '~/composables/useCart.js'
+import { getSitePaymentStatusLabel } from '~~/shared/utils/site-payment-status.js'
+import { isSiteOrderInWork } from '~~/shared/utils/site-order-status.js'
 
 definePageMeta({
   middleware: ['auth']
@@ -8,7 +10,7 @@ definePageMeta({
 
 const route = useRoute()
 const orderId = computed(() => String(route.params.orderId || ''))
-const { data, pending, error } = await useFetch(() => `/api/profile/orders/${orderId.value}`, {
+const { data, pending, error, refresh } = await useFetch(() => `/api/profile/orders/${orderId.value}`, {
   default: () => ({ order: null })
 })
 
@@ -19,15 +21,14 @@ const { addExistingItem } = useCart()
 const titleLabel = computed(() => order.value?.titleLabel || `Заказ №${orderNumber.value}`)
 const summary = computed(() => order.value?.summary || {})
 const isMapOpen = ref(false)
-const recipientName = computed(() => order.value?.recipient?.name || 'Получатель не указан')
-const recipientPhone = computed(() => order.value?.recipient?.phone || 'Телефон не указан')
-const summaryTitle = computed(() => {
-  if (order.value?.paymentStatus === 'paid') return 'Оплачено'
-  if (order.value?.paymentStatus === 'failed') return 'Оплата не прошла'
-  if (order.value?.paymentStatus === 'expired') return 'Оплата истекла'
-  if (order.value?.paymentStatus === 'cancelled') return 'Отменен'
-  return 'Ожидает оплаты'
-})
+const summaryTitle = computed(() => getSitePaymentStatusLabel(order.value?.paymentStatus))
+const canDownloadInvoice = computed(() =>
+  order.value?.paymentStatus === 'pending'
+  && order.value?.paymentProvider === 'invoice'
+  && Boolean(order.value?.invoice?.downloadUrl)
+)
+const canCancelOrder = computed(() => isSiteOrderInWork(order.value?.workflowStatus))
+const primaryActionLabel = computed(() => canDownloadInvoice.value ? 'Скачать счёт в PDF' : 'Повторить заказ')
 function getItemImage(item) {
   return resolveCartItemImage(item?.config) || productImage
 }
@@ -63,6 +64,22 @@ function repeatOrder() {
   })
 
   navigateTo('/cart')
+}
+
+function downloadInvoice() {
+  const url = order.value?.invoice?.downloadUrl
+  if (!url) return
+
+  window.open(url, '_blank', 'noopener')
+}
+
+function onPrimaryAction() {
+  if (canDownloadInvoice.value) {
+    downloadInvoice()
+    return
+  }
+
+  repeatOrder()
 }
 </script>
 
@@ -122,24 +139,12 @@ function repeatOrder() {
               </p>
             </article>
 
-            <article class="order-info__card">
-              <div class="order-info__card-header">
-                <h2 class="order-info__card-title">
-                  Получатель
-                </h2>
-                <button
-                  type="button"
-                  class="order-info__small-button"
-                  disabled
-                >
-                  Изменить
-                </button>
-              </div>
-              <p class="order-info__text">
-                {{ recipientName }}<br>
-                {{ recipientPhone }}
-              </p>
-            </article>
+            <ProfileOrderRecipientCard
+              :order-id="order.id"
+              :recipient="order.recipient"
+              :can-edit="canCancelOrder"
+              @saved="refresh"
+            />
           </section>
 
           <section class="order-items app-card">
@@ -200,12 +205,12 @@ function repeatOrder() {
             <div class="order-summary__divider" />
 
             <button
-              v-if="order.canRepeat"
+              v-if="order.canRepeat || canDownloadInvoice"
               type="button"
               class="order-summary__repeat"
-              @click="repeatOrder"
+              @click="onPrimaryAction"
             >
-              Повторить заказ
+              {{ primaryActionLabel }}
             </button>
 
             <a
@@ -247,7 +252,7 @@ function repeatOrder() {
           </section>
 
           <section
-            v-if="order.canCancel"
+            v-if="canCancelOrder"
             class="order-side-card app-card"
           >
             <div class="order-side-card__copy">

@@ -1,22 +1,48 @@
-import { d as defineEventHandler, a as auth, B as getRequestHeaders, c as createError, u as useDatabase, T as getRequestURL, U as sendNotificoreEmail, m as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, G as getRequestHeaders, c as createError, u as useDatabase, $ as getRequestURL, a0 as sendNotificoreEmail, m as isNotificoreTimeoutError, C as useRuntimeConfig } from '../../../../nitro/nitro.mjs';
 import { randomUUID, randomBytes, createHash } from 'node:crypto';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:url';
 import '@iconify/utils';
 import 'consola';
 
 const TOKEN_TTL_MS = 60 * 60 * 1e3;
+const DEFAULT_SUPPORT_EMAIL = "info@indigo-mail.ru";
+const DEFAULT_EMAIL_LOGO_PATH = "/email/logo-indigo.svg";
+const DEFAULT_EMAIL_AVATAR_PATH = "/email/avatar-indigo.svg";
 const createToken = () => randomBytes(32).toString("base64url");
 const hashToken = (token) => createHash("sha256").update(token).digest("hex");
+const readEnv = (name) => {
+  var _a;
+  return ((_a = process.env[name]) == null ? void 0 : _a.trim()) || "";
+};
+const getRuntimeString = (value) => typeof value === "string" ? value.trim() : "";
+const buildPublicUrl = (origin, value) => {
+  const url = String(value != null ? value : "").trim();
+  if (!url) return "";
+  if (/^https?:\/\//i.test(url) || /^mailto:/i.test(url)) return url;
+  return new URL(url.startsWith("/") ? url : `/${url}`, origin).href;
+};
+const getTemplateAssetUrl = (origin, configValue, envName, fallbackPath) => buildPublicUrl(origin, getRuntimeString(configValue) || readEnv(envName) || fallbackPath);
+const getFormattedEmailTime = (date) => new Intl.DateTimeFormat("ru-RU", {
+  timeZone: "Europe/Moscow",
+  hour: "2-digit",
+  minute: "2-digit"
+}).format(date);
+const getDisplayName = (user) => {
+  var _a, _b;
+  return String((_a = user == null ? void 0 : user.name) != null ? _a : "").trim() || String((_b = user == null ? void 0 : user.email) != null ? _b : "").trim() || "\u041A\u043B\u0438\u0435\u043D\u0442 \u0418\u043D\u0434\u0438\u0433\u043E";
+};
 const getNotificoreErrorMessage = (error) => {
   var _a, _b, _c, _d, _e;
   const validationMessages = Object.values((_b = (_a = error == null ? void 0 : error.data) == null ? void 0 : _a.errors) != null ? _b : {}).flat().filter(Boolean);
@@ -35,7 +61,7 @@ const getNotificoreStatusCode = (error) => {
   return statusCode >= 500 ? 502 : statusCode;
 };
 const confirmation_post = defineEventHandler(async (event) => {
-  var _a, _b;
+  var _a, _b, _c;
   const session = await auth.api.getSession({
     headers: getRequestHeaders(event)
   });
@@ -47,7 +73,7 @@ const confirmation_post = defineEventHandler(async (event) => {
     });
   }
   const database = useDatabase();
-  const user = await database.selectFrom("user").select(["email", "emailVerified"]).where("id", "=", session.user.id).executeTakeFirst();
+  const user = await database.selectFrom("user").select(["email", "emailVerified", "name"]).where("id", "=", session.user.id).executeTakeFirst();
   const email = String((_b = user == null ? void 0 : user.email) != null ? _b : "").trim().toLowerCase();
   if (!email) {
     throw createError({
@@ -61,6 +87,27 @@ const confirmation_post = defineEventHandler(async (event) => {
   const confirmationUrl = `${origin}/api/profile/email/confirm?t=${encodeURIComponent(token)}`;
   const now = /* @__PURE__ */ new Date();
   const expiresAt = new Date(now.getTime() + TOKEN_TTL_MS);
+  const runtimeConfig = useRuntimeConfig();
+  const notificoreConfig = (_c = runtimeConfig.notificore) != null ? _c : {};
+  const supportEmail = getRuntimeString(notificoreConfig.supportEmail) || readEnv("NOTIFICORE_EMAIL_SUPPORT_EMAIL") || DEFAULT_SUPPORT_EMAIL;
+  const supportUrl = buildPublicUrl(
+    origin,
+    getRuntimeString(notificoreConfig.supportUrl) || readEnv("NOTIFICORE_EMAIL_SUPPORT_URL") || `mailto:${supportEmail}`
+  );
+  const logoUrl = getTemplateAssetUrl(
+    origin,
+    notificoreConfig.emailLogoUrl,
+    "NOTIFICORE_EMAIL_LOGO_URL",
+    DEFAULT_EMAIL_LOGO_PATH
+  );
+  const avatarUrl = getTemplateAssetUrl(
+    origin,
+    notificoreConfig.emailAvatarUrl,
+    "NOTIFICORE_EMAIL_AVATAR_URL",
+    DEFAULT_EMAIL_AVATAR_PATH
+  );
+  const userName = getDisplayName(user);
+  const headerTime = getFormattedEmailTime(now);
   await database.updateTable("userEmailConfirmationToken").set({
     usedAt: now
   }).where("userId", "=", session.user.id).where("email", "=", email).where("usedAt", "is", null).execute();
@@ -79,7 +126,13 @@ const confirmation_post = defineEventHandler(async (event) => {
       subject: "\u041F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435 \u043F\u043E\u0447\u0442\u044B \u0418\u043D\u0434\u0438\u0433\u043E",
       templateContent: {
         confirmationUrl,
-        profileUrl: confirmationUrl
+        supportUrl,
+        supportEmail,
+        logoUrl,
+        avatarUrl,
+        userName,
+        userEmail: email,
+        headerTime
       }
     });
     console.info("[profile/email/confirmation] Notificore response:", result);

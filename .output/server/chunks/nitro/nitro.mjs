@@ -1,13 +1,15 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { betterAuth } from 'better-auth';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { readFile as readFile$1, stat, mkdir, rm } from 'node:fs/promises';
+import { Kysely, MysqlDialect, sql } from 'kysely';
+import { spawn } from 'node:child_process';
+import { resolve as resolve$1, dirname as dirname$1, join } from 'node:path';
+import { betterAuth } from 'better-auth';
 import { phoneNumber } from 'better-auth/plugins';
-import { Kysely, MysqlDialect } from 'kysely';
 import { createPool } from 'mysql2';
 import http, { Server as Server$1 } from 'node:http';
 import https, { Server } from 'node:https';
 import { EventEmitter } from 'node:events';
 import { Buffer as Buffer$1 } from 'node:buffer';
 import { promises, existsSync } from 'node:fs';
-import { resolve as resolve$1, dirname as dirname$1, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { getIcons } from '@iconify/utils';
@@ -922,6 +924,7 @@ function getRequestHeader(event, name) {
   const value = headers[name.toLowerCase()];
   return value;
 }
+const getHeader = getRequestHeader;
 function getRequestHost(event, opts = {}) {
   if (opts.xForwardedHost) {
     const _header = event.node.req.headers["x-forwarded-host"];
@@ -1325,6 +1328,7 @@ const setHeaders = setResponseHeaders;
 function setResponseHeader(event, name, value) {
   event.node.res.setHeader(name, value);
 }
+const setHeader = setResponseHeader;
 function appendResponseHeader(event, name, value) {
   let current = event.node.res.getHeader(name);
   if (!current) {
@@ -3309,7 +3313,26 @@ async function dispose(driver) {
 }
 
 const _assets = {
-
+  ["server:fonts:Invoice-Bold.ttf"]: {
+    import: () => import('../raw/Invoice-Bold.mjs').then(r => r.default || r),
+    meta: {"type":"font/ttf","etag":"\"ad138-ApipaD6pJ+cDhX2fA1l2O6hNsTc\"","mtime":"2026-05-25T20:49:56.512Z"}
+  },
+  ["server:fonts:Invoice-Regular.ttf"]: {
+    import: () => import('../raw/Invoice-Regular.mjs').then(r => r.default || r),
+    meta: {"type":"font/ttf","etag":"\"b97a8-MGHPevJXk6ZVof9aUJOF82IPPrM\"","mtime":"2026-05-25T20:49:56.486Z"}
+  },
+  ["server:fonts:Manrope-Bold.woff"]: {
+    import: () => import('../raw/Manrope-Bold.mjs').then(r => r.default || r),
+    meta: {"type":"font/woff","etag":"\"2714-efct7tH5cmnJnDmMD/8kIJ4gSsc\"","mtime":"2026-05-25T16:30:21.518Z"}
+  },
+  ["server:fonts:Manrope-Regular.woff"]: {
+    import: () => import('../raw/Manrope-Regular.mjs').then(r => r.default || r),
+    meta: {"type":"font/woff","etag":"\"2730-MpSBSgjzr8d8U09B7qrhx5tQWGk\"","mtime":"2026-05-25T16:30:21.515Z"}
+  },
+  ["server:fonts:Manrope-SemiBold.woff"]: {
+    import: () => import('../raw/Manrope-SemiBold.mjs').then(r => r.default || r),
+    meta: {"type":"font/woff","etag":"\"274c-Zw+cU8cYr8xVg6ZwHz0/vQLyEtw\"","mtime":"2026-05-25T16:30:21.515Z"}
+  }
 };
 
 const normalizeKey = function normalizeKey(key) {
@@ -4527,7 +4550,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "917cbb96-b2fb-4b0d-9ea2-eb9e0a49fa8d",
+    "buildId": "52853b17-ada9-4e9e-9643-a1bd64f01324",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4573,6 +4596,10 @@ const _inlineRuntimeConfig = {
     "emailApiBaseUrl": "https://one-api.notificore.ru",
     "emailFrom": "",
     "confirmationEmailTemplateId": "",
+    "emailLogoUrl": "",
+    "emailAvatarUrl": "",
+    "supportEmail": "",
+    "supportUrl": "",
     "codeDigits": 4,
     "codeLifetime": 60,
     "codeMaxTries": 3,
@@ -4586,6 +4613,9 @@ const _inlineRuntimeConfig = {
     "baseUrl": "",
     "token": ""
   },
+  "shopApi": {
+    "token": ""
+  },
   "vtbPayment": {
     "baseUrl": "https://vtb.rbsuat.com/payment/rest/",
     "token": "",
@@ -4595,6 +4625,20 @@ const _inlineRuntimeConfig = {
     "failUrl": "",
     "callbackUrl": "",
     "qrTtlSeconds": 900
+  },
+  "rarusKkt": {
+    "baseUrl": "https://kkm.rarus-cloud.ru",
+    "apiVersion": "1.1.7",
+    "apiKey": "",
+    "inn": "6234117358",
+    "taxSystem": "OSN",
+    "tax": "none",
+    "paymentAddress": "",
+    "paymentPlace": "",
+    "senderEmail": "",
+    "signMethodCalculation": "full_prepayment",
+    "signCalculationObject": "commodity",
+    "tag1011": 2
   },
   "betterAuth": {
     "url": "",
@@ -5050,1016 +5094,1037 @@ const plugins = [
 const assets = {
   "/_payload.json": {
     "type": "application/json;charset=utf-8",
-    "etag": "\"45-AL+a5YGHkfvwPmED8PD46O1PNkM\"",
-    "mtime": "2026-05-20T23:27:10.539Z",
+    "etag": "\"45-pefH1rmJ3rwuUWpsXWCdGfoOERg\"",
+    "mtime": "2026-05-28T12:37:51.176Z",
     "size": 69,
     "path": "../public/_payload.json"
-  },
-  "/index.html": {
-    "type": "text/html;charset=utf-8",
-    "etag": "\"10165-7wJG2YWulDD5Vo3XMB+SUAmmREU\"",
-    "mtime": "2026-05-20T23:27:10.539Z",
-    "size": 65893,
-    "path": "../public/index.html"
   },
   "/favicon.ico": {
     "type": "image/vnd.microsoft.icon",
     "etag": "\"3c2e-ZM+VbhpLBjdyZJWzsxeFNgtyI1c\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
+    "mtime": "2026-05-28T12:37:51.720Z",
     "size": 15406,
     "path": "../public/favicon.ico"
   },
-  "/_fonts/Im8HkqQ00A1IGqihOqFViX4pj8D3DlxkfI6t6LTbZQg-jR4Prvz_J7I8oA8oUj3_1pTizDgpRYIEI5b7BlHPneU.woff2": {
-    "type": "font/woff2",
-    "etag": "\"a20-/mE2T1SnEVqacISsybF/22fJxpQ\"",
-    "mtime": "2026-05-20T23:27:10.637Z",
-    "size": 2592,
-    "path": "../public/_fonts/Im8HkqQ00A1IGqihOqFViX4pj8D3DlxkfI6t6LTbZQg-jR4Prvz_J7I8oA8oUj3_1pTizDgpRYIEI5b7BlHPneU.woff2"
+  "/index.html": {
+    "type": "text/html;charset=utf-8",
+    "etag": "\"101b6-mg90widNn/3/rHAUGW9/7/NQW+E\"",
+    "mtime": "2026-05-28T12:37:51.172Z",
+    "size": 65974,
+    "path": "../public/index.html"
   },
   "/_fonts/6CXtQpr9VY5Z0zV1xogwmkWDzNR_19zN1NTGulEzmjg-kCRFKXhkCh0_kGLAckhVN3TP-F_bkwm7Ivy9TdKzUJg.woff2": {
     "type": "font/woff2",
     "etag": "\"6000-yOr+6GOlMYXr/a2M9DBWFj+PFP0\"",
-    "mtime": "2026-05-20T23:27:10.637Z",
+    "mtime": "2026-05-28T12:37:51.352Z",
     "size": 24576,
     "path": "../public/_fonts/6CXtQpr9VY5Z0zV1xogwmkWDzNR_19zN1NTGulEzmjg-kCRFKXhkCh0_kGLAckhVN3TP-F_bkwm7Ivy9TdKzUJg.woff2"
-  },
-  "/_fonts/FPImowmXkU1aWgmKsxPu7Akj0JNowdsV90BaJJQN8Dw-_91jnewDEbv6Ft52Ae56infTiwcwq3HFAAhB_Y7h8Nw.woff2": {
-    "type": "font/woff2",
-    "etag": "\"212c-qyXMIA38lm8hz7dJ91nZrSUTpo8\"",
-    "mtime": "2026-05-20T23:27:10.637Z",
-    "size": 8492,
-    "path": "../public/_fonts/FPImowmXkU1aWgmKsxPu7Akj0JNowdsV90BaJJQN8Dw-_91jnewDEbv6Ft52Ae56infTiwcwq3HFAAhB_Y7h8Nw.woff2"
   },
   "/sw.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"cf-Yaz0W3MuC8fvUl2UpJuR3JzbKX0\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
+    "mtime": "2026-05-28T12:37:51.600Z",
     "size": 207,
     "path": "../public/sw.js"
+  },
+  "/_fonts/FPImowmXkU1aWgmKsxPu7Akj0JNowdsV90BaJJQN8Dw-_91jnewDEbv6Ft52Ae56infTiwcwq3HFAAhB_Y7h8Nw.woff2": {
+    "type": "font/woff2",
+    "etag": "\"212c-qyXMIA38lm8hz7dJ91nZrSUTpo8\"",
+    "mtime": "2026-05-28T12:37:51.356Z",
+    "size": 8492,
+    "path": "../public/_fonts/FPImowmXkU1aWgmKsxPu7Akj0JNowdsV90BaJJQN8Dw-_91jnewDEbv6Ft52Ae56infTiwcwq3HFAAhB_Y7h8Nw.woff2"
+  },
+  "/_fonts/Im8HkqQ00A1IGqihOqFViX4pj8D3DlxkfI6t6LTbZQg-jR4Prvz_J7I8oA8oUj3_1pTizDgpRYIEI5b7BlHPneU.woff2": {
+    "type": "font/woff2",
+    "etag": "\"a20-/mE2T1SnEVqacISsybF/22fJxpQ\"",
+    "mtime": "2026-05-28T12:37:51.356Z",
+    "size": 2592,
+    "path": "../public/_fonts/Im8HkqQ00A1IGqihOqFViX4pj8D3DlxkfI6t6LTbZQg-jR4Prvz_J7I8oA8oUj3_1pTizDgpRYIEI5b7BlHPneU.woff2"
   },
   "/_fonts/UnngOpW3QUFmW9ustR7f4iJ6HMtsBQrF8MRey6Urw8M-bdAyUOEhdSN8LU65JRDWYqdkUIYhM59ZKeszsiAgtAI.woff2": {
     "type": "font/woff2",
     "etag": "\"2490-lxxhduGHtEyKOfaXOsN0tycYxLo\"",
-    "mtime": "2026-05-20T23:27:10.637Z",
+    "mtime": "2026-05-28T12:37:51.356Z",
     "size": 9360,
     "path": "../public/_fonts/UnngOpW3QUFmW9ustR7f4iJ6HMtsBQrF8MRey6Urw8M-bdAyUOEhdSN8LU65JRDWYqdkUIYhM59ZKeszsiAgtAI.woff2"
-  },
-  "/favicon/android-chrome-192x192.png": {
-    "type": "image/png",
-    "etag": "\"30ee-wj1gNf5R0U0POpcHTCetRhWJHYY\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 12526,
-    "path": "../public/favicon/android-chrome-192x192.png"
   },
   "/_fonts/bJM9t_QZ4-OukAilpAvXFzrpFWWgeGJ0mI4OoxeTBXA-T1gZRQnm_CyPlHs2G7o5lSEBc3-0yjeDI6MJ5h7RFr8.woff2": {
     "type": "font/woff2",
     "etag": "\"3b88-8PPUGEtSggUUaoWKHrBtMZpCcII\"",
-    "mtime": "2026-05-20T23:27:10.637Z",
+    "mtime": "2026-05-28T12:37:51.352Z",
     "size": 15240,
     "path": "../public/_fonts/bJM9t_QZ4-OukAilpAvXFzrpFWWgeGJ0mI4OoxeTBXA-T1gZRQnm_CyPlHs2G7o5lSEBc3-0yjeDI6MJ5h7RFr8.woff2"
-  },
-  "/favicon/android-chrome-512x512.png": {
-    "type": "image/png",
-    "etag": "\"ce78-k+5LhFV4o58e+t9DYBeQUxuM2ZM\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 52856,
-    "path": "../public/favicon/android-chrome-512x512.png"
-  },
-  "/favicon/apple-touch-icon.png": {
-    "type": "image/png",
-    "etag": "\"2b4a-dqJvpLMnQNNG7IF8f4OmHpSapj4\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 11082,
-    "path": "../public/favicon/apple-touch-icon.png"
-  },
-  "/favicon/favicon-16x16.png": {
-    "type": "image/png",
-    "etag": "\"213-iFewOY7nK6wZqfEE7APZlqYbQgQ\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 531,
-    "path": "../public/favicon/favicon-16x16.png"
   },
   "/_fonts/j2DQVh5iMWeAm2MqpLd4MwbmjfUsIAMYOc7Un8-q1oQ-5gkdZw7cVFs_x-rFm49rMnDT-AGGoIvy6_RxE2XbStA.woff2": {
     "type": "font/woff2",
     "etag": "\"38d0-N24h2Ga9QWdeZ+V28x7JcqD6is8\"",
-    "mtime": "2026-05-20T23:27:10.637Z",
+    "mtime": "2026-05-28T12:37:51.356Z",
     "size": 14544,
     "path": "../public/_fonts/j2DQVh5iMWeAm2MqpLd4MwbmjfUsIAMYOc7Un8-q1oQ-5gkdZw7cVFs_x-rFm49rMnDT-AGGoIvy6_RxE2XbStA.woff2"
   },
-  "/favicon/favicon-32x32.png": {
-    "type": "image/png",
-    "etag": "\"460-M6n5EApmRW4GOPGB/JmrIsTkyVU\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 1120,
-    "path": "../public/favicon/favicon-32x32.png"
+  "/email/avatar-indigo.svg": {
+    "type": "image/svg+xml",
+    "etag": "\"19a2-Tc7VVzwgC/EeB4ey/2sd98zrS/8\"",
+    "mtime": "2026-05-28T12:37:51.492Z",
+    "size": 6562,
+    "path": "../public/email/avatar-indigo.svg"
   },
-  "/favicon/favicon.ico": {
-    "type": "image/vnd.microsoft.icon",
-    "etag": "\"3c2e-ZM+VbhpLBjdyZJWzsxeFNgtyI1c\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 15406,
-    "path": "../public/favicon/favicon.ico"
+  "/email/logo-indigo.svg": {
+    "type": "image/svg+xml",
+    "etag": "\"2244-aJ1qfKmmNhK95C2FlNGKtJJDyI0\"",
+    "mtime": "2026-05-28T12:37:51.492Z",
+    "size": 8772,
+    "path": "../public/email/logo-indigo.svg"
   },
-  "/favicon/site.webmanifest": {
-    "type": "application/manifest+json",
-    "etag": "\"129-wgUZDFVnRHfDyR3HVeq2tzvjOhI\"",
-    "mtime": "2026-05-20T23:27:10.970Z",
-    "size": 297,
-    "path": "../public/favicon/site.webmanifest"
-  },
-  "/_nuxt/2C5Mxp8c.js": {
+  "/_nuxt/-OJhP7xJ.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"791-d0h+gO0JTP/oBysa9OBc1WIgebQ\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 1937,
-    "path": "../public/_nuxt/2C5Mxp8c.js"
+    "etag": "\"3ab-cNnsvi+IR+JI9i2XzB/3PAEsJ+M\"",
+    "mtime": "2026-05-28T12:37:51.480Z",
+    "size": 939,
+    "path": "../public/_nuxt/-OJhP7xJ.js"
+  },
+  "/_nuxt/6Gwzp-GE.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"12a2-Shsh7810TVBpmWSi8BcWYKeCzf8\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 4770,
+    "path": "../public/_nuxt/6Gwzp-GE.js"
   },
   "/_nuxt/AppBreadcrumbs.D4A7nhcc.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"33d-UT8XP1UjG1rgljHe0/Zqy1RSimc\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
+    "mtime": "2026-05-28T12:37:51.436Z",
     "size": 829,
     "path": "../public/_nuxt/AppBreadcrumbs.D4A7nhcc.css"
   },
   "/_nuxt/AppButton.DUN3cgd3.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"d33-iLQovk+Qj/63/lNlV5X2a++Juls\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
+    "mtime": "2026-05-28T12:37:51.436Z",
     "size": 3379,
     "path": "../public/_nuxt/AppButton.DUN3cgd3.css"
-  },
-  "/_nuxt/AppSwitch.CSgRb82J.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"4d9-Sg8+wuhbS+VBr7Eqb3hb//Nq634\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 1241,
-    "path": "../public/_nuxt/AppSwitch.CSgRb82J.css"
-  },
-  "/_nuxt/BH-cFkJA.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"12a7-0mqIaJJ1zsUPNjSJgRbBs3oE6K0\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 4775,
-    "path": "../public/_nuxt/BH-cFkJA.js"
   },
   "/_nuxt/BAR9_jX0.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"391-OPEmXXUan0r3nGSlp1n2xYSlAKg\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
+    "mtime": "2026-05-28T12:37:51.436Z",
     "size": 913,
     "path": "../public/_nuxt/BAR9_jX0.js"
-  },
-  "/_nuxt/BEitTUcL.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"806-+DxAX64I8LknvQNrDxRvr07WJ9M\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 2054,
-    "path": "../public/_nuxt/BEitTUcL.js"
-  },
-  "/_nuxt/B-e-1PHS.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1b99-RG0LqzHgFTePb7O0K9SMCfVjRDA\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 7065,
-    "path": "../public/_nuxt/B-e-1PHS.js"
-  },
-  "/_nuxt/BR-dSiYX.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"eb1b-5zQzlxW2RaJ9gj1W7wPblFK/Zhw\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 60187,
-    "path": "../public/_nuxt/BR-dSiYX.js"
-  },
-  "/_nuxt/BUaJdbOg.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"3ab-pTfeNbUEr1DbkG9CscnSxH9yeFI\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 939,
-    "path": "../public/_nuxt/BUaJdbOg.js"
   },
   "/_nuxt/BaseModal.ChyWkGPf.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"401-Dcvmicl9h/o7Ic936Ha1Di9m4ds\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
+    "mtime": "2026-05-28T12:37:51.436Z",
     "size": 1025,
     "path": "../public/_nuxt/BaseModal.ChyWkGPf.css"
+  },
+  "/_nuxt/BcQM2AbP.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"64e-y17P19p0w08oZsGgexR9zAvTKpY\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 1614,
+    "path": "../public/_nuxt/BcQM2AbP.js"
+  },
+  "/_nuxt/AppSwitch.CSgRb82J.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"4d9-Sg8+wuhbS+VBr7Eqb3hb//Nq634\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 1241,
+    "path": "../public/_nuxt/AppSwitch.CSgRb82J.css"
   },
   "/_nuxt/BcScItuj.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b88-W/mqPn0HSiXUZKjxGUJXxTfNwVo\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
+    "mtime": "2026-05-28T12:37:51.436Z",
     "size": 7048,
     "path": "../public/_nuxt/BcScItuj.js"
   },
-  "/_nuxt/C6PSK9lM.js": {
+  "/_nuxt/CH5p69Td.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"1695-4I9fa/12GRJzzLCTIbIdIyEvjfs\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 5781,
-    "path": "../public/_nuxt/C6PSK9lM.js"
+    "etag": "\"169a-vtGRY9EOcHk0uK2taxVYfcN8Z9I\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 5786,
+    "path": "../public/_nuxt/CH5p69Td.js"
   },
-  "/_nuxt/C6oam9UO.js": {
+  "/_nuxt/BjLhg-s1.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"64e-AZ99LmrekfFR9FFriaxSVcdUDzU\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 1614,
-    "path": "../public/_nuxt/C6oam9UO.js"
+    "etag": "\"445-yLpzC/o3NuxcMsgrMuJC14FJV4w\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 1093,
+    "path": "../public/_nuxt/BjLhg-s1.js"
   },
-  "/_nuxt/CTMVGm97.js": {
+  "/_nuxt/C3v2g71A.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"809e-PnIcbmdrGoLK9+yt9RaCrhpKWE4\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 32926,
-    "path": "../public/_nuxt/CTMVGm97.js"
+    "etag": "\"96d9-+Po5/L36V3j9/E3qLjwO6QkLFVY\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 38617,
+    "path": "../public/_nuxt/C3v2g71A.js"
   },
-  "/_nuxt/CcHpLQRy.js": {
+  "/_nuxt/2OlT4-Vp.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2dff-OIBxTjM6bWZuyHvaJ69HnBrd3s0\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 11775,
-    "path": "../public/_nuxt/CcHpLQRy.js"
+    "etag": "\"8431d-JVbbkkFf9ILnivQXkI7Hc9WhlHk\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 541469,
+    "path": "../public/_nuxt/2OlT4-Vp.js"
   },
-  "/_nuxt/Ccf7TbCq.js": {
+  "/_nuxt/CNNajI7d.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"ac1-LCZmH0blLVDteX0j/ep+cIoq5Wc\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 2753,
-    "path": "../public/_nuxt/Ccf7TbCq.js"
+    "etag": "\"82e3-mH71XkLRtFU4URpJPN7m4v07nkk\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 33507,
+    "path": "../public/_nuxt/CNNajI7d.js"
   },
-  "/_nuxt/C46a3hFe.js": {
+  "/_nuxt/C_mdXSiI.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"cb-+0B384z4QuGNb6ci5LQRxpv++cI\"",
-    "mtime": "2026-05-20T23:27:10.729Z",
-    "size": 203,
-    "path": "../public/_nuxt/C46a3hFe.js"
+    "etag": "\"7551-+PaGECmnYPOllwLVWQ9ZdkbK+J0\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 30033,
+    "path": "../public/_nuxt/C_mdXSiI.js"
   },
-  "/_nuxt/D8BysuYU.js": {
+  "/_nuxt/CbABJlKE.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"82bd-0I8zCYt9D9d3xmbTjkhSN36d6/k\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 33469,
-    "path": "../public/_nuxt/D8BysuYU.js"
+    "etag": "\"2dfa-rXyIru3GCYt4ZmpcHR14iWIcBGs\"",
+    "mtime": "2026-05-28T12:37:51.436Z",
+    "size": 11770,
+    "path": "../public/_nuxt/CbABJlKE.js"
   },
-  "/_nuxt/DwXwuq67.js": {
+  "/_nuxt/CrOH9XTm.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2f4-b+VqoXmIiOaLjkP4i96Z3CFyJj4\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
+    "etag": "\"791-bGNqhtyncus4A/gRAy5zObwVbBk\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 1937,
+    "path": "../public/_nuxt/CrOH9XTm.js"
+  },
+  "/_nuxt/CxpTDfFE.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2f4-auZQ6ogs1COLa1Vp8vyL8cYrvnc\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 756,
-    "path": "../public/_nuxt/DwXwuq67.js"
+    "path": "../public/_nuxt/CxpTDfFE.js"
   },
-  "/_nuxt/DbZECcM-.js": {
+  "/_nuxt/DLYrkwSX.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"d7b-adrX5LbXHkT9gcqM0Iorf+F2BBk\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 3451,
-    "path": "../public/_nuxt/DbZECcM-.js"
+    "etag": "\"806-XJxLwPcJe7AhsIQy1bRLKY0Zdjc\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 2054,
+    "path": "../public/_nuxt/DLYrkwSX.js"
   },
-  "/_nuxt/Dy5RZySe.js": {
+  "/_nuxt/DMOyEZ5X.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"586-qNB630+y+EP0KtpuzDyNoYJK7Es\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 1414,
-    "path": "../public/_nuxt/Dy5RZySe.js"
+    "etag": "\"eb1c-I6rI0DCaXpG3kr1bc74u/J3EEno\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 60188,
+    "path": "../public/_nuxt/DMOyEZ5X.js"
+  },
+  "/_nuxt/DdjgdWet.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"ac1-BBOmaj2KyY13t3AqS6nfmrLi5vE\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 2753,
+    "path": "../public/_nuxt/DdjgdWet.js"
+  },
+  "/_nuxt/DhzPc2Q2.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"e99-dJKqsppbucpe72nlHd+K6y+M8zI\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 3737,
+    "path": "../public/_nuxt/DhzPc2Q2.js"
+  },
+  "/_nuxt/DzXweA5W.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"28e1-yRjb/hc1QLO4OwIYemZQbEr2068\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 10465,
+    "path": "../public/_nuxt/DzXweA5W.js"
+  },
+  "/_nuxt/ENsUp07v.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"809e-LAvCBSWag5TMlAoZwvm3E/ACY74\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 32926,
+    "path": "../public/_nuxt/ENsUp07v.js"
   },
   "/_nuxt/QuantityInput.NhC1HKdD.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"44b-AupH9JYJ2O5ETZsO2W0/Mj00vnU\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 1099,
     "path": "../public/_nuxt/QuantityInput.NhC1HKdD.css"
   },
-  "/_nuxt/VIdxFX0-.js": {
+  "/_nuxt/U7Hoc_zz.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"44a-xV1BHgHjn+hK+3SLBIorp+gSiYc\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 1098,
-    "path": "../public/_nuxt/VIdxFX0-.js"
+    "etag": "\"cc-k1rDNFXAQeKsbalmFcPjtvqvSWM\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 204,
+    "path": "../public/_nuxt/U7Hoc_zz.js"
   },
-  "/_nuxt/_orderId_.DovEPRTG.css": {
+  "/_nuxt/_orderId_.bncsZaXq.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"1c98-CIwR/eTuaoRNmHD/120mKdDXxDI\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 7320,
-    "path": "../public/_nuxt/_orderId_.DovEPRTG.css"
+    "etag": "\"2416-2zYXBXSmiNY8WlyZISd2kZ8n4lo\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 9238,
+    "path": "../public/_nuxt/_orderId_.bncsZaXq.css"
   },
-  "/_nuxt/cart.CYpP_l6f.css": {
+  "/_nuxt/aHfL-5Yl.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"586-jz7q+tYn+mqPBag2gX6pR8noYEM\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 1414,
+    "path": "../public/_nuxt/aHfL-5Yl.js"
+  },
+  "/_nuxt/cart.CyUd6-qq.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"bd5e-PD/evdyRnztdqrs+HMaPRZLQZMM\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
-    "size": 48478,
-    "path": "../public/_nuxt/cart.CYpP_l6f.css"
+    "etag": "\"c535-l0KhN5p6TllGEo3iwksyeAJAfrY\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 50485,
+    "path": "../public/_nuxt/cart.CyUd6-qq.css"
   },
   "/_nuxt/catalog-products.CSz2nG3j.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"332-ufYNtgYdupeActYd1CdVDGzc30A\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 818,
     "path": "../public/_nuxt/catalog-products.CSz2nG3j.css"
   },
-  "/_nuxt/catalog.BdjvH60M.css": {
+  "/_nuxt/catalog.DSVdz4sN.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"c11a-/ZXk+OVPAgSsahkUleO0owOgFCI\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
+    "etag": "\"c11a-RVn7LmHV8ZXCwcjoYYjD395heBs\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 49434,
-    "path": "../public/_nuxt/catalog.BdjvH60M.css"
+    "path": "../public/_nuxt/catalog.DSVdz4sN.css"
   },
   "/_nuxt/catalog_slider_2.BH45i3L8.png": {
     "type": "image/png",
     "etag": "\"5262d-4c8UpFC77yPLHqigal4rgiTKR4g\"",
-    "mtime": "2026-05-20T23:27:10.732Z",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 337453,
     "path": "../public/_nuxt/catalog_slider_2.BH45i3L8.png"
+  },
+  "/_nuxt/cookie-policy.DbJ_Hgph.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"399-B/YQ46Eaho4o1o84/13G7uEWcnQ\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 921,
+    "path": "../public/_nuxt/cookie-policy.DbJ_Hgph.css"
   },
   "/_nuxt/catalog_slider_5.J76b3FyM.png": {
     "type": "image/png",
     "etag": "\"7ae65-13onMZeTGAYGPrS6zKQG05uoHKY\"",
-    "mtime": "2026-05-20T23:27:10.736Z",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 503397,
     "path": "../public/_nuxt/catalog_slider_5.J76b3FyM.png"
+  },
+  "/_nuxt/delivery.eNplfU_M.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"89b-9um6TuALWIIUhtVK3c7zTL6Z3Ts\"",
+    "mtime": "2026-05-28T12:37:51.440Z",
+    "size": 2203,
+    "path": "../public/_nuxt/delivery.eNplfU_M.css"
   },
   "/_nuxt/catalog_slider_3.qx5ywKHs.png": {
     "type": "image/png",
     "etag": "\"db421-XPTQRXfj0AwjWEXQjihfrMmx6Ok\"",
-    "mtime": "2026-05-20T23:27:10.736Z",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 898081,
     "path": "../public/_nuxt/catalog_slider_3.qx5ywKHs.png"
   },
   "/_nuxt/catalog_slider_4.C0q_KMLO.png": {
     "type": "image/png",
     "etag": "\"da674-xfTbUkrpoLqvpDxyWfmtU63bZ8g\"",
-    "mtime": "2026-05-20T23:27:10.736Z",
+    "mtime": "2026-05-28T12:37:51.440Z",
     "size": 894580,
     "path": "../public/_nuxt/catalog_slider_4.C0q_KMLO.png"
-  },
-  "/_nuxt/delivery.eNplfU_M.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"89b-9um6TuALWIIUhtVK3c7zTL6Z3Ts\"",
-    "mtime": "2026-05-20T23:27:10.736Z",
-    "size": 2203,
-    "path": "../public/_nuxt/delivery.eNplfU_M.css"
-  },
-  "/_nuxt/cookie-policy.DbJ_Hgph.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"399-B/YQ46Eaho4o1o84/13G7uEWcnQ\"",
-    "mtime": "2026-05-20T23:27:10.736Z",
-    "size": 921,
-    "path": "../public/_nuxt/cookie-policy.DbJ_Hgph.css"
-  },
-  "/_nuxt/entry.WQt1GWmq.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"48d7f-G+KWk3Gffq3of89BGo6jYW1ThK4\"",
-    "mtime": "2026-05-20T23:27:10.758Z",
-    "size": 298367,
-    "path": "../public/_nuxt/entry.WQt1GWmq.css"
   },
   "/_nuxt/error-404.C-Ezrlz-.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"97e-YLcQ2HBNLea0KJoUeqSqSCendIU\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 2430,
     "path": "../public/_nuxt/error-404.C-Ezrlz-.css"
   },
   "/_nuxt/error-500.DBWf9FGj.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"773-9MNIE+ztUss3x7HN62QKMFz0rhs\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 1907,
     "path": "../public/_nuxt/error-500.DBWf9FGj.css"
   },
-  "/_nuxt/fUmjn54m.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e99-HPntf6U5OJUeXCyI0iK/y05S4sY\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 3737,
-    "path": "../public/_nuxt/fUmjn54m.js"
+  "/_nuxt/footer-logo.NO_QlmsK.svg": {
+    "type": "image/svg+xml",
+    "etag": "\"274f-rMfX6K7iAgviNYpOMM5fKOfRcFw\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 10063,
+    "path": "../public/_nuxt/footer-logo.NO_QlmsK.svg"
+  },
+  "/_nuxt/header-logo-text.B_a9knhz.svg": {
+    "type": "image/svg+xml",
+    "etag": "\"272f-YQkkTXHp4uPT4lIdOvHHm6SqpVM\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 10031,
+    "path": "../public/_nuxt/header-logo-text.B_a9knhz.svg"
+  },
+  "/_nuxt/entry.Cbf2IWTq.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"48d7f-JbFRFXAELeaD91voCLb37Q0qB4k\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 298367,
+    "path": "../public/_nuxt/entry.Cbf2IWTq.css"
   },
   "/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png": {
     "type": "image/png",
     "etag": "\"c1c3c-WPXrPMYN1haE73E/bhw5EvrxsfM\"",
-    "mtime": "2026-05-20T23:27:10.743Z",
+    "mtime": "2026-05-28T12:37:51.444Z",
     "size": 793660,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png"
   },
   "/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png": {
     "type": "image/png",
     "etag": "\"974af-rFo4G91FF29VCRxG8Uj8Rd96c2I\"",
-    "mtime": "2026-05-20T23:27:10.750Z",
+    "mtime": "2026-05-28T12:37:51.444Z",
     "size": 619695,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png"
-  },
-  "/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png": {
-    "type": "image/png",
-    "etag": "\"e6c7e-BW6nR+IDPI88oNumjyYWhoVU+9w\"",
-    "mtime": "2026-05-20T23:27:10.750Z",
-    "size": 945278,
-    "path": "../public/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png"
-  },
-  "/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png": {
-    "type": "image/png",
-    "etag": "\"afe45-+U/r8gotREKnoFkqjAXjFeAf3KU\"",
-    "mtime": "2026-05-20T23:27:10.750Z",
-    "size": 720453,
-    "path": "../public/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png"
-  },
-  "/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png": {
-    "type": "image/png",
-    "etag": "\"c6368-Ruf+t2JpbGOKa1TSV1RJZsdcexo\"",
-    "mtime": "2026-05-20T23:27:10.750Z",
-    "size": 811880,
-    "path": "../public/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_single.BVUsePy3.png": {
     "type": "image/png",
     "etag": "\"b51dc-IQ1iRAmeZp+RV9y2TQ7Z4EVzeU0\"",
-    "mtime": "2026-05-20T23:27:10.750Z",
+    "mtime": "2026-05-28T12:37:51.448Z",
     "size": 741852,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_single.BVUsePy3.png"
   },
-  "/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png": {
+  "/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png": {
     "type": "image/png",
-    "etag": "\"d0274-TzhC58l3kLcrY4xJnFNFaKdyjJc\"",
-    "mtime": "2026-05-20T23:27:10.754Z",
-    "size": 852596,
-    "path": "../public/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png"
+    "etag": "\"e6c7e-BW6nR+IDPI88oNumjyYWhoVU+9w\"",
+    "mtime": "2026-05-28T12:37:51.444Z",
+    "size": 945278,
+    "path": "../public/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png": {
     "type": "image/png",
     "etag": "\"cf2fd-rzZNc2ktEkMoKtGIWhp1nhObTzM\"",
-    "mtime": "2026-05-20T23:27:10.750Z",
+    "mtime": "2026-05-28T12:37:51.448Z",
     "size": 848637,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png"
   },
-  "/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png": {
+  "/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png": {
     "type": "image/png",
-    "etag": "\"94eed-tmHpVV5QnTclEjHqfn8Mt9DYv/Q\"",
-    "mtime": "2026-05-20T23:27:10.758Z",
-    "size": 610029,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png": {
-    "type": "image/png",
-    "etag": "\"af2e3-rHg7lA2xtgll8lyyR2els45M8WI\"",
-    "mtime": "2026-05-20T23:27:10.758Z",
-    "size": 717539,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png": {
-    "type": "image/png",
-    "etag": "\"c5922-DjKZ5tyA9pa7yb6LcHWW//vP69g\"",
-    "mtime": "2026-05-20T23:27:10.758Z",
-    "size": 809250,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png"
+    "etag": "\"d0274-TzhC58l3kLcrY4xJnFNFaKdyjJc\"",
+    "mtime": "2026-05-28T12:37:51.448Z",
+    "size": 852596,
+    "path": "../public/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png"
   },
   "/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png": {
     "type": "image/png",
     "etag": "\"b5adf-icXnosKHM1Dr7M9BqslsTjgtYTQ\"",
-    "mtime": "2026-05-20T23:27:10.754Z",
+    "mtime": "2026-05-28T12:37:51.448Z",
     "size": 744159,
     "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png"
-  },
-  "/_nuxt/footer-logo.NO_QlmsK.svg": {
-    "type": "image/svg+xml",
-    "etag": "\"274f-rMfX6K7iAgviNYpOMM5fKOfRcFw\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 10063,
-    "path": "../public/_nuxt/footer-logo.NO_QlmsK.svg"
-  },
-  "/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png": {
-    "type": "image/png",
-    "etag": "\"a4488-DIo4O1BbqcnbmdhJC5NNBCRkA3s\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 672904,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png"
   },
   "/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png": {
     "type": "image/png",
     "etag": "\"ad8bf-XqXSmL08NF69/BRtKJOyUXye1d8\"",
-    "mtime": "2026-05-20T23:27:10.754Z",
+    "mtime": "2026-05-28T12:37:51.448Z",
     "size": 710847,
     "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png"
   },
-  "/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png": {
+  "/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png": {
     "type": "image/png",
-    "etag": "\"f7f0e-KLHb6o1ndMEUC0u9JIJpgj83K3k\"",
-    "mtime": "2026-05-20T23:27:10.765Z",
-    "size": 1015566,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png"
+    "etag": "\"c5922-DjKZ5tyA9pa7yb6LcHWW//vP69g\"",
+    "mtime": "2026-05-28T12:37:51.448Z",
+    "size": 809250,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png": {
+    "type": "image/png",
+    "etag": "\"af2e3-rHg7lA2xtgll8lyyR2els45M8WI\"",
+    "mtime": "2026-05-28T12:37:51.448Z",
+    "size": 717539,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png"
+  },
+  "/_nuxt/index.2pWCMYDU.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"22501-9O7ptNLoV2n47PyhETapsVZKtLY\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 140545,
+    "path": "../public/_nuxt/index.2pWCMYDU.css"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png": {
+    "type": "image/png",
+    "etag": "\"94eed-tmHpVV5QnTclEjHqfn8Mt9DYv/Q\"",
+    "mtime": "2026-05-28T12:37:51.448Z",
+    "size": 610029,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png": {
+    "type": "image/png",
+    "etag": "\"a4488-DIo4O1BbqcnbmdhJC5NNBCRkA3s\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 672904,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png"
   },
   "/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png": {
     "type": "image/png",
     "etag": "\"e626d-DuxpsFNbK6xJ6y4ZD74yIqrYEhI\"",
-    "mtime": "2026-05-20T23:27:10.758Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 942701,
     "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png"
-  },
-  "/_nuxt/glU3fhrt.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"83bf6-wjQ8+G+rhgHDMHjuDcVQXx92NY4\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 539638,
-    "path": "../public/_nuxt/glU3fhrt.js"
-  },
-  "/_nuxt/catalog_slider_1.BiVYIshC.png": {
-    "type": "image/png",
-    "etag": "\"3b66ed-8Fv6jlmmxiTrk+I5uuG29yjUS9o\"",
-    "mtime": "2026-05-20T23:27:10.743Z",
-    "size": 3892973,
-    "path": "../public/_nuxt/catalog_slider_1.BiVYIshC.png"
-  },
-  "/_nuxt/hCsKdMRB.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"7551-rTJjYv3dJHrUr/lNRrfjO6NCDGY\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 30033,
-    "path": "../public/_nuxt/hCsKdMRB.js"
-  },
-  "/_nuxt/hTWYZoBa.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"86f8-/pU9FrLmrYBnbIYmaWzNN/eKq04\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 34552,
-    "path": "../public/_nuxt/hTWYZoBa.js"
-  },
-  "/_nuxt/header-logo-text.B_a9knhz.svg": {
-    "type": "image/svg+xml",
-    "etag": "\"272f-YQkkTXHp4uPT4lIdOvHHm6SqpVM\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 10031,
-    "path": "../public/_nuxt/header-logo-text.B_a9knhz.svg"
-  },
-  "/_nuxt/index.BxxJjgku.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"22501-D7GE1vwnfzbehNvqRy7GffAImI0\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
-    "size": 140545,
-    "path": "../public/_nuxt/index.BxxJjgku.css"
   },
   "/_nuxt/index.CFCRDarC.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"115b-adv4bzNDSspXrHgD58IIgzc3zkQ\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 4443,
     "path": "../public/_nuxt/index.CFCRDarC.css"
   },
   "/_nuxt/landing-hero-pattern.DfC6rtHl.svg": {
     "type": "image/svg+xml",
     "etag": "\"148e7-F5jHI/7VIhHnkT7/1QLmCvmMgAc\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 84199,
     "path": "../public/_nuxt/landing-hero-pattern.DfC6rtHl.svg"
+  },
+  "/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png": {
+    "type": "image/png",
+    "etag": "\"afe45-+U/r8gotREKnoFkqjAXjFeAf3KU\"",
+    "mtime": "2026-05-28T12:37:51.448Z",
+    "size": 720453,
+    "path": "../public/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png": {
+    "type": "image/png",
+    "etag": "\"f7f0e-KLHb6o1ndMEUC0u9JIJpgj83K3k\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 1015566,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png"
+  },
+  "/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png": {
+    "type": "image/png",
+    "etag": "\"c6368-Ruf+t2JpbGOKa1TSV1RJZsdcexo\"",
+    "mtime": "2026-05-28T12:37:51.444Z",
+    "size": 811880,
+    "path": "../public/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png"
+  },
+  "/_nuxt/catalog_slider_1.BiVYIshC.png": {
+    "type": "image/png",
+    "etag": "\"3b66ed-8Fv6jlmmxiTrk+I5uuG29yjUS9o\"",
+    "mtime": "2026-05-28T12:37:51.444Z",
+    "size": 3892973,
+    "path": "../public/_nuxt/catalog_slider_1.BiVYIshC.png"
   },
   "/_nuxt/legal-information.Kzi_0WoB.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"53d-48A/ngoy6yK+qzj/1RdrBKZ7O5c\"",
-    "mtime": "2026-05-20T23:27:10.761Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 1341,
     "path": "../public/_nuxt/legal-information.Kzi_0WoB.css"
+  },
+  "/_nuxt/logo.nBvKnBnY.png": {
+    "type": "image/png",
+    "etag": "\"21ce-Wn/SI/UarbICKdyHxjjj7x1B43A\"",
+    "mtime": "2026-05-28T12:37:51.452Z",
+    "size": 8654,
+    "path": "../public/_nuxt/logo.nBvKnBnY.png"
   },
   "/_nuxt/mesh_grommets_60x90_double.DUTuOgHv.png": {
     "type": "image/png",
     "etag": "\"ca2ab-7RE/t9akhiXfSecyDfP6rwzvxgM\"",
-    "mtime": "2026-05-20T23:27:10.769Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 828075,
     "path": "../public/_nuxt/mesh_grommets_60x90_double.DUTuOgHv.png"
+  },
+  "/_nuxt/payment.CPXVp06Q.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"845-yEGNzGX/dnxZ25aGy1uktx60CIE\"",
+    "mtime": "2026-05-28T12:37:51.460Z",
+    "size": 2117,
+    "path": "../public/_nuxt/payment.CPXVp06Q.css"
   },
   "/_nuxt/mesh_grommets_60x90_single.CQzq71gw.png": {
     "type": "image/png",
     "etag": "\"f4de3-SKSKAHzpvuwKtkxLyDWggYqq6sQ\"",
-    "mtime": "2026-05-20T23:27:10.772Z",
+    "mtime": "2026-05-28T12:37:51.452Z",
     "size": 1002979,
     "path": "../public/_nuxt/mesh_grommets_60x90_single.CQzq71gw.png"
   },
   "/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png": {
     "type": "image/png",
     "etag": "\"f9d3b-7PaD5v3wiR9QBJa4kU5m3HCjD3Q\"",
-    "mtime": "2026-05-20T23:27:10.780Z",
+    "mtime": "2026-05-28T12:37:51.456Z",
     "size": 1023291,
     "path": "../public/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png"
-  },
-  "/_nuxt/payment.CPXVp06Q.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"845-yEGNzGX/dnxZ25aGy1uktx60CIE\"",
-    "mtime": "2026-05-20T23:27:10.908Z",
-    "size": 2117,
-    "path": "../public/_nuxt/payment.CPXVp06Q.css"
   },
   "/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png": {
     "type": "image/png",
     "etag": "\"e41c2-gn3NuTZexL7pnIiYv/S3hN+WUwg\"",
-    "mtime": "2026-05-20T23:27:10.893Z",
+    "mtime": "2026-05-28T12:37:51.460Z",
     "size": 934338,
     "path": "../public/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png"
   },
-  "/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png": {
+  "/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png": {
     "type": "image/png",
-    "etag": "\"111fe9-QNxA0zMV3U5mePIStrhocShfGxM\"",
-    "mtime": "2026-05-20T23:27:10.776Z",
-    "size": 1122281,
-    "path": "../public/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png"
+    "etag": "\"10bc88-hDhg4NNq6kd1JyedBw7aLxQ0c6E\"",
+    "mtime": "2026-05-28T12:37:51.456Z",
+    "size": 1096840,
+    "path": "../public/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png"
   },
   "/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png": {
     "type": "image/png",
     "etag": "\"f05f9-rTB5AQAPkQp9fWfDnP4xucGtV6U\"",
-    "mtime": "2026-05-20T23:27:10.908Z",
+    "mtime": "2026-05-28T12:37:51.460Z",
     "size": 984569,
     "path": "../public/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png"
+  },
+  "/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png": {
+    "type": "image/png",
+    "etag": "\"ef2e1-U1EIsAOt7xKod2tw9L328UEWxuo\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 979681,
+    "path": "../public/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png"
+  },
+  "/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png": {
+    "type": "image/png",
+    "etag": "\"cb64d-AccAjd5fD6gzJAS6aRM3hWSO370\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 833101,
+    "path": "../public/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png"
+  },
+  "/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png": {
+    "type": "image/png",
+    "etag": "\"ed5a8-3gqMT6SJwRA3CDK4rnqpeVvg9GU\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 972200,
+    "path": "../public/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png"
+  },
+  "/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png": {
+    "type": "image/png",
+    "etag": "\"b8553-WzUniAyA7kugCNTak18gkF/lJ3E\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 755027,
+    "path": "../public/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png"
+  },
+  "/_nuxt/polyester_grommets_60x90_single.MOirczvX.png": {
+    "type": "image/png",
+    "etag": "\"f3975-ympc+goWybiiU2a/q6wZl8RxDuw\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 997749,
+    "path": "../public/_nuxt/polyester_grommets_60x90_single.MOirczvX.png"
+  },
+  "/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png": {
+    "type": "image/png",
+    "etag": "\"f32f6-Xz2DavSitbi8RxKBXOIINRhKSxk\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 996086,
+    "path": "../public/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png"
+  },
+  "/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png": {
+    "type": "image/png",
+    "etag": "\"111fe9-QNxA0zMV3U5mePIStrhocShfGxM\"",
+    "mtime": "2026-05-28T12:37:51.456Z",
+    "size": 1122281,
+    "path": "../public/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png"
   },
   "/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png": {
     "type": "image/png",
     "etag": "\"10ed3b-6YML+cTdF2zmed7JEItYq1Vq3cc\"",
-    "mtime": "2026-05-20T23:27:10.787Z",
+    "mtime": "2026-05-28T12:37:51.456Z",
     "size": 1109307,
     "path": "../public/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png"
   },
   "/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png": {
     "type": "image/png",
     "etag": "\"10309b-0UBE9mC6o4233B9fQYnITJDWJE4\"",
-    "mtime": "2026-05-20T23:27:10.791Z",
+    "mtime": "2026-05-28T12:37:51.456Z",
     "size": 1061019,
     "path": "../public/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png"
-  },
-  "/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png": {
-    "type": "image/png",
-    "etag": "\"10bc88-hDhg4NNq6kd1JyedBw7aLxQ0c6E\"",
-    "mtime": "2026-05-20T23:27:10.776Z",
-    "size": 1096840,
-    "path": "../public/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png"
-  },
-  "/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png": {
-    "type": "image/png",
-    "etag": "\"1131f7-HIEsvRixV3Fw1m9dqsNm9u5JLSQ\"",
-    "mtime": "2026-05-20T23:27:10.791Z",
-    "size": 1126903,
-    "path": "../public/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png"
   },
   "/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png": {
     "type": "image/png",
     "etag": "\"106b6d-piT0AW5eiQK/BH5pmowglNu7wkk\"",
-    "mtime": "2026-05-20T23:27:10.791Z",
+    "mtime": "2026-05-28T12:37:51.456Z",
     "size": 1076077,
     "path": "../public/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png"
   },
-  "/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png": {
+  "/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png": {
     "type": "image/png",
-    "etag": "\"ef2e1-U1EIsAOt7xKod2tw9L328UEWxuo\"",
-    "mtime": "2026-05-20T23:27:10.900Z",
-    "size": 979681,
-    "path": "../public/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png"
+    "etag": "\"1131f7-HIEsvRixV3Fw1m9dqsNm9u5JLSQ\"",
+    "mtime": "2026-05-28T12:37:51.456Z",
+    "size": 1126903,
+    "path": "../public/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png"
   },
   "/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png": {
     "type": "image/png",
     "etag": "\"122924-XtwCzQHKGfBj4yjLa6Hs/n8f/PE\"",
-    "mtime": "2026-05-20T23:27:10.889Z",
+    "mtime": "2026-05-28T12:37:51.456Z",
     "size": 1190180,
     "path": "../public/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png"
   },
   "/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png": {
     "type": "image/png",
     "etag": "\"1381de-QdbAltqQNo9BrbZzxKU3JdN83jw\"",
-    "mtime": "2026-05-20T23:27:10.904Z",
+    "mtime": "2026-05-28T12:37:51.460Z",
     "size": 1278430,
     "path": "../public/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png"
-  },
-  "/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png": {
-    "type": "image/png",
-    "etag": "\"cb64d-AccAjd5fD6gzJAS6aRM3hWSO370\"",
-    "mtime": "2026-05-20T23:27:10.926Z",
-    "size": 833101,
-    "path": "../public/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png"
-  },
-  "/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png": {
-    "type": "image/png",
-    "etag": "\"102705-Kt6BfU8yL0+4ETJxCKuYg/g0Z/c\"",
-    "mtime": "2026-05-20T23:27:10.904Z",
-    "size": 1058565,
-    "path": "../public/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png"
   },
   "/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png": {
     "type": "image/png",
     "etag": "\"13fbdb-+T5Tu9sY6BR9fmMOHSmHyoUIC/s\"",
-    "mtime": "2026-05-20T23:27:10.915Z",
+    "mtime": "2026-05-28T12:37:51.460Z",
     "size": 1309659,
     "path": "../public/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png"
   },
-  "/_nuxt/polyester_grommets_60x90_single.MOirczvX.png": {
+  "/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png": {
     "type": "image/png",
-    "etag": "\"f3975-ympc+goWybiiU2a/q6wZl8RxDuw\"",
-    "mtime": "2026-05-20T23:27:10.922Z",
-    "size": 997749,
-    "path": "../public/_nuxt/polyester_grommets_60x90_single.MOirczvX.png"
-  },
-  "/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png": {
-    "type": "image/png",
-    "etag": "\"ed5a8-3gqMT6SJwRA3CDK4rnqpeVvg9GU\"",
-    "mtime": "2026-05-20T23:27:10.915Z",
-    "size": 972200,
-    "path": "../public/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png"
-  },
-  "/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png": {
-    "type": "image/png",
-    "etag": "\"f32f6-Xz2DavSitbi8RxKBXOIINRhKSxk\"",
-    "mtime": "2026-05-20T23:27:10.926Z",
-    "size": 996086,
-    "path": "../public/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png"
-  },
-  "/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png": {
-    "type": "image/png",
-    "etag": "\"b8553-WzUniAyA7kugCNTak18gkF/lJ3E\"",
-    "mtime": "2026-05-20T23:27:10.926Z",
-    "size": 755027,
-    "path": "../public/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png"
+    "etag": "\"102705-Kt6BfU8yL0+4ETJxCKuYg/g0Z/c\"",
+    "mtime": "2026-05-28T12:37:51.464Z",
+    "size": 1058565,
+    "path": "../public/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png"
   },
   "/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png": {
     "type": "image/png",
     "etag": "\"d86ae-GjS3RmAtTiTfefVL4c2CKd0Oqtk\"",
-    "mtime": "2026-05-20T23:27:10.926Z",
+    "mtime": "2026-05-28T12:37:51.464Z",
     "size": 886446,
     "path": "../public/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png"
   },
   "/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png": {
     "type": "image/png",
     "etag": "\"a6a05-zHQ5JUB5vQWBn4bmOkonjmrZ3Ac\"",
-    "mtime": "2026-05-20T23:27:10.929Z",
+    "mtime": "2026-05-28T12:37:51.468Z",
     "size": 682501,
     "path": "../public/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png"
   },
   "/_nuxt/polyester_grommets_90x135_single_fringe.sevc2bgj.png": {
     "type": "image/png",
     "etag": "\"e9938-9Gcnas2YPWAro+VYRSG+O5aTQ9I\"",
-    "mtime": "2026-05-20T23:27:10.929Z",
+    "mtime": "2026-05-28T12:37:51.468Z",
     "size": 956728,
     "path": "../public/_nuxt/polyester_grommets_90x135_single_fringe.sevc2bgj.png"
   },
   "/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png": {
     "type": "image/png",
     "etag": "\"a378f-4IYJ/g2b9b7+PdhoFv4LJCq3T4k\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
+    "mtime": "2026-05-28T12:37:51.468Z",
     "size": 669583,
     "path": "../public/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png"
   },
   "/_nuxt/polyester_sleeve_60x90_double_fringe.D5RRAdln.png": {
     "type": "image/png",
     "etag": "\"e5dfc-U+PIG4wh5pswa0Z2gkDBInftvYQ\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
+    "mtime": "2026-05-28T12:37:51.468Z",
     "size": 941564,
     "path": "../public/_nuxt/polyester_sleeve_60x90_double_fringe.D5RRAdln.png"
   },
   "/_nuxt/polyester_sleeve_60x90_single.C7RVHdnM.png": {
     "type": "image/png",
     "etag": "\"cb680-QMmugOdQscuZwV/uGJyrkbGwxas\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
+    "mtime": "2026-05-28T12:37:51.468Z",
     "size": 833152,
     "path": "../public/_nuxt/polyester_sleeve_60x90_single.C7RVHdnM.png"
   },
   "/_nuxt/privacy-policy.CyfpbZ6y.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"e85-yQnd66mtqESRG8Jq1F31yV8ldFY\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 3717,
     "path": "../public/_nuxt/privacy-policy.CyfpbZ6y.css"
   },
   "/_nuxt/qr-base.CKZU5BqH.svg": {
     "type": "image/svg+xml",
     "etag": "\"600c-+/7BSCORPJSa1PixN2Vn3cadFjw\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 24588,
     "path": "../public/_nuxt/qr-base.CKZU5BqH.svg"
+  },
+  "/_nuxt/r1yrGOZ_.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d7b-+CJ715l7G5hlT7Q7fNdCK8TJpgM\"",
+    "mtime": "2026-05-28T12:37:51.472Z",
+    "size": 3451,
+    "path": "../public/_nuxt/r1yrGOZ_.js"
   },
   "/_nuxt/polyester_sleeve_90x135_double.C2ikPQO1.png": {
     "type": "image/png",
     "etag": "\"d798d-y5DfsOIq6SvRIi4Prj4yfuFS0kQ\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 883085,
     "path": "../public/_nuxt/polyester_sleeve_90x135_double.C2ikPQO1.png"
-  },
-  "/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png": {
-    "type": "image/png",
-    "etag": "\"def1b-MCtCC+FIb8bV9WljcuIAaEgFl9I\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
-    "size": 913179,
-    "path": "../public/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png"
   },
   "/_nuxt/polyester_sleeve_90x135_double_fringe.UUtANBuN.png": {
     "type": "image/png",
     "etag": "\"ec8ce-bXDQpn+MKNkHul4Yrt4e08SOjTo\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 968910,
     "path": "../public/_nuxt/polyester_sleeve_90x135_double_fringe.UUtANBuN.png"
   },
   "/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png": {
     "type": "image/png",
     "etag": "\"b90e9-iczceUWC1MO8ZH1l6cUVA8djbzo\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 757993,
     "path": "../public/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png"
+  },
+  "/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png": {
+    "type": "image/png",
+    "etag": "\"def1b-MCtCC+FIb8bV9WljcuIAaEgFl9I\"",
+    "mtime": "2026-05-28T12:37:51.472Z",
+    "size": 913179,
+    "path": "../public/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png"
   },
   "/_nuxt/satin_grommets_60x90_double.C8GIQrJU.png": {
     "type": "image/png",
     "etag": "\"b0692-VvIhoC2HzI7kw087DdrXVw/1Q9w\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 722578,
     "path": "../public/_nuxt/satin_grommets_60x90_double.C8GIQrJU.png"
-  },
-  "/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png": {
-    "type": "image/png",
-    "etag": "\"10cdc4-mpGEmUNiqetuLz2SpKLVH89y5PY\"",
-    "mtime": "2026-05-20T23:27:10.933Z",
-    "size": 1101252,
-    "path": "../public/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png"
-  },
-  "/_nuxt/satin_grommets_60x90_single.-INYcgSl.png": {
-    "type": "image/png",
-    "etag": "\"ad2a5-6ZKaUShk7qklp1/ft90nm72W8ww\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
-    "size": 709285,
-    "path": "../public/_nuxt/satin_grommets_60x90_single.-INYcgSl.png"
   },
   "/_nuxt/satin_grommets_60x90_double_fringe.CRifW5D4.png": {
     "type": "image/png",
     "etag": "\"de611-yZCDteaYoLXqAlRBLeOwKC1Ll90\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.472Z",
     "size": 910865,
     "path": "../public/_nuxt/satin_grommets_60x90_double_fringe.CRifW5D4.png"
   },
-  "/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png": {
+  "/_nuxt/satin_grommets_60x90_single.-INYcgSl.png": {
     "type": "image/png",
-    "etag": "\"e51a3-nXlTU08nBJ0fBPqR5ZcwOnNN/Y4\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
-    "size": 938403,
-    "path": "../public/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png"
+    "etag": "\"ad2a5-6ZKaUShk7qklp1/ft90nm72W8ww\"",
+    "mtime": "2026-05-28T12:37:51.472Z",
+    "size": 709285,
+    "path": "../public/_nuxt/satin_grommets_60x90_single.-INYcgSl.png"
   },
   "/_nuxt/satin_grommets_90x135_double.CeveyNnt.png": {
     "type": "image/png",
     "etag": "\"a2330-4hE9FreV+uTOOZ7zJLbwuFN8Ki8\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.476Z",
     "size": 664368,
     "path": "../public/_nuxt/satin_grommets_90x135_double.CeveyNnt.png"
+  },
+  "/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png": {
+    "type": "image/png",
+    "etag": "\"10cdc4-mpGEmUNiqetuLz2SpKLVH89y5PY\"",
+    "mtime": "2026-05-28T12:37:51.468Z",
+    "size": 1101252,
+    "path": "../public/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png"
+  },
+  "/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png": {
+    "type": "image/png",
+    "etag": "\"e51a3-nXlTU08nBJ0fBPqR5ZcwOnNN/Y4\"",
+    "mtime": "2026-05-28T12:37:51.472Z",
+    "size": 938403,
+    "path": "../public/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png"
   },
   "/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png": {
     "type": "image/png",
     "etag": "\"e8927-Z7fFGSlVDw9VZaifLis437urM1o\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.476Z",
     "size": 952615,
     "path": "../public/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png"
   },
   "/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png": {
     "type": "image/png",
     "etag": "\"ba0bd-47+Amr5hWKSBzbQhribYCDZ77C4\"",
-    "mtime": "2026-05-20T23:27:10.937Z",
+    "mtime": "2026-05-28T12:37:51.476Z",
     "size": 762045,
     "path": "../public/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png"
-  },
-  "/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png": {
-    "type": "image/png",
-    "etag": "\"95a0a-fv885rf4Vx92DCE2vZrgPa19imM\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
-    "size": 612874,
-    "path": "../public/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png"
   },
   "/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png": {
     "type": "image/png",
     "etag": "\"d0386-2eI7F0JMJ6QCK69GGZW02R/MTDI\"",
-    "mtime": "2026-05-20T23:27:10.948Z",
+    "mtime": "2026-05-28T12:37:51.476Z",
     "size": 852870,
     "path": "../public/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png"
   },
-  "/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png": {
+  "/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png": {
     "type": "image/png",
-    "etag": "\"8ce33-/RIbujU9cWx3axHUtzDoiiSBPwA\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
-    "size": 577075,
-    "path": "../public/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png"
-  },
-  "/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png": {
-    "type": "image/png",
-    "etag": "\"fe4b9-Ty8Joy7bz3xKgyQZislTdbT9ZPw\"",
-    "mtime": "2026-05-20T23:27:10.948Z",
-    "size": 1041593,
-    "path": "../public/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png"
+    "etag": "\"95a0a-fv885rf4Vx92DCE2vZrgPa19imM\"",
+    "mtime": "2026-05-28T12:37:51.476Z",
+    "size": 612874,
+    "path": "../public/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png"
   },
   "/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png": {
     "type": "image/png",
     "etag": "\"c5286-+GJiujJs0Ilt4OapGvHIUnU3TCs\"",
-    "mtime": "2026-05-20T23:27:10.944Z",
+    "mtime": "2026-05-28T12:37:51.476Z",
     "size": 807558,
     "path": "../public/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png"
-  },
-  "/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png": {
-    "type": "image/png",
-    "etag": "\"d2f2e-SfgOjN2hCEydf47UXfFpFZKtJCA\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
-    "size": 864046,
-    "path": "../public/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png"
-  },
-  "/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png": {
-    "type": "image/png",
-    "etag": "\"baef8-tAlxFs9fCrvQj0ErrKRF7uFzuSw\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
-    "size": 765688,
-    "path": "../public/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png"
   },
   "/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png": {
     "type": "image/png",
     "etag": "\"10f3fe-dAm0UZTUnnhtFzCmfzcKmt0nCqs\"",
-    "mtime": "2026-05-20T23:27:10.948Z",
+    "mtime": "2026-05-28T12:37:51.476Z",
     "size": 1111038,
     "path": "../public/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png"
+  },
+  "/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png": {
+    "type": "image/png",
+    "etag": "\"fe4b9-Ty8Joy7bz3xKgyQZislTdbT9ZPw\"",
+    "mtime": "2026-05-28T12:37:51.476Z",
+    "size": 1041593,
+    "path": "../public/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png"
+  },
+  "/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png": {
+    "type": "image/png",
+    "etag": "\"8ce33-/RIbujU9cWx3axHUtzDoiiSBPwA\"",
+    "mtime": "2026-05-28T12:37:51.476Z",
+    "size": 577075,
+    "path": "../public/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png"
+  },
+  "/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png": {
+    "type": "image/png",
+    "etag": "\"d2f2e-SfgOjN2hCEydf47UXfFpFZKtJCA\"",
+    "mtime": "2026-05-28T12:37:51.480Z",
+    "size": 864046,
+    "path": "../public/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png"
   },
   "/_nuxt/textile-caps.BA0R0Z1M.png": {
     "type": "image/png",
     "etag": "\"169a2-3zIcb2eXwveZXW70/E7uSKvAseM\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 92578,
     "path": "../public/_nuxt/textile-caps.BA0R0Z1M.png"
-  },
-  "/_nuxt/textile-embroidery-patches.BI_T9z9c.png": {
-    "type": "image/png",
-    "etag": "\"22c14-V1mIH5fJiFyynbkbJLSWiuKoqt0\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
-    "size": 142356,
-    "path": "../public/_nuxt/textile-embroidery-patches.BI_T9z9c.png"
   },
   "/_nuxt/textile-embroidery-clothes.DDD3s30Y.png": {
     "type": "image/png",
     "etag": "\"271a0-o3+Mh+dGgY+uae1hCzLZudYdwnE\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 160160,
     "path": "../public/_nuxt/textile-embroidery-clothes.DDD3s30Y.png"
+  },
+  "/_nuxt/textile-embroidery-patches.BI_T9z9c.png": {
+    "type": "image/png",
+    "etag": "\"22c14-V1mIH5fJiFyynbkbJLSWiuKoqt0\"",
+    "mtime": "2026-05-28T12:37:51.480Z",
+    "size": 142356,
+    "path": "../public/_nuxt/textile-embroidery-patches.BI_T9z9c.png"
   },
   "/_nuxt/textile-flags.CpmamLaJ.png": {
     "type": "image/png",
     "etag": "\"1d82b-nn9sxwOLEuOWB0ly34dBcDZDkg8\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 120875,
     "path": "../public/_nuxt/textile-flags.CpmamLaJ.png"
   },
   "/_nuxt/textile-print-pillow.BE0p2UrK.png": {
     "type": "image/png",
     "etag": "\"1f8e2-LETLl3mNK9vs6+jJhR9diK6HS7g\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 129250,
     "path": "../public/_nuxt/textile-print-pillow.BE0p2UrK.png"
   },
   "/_nuxt/textile-print-tshirt.DSQ8CFf8.png": {
     "type": "image/png",
     "etag": "\"1a6a8-iRWO/8odDtQKvAArnQ0ITOyz2Lk\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 108200,
     "path": "../public/_nuxt/textile-print-tshirt.DSQ8CFf8.png"
+  },
+  "/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png": {
+    "type": "image/png",
+    "etag": "\"baef8-tAlxFs9fCrvQj0ErrKRF7uFzuSw\"",
+    "mtime": "2026-05-28T12:37:51.480Z",
+    "size": 765688,
+    "path": "../public/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png"
+  },
+  "/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png": {
+    "type": "image/png",
+    "etag": "\"f5cee-FlH7q5JBu3V8Lb0CNG6EFAvEmOU\"",
+    "mtime": "2026-05-28T12:37:51.480Z",
+    "size": 1006830,
+    "path": "../public/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png"
   },
   "/_nuxt/textile-ribbon-print.-15G9hIc.png": {
     "type": "image/png",
     "etag": "\"134d6-MCOFnbNlAt6X7klT1339OcHhe1Y\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 79062,
     "path": "../public/_nuxt/textile-ribbon-print.-15G9hIc.png"
   },
   "/_nuxt/textile-shopper.ITFXD2Li.png": {
     "type": "image/png",
     "etag": "\"1cc49-VBW9gIn00sdlFDYzHta3spK0M+Q\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 117833,
     "path": "../public/_nuxt/textile-shopper.ITFXD2Li.png"
   },
   "/_nuxt/user-agreement.CCKUbKOn.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"be8-EJSDmWhZ2vUFBl2Y6se1vZVTzfs\"",
-    "mtime": "2026-05-20T23:27:10.959Z",
+    "mtime": "2026-05-28T12:37:51.480Z",
     "size": 3048,
     "path": "../public/_nuxt/user-agreement.CCKUbKOn.css"
   },
+  "/favicon/android-chrome-192x192.png": {
+    "type": "image/png",
+    "etag": "\"30ee-wj1gNf5R0U0POpcHTCetRhWJHYY\"",
+    "mtime": "2026-05-28T12:37:51.600Z",
+    "size": 12526,
+    "path": "../public/favicon/android-chrome-192x192.png"
+  },
+  "/favicon/android-chrome-512x512.png": {
+    "type": "image/png",
+    "etag": "\"ce78-k+5LhFV4o58e+t9DYBeQUxuM2ZM\"",
+    "mtime": "2026-05-28T12:37:51.608Z",
+    "size": 52856,
+    "path": "../public/favicon/android-chrome-512x512.png"
+  },
+  "/favicon/apple-touch-icon.png": {
+    "type": "image/png",
+    "etag": "\"2b4a-dqJvpLMnQNNG7IF8f4OmHpSapj4\"",
+    "mtime": "2026-05-28T12:37:51.660Z",
+    "size": 11082,
+    "path": "../public/favicon/apple-touch-icon.png"
+  },
+  "/favicon/favicon-16x16.png": {
+    "type": "image/png",
+    "etag": "\"213-iFewOY7nK6wZqfEE7APZlqYbQgQ\"",
+    "mtime": "2026-05-28T12:37:51.660Z",
+    "size": 531,
+    "path": "../public/favicon/favicon-16x16.png"
+  },
+  "/favicon/favicon.ico": {
+    "type": "image/vnd.microsoft.icon",
+    "etag": "\"3c2e-ZM+VbhpLBjdyZJWzsxeFNgtyI1c\"",
+    "mtime": "2026-05-28T12:37:51.600Z",
+    "size": 15406,
+    "path": "../public/favicon/favicon.ico"
+  },
+  "/favicon/site.webmanifest": {
+    "type": "application/manifest+json",
+    "etag": "\"129-wgUZDFVnRHfDyR3HVeq2tzvjOhI\"",
+    "mtime": "2026-05-28T12:37:51.492Z",
+    "size": 297,
+    "path": "../public/favicon/site.webmanifest"
+  },
+  "/favicon/favicon-32x32.png": {
+    "type": "image/png",
+    "etag": "\"460-M6n5EApmRW4GOPGB/JmrIsTkyVU\"",
+    "mtime": "2026-05-28T12:37:51.600Z",
+    "size": 1120,
+    "path": "../public/favicon/favicon-32x32.png"
+  },
   "/_nuxt/builds/latest.json": {
     "type": "application/json",
-    "etag": "\"47-KN3dVwVbkRekCyV/Gj+5nxptV1k\"",
-    "mtime": "2026-05-20T23:27:10.630Z",
+    "etag": "\"47-IMc5ASyfi4Ay8NCt1DK5rEtUxAw\"",
+    "mtime": "2026-05-28T12:37:51.348Z",
     "size": 71,
     "path": "../public/_nuxt/builds/latest.json"
+  },
+  "/_nuxt/builds/meta/52853b17-ada9-4e9e-9643-a1bd64f01324.json": {
+    "type": "application/json",
+    "etag": "\"5b-1BqRMWmlofxVYuuh2T8KqtLsom0\"",
+    "mtime": "2026-05-28T12:37:51.340Z",
+    "size": 91,
+    "path": "../public/_nuxt/builds/meta/52853b17-ada9-4e9e-9643-a1bd64f01324.json"
   },
   "/uploads/site-orders/8/f11dd27b-0b0a-48ea-b4fa-70fedf7bab24.jpg": {
     "type": "image/jpeg",
     "etag": "\"210f0-Yo8uuJJ7G++R+B/zTrJjyr5FAZs\"",
-    "mtime": "2026-05-20T23:27:10.973Z",
+    "mtime": "2026-05-28T12:37:51.700Z",
     "size": 135408,
     "path": "../public/uploads/site-orders/8/f11dd27b-0b0a-48ea-b4fa-70fedf7bab24.jpg"
-  },
-  "/_nuxt/builds/meta/917cbb96-b2fb-4b0d-9ea2-eb9e0a49fa8d.json": {
-    "type": "application/json",
-    "etag": "\"5b-XM6R6mBQErA/RdGUIcOMG7pWqr4\"",
-    "mtime": "2026-05-20T23:27:10.619Z",
-    "size": 91,
-    "path": "../public/_nuxt/builds/meta/917cbb96-b2fb-4b0d-9ea2-eb9e0a49fa8d.json"
-  },
-  "/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png": {
-    "type": "image/png",
-    "etag": "\"f5cee-FlH7q5JBu3V8Lb0CNG6EFAvEmOU\"",
-    "mtime": "2026-05-20T23:27:10.951Z",
-    "size": 1006830,
-    "path": "../public/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png"
   },
   "/uploads/site-orders/8/036709d7-9491-45dd-b414-af2fdd5db6ab.jpg": {
     "type": "image/jpeg",
     "etag": "\"d13be-3cRJeGJ3N0LEml8qB3geXVican4\"",
-    "mtime": "2026-05-20T23:27:10.988Z",
+    "mtime": "2026-05-28T12:37:51.755Z",
     "size": 857022,
     "path": "../public/uploads/site-orders/8/036709d7-9491-45dd-b414-af2fdd5db6ab.jpg"
   }
@@ -6463,6 +6528,63 @@ function isValidEmail(value) {
   });
 }
 
+const INVOICE_EMAIL_STATUS = {
+  QUEUED: "queued",
+  SENDING: "sending",
+  SENT: "sent",
+  FAILED: "failed",
+  NOT_SENT: "not_sent"
+};
+function isInvoiceEmailPending(status) {
+  return [
+    INVOICE_EMAIL_STATUS.QUEUED,
+    INVOICE_EMAIL_STATUS.SENDING,
+    INVOICE_EMAIL_STATUS.NOT_SENT
+  ].includes(status);
+}
+function isInvoiceEmailSent(status) {
+  return status === INVOICE_EMAIL_STATUS.SENT;
+}
+
+const SITE_ORDER_STATUS = {
+  WORK_IN_PROGRESS: "0",
+  WAIT: "1",
+  SHIPPED: "2",
+  ON_APPROVAL: "3",
+  READY: "5"
+};
+const SITE_ORDER_STATUS_LABELS = {
+  [SITE_ORDER_STATUS.WORK_IN_PROGRESS]: "\u0412 \u0440\u0430\u0431\u043E\u0442\u0435",
+  [SITE_ORDER_STATUS.WAIT]: "\u0416\u0434\u0451\u0442",
+  [SITE_ORDER_STATUS.SHIPPED]: "\u041E\u0442\u0433\u0440\u0443\u0436\u0435\u043D",
+  [SITE_ORDER_STATUS.ON_APPROVAL]: "\u041D\u0430 \u0443\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0438",
+  [SITE_ORDER_STATUS.READY]: "\u0413\u043E\u0442\u043E\u0432"
+};
+function normalizeSiteOrderStatus(status) {
+  return String(status != null ? status : SITE_ORDER_STATUS.WAIT);
+}
+function getSiteOrderStatusLabel(status) {
+  return SITE_ORDER_STATUS_LABELS[normalizeSiteOrderStatus(status)] || SITE_ORDER_STATUS_LABELS[SITE_ORDER_STATUS.WAIT];
+}
+function isSiteOrderInWork(status) {
+  return normalizeSiteOrderStatus(status) === SITE_ORDER_STATUS.WORK_IN_PROGRESS;
+}
+
+const SITE_PAYMENT_STATUS_META = {
+  pending: { label: "\u041E\u0436\u0438\u0434\u0430\u0435\u0442 \u043E\u043F\u043B\u0430\u0442\u044B", tone: "secondary", group: "review" },
+  paid: { label: "\u041E\u043F\u043B\u0430\u0447\u0435\u043D", tone: "purple", group: "review" },
+  failed: { label: "\u041E\u043F\u043B\u0430\u0442\u0430 \u043D\u0435 \u043F\u0440\u043E\u0448\u043B\u0430", tone: "danger", group: "review" },
+  expired: { label: "\u041E\u043F\u043B\u0430\u0442\u0430 \u0438\u0441\u0442\u0435\u043A\u043B\u0430", tone: "danger", group: "review" },
+  cancelled: { label: "\u041E\u0442\u043C\u0435\u043D\u0435\u043D", tone: "secondary", group: "finished" }
+};
+const DEFAULT_SITE_PAYMENT_STATUS_META = SITE_PAYMENT_STATUS_META.pending;
+function getSitePaymentStatusMeta(status) {
+  return SITE_PAYMENT_STATUS_META[status] || DEFAULT_SITE_PAYMENT_STATUS_META;
+}
+function getSitePaymentStatusLabel(status) {
+  return getSitePaymentStatusMeta(status).label;
+}
+
 function getRussianSecondsWord(value) {
   const absoluteValue = Math.abs(value);
   const lastTwo = absoluteValue % 100;
@@ -6480,18 +6602,18 @@ function getRussianSecondsWord(value) {
 }
 
 let database;
-const readEnv$4 = (name) => {
+const readEnv$5 = (name) => {
   var _a, _b;
   return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
 };
 const readNumberEnv = (name, fallback) => {
-  const value = Number(readEnv$4(name));
+  const value = Number(readEnv$5(name));
   return Number.isFinite(value) ? value : fallback;
 };
 const DEFAULT_CONNECT_TIMEOUT = 5e3;
 const DEFAULT_CONNECTION_LIMIT = 10;
 const getDatabaseUrl = () => {
-  const databaseUrl = readEnv$4("DATABASE_URL");
+  const databaseUrl = readEnv$5("DATABASE_URL");
   if (!databaseUrl) {
     throw createError$1({
       statusCode: 500,
@@ -6525,7 +6647,7 @@ const DEFAULT_OTP_TIMEOUT_MS = 3e4;
 const DEFAULT_VERIFY_TIMEOUT_MS = 2e4;
 const DEFAULT_EMAIL_TIMEOUT_MS = 2e4;
 const stripWrappingQuotes = (value) => value.length >= 2 && (value.startsWith('"') && value.endsWith('"') || value.startsWith("'") && value.endsWith("'")) ? value.slice(1, -1).trim() : value;
-const readEnv$3 = (name) => {
+const readEnv$4 = (name) => {
   var _a, _b;
   return stripWrappingQuotes((_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "");
 };
@@ -6543,13 +6665,13 @@ const getNotificoreConfig = () => {
   var _a;
   const config = useRuntimeConfig();
   const notificore = (_a = config.notificore) != null ? _a : {};
-  const apiKey = getRuntimeString$1(notificore.apiKey) || readEnv$3("NOTIFICORE_API_KEY");
-  const sender = getRuntimeString$1(notificore.sender) || readEnv$3("NOTIFICORE_OTP_SENDER");
-  const otpTemplateId = getRuntimeString$1(notificore.otpTemplateId) || readEnv$3("NOTIFICORE_OTP_TEMPLATE_ID");
+  const apiKey = getRuntimeString$1(notificore.apiKey) || readEnv$4("NOTIFICORE_API_KEY");
+  const sender = getRuntimeString$1(notificore.sender) || readEnv$4("NOTIFICORE_OTP_SENDER");
+  const otpTemplateId = getRuntimeString$1(notificore.otpTemplateId) || readEnv$4("NOTIFICORE_OTP_TEMPLATE_ID");
   const templateId = readNumber(otpTemplateId, Number.NaN);
-  const apiBaseUrl = (getRuntimeString$1(notificore.apiBaseUrl) || readEnv$3("NOTIFICORE_API_BASE_URL") || DEFAULT_API_BASE_URL).replace(/\/$/, "");
+  const apiBaseUrl = (getRuntimeString$1(notificore.apiBaseUrl) || readEnv$4("NOTIFICORE_API_BASE_URL") || DEFAULT_API_BASE_URL).replace(/\/$/, "");
   const oneApiBaseUrl = normalizeOneApiBaseUrl(
-    getRuntimeString$1(notificore.oneApiBaseUrl) || readEnv$3("NOTIFICORE_ONE_API_BASE_URL") || DEFAULT_ONE_API_BASE_URL
+    getRuntimeString$1(notificore.oneApiBaseUrl) || readEnv$4("NOTIFICORE_ONE_API_BASE_URL") || DEFAULT_ONE_API_BASE_URL
   );
   if (!apiKey) {
     throw createError$1({
@@ -6571,19 +6693,19 @@ const getNotificoreConfig = () => {
     oneApiBaseUrl,
     sender,
     otpTemplateId: templateId,
-    codeDigits: readNumber(notificore.codeDigits || readEnv$3("NOTIFICORE_OTP_CODE_DIGITS"), 5),
-    codeLifetime: readNumber(notificore.codeLifetime || readEnv$3("NOTIFICORE_OTP_CODE_LIFETIME"), 300),
-    codeMaxTries: readNumber(notificore.codeMaxTries || readEnv$3("NOTIFICORE_OTP_CODE_MAX_TRIES"), 3),
+    codeDigits: readNumber(notificore.codeDigits || readEnv$4("NOTIFICORE_OTP_CODE_DIGITS"), 5),
+    codeLifetime: readNumber(notificore.codeLifetime || readEnv$4("NOTIFICORE_OTP_CODE_LIFETIME"), 300),
+    codeMaxTries: readNumber(notificore.codeMaxTries || readEnv$4("NOTIFICORE_OTP_CODE_MAX_TRIES"), 3),
     authTimeout: readPositiveNumber(
-      notificore.authTimeout || readEnv$3("NOTIFICORE_AUTH_TIMEOUT_MS"),
+      notificore.authTimeout || readEnv$4("NOTIFICORE_AUTH_TIMEOUT_MS"),
       DEFAULT_AUTH_TIMEOUT_MS
     ),
     otpTimeout: readPositiveNumber(
-      notificore.otpTimeout || readEnv$3("NOTIFICORE_OTP_TIMEOUT_MS"),
+      notificore.otpTimeout || readEnv$4("NOTIFICORE_OTP_TIMEOUT_MS"),
       DEFAULT_OTP_TIMEOUT_MS
     ),
     verifyTimeout: readPositiveNumber(
-      notificore.verifyTimeout || readEnv$3("NOTIFICORE_VERIFY_TIMEOUT_MS"),
+      notificore.verifyTimeout || readEnv$4("NOTIFICORE_VERIFY_TIMEOUT_MS"),
       DEFAULT_VERIFY_TIMEOUT_MS
     )
   };
@@ -6808,11 +6930,11 @@ const getNotificoreEmailConfig = () => {
   var _a;
   const config = useRuntimeConfig();
   const notificore = (_a = config.notificore) != null ? _a : {};
-  const apiKey = getRuntimeString$1(notificore.emailApiKey) || readEnv$3("NOTIFICORE_EMAIL_API_KEY") || getRuntimeString$1(notificore.apiKey) || readEnv$3("NOTIFICORE_API_KEY");
-  const from = getRuntimeString$1(notificore.emailFrom) || readEnv$3("NOTIFICORE_EMAIL_FROM");
-  const emailTemplateId = getRuntimeString$1(notificore.confirmationEmailTemplateId) || readEnv$3("NOTIFICORE_CONFIRMATION_EMAIL_TEMPLATE_ID") || getRuntimeString$1(notificore.emailTemplateId) || readEnv$3("NOTIFICORE_EMAIL_TEMPLATE_ID");
+  const apiKey = getRuntimeString$1(notificore.emailApiKey) || readEnv$4("NOTIFICORE_EMAIL_API_KEY") || getRuntimeString$1(notificore.apiKey) || readEnv$4("NOTIFICORE_API_KEY");
+  const from = getRuntimeString$1(notificore.emailFrom) || readEnv$4("NOTIFICORE_EMAIL_FROM");
+  const emailTemplateId = getRuntimeString$1(notificore.confirmationEmailTemplateId) || readEnv$4("NOTIFICORE_CONFIRMATION_EMAIL_TEMPLATE_ID") || getRuntimeString$1(notificore.emailTemplateId) || readEnv$4("NOTIFICORE_EMAIL_TEMPLATE_ID");
   const templateId = readNumber(emailTemplateId, Number.NaN);
-  const apiBaseUrl = getRuntimeString$1(notificore.emailApiBaseUrl) || readEnv$3("NOTIFICORE_EMAIL_API_BASE_URL") || DEFAULT_EMAIL_API_BASE_URL;
+  const apiBaseUrl = getRuntimeString$1(notificore.emailApiBaseUrl) || readEnv$4("NOTIFICORE_EMAIL_API_BASE_URL") || DEFAULT_EMAIL_API_BASE_URL;
   if (!apiKey || !from || !Number.isInteger(templateId)) {
     throw createError$1({
       statusCode: 500,
@@ -6826,7 +6948,7 @@ const getNotificoreEmailConfig = () => {
     templateId,
     apiBaseUrl: normalizeOneApiBaseUrl(apiBaseUrl),
     emailTimeout: readPositiveNumber(
-      notificore.emailTimeout || readEnv$3("NOTIFICORE_EMAIL_TIMEOUT_MS"),
+      notificore.emailTimeout || readEnv$4("NOTIFICORE_EMAIL_TIMEOUT_MS"),
       DEFAULT_EMAIL_TIMEOUT_MS
     )
   };
@@ -6901,16 +7023,16 @@ const isNotificoreTimeoutError = (error) => {
 
 var _a, _b, _c;
 const runtimeConfig = useRuntimeConfig();
-const readEnv$2 = (name) => {
+const readEnv$3 = (name) => {
   var _a2;
   return ((_a2 = process.env[name]) == null ? void 0 : _a2.trim()) || "";
 };
-const betterAuthUrl = ((_a = runtimeConfig.betterAuth) == null ? void 0 : _a.url) || readEnv$2("BETTER_AUTH_URL");
-const betterAuthSecret = ((_b = runtimeConfig.betterAuth) == null ? void 0 : _b.secret) || readEnv$2("BETTER_AUTH_SECRET");
+const betterAuthUrl = ((_a = runtimeConfig.betterAuth) == null ? void 0 : _a.url) || readEnv$3("BETTER_AUTH_URL");
+const betterAuthSecret = ((_b = runtimeConfig.betterAuth) == null ? void 0 : _b.secret) || readEnv$3("BETTER_AUTH_SECRET");
 const betterAuthTrustedOrigins = [
   "https://ra-indigo.com",
   String(((_c = runtimeConfig.betterAuth) == null ? void 0 : _c.trustedOrigins) || ""),
-  readEnv$2("BETTER_AUTH_TRUSTED_ORIGINS")
+  readEnv$3("BETTER_AUTH_TRUSTED_ORIGINS")
 ].join(",").split(",").map((origin) => origin.trim().replace(/\/$/, "")).filter(Boolean);
 const auth = betterAuth({
   database: {
@@ -6969,7 +7091,7 @@ const auth = betterAuth({
 });
 
 const DEFAULT_SUGGEST_URL = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
-const readEnv$1 = (name) => {
+const readEnv$2 = (name) => {
   var _a, _b;
   return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
 };
@@ -6978,8 +7100,8 @@ const getDadataConfig = () => {
   var _a;
   const config = useRuntimeConfig();
   const dadata = (_a = config.dadata) != null ? _a : {};
-  const apiKey = getRuntimeString(dadata.apiKey) || readEnv$1("DADATA_API_KEY");
-  const suggestUrl = getRuntimeString(dadata.suggestUrl) || readEnv$1("DADATA_SUGGEST_URL") || DEFAULT_SUGGEST_URL;
+  const apiKey = getRuntimeString(dadata.apiKey) || readEnv$2("DADATA_API_KEY");
+  const suggestUrl = getRuntimeString(dadata.suggestUrl) || readEnv$2("DADATA_SUGGEST_URL") || DEFAULT_SUGGEST_URL;
   if (!apiKey) {
     throw createError$1({
       statusCode: 500,
@@ -7029,6 +7151,547 @@ const suggestDadataParties = async ({ query, count = 5 }) => {
   return ((_a = response.suggestions) != null ? _a : []).map(mapPartySuggestion);
 };
 
+function assertInternalShopToken(event) {
+  var _a;
+  const config = useRuntimeConfig();
+  const expected = String(((_a = config.shopApi) == null ? void 0 : _a.token) || process.env.SHOP_API_TOKEN || "").trim();
+  const header = getHeader(event, "authorization") || "";
+  const token = header.startsWith("Bearer ") ? header.slice(7).trim() : "";
+  if (!expected || token !== expected) {
+    throw createError$1({ statusCode: 401, statusMessage: "Unauthorized", message: "\u041D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043F\u0440\u0430\u0432" });
+  }
+}
+
+const INVOICE_SELLER = {
+  name: "\u0418\u043D\u0434\u0438\u0432\u0438\u0434\u0443\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u0435\u0434\u043F\u0440\u0438\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u044C \u0420\u0443\u0447\u043A\u043E \u0410\u043D\u0430\u0441\u0442\u0430\u0441\u0438\u044F \u0412\u0438\u043A\u0442\u043E\u0440\u043E\u0432\u043D\u0430",
+  shortName: "\u0418\u041F \u0420\u0443\u0447\u043A\u043E \u0410.\u0412.",
+  inn: "930900107014",
+  ogrnip: "323930100105541 \u043E\u0442 25.01.2023",
+  bankName: process.env.COMPANY_BANK_NAME || "\u041F\u0410\u041E \xAB\u0411\u0430\u043D\u043A \u041F\u0421\u0411\xBB \u0433. \u042F\u0440\u043E\u0441\u043B\u0430\u0432\u043B\u044C",
+  bik: process.env.COMPANY_BIK || "044525555",
+  rs: process.env.COMPANY_ACCOUNT || "40802810309300182031",
+  ks: process.env.COMPANY_CORR_ACCOUNT || "30101810400000000555",
+  legalAddress: "\u0420\u0424, \u0414\u041D\u0420, \u0413.\u041E. \u0414\u043E\u043D\u0435\u0446\u043A, 283054, \u0433. \u0414\u043E\u043D\u0435\u0446\u043A, \u0443\u043B. \u0410\u0440\u0438\u0441\u0442\u043E\u0432\u0430, \u0434.1",
+  actualAddress: "\u0420\u0424, \u0414\u041D\u0420, \u0413.\u041E. \u0414\u043E\u043D\u0435\u0446\u043A, \u0433. \u0414\u043E\u043D\u0435\u0446\u043A, \u0443\u043B. \u041F\u043E\u0441\u0442\u044B\u0448\u0435\u0432\u0430, \u0434.60",
+  phone: "+7949 131 45 44",
+  email: "info@indigo-mail.ru",
+  basis: "\u041E\u0413\u0420\u041D\u0418\u041F 323930100105541 \u043E\u0442 25.01.2023",
+  title: "\u0418\u043D\u0434\u0438\u0432\u0438\u0434\u0443\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u0435\u0434\u043F\u0440\u0438\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u044C",
+  signerName: "\u0420\u0443\u0447\u043A\u043E \u0410.\u0412."
+};
+const INVOICE_VAT = "\u0411\u0435\u0437 \u041D\u0414\u0421, \u0423\u0421\u041D";
+const INVOICE_DESIGN_LINE_NAME = "\u0420\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u0434\u0438\u0437\u0430\u0439\u043D-\u043C\u0430\u043A\u0435\u0442\u0430";
+
+const STORAGE_ROOT = resolve$1(process.cwd(), "storage/invoices");
+const PHP_INVOICE_GENERATOR = resolve$1(process.cwd(), "server/invoice-pdf/generate.php");
+function dateRu(value) {
+  return new Date(value).toLocaleDateString("ru-RU");
+}
+function parseJson$3(value, fallback = null) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+function buildPhpInvoicePayload({ invoice, seller, payer, lines }) {
+  return {
+    invoice_number: invoice.invoice_number,
+    invoice_date: dateRu(invoice.created_at),
+    company: {
+      name: seller.name,
+      short_name: seller.shortName,
+      director_name: seller.signerName,
+      inn: seller.inn,
+      ogrnip: seller.ogrnip,
+      address: seller.legalAddress,
+      actual_address: seller.actualAddress,
+      bank_name: seller.bankName,
+      bik: seller.bik,
+      account: seller.rs,
+      corr_account: seller.ks,
+      phone: seller.phone,
+      email: seller.email,
+      basis: seller.basis
+    },
+    payer,
+    items: lines.map((line) => ({
+      name: line.name,
+      unit: line.unit || "\u0448\u0442.",
+      qty: Number(line.quantity || 0),
+      price: Number(line.price || 0),
+      total: Number(line.total || 0)
+    })),
+    total: Number(invoice.amount || 0),
+    vat_text: INVOICE_VAT,
+    director_name: seller.signerName
+  };
+}
+async function generatePdfFile({ invoice, seller, payer, lines, path }) {
+  const payload = JSON.stringify(buildPhpInvoicePayload({ invoice, seller, payer, lines }));
+  await new Promise((resolvePromise, reject) => {
+    const child = spawn(process.env.PHP_BINARY || "php", [PHP_INVOICE_GENERATOR, path], {
+      stdio: ["pipe", "ignore", "pipe"]
+    });
+    const stderr = [];
+    child.stderr.on("data", (chunk) => stderr.push(chunk));
+    child.on("error", reject);
+    child.on("close", (code) => {
+      const errorOutput = Buffer.concat(stderr).toString("utf8").trim();
+      if (code === 0) {
+        if (errorOutput) console.error("[invoice/pdf] PHP generator stderr:", errorOutput);
+        resolvePromise();
+        return;
+      }
+      reject(new Error(errorOutput || `PHP invoice generator failed with exit code ${code}`));
+    });
+    child.stdin.end(payload);
+  });
+}
+async function createInvoicePdfPath(year, invoiceNumber) {
+  const path = join(STORAGE_ROOT, String(year), `${invoiceNumber}.pdf`);
+  await mkdir(dirname$1(path), { recursive: true });
+  return path;
+}
+async function fileExists(path) {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+async function generateInvoicePdfFromSnapshot(invoice) {
+  const seller = parseJson$3(invoice.seller_snapshot, INVOICE_SELLER);
+  const payer = parseJson$3(invoice.payer_snapshot, {});
+  const lines = parseJson$3(invoice.lines_snapshot, []);
+  await generatePdfFile({ invoice, seller, payer, lines, path: invoice.pdf_path });
+}
+async function readInvoicePdf(invoice) {
+  if (!await fileExists(invoice.pdf_path)) {
+    await generateInvoicePdfFromSnapshot(invoice);
+  }
+  return readFile$1(invoice.pdf_path);
+}
+
+function parseJson$2(value, fallback = null) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+async function nextInvoiceSequence(database, year) {
+  var _a, _b;
+  await sql`
+    INSERT INTO site_invoice_counters (invoice_year, last_sequence)
+    VALUES (${year}, LAST_INSERT_ID(1))
+    ON DUPLICATE KEY UPDATE last_sequence = LAST_INSERT_ID(last_sequence + 1)
+  `.execute(database);
+  const row = await sql`SELECT LAST_INSERT_ID() AS sequence`.execute(database);
+  return Number(((_b = (_a = row.rows) == null ? void 0 : _a[0]) == null ? void 0 : _b.sequence) || 0);
+}
+function formatInvoiceNumber(year, sequence) {
+  return `IND-${year}-${String(sequence).padStart(5, "0")}`;
+}
+async function getInvoiceByOrderId(database, orderId) {
+  return database.selectFrom("site_order_invoices").selectAll().where("site_order_id", "=", orderId).executeTakeFirst();
+}
+function getInvoiceDownloadUrl(invoice, accessToken = "") {
+  const query = accessToken ? `?accessToken=${encodeURIComponent(accessToken)}` : "";
+  return `/api/invoices/${invoice.id}/download${query}`;
+}
+async function getOrderItems(database, orderId) {
+  return database.selectFrom("site_order_items").selectAll().where("site_order_id", "=", orderId).orderBy("id", "asc").execute();
+}
+function buildInvoiceLines(items) {
+  const lines = [];
+  for (const item of items) {
+    const quantity = Number(item.quantity || 1);
+    const unitPrice = Number(item.unit_price || 0);
+    const productTotal = Math.round(unitPrice * quantity * 100) / 100;
+    lines.push({ name: item.name, quantity, unit: "\u0448\u0442.", price: unitPrice, total: productTotal, vat: INVOICE_VAT });
+    const designPrice = Number(item.design_price || 0);
+    if (designPrice > 0) {
+      lines.push({ name: INVOICE_DESIGN_LINE_NAME, quantity: 1, unit: "\u0443\u0441\u043B.", price: designPrice, total: designPrice, vat: INVOICE_VAT });
+    }
+  }
+  return lines;
+}
+function normalizePayer(checkout) {
+  const organization = checkout.organization || {};
+  return {
+    name: String(organization.name || "").trim(),
+    inn: String(organization.inn || "").trim(),
+    kpp: String(organization.kpp || "").trim(),
+    address: String(organization.address || "").trim()
+  };
+}
+function validateInvoiceInput({ checkout, payer }) {
+  var _a;
+  const email = String(((_a = checkout.customer) == null ? void 0 : _a.email) || "").trim().toLowerCase();
+  const emailError = getRegistrationEmailError(email);
+  if (emailError) throw createError$1({ statusCode: 400, statusMessage: "Invalid email", message: emailError });
+  if (!payer.name || !payer.inn) throw createError$1({ statusCode: 400, statusMessage: "Missing organization", message: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u044E \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B \u043F\u043E \u0441\u0447\u0451\u0442\u0443" });
+  return email;
+}
+async function sendInvoicePdf(event, invoice) {
+  const pdf = await readInvoicePdf(invoice);
+  setHeader(event, "content-type", "application/pdf");
+  setHeader(event, "content-disposition", `attachment; filename="${invoice.invoice_number}.pdf"`);
+  return pdf;
+}
+function isDuplicateInvoiceError(error) {
+  return (error == null ? void 0 : error.code) === "ER_DUP_ENTRY" || (error == null ? void 0 : error.errno) === 1062;
+}
+async function markOrderAsInvoicePayment(database, orderId, now = /* @__PURE__ */ new Date()) {
+  await database.updateTable("site_orders").set({ payment_provider: "invoice", payment_status: "pending", updated_at: now }).where("id", "=", orderId).execute();
+}
+async function createOrGetInvoice(database, event, order) {
+  const orderId = Number(order.id);
+  const existing = await getInvoiceByOrderId(database, orderId);
+  if (existing) {
+    if (!await fileExists(existing.pdf_path)) {
+      await generateInvoicePdfFromSnapshot(existing);
+    }
+    await markOrderAsInvoicePayment(database, orderId);
+    return { invoice: existing, created: false };
+  }
+  const payload = parseJson$2(order.payload, {});
+  const checkout = payload.checkout || {};
+  const payer = normalizePayer(checkout);
+  const customerEmail = validateInvoiceInput({ checkout, payer });
+  const items = await getOrderItems(database, orderId);
+  const lines = buildInvoiceLines(items);
+  const now = /* @__PURE__ */ new Date();
+  try {
+    const invoice = await database.transaction().execute(async (trx) => {
+      const year = now.getFullYear();
+      const sequence = await nextInvoiceSequence(trx, year);
+      const invoiceNumber = formatInvoiceNumber(year, sequence);
+      const pdfPath = await createInvoicePdfPath(year, invoiceNumber);
+      const result = await trx.insertInto("site_order_invoices").values({
+        site_order_id: orderId,
+        invoice_number: invoiceNumber,
+        invoice_year: year,
+        sequence,
+        amount: Number(order.amount || 0),
+        currency: order.currency || "RUB",
+        customer_email: customerEmail,
+        payer_snapshot: JSON.stringify(payer),
+        seller_snapshot: JSON.stringify(INVOICE_SELLER),
+        lines_snapshot: JSON.stringify(lines),
+        pdf_path: pdfPath,
+        email_status: INVOICE_EMAIL_STATUS.QUEUED,
+        created_at: now,
+        updated_at: now
+      }).executeTakeFirst();
+      return trx.selectFrom("site_order_invoices").selectAll().where("id", "=", Number(result.insertId)).executeTakeFirst();
+    });
+    try {
+      await generateInvoicePdfFromSnapshot(invoice);
+    } catch (error) {
+      await database.deleteFrom("site_order_invoices").where("id", "=", invoice.id).execute();
+      await rm(invoice.pdf_path, { force: true }).catch(() => {
+      });
+      throw error;
+    }
+    await markOrderAsInvoicePayment(database, orderId, now);
+    return { invoice, created: true };
+  } catch (error) {
+    if (!isDuplicateInvoiceError(error)) throw error;
+    const invoice = await getInvoiceByOrderId(database, orderId);
+    if (invoice) {
+      if (!await fileExists(invoice.pdf_path)) {
+        await generateInvoicePdfFromSnapshot(invoice);
+      }
+      await markOrderAsInvoicePayment(database, orderId);
+      return { invoice, created: false };
+    }
+    throw error;
+  }
+}
+
+function money(value) {
+  return Number(value || 0).toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+async function updateInvoiceEmailStatus(database, invoiceId, status, error = null) {
+  await database.updateTable("site_order_invoices").set({
+    email_status: status,
+    email_error: error,
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", invoiceId).execute();
+}
+async function sendInvoiceEmail(database, event, invoice, order, accessToken = "") {
+  const origin = getRequestURL(event).origin;
+  const downloadUrl = `${origin}${getInvoiceDownloadUrl(invoice, accessToken || order.access_token || "")}`;
+  try {
+    await updateInvoiceEmailStatus(database, invoice.id, INVOICE_EMAIL_STATUS.SENDING);
+    await sendNotificoreEmail({
+      to: [invoice.customer_email],
+      subject: `\u0421\u0447\u0451\u0442 \u043D\u0430 \u043E\u043F\u043B\u0430\u0442\u0443 ${invoice.invoice_number}`,
+      templateContent: {
+        invoiceNumber: invoice.invoice_number,
+        orderNumber: order.order_number || `SITE-${order.id}`,
+        amount: `${money(invoice.amount)} \u20BD`,
+        downloadUrl,
+        confirmationUrl: downloadUrl,
+        profileUrl: downloadUrl
+      }
+    });
+    await updateInvoiceEmailStatus(database, invoice.id, INVOICE_EMAIL_STATUS.SENT);
+  } catch (error) {
+    await updateInvoiceEmailStatus(
+      database,
+      invoice.id,
+      INVOICE_EMAIL_STATUS.FAILED,
+      (error == null ? void 0 : error.message) || "Email failed"
+    );
+  }
+}
+
+function parseJson$1(value, fallback = null) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+function serializeInvoice(invoice, order, accessToken = "") {
+  return {
+    id: Number(invoice.id),
+    number: invoice.invoice_number,
+    date: invoice.created_at,
+    amount: Number(invoice.amount || 0),
+    orderId: Number(order.id),
+    orderNumber: order.order_number || `SITE-${order.id}`,
+    downloadUrl: getInvoiceDownloadUrl(invoice, accessToken),
+    emailSent: isInvoiceEmailSent(invoice.email_status),
+    emailFallbackUsed: false,
+    emailStatus: invoice.email_status,
+    customerEmail: invoice.customer_email,
+    seller: parseJson$1(invoice.seller_snapshot, INVOICE_SELLER),
+    payer: parseJson$1(invoice.payer_snapshot, {}),
+    vat: INVOICE_VAT
+  };
+}
+
+const FISCAL_RECEIPT_STATUS = {
+  SENDING: "sending",
+  FAILED: "failed",
+  QUEUED: "queued"
+};
+const DEFAULT_BASE_URL$1 = "https://kkm.rarus-cloud.ru";
+const DEFAULT_API_VERSION = "1.1.7";
+const DEFAULT_INN = "6234117358";
+const DEFAULT_TAX_SYSTEM = "OSN";
+const DEFAULT_TAX = "none";
+const DEFAULT_SIGN_METHOD_CALCULATION = "full_prepayment";
+const DEFAULT_SIGN_CALCULATION_OBJECT = "commodity";
+const DEFAULT_TAG_1011 = 2;
+const readEnv$1 = (name) => {
+  var _a, _b;
+  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
+};
+function readConfigValue$1(config, key, envName) {
+  var _a;
+  return readEnv$1(envName) || ((_a = config.rarusKkt) == null ? void 0 : _a[key]) || "";
+}
+function getRarusKktConfig() {
+  const config = useRuntimeConfig();
+  const baseUrl = readConfigValue$1(config, "baseUrl", "RARUS_KKT_BASE_URL") || DEFAULT_BASE_URL$1;
+  const apiVersion = readConfigValue$1(config, "apiVersion", "RARUS_KKT_API_VERSION") || DEFAULT_API_VERSION;
+  return {
+    baseUrl: baseUrl.replace(/\/+$/, ""),
+    apiVersion,
+    apiKey: readConfigValue$1(config, "apiKey", "RARUS_KKT_API_KEY"),
+    inn: readConfigValue$1(config, "inn", "RARUS_KKT_INN") || DEFAULT_INN,
+    taxSystem: readConfigValue$1(config, "taxSystem", "RARUS_KKT_TAX_SYSTEM") || DEFAULT_TAX_SYSTEM,
+    tax: readConfigValue$1(config, "tax", "RARUS_KKT_TAX") || DEFAULT_TAX,
+    paymentAddress: readConfigValue$1(config, "paymentAddress", "RARUS_KKT_PAYMENT_ADDRESS"),
+    paymentPlace: readConfigValue$1(config, "paymentPlace", "RARUS_KKT_PAYMENT_PLACE"),
+    senderEmail: readConfigValue$1(config, "senderEmail", "RARUS_KKT_SENDER_EMAIL"),
+    signMethodCalculation: readConfigValue$1(config, "signMethodCalculation", "RARUS_KKT_SIGN_METHOD_CALCULATION") || DEFAULT_SIGN_METHOD_CALCULATION,
+    signCalculationObject: readConfigValue$1(config, "signCalculationObject", "RARUS_KKT_SIGN_CALCULATION_OBJECT") || DEFAULT_SIGN_CALCULATION_OBJECT,
+    tag1011: Number(readConfigValue$1(config, "tag1011", "RARUS_KKT_TAG_1011")) || DEFAULT_TAG_1011,
+    enabled: !["0", "false", "no", "off"].includes(readEnv$1("RARUS_KKT_ENABLED").toLowerCase())
+  };
+}
+function parseJson(value) {
+  if (!value) return null;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
+function normalizePhone(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("8")) return `+7${digits.slice(1)}`;
+  if (digits.length === 11 && digits.startsWith("7")) return `+${digits}`;
+  if (digits.length === 10) return `+7${digits}`;
+  if (raw.startsWith("+") && digits.length >= 10) return `+${digits}`;
+  return "";
+}
+function getReceiptContact(order) {
+  var _a, _b, _c;
+  const payload = parseJson(order.payload) || {};
+  const checkout = payload.checkout || {};
+  const email = String(((_a = checkout.customer) == null ? void 0 : _a.email) || "").trim();
+  if (email) {
+    return { email };
+  }
+  const phone = normalizePhone(((_b = checkout.customer) == null ? void 0 : _b.phone) || ((_c = checkout.recipient) == null ? void 0 : _c.phone));
+  return phone ? { phone } : {};
+}
+function createReceiptId(order) {
+  return `INDIGO-ORDER-${order.id}`.slice(0, 40);
+}
+function toMoney(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount) && amount > 0 ? Math.round(amount * 100) / 100 : 0;
+}
+async function getReceiptItems(database, orderId, config) {
+  const items = await database.selectFrom("site_order_items").select(["name", "quantity", "unit_price", "design_price", "total"]).where("site_order_id", "=", orderId).execute();
+  if (!items.length) {
+    return [];
+  }
+  return items.flatMap((item) => {
+    const quantity = Math.max(1, Number(item.quantity) || 1);
+    const unitPrice = toMoney(item.unit_price);
+    const designPrice = toMoney(item.design_price);
+    const rows = [];
+    if (unitPrice) {
+      rows.push({
+        name: String(item.name || "\u0422\u043E\u0432\u0430\u0440").slice(0, 128),
+        price: unitPrice,
+        quantity,
+        sum: toMoney(unitPrice * quantity),
+        tax: config.tax,
+        sign_method_calculation: config.signMethodCalculation,
+        sign_calculation_object: config.signCalculationObject
+      });
+    }
+    if (designPrice) {
+      rows.push({
+        name: `\u0414\u0438\u0437\u0430\u0439\u043D: ${String(item.name || "\u043F\u043E\u0437\u0438\u0446\u0438\u044F").slice(0, 120)}`,
+        price: designPrice,
+        quantity: 1,
+        sum: designPrice,
+        tax: config.tax,
+        sign_method_calculation: config.signMethodCalculation,
+        sign_calculation_object: "service"
+      });
+    }
+    return rows;
+  });
+}
+async function requestRarusKkt(config, receipt) {
+  const response = await fetch(`${config.baseUrl}/${config.apiVersion}/document`, {
+    method: "POST",
+    headers: {
+      "API-KEY": config.apiKey,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(receipt)
+  });
+  const text = await response.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = { raw: text };
+  }
+  if (!response.ok) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "Rarus KKT request failed",
+      message: `Rarus KKT \u0432\u0435\u0440\u043D\u0443\u043B HTTP ${response.status}`,
+      data
+    });
+  }
+  return data;
+}
+async function claimFiscalReceipt(database, orderId) {
+  var _a;
+  const result = await database.updateTable("site_orders").set({
+    fiscal_receipt_status: FISCAL_RECEIPT_STATUS.SENDING,
+    fiscal_receipt_error: null,
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", orderId).where("fiscal_receipt_operation_id", "is", null).where((eb) => eb.or([
+    eb("fiscal_receipt_status", "is", null),
+    eb("fiscal_receipt_status", "=", ""),
+    eb("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.FAILED)
+  ])).executeTakeFirst();
+  return Number((_a = result.numUpdatedRows) != null ? _a : 0) > 0;
+}
+async function saveFiscalReceiptFailure(database, orderId, error) {
+  await database.updateTable("site_orders").set({
+    fiscal_receipt_status: FISCAL_RECEIPT_STATUS.FAILED,
+    fiscal_receipt_error: (error == null ? void 0 : error.data) ? JSON.stringify(error.data) : (error == null ? void 0 : error.message) || "Fiscal receipt failed",
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", orderId).where("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.SENDING).execute();
+}
+async function sendFiscalReceiptForPaidOrder(database, order) {
+  if (!order || order.payment_status !== "paid") return null;
+  if (order.fiscal_receipt_operation_id) return null;
+  if (order.fiscal_receipt_status && order.fiscal_receipt_status !== FISCAL_RECEIPT_STATUS.FAILED) return null;
+  const config = getRarusKktConfig();
+  if (!config.enabled || !config.apiKey) return null;
+  const orderId = Number(order.id);
+  if (!await claimFiscalReceipt(database, orderId)) return null;
+  try {
+    const contact = getReceiptContact(order);
+    if (!contact.email && !contact.phone) {
+      throw new Error("Missing customer email or phone for fiscal receipt");
+    }
+    const items = await getReceiptItems(database, orderId, config);
+    const total = toMoney(order.amount);
+    if (!items.length || !total) {
+      throw new Error("Missing fiscal receipt items or amount");
+    }
+    const timestamp = Math.floor(Date.now() / 1e3);
+    const receipt = {
+      id: createReceiptId(order),
+      doc_type: "sale",
+      timestamp_utc: timestamp,
+      timestamp_local: timestamp,
+      ...contact,
+      tax_system: config.taxSystem,
+      inn: config.inn,
+      payment_address: config.paymentAddress || void 0,
+      payment_place: config.paymentPlace || void 0,
+      senderEmail: config.senderEmail || void 0,
+      tag_1125: 1,
+      tag_1011: config.tag1011,
+      items,
+      total
+    };
+    const data = await requestRarusKkt(config, receipt);
+    const operation = (data == null ? void 0 : data.operation) || {};
+    await database.updateTable("site_orders").set({
+      fiscal_receipt_status: operation.status || FISCAL_RECEIPT_STATUS.QUEUED,
+      fiscal_receipt_operation_id: operation.operation_id || null,
+      fiscal_receipt_sent_at: /* @__PURE__ */ new Date(),
+      fiscal_receipt_error: null,
+      updated_at: /* @__PURE__ */ new Date()
+    }).where("id", "=", orderId).where("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.SENDING).execute();
+    return data;
+  } catch (error) {
+    await saveFiscalReceiptFailure(database, orderId, error);
+    return null;
+  }
+}
+
 const PAYMENT_PROVIDER = "vtb_sbp";
 function normalizePaymentStatus(status) {
   return ["pending", "paid", "failed", "expired", "cancelled"].includes(status) ? status : "pending";
@@ -7048,6 +7711,16 @@ async function updateOrderPaymentStatus(database, paymentId, status, patch = {})
     update.paid_at = now;
   }
   await database.updateTable("site_orders").set(update).where("id", "=", paymentId).execute();
+}
+async function settleOrderPayment(database, paymentId, status, patch = {}) {
+  await updateOrderPaymentStatus(database, paymentId, status, patch);
+  const payment = await getOrderPayment(database, paymentId);
+  if ((payment == null ? void 0 : payment.payment_status) === "paid") {
+    sendFiscalReceiptForPaidOrder(database, payment).catch((error) => {
+      console.error("[rarus-kkt] Async fiscal receipt failed:", error);
+    });
+  }
+  return payment;
 }
 async function saveVtbRegistration(database, paymentId, response) {
   await database.updateTable("site_orders").set({
@@ -7656,6 +8329,10 @@ async function getOptionalSiteUser(event) {
 function createAccessToken() {
   return crypto.randomUUID().replaceAll("-", "") + crypto.randomUUID().replaceAll("-", "");
 }
+function createSiteOrderNumber(orderId) {
+  const suffix = Date.now().toString(36).toUpperCase();
+  return `SITE-${orderId}-${suffix}`.slice(0, 36);
+}
 async function getCurrentSiteUser(event) {
   const user = await getOptionalSiteUser(event);
   if (!user) {
@@ -7666,6 +8343,20 @@ async function getCurrentSiteUser(event) {
     });
   }
   return user;
+}
+function parseSiteOrderPayload(value, fallback = {}) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+function getSiteOrderWorkflowStatus(order, payload = parseSiteOrderPayload(order == null ? void 0 : order.payload)) {
+  return normalizeSiteOrderStatus(
+    (order == null ? void 0 : order.workflow_status) || (order == null ? void 0 : order.production_status) || (order == null ? void 0 : order.status) || payload.workflowStatus || payload.productionStatus || payload.orderStatus || ""
+  ).trim();
 }
 function normalizeCheckout(checkout) {
   if (!checkout || typeof checkout !== "object") return {};
@@ -7708,46 +8399,83 @@ async function createSiteOrder(database, event, { items, amount, checkout }) {
   const normalizedCheckout = normalizeCheckout(checkout);
   const productIds = [...new Set(items.map((item) => item.productId).filter(Boolean))];
   const existingProductIds = productIds.length ? new Set((await database.selectFrom("products").select(["id"]).where("id", "in", productIds).execute()).map((product) => Number(product.id))) : /* @__PURE__ */ new Set();
-  const result = await database.insertInto("site_orders").values({
-    client_id: clientId,
-    site_user_id: siteUserId,
-    access_token: accessToken,
-    amount,
-    currency: "RUB",
-    payment_status: "pending",
-    payload: JSON.stringify({
-      source: "site",
-      checkout: normalizedCheckout,
-      orderDescription: buildOrderDescription(normalizedCheckout, items),
-      items
-    }),
-    created_at: now,
-    updated_at: now
-  }).executeTakeFirst();
-  const orderId = Number(result.insertId);
-  if (!orderId) {
-    throw createError$1({
-      statusCode: 500,
-      statusMessage: "Order was not created",
-      message: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u0437\u0430\u043A\u0430\u0437"
-    });
-  }
-  if (items.length) {
-    await database.insertInto("site_order_items").values(items.map((item) => ({
-      site_order_id: orderId,
-      product_id: existingProductIds.has(item.productId) ? item.productId : null,
-      name: item.name,
-      description: item.description || null,
-      quantity: item.quantity,
-      unit_price: item.unitPrice,
-      design_price: item.designPrice,
-      total: item.total,
-      payload: JSON.stringify(item),
+  return database.transaction().execute(async (trx) => {
+    const result = await trx.insertInto("site_orders").values({
+      client_id: clientId,
+      site_user_id: siteUserId,
+      access_token: accessToken,
+      amount,
+      currency: "RUB",
+      payment_status: "pending",
+      payload: JSON.stringify({
+        source: "site",
+        checkout: normalizedCheckout,
+        orderDescription: buildOrderDescription(normalizedCheckout, items),
+        items
+      }),
       created_at: now,
       updated_at: now
-    }))).execute();
+    }).executeTakeFirst();
+    const orderId = Number(result.insertId);
+    if (!orderId) {
+      throw createError$1({
+        statusCode: 500,
+        statusMessage: "Order was not created",
+        message: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u0437\u0430\u043A\u0430\u0437"
+      });
+    }
+    const orderNumber = createSiteOrderNumber(orderId);
+    await trx.updateTable("site_orders").set({
+      order_number: orderNumber,
+      updated_at: now
+    }).where("id", "=", orderId).execute();
+    if (items.length) {
+      await trx.insertInto("site_order_items").values(items.map((item) => ({
+        site_order_id: orderId,
+        product_id: existingProductIds.has(item.productId) ? item.productId : null,
+        name: item.name,
+        description: item.description || null,
+        quantity: item.quantity,
+        unit_price: item.unitPrice,
+        design_price: item.designPrice,
+        total: item.total,
+        payload: JSON.stringify(item),
+        created_at: now,
+        updated_at: now
+      }))).execute();
+    }
+    return { id: orderId, orderNumber, amount, siteUserId, accessToken };
+  });
+}
+async function updateSiteOrderRecipient(database, event, orderId, recipientPatch) {
+  const order = await getOwnedSiteOrder(database, event, orderId);
+  const payload = parseSiteOrderPayload(order.payload);
+  const workflowStatus = getSiteOrderWorkflowStatus(order, payload);
+  if (!isSiteOrderInWork(workflowStatus)) {
+    throw createError$1({
+      statusCode: 409,
+      statusMessage: "Order recipient is locked",
+      message: "\u041F\u043E\u043B\u0443\u0447\u0430\u0442\u0435\u043B\u044F \u043C\u043E\u0436\u043D\u043E \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u043A\u0430 \u0437\u0430\u043A\u0430\u0437 \u0432 \u0440\u0430\u0431\u043E\u0442\u0435"
+    });
   }
-  return { id: orderId, amount, siteUserId, accessToken };
+  const checkout = payload.checkout && typeof payload.checkout === "object" ? payload.checkout : {};
+  const recipient = {
+    ...checkout.recipient && typeof checkout.recipient === "object" ? checkout.recipient : {},
+    type: "another",
+    ...recipientPatch
+  };
+  const nextPayload = {
+    ...payload,
+    checkout: {
+      ...checkout,
+      recipient
+    }
+  };
+  await database.updateTable("site_orders").set({
+    payload: JSON.stringify(nextPayload),
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", orderId).execute();
+  return recipient;
 }
 async function getOwnedSiteOrder(database, event, orderId, accessToken = "") {
   const user = await getOptionalSiteUser(event);
@@ -8043,12 +8771,16 @@ const _lazy_x8S6Z5 = () => import('../routes/api/auth/password-recovery/request-
 const _lazy_iM6PMI = () => import('../routes/api/auth/request-code.post.mjs');
 const _lazy_7yraPe = () => import('../routes/api/auth/verify-code.post.mjs');
 const _lazy_LBdnb_ = () => import('../routes/api/dadata/party-suggest.post.mjs');
+const _lazy_9YVRlL = () => import('../routes/api/internal/site-orders/_orderId/invoice/download.get.mjs');
+const _lazy_MQkddy = () => import('../routes/api/internal/site-orders/_orderId/index.get.mjs');
+const _lazy_uxGW6z = () => import('../routes/api/invoices/_invoiceId/download.get.mjs');
 const _lazy_i9FG0D = () => import('../routes/api/orders/_orderId/files.post.mjs');
 const _lazy_ZGkFgJ = () => import('../routes/api/index.post.mjs');
 const _lazy_v0T1U7 = () => import('../routes/api/organizations.post.mjs');
 const _lazy_hYnqLN = () => import('../routes/api/organizations/_organizationId_.delete.mjs');
 const _lazy_u6U_ey = () => import('../routes/api/organizations/_organizationId/active.patch.mjs');
 const _lazy__RsLdI = () => import('../routes/api/payments/_paymentId/status.get.mjs');
+const _lazy_dsJs2f = () => import('../routes/api/payments/invoice/start.post.mjs');
 const _lazy_mZH6FC = () => import('../routes/api/payments/vtb-sbp/callback.get.mjs');
 const _lazy_LNpv6e = () => import('../routes/api/payments/vtb-sbp/start.post.mjs');
 const _lazy_nUlvZH = () => import('../routes/api/products/_slug_.get.mjs');
@@ -8060,6 +8792,7 @@ const _lazy_58UI9t = () => import('../routes/api/profile/email.patch.mjs');
 const _lazy_SuV5P9 = () => import('../routes/api/profile/email/confirm.get.mjs');
 const _lazy_5QpC0U = () => import('../routes/api/profile/email/confirmation.post.mjs');
 const _lazy_fKT9_I = () => import('../routes/api/profile/orders/_orderId_.get.mjs');
+const _lazy_h31PU4 = () => import('../routes/api/profile/orders/_orderId/recipient.patch.mjs');
 const _lazy_PX1286 = () => import('../routes/api/profile/index.get.mjs');
 const _lazy_GaJmRW = () => import('../routes/api/profile/phone.patch.mjs');
 const _lazy_cPKJ1M = () => import('../routes/api/profile/phone/request-code.post.mjs');
@@ -8076,12 +8809,16 @@ const handlers = [
   { route: '/api/auth/request-code', handler: _lazy_iM6PMI, lazy: true, middleware: false, method: "post" },
   { route: '/api/auth/verify-code', handler: _lazy_7yraPe, lazy: true, middleware: false, method: "post" },
   { route: '/api/dadata/party-suggest', handler: _lazy_LBdnb_, lazy: true, middleware: false, method: "post" },
+  { route: '/api/internal/site-orders/:orderId/invoice/download', handler: _lazy_9YVRlL, lazy: true, middleware: false, method: "get" },
+  { route: '/api/internal/site-orders/:orderId/invoice', handler: _lazy_MQkddy, lazy: true, middleware: false, method: "get" },
+  { route: '/api/invoices/:invoiceId/download', handler: _lazy_uxGW6z, lazy: true, middleware: false, method: "get" },
   { route: '/api/orders/:orderId/files', handler: _lazy_i9FG0D, lazy: true, middleware: false, method: "post" },
   { route: '/api/orders', handler: _lazy_ZGkFgJ, lazy: true, middleware: false, method: "post" },
   { route: '/api/organizations', handler: _lazy_v0T1U7, lazy: true, middleware: false, method: "post" },
   { route: '/api/organizations/:organizationId', handler: _lazy_hYnqLN, lazy: true, middleware: false, method: "delete" },
   { route: '/api/organizations/:organizationId/active', handler: _lazy_u6U_ey, lazy: true, middleware: false, method: "patch" },
   { route: '/api/payments/:paymentId/status', handler: _lazy__RsLdI, lazy: true, middleware: false, method: "get" },
+  { route: '/api/payments/invoice/start', handler: _lazy_dsJs2f, lazy: true, middleware: false, method: "post" },
   { route: '/api/payments/vtb-sbp/callback', handler: _lazy_mZH6FC, lazy: true, middleware: false, method: "get" },
   { route: '/api/payments/vtb-sbp/start', handler: _lazy_LNpv6e, lazy: true, middleware: false, method: "post" },
   { route: '/api/products/:slug', handler: _lazy_nUlvZH, lazy: true, middleware: false, method: "get" },
@@ -8093,6 +8830,7 @@ const handlers = [
   { route: '/api/profile/email/confirm', handler: _lazy_SuV5P9, lazy: true, middleware: false, method: "get" },
   { route: '/api/profile/email/confirmation', handler: _lazy_5QpC0U, lazy: true, middleware: false, method: "post" },
   { route: '/api/profile/orders/:orderId', handler: _lazy_fKT9_I, lazy: true, middleware: false, method: "get" },
+  { route: '/api/profile/orders/:orderId/recipient', handler: _lazy_h31PU4, lazy: true, middleware: false, method: "patch" },
   { route: '/api/profile/orders', handler: _lazy_PX1286, lazy: true, middleware: false, method: "get" },
   { route: '/api/profile/phone', handler: _lazy_GaJmRW, lazy: true, middleware: false, method: "patch" },
   { route: '/api/profile/phone/request-code', handler: _lazy_cPKJ1M, lazy: true, middleware: false, method: "post" },
@@ -8518,5 +9256,5 @@ trapUnhandledNodeErrors();
 setupGracefulShutdown(listener, nitroApp);
 const nodeServer = {};
 
-export { defineRenderHandler as $, createSiteOrder as A, getRequestHeaders as B, getOrderPayment as C, updateOrderPaymentStatus as D, getVtbDynamicQrStatus as E, getPaymentStatusFromVtbQr as F, getQuery as G, createPendingSiteOrderPayment as H, registerVtbOrder as I, getRequestIP as J, saveVtbRegistration as K, getVtbDynamicQr as L, getVtbQrExpiresAt as M, saveVtbQr as N, getProductBySlug as O, calculateProductPrice as P, getProducts as Q, getRegistrationEmailError as R, sendRedirect as S, getRequestURL as T, sendNotificoreEmail as U, getCurrentSiteUser as V, isAuthPhone as W, defineCachedFunction as X, buildAssetsURL as Y, getResponseStatusText as Z, getResponseStatus as _, auth as a, publicAssetsURL as a0, destr as a1, getRouteRules as a2, joinURL as a3, useNitroApp as a4, serialize$1 as a5, hasProtocol as a6, isScriptProtocol as a7, parseQuery as a8, withQuery as a9, sanitizeStatusCode as aa, parseURL as ab, encodePath as ac, decodePath as ad, klona as ae, defu as af, defuFn as ag, isPhoneLike as ah, getIdentifierError as ai, getRussianSecondsWord as aj, formatCompactPhone as ak, getContext as al, isEqual as am, formatPhone as an, unmaskPhoneToEmail as ao, withTrailingSlash as ap, withoutTrailingSlash as aq, $fetch$1 as ar, baseURL as as, hash$1 as at, executeAsync as au, nodeServer as av, normalizePhoneDigits as b, createError$1 as c, defineEventHandler as d, ensureSiteClient as e, formatAuthPhone as f, assertRateLimit as g, sendNotificoreOtp as h, getNotificoreAuthenticationPayload as i, assertSuccessfulNotificoreOtpResponse as j, setResponseStatus as k, getNotificoreAuthenticationId as l, isNotificoreTimeoutError as m, normalizeAuthIdentifier as n, suggestDadataParties as o, getRouterParam as p, readMultipartFormData as q, readBody as r, sendWebResponse as s, toWebRequest as t, useDatabase as u, verifyNotificoreOtp as v, getOwnedSiteOrder as w, useRuntimeConfig as x, normalizeSiteOrderItems as y, getSiteOrderItemsAmount as z };
+export { getRequestURL as $, getQuery as A, readMultipartFormData as B, useRuntimeConfig as C, normalizeSiteOrderItems as D, getSiteOrderItemsAmount as E, createSiteOrder as F, getRequestHeaders as G, getOrderPayment as H, updateOrderPaymentStatus as I, getVtbDynamicQrStatus as J, getPaymentStatusFromVtbQr as K, createOrGetInvoice as L, sendInvoiceEmail as M, settleOrderPayment as N, createSiteOrderNumber as O, createPendingSiteOrderPayment as P, registerVtbOrder as Q, getRequestIP as R, saveVtbRegistration as S, getVtbDynamicQr as T, getVtbQrExpiresAt as U, saveVtbQr as V, getProductBySlug as W, calculateProductPrice as X, getProducts as Y, getRegistrationEmailError as Z, sendRedirect as _, auth as a, sendNotificoreEmail as a0, parseSiteOrderPayload as a1, getSiteOrderWorkflowStatus as a2, getSiteOrderStatusLabel as a3, getSitePaymentStatusLabel as a4, isSiteOrderInWork as a5, updateSiteOrderRecipient as a6, getCurrentSiteUser as a7, getSitePaymentStatusMeta as a8, isAuthPhone as a9, getContext as aA, isEqual as aB, formatPhone as aC, unmaskPhoneToEmail as aD, withTrailingSlash as aE, withoutTrailingSlash as aF, $fetch$1 as aG, baseURL as aH, hash$1 as aI, executeAsync as aJ, isInvoiceEmailPending as aK, nodeServer as aL, defineCachedFunction as aa, buildAssetsURL as ab, getResponseStatusText as ac, getResponseStatus as ad, defineRenderHandler as ae, publicAssetsURL as af, destr as ag, getRouteRules as ah, joinURL as ai, useNitroApp as aj, serialize$1 as ak, hasProtocol as al, isScriptProtocol as am, parseQuery as an, withQuery as ao, sanitizeStatusCode as ap, parseURL as aq, encodePath as ar, decodePath as as, klona as at, defu as au, defuFn as av, isPhoneLike as aw, getIdentifierError as ax, getRussianSecondsWord as ay, formatCompactPhone as az, normalizePhoneDigits as b, createError$1 as c, defineEventHandler as d, ensureSiteClient as e, formatAuthPhone as f, assertRateLimit as g, sendNotificoreOtp as h, getNotificoreAuthenticationPayload as i, assertSuccessfulNotificoreOtpResponse as j, setResponseStatus as k, getNotificoreAuthenticationId as l, isNotificoreTimeoutError as m, normalizeAuthIdentifier as n, suggestDadataParties as o, assertInternalShopToken as p, getRouterParam as q, readBody as r, sendWebResponse as s, toWebRequest as t, useDatabase as u, verifyNotificoreOtp as v, getInvoiceByOrderId as w, sendInvoicePdf as x, serializeInvoice as y, getOwnedSiteOrder as z };
 //# sourceMappingURL=nitro.mjs.map

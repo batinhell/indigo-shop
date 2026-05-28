@@ -16,6 +16,7 @@ export function useAuthEntryFlow({
   onCompleteLogin,
   onCompleteRegistration
 } = {}) {
+  const profileStore = useProfileStore()
   const step = ref('entry')
   const identifier = ref('')
   const isFieldTouched = ref(false)
@@ -860,6 +861,8 @@ export function useAuthEntryFlow({
           organization: selectedOrganization.value
         }
       })
+
+      await profileStore.refreshProfile()
 
       step.value = 'success'
     } catch (error) {

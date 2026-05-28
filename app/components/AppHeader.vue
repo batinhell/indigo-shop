@@ -16,7 +16,7 @@ const navLinks = [
 
 const visibleNavLinks = computed(() => navLinks.filter(item => !item.hidden))
 
-const session = authClient.useSession()
+const session = useClientAuthSession()
 
 const isSessionPending = computed(() => session.value?.isPending ?? true)
 const sessionUser = computed(() => session.value?.data?.user ?? null)

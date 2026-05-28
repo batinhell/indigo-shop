@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS `site_order_invoices` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `site_order_id` bigint unsigned NOT NULL,
+  `invoice_number` varchar(32) NOT NULL,
+  `invoice_year` int unsigned NOT NULL,
+  `sequence` int unsigned NOT NULL,
+  `amount` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `currency` varchar(3) NOT NULL DEFAULT 'RUB',
+  `customer_email` varchar(255) NOT NULL,
+  `payer_snapshot` json NOT NULL,
+  `seller_snapshot` json NOT NULL,
+  `lines_snapshot` json NOT NULL,
+  `pdf_path` varchar(512) NOT NULL,
+  `email_status` varchar(32) NOT NULL DEFAULT 'not_sent',
+  `email_error` text NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `site_order_invoices_site_order_id_unique` (`site_order_id`),
+  UNIQUE KEY `site_order_invoices_number_unique` (`invoice_number`),
+  UNIQUE KEY `site_order_invoices_year_sequence_unique` (`invoice_year`, `sequence`),
+  KEY `site_order_invoices_email_status_idx` (`email_status`),
+  CONSTRAINT `site_order_invoices_site_order_id_fk`
+    FOREIGN KEY (`site_order_id`) REFERENCES `site_orders` (`id`) ON DELETE CASCADE
+);

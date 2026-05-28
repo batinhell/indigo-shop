@@ -1,23 +1,21 @@
-import { d as defineEventHandler, r as readBody, y as normalizeSiteOrderItems, z as getSiteOrderItemsAmount, c as createError, u as useDatabase, H as createPendingSiteOrderPayment, I as registerVtbOrder, J as getRequestIP, K as saveVtbRegistration, L as getVtbDynamicQr, M as getVtbQrExpiresAt, N as saveVtbQr, A as createSiteOrder, w as getOwnedSiteOrder } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, D as normalizeSiteOrderItems, E as getSiteOrderItemsAmount, c as createError, u as useDatabase, O as createSiteOrderNumber, P as createPendingSiteOrderPayment, Q as registerVtbOrder, R as getRequestIP, S as saveVtbRegistration, T as getVtbDynamicQr, U as getVtbQrExpiresAt, V as saveVtbQr, F as createSiteOrder, z as getOwnedSiteOrder } from '../../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
 import 'consola';
 
-function createOrderNumber(orderId) {
-  const suffix = Date.now().toString(36).toUpperCase();
-  return `SITE-${orderId}-${suffix}`.slice(0, 36);
-}
 async function resolveOrder(event, database, body, items, amount) {
   const orderId = Number(body == null ? void 0 : body.orderId);
   if (!Number.isInteger(orderId) || orderId <= 0) {
@@ -43,7 +41,8 @@ const start_post = defineEventHandler(async (event) => {
   }
   const database = useDatabase();
   const orderId = await resolveOrder(event, database, body, items, amount);
-  const orderNumber = createOrderNumber(orderId);
+  const existingOrder = await database.selectFrom("site_orders").select(["order_number"]).where("id", "=", orderId).executeTakeFirst();
+  const orderNumber = (existingOrder == null ? void 0 : existingOrder.order_number) || createSiteOrderNumber(orderId);
   const paymentId = await createPendingSiteOrderPayment(database, {
     siteOrderId: orderId,
     orderNumber,

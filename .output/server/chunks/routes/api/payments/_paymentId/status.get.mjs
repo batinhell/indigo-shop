@@ -1,19 +1,30 @@
-import { d as defineEventHandler, p as getRouterParam, c as createError, u as useDatabase, C as getOrderPayment, D as updateOrderPaymentStatus, E as getVtbDynamicQrStatus, F as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, q as getRouterParam, c as createError, u as useDatabase, H as getOrderPayment, I as updateOrderPaymentStatus, J as getVtbDynamicQrStatus, K as getPaymentStatusFromVtbQr } from '../../../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
 import 'consola';
 
+function mergePayload(payload, patch) {
+  let base = {};
+  try {
+    base = payload ? JSON.parse(payload) : {};
+  } catch {
+    base = {};
+  }
+  return JSON.stringify({ ...base, ...patch });
+}
 const status_get = defineEventHandler(async (event) => {
   var _a, _b, _c;
   const paymentId = Number(getRouterParam(event, "paymentId"));
@@ -34,7 +45,7 @@ const status_get = defineEventHandler(async (event) => {
     });
   }
   const paymentStatus = (_a = payment.payment_status) != null ? _a : payment.status;
-  if (paymentStatus === "paid" || paymentStatus === "failed" || paymentStatus === "cancelled") {
+  if (paymentStatus === "paid" || paymentStatus === "failed" || paymentStatus === "expired" || paymentStatus === "cancelled") {
     return { payment: { ...payment, status: paymentStatus } };
   }
   if (payment.expires_at && new Date(payment.expires_at).getTime() < Date.now()) {
@@ -59,7 +70,7 @@ const status_get = defineEventHandler(async (event) => {
     statusResponse.transactionState
   );
   await updateOrderPaymentStatus(database, paymentId, status, {
-    payload: JSON.stringify({ vtbStatusResponse: statusResponse })
+    payload: mergePayload(payment.payload, { vtbStatusResponse: statusResponse })
   });
   const updatedPayment = await getOrderPayment(database, paymentId);
   return {

@@ -1,14 +1,16 @@
-import { d as defineEventHandler, r as readBody, y as normalizeSiteOrderItems, z as getSiteOrderItemsAmount, c as createError, u as useDatabase, A as createSiteOrder } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, D as normalizeSiteOrderItems, E as getSiteOrderItemsAmount, c as createError, u as useDatabase, F as createSiteOrder } from '../../nitro/nitro.mjs';
+import 'node:fs/promises';
+import 'kysely';
+import 'node:child_process';
+import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
-import 'kysely';
 import 'mysql2';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -35,6 +37,7 @@ const index_post = defineEventHandler(async (event) => {
   return {
     order: {
       id: order.id,
+      orderNumber: order.orderNumber,
       accessToken: order.accessToken,
       amount: order.amount,
       status: "pending"

@@ -1,11 +1,9 @@
 <script setup>
-import { authClient } from '~/utils/auth-client.js'
-
 const isOpen = defineModel({ required: true })
 const emit = defineEmits(['pay', 'continue-shopping'])
 
 const { items: cartItems, updateQuantity, removeItems, updateItem } = useCart()
-const session = authClient.useSession()
+const session = useClientAuthSession()
 
 const selectedItems = computed(() => cartItems.value.filter(item => item.selected))
 const sessionUser = computed(() => session.value?.data?.user ?? null)

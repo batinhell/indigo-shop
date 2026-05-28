@@ -1,29 +1,16 @@
 import { useDatabase } from '../../../utils/database.js'
-import { getOwnedSiteOrder } from '../../../utils/site-orders.js'
+import { serializeInvoice } from '../../../utils/invoice-serializer.js'
+import { getInvoiceByOrderId } from '../../../utils/invoices.js'
+import { getOwnedSiteOrder, getSiteOrderWorkflowStatus, parseSiteOrderPayload } from '../../../utils/site-orders.js'
+import { getSiteOrderStatusLabel, isSiteOrderInWork } from '~~/shared/utils/site-order-status.js'
+import { getSitePaymentStatusLabel } from '~~/shared/utils/site-payment-status.js'
 
 function formatMoney(value) {
   return `${Number(value || 0).toLocaleString('ru-RU')} ₽`
 }
 
-function getStatusLabel(status) {
-  return {
-    pending: 'Ожидает оплаты',
-    paid: 'Оплачен',
-    failed: 'Оплата не прошла',
-    expired: 'Оплата истекла',
-    cancelled: 'Отменен'
-  }[status] || 'Ожидает оплаты'
-}
-
-function parsePayload(value) {
-  if (!value) return null
-  if (typeof value === 'object') return value
-
-  try {
-    return JSON.parse(value)
-  } catch {
-    return null
-  }
+function canCancelOrder(workflowStatus) {
+  return isSiteOrderInWork(workflowStatus)
 }
 
 export default defineEventHandler(async (event) => {
@@ -39,7 +26,9 @@ export default defineEventHandler(async (event) => {
 
   const database = useDatabase()
   const order = await getOwnedSiteOrder(database, event, orderId)
-  const orderPayload = parsePayload(order.payload) || {}
+  const invoice = await getInvoiceByOrderId(database, orderId)
+  const orderPayload = parseSiteOrderPayload(order.payload)
+  const workflowStatus = getSiteOrderWorkflowStatus(order, orderPayload)
   const checkout = orderPayload.checkout || {}
   const items = await database
     .selectFrom('site_order_items')
@@ -54,8 +43,11 @@ export default defineEventHandler(async (event) => {
       publicNumber: order.order_number || `SITE-${order.id}`,
       titleLabel: `Заказ ${order.order_number || `SITE-${order.id}`}`,
       status: order.payment_status,
-      statusLabel: getStatusLabel(order.payment_status),
+      statusLabel: getSitePaymentStatusLabel(order.payment_status),
       paymentStatus: order.payment_status,
+      paymentProvider: order.payment_provider || '',
+      workflowStatus,
+      workflowStatusLabel: getSiteOrderStatusLabel(workflowStatus),
       createdAt: order.created_at,
       totalPrice: Number(order.amount || 0),
       totalPriceLabel: formatMoney(order.amount),
@@ -69,7 +61,7 @@ export default defineEventHandler(async (event) => {
         type: checkout.recipient?.type || 'self'
       },
       items: items.map((item) => {
-        const payload = parsePayload(item.payload) || {}
+        const payload = parseSiteOrderPayload(item.payload)
 
         return {
           id: Number(item.id),
@@ -93,8 +85,9 @@ export default defineEventHandler(async (event) => {
         total: Number(order.amount || 0),
         totalLabel: formatMoney(order.amount)
       },
-      canCancel: ['pending', 'failed', 'expired'].includes(order.payment_status),
-      canRepeat: true
+      canCancel: canCancelOrder(workflowStatus),
+      canRepeat: order.payment_status === 'paid',
+      invoice: invoice ? serializeInvoice(invoice, order) : null
     }
   }
 })

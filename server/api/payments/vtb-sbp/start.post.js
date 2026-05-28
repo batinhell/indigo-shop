@@ -6,6 +6,7 @@ import {
 } from '../../../utils/order-payment.js'
 import {
   createSiteOrder,
+  createSiteOrderNumber,
   getOwnedSiteOrder,
   getSiteOrderItemsAmount,
   normalizeSiteOrderItems
@@ -15,12 +16,6 @@ import {
   getVtbQrExpiresAt,
   registerVtbOrder
 } from '../../../utils/vtb-payment.js'
-
-
-function createOrderNumber(orderId) {
-  const suffix = Date.now().toString(36).toUpperCase()
-  return `SITE-${orderId}-${suffix}`.slice(0, 36)
-}
 
 async function resolveOrder(event, database, body, items, amount) {
   const orderId = Number(body?.orderId)
@@ -51,7 +46,12 @@ export default defineEventHandler(async (event) => {
 
   const database = useDatabase()
   const orderId = await resolveOrder(event, database, body, items, amount)
-  const orderNumber = createOrderNumber(orderId)
+  const existingOrder = await database
+    .selectFrom('site_orders')
+    .select(['order_number'])
+    .where('id', '=', orderId)
+    .executeTakeFirst()
+  const orderNumber = existingOrder?.order_number || createSiteOrderNumber(orderId)
   const paymentId = await createPendingSiteOrderPayment(database, {
     siteOrderId: orderId,
     orderNumber,
