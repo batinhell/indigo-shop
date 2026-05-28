@@ -1,1 +1,0 @@
-import{bk as a,bl as o,s as i,v as n}from"./BsmcB0oG.js";import{authClient as r}from"./CPxKNE3W.js";const l=a(async()=>{let e,t;const{data:s}=([e,t]=o(()=>r.useSession(i)),e=await e,t(),e);if(!s.value)return n("/")});export{l as default};

@@ -1,15 +1,17 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, toRef, useSlots, ref, withCtx, renderSlot, openBlock, createBlock, createCommentVNode, toDisplayString, defineComponent, shallowRef, getCurrentInstance, provide, cloneVNode, h, createElementBlock, resolveComponent, isRef, toValue, onServerPrefetch, useModel, createTextVNode, mergeModels, nextTick, reactive, defineAsyncComponent, useSSRContext, Suspense, Fragment, createApp, renderList, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, withModifiers, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
-import { ak as serialize, al as hasProtocol, am as isScriptProtocol, ai as joinURL, an as klona, ao as defu, ap as parseQuery$1, aq as withQuery, ar as sanitizeStatusCode, as as parseURL$1, at as encodePath$1, au as decodePath, av as defuFn, aw as isEqual, ax as getContext, G as getRequestHeaders, ay as withTrailingSlash, az as withoutTrailingSlash, c as createError$1, aA as $fetch$1, aB as baseURL, aC as hash, aD as executeAsync } from '../nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, useAttrs, mergeModels, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
+import { ak as serialize, al as hasProtocol, am as isScriptProtocol, ai as joinURL, an as parseQuery$1, ao as withQuery, ap as sanitizeStatusCode, aq as parseURL$1, ar as encodePath$1, as as decodePath, at as klona, au as defu, av as defuFn, aw as isPhoneLike, ax as getIdentifierError, Z as getRegistrationEmailError, b as normalizePhoneDigits, ay as getRussianSecondsWord, az as formatCompactPhone, aA as getContext, aB as isEqual, G as getRequestHeaders, f as formatAuthPhone, aC as formatPhone, aD as unmaskPhoneToEmail, aE as withTrailingSlash, aF as withoutTrailingSlash, c as createError$1, aG as $fetch$1, aH as baseURL, aI as hash, aJ as executeAsync } from '../nitro/nitro.mjs';
 import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
 import { debounce } from 'perfect-debounce';
 import { isPlainObject } from '@vue/shared';
 import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
-import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrRenderClass, ssrInterpolate, ssrRenderAttrs, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrRenderSuspense, ssrIncludeBooleanAttr } from 'vue/server-renderer';
-import { useForwardProps, createContext, Primitive, Slot, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, useForwardPropsEmits, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
-import { reactivePick, reactiveOmit, createSharedComposable } from '@vueuse/core';
+import { ssrRenderComponent, ssrRenderVNode, ssrRenderSlot, ssrInterpolate, ssrRenderClass, ssrRenderAttrs, ssrGetDynamicModelProps, ssrRenderAttr, ssrRenderList, ssrRenderStyle, ssrIncludeBooleanAttr, ssrLooseContain, ssrRenderSuspense } from 'vue/server-renderer';
+import { useForwardProps, useForwardPropsEmits, DialogRoot, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, DialogTrigger, DialogPortal, DialogOverlay, createContext, Primitive, Slot, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
+import { reactivePick, createReusableTemplate, reactiveOmit, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
 import { getIconCSS } from '@iconify/utils/lib/css/icon';
+import { createAuthClient } from 'better-auth/vue';
+import { phoneNumberClient } from 'better-auth/client/plugins';
 import { u as useSeoMeta$1, a as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
 import 'node:fs/promises';
 import 'kysely';
@@ -2113,58 +2115,58 @@ const _routes = [
     name: "profile-orders-orderId",
     path: "/profile/orders/:orderId()",
     meta: { "middleware": ["auth"] },
-    component: () => import('./_orderId_-BlWHaOle.mjs')
+    component: () => import('./_orderId_-Dp7auTni.mjs')
   },
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-HHWjWpjM.mjs')
+    component: () => import('./cart-B6eNENIk.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-CY4LO3aa.mjs')
+    component: () => import('./catalog-BUG0dhxp.mjs')
   },
   {
     name: "cookie-policy",
     path: "/cookie-policy",
-    component: () => import('./cookie-policy-CacMG2Gr.mjs')
+    component: () => import('./cookie-policy-BPwat5PP.mjs')
   },
   {
     name: "delivery",
     path: "/delivery",
-    component: () => import('./delivery-FhO1f5zY.mjs')
+    component: () => import('./delivery-IspMtGyU.mjs')
   },
   {
     name: "legal-information",
     path: "/legal-information",
-    component: () => import('./legal-information-C8YW1mLO.mjs')
+    component: () => import('./legal-information-DUomjzun.mjs')
   },
   {
     name: "payment",
     path: "/payment",
-    component: () => import('./payment-CJwBJYkk.mjs')
+    component: () => import('./payment-Bq3AszfY.mjs')
   },
   {
     name: "privacy-policy",
     path: "/privacy-policy",
-    component: () => import('./privacy-policy-DXHnskEm.mjs')
+    component: () => import('./privacy-policy-CwySkDed.mjs')
   },
   {
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-RnUrk4lR.mjs')
+    component: () => import('./index-DIwWRuK9.mjs')
   },
   {
     name: "user-agreement",
     path: "/user-agreement",
-    component: () => import('./user-agreement-By6G_G5H.mjs')
+    component: () => import('./user-agreement-SU0PuB52.mjs')
   },
   {
     name: "index",
     path: "/",
-    component: () => import('./index-6XD_UU86.mjs')
+    component: () => import('./index-CR7OnEsU.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -2290,7 +2292,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./auth-B26BbqHC.mjs')
+  auth: () => import('./auth-DzLwixKu.mjs')
 };
 const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -2514,7 +2516,7 @@ defineComponent({
   }
 });
 const clientOnlySymbol = /* @__PURE__ */ Symbol.for("nuxt:client-only");
-const __nuxt_component_5$1 = defineComponent({
+defineComponent({
   name: "ClientOnly",
   inheritAttrs: false,
   props: ["fallback", "placeholder", "placeholderTag", "fallbackTag"],
@@ -3306,7 +3308,7 @@ function defineNuxtLink(options) {
     }
   });
 }
-const __nuxt_component_0$2 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+const __nuxt_component_0$3 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
 function applyTrailingSlashBehavior(to, trailingSlash) {
   const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
   const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
@@ -4242,7 +4244,7 @@ const NuxtIconSvg = /* @__PURE__ */ defineComponent({
     }, slots);
   }
 });
-const __nuxt_component_0$1 = defineComponent({
+const __nuxt_component_0$2 = defineComponent({
   name: "NuxtIcon",
   props: {
     name: {
@@ -4291,9 +4293,9 @@ const __nuxt_component_0$1 = defineComponent({
 });
 const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: __nuxt_component_0$1
+  default: __nuxt_component_0$2
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$i = {
+const _sfc_main$u = {
   __name: "UIcon",
   __ssrInlineRender: true,
   props: {
@@ -4306,7 +4308,7 @@ const _sfc_main$i = {
     const props = __props;
     const iconProps = useForwardProps(reactivePick(props, "name", "mode", "size", "customize"));
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_Icon = __nuxt_component_0$1;
+      const _component_Icon = __nuxt_component_0$2;
       if (typeof __props.name === "string") {
         _push(ssrRenderComponent(_component_Icon, mergeProps(unref(iconProps), _attrs), null, _parent));
       } else {
@@ -4315,11 +4317,11 @@ const _sfc_main$i = {
     };
   }
 };
-const _sfc_setup$i = _sfc_main$i.setup;
-_sfc_main$i.setup = (props, ctx) => {
+const _sfc_setup$u = _sfc_main$u.setup;
+_sfc_main$u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
-  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
+  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
 };
 const ImageComponent = "img";
 const avatarGroupInjectionKey = /* @__PURE__ */ Symbol("nuxt-ui.avatar-group");
@@ -4331,7 +4333,7 @@ function useAvatarGroup(props) {
     size
   };
 }
-const theme$7 = {
+const theme$8 = {
   "slots": {
     "root": "relative inline-flex items-center justify-center shrink-0",
     "base": "rounded-full ring ring-bg flex items-center justify-center text-inverted font-medium whitespace-nowrap"
@@ -4398,7 +4400,7 @@ const theme$7 = {
     "position": "top-right"
   }
 };
-const _sfc_main$h = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$t = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UChip",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -4422,7 +4424,7 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     const { size } = useAvatarGroup(props);
     const appConfig2 = useAppConfig();
     const uiProp = useComponentUI("chip", props);
-    const ui = computed(() => tv({ extend: tv(theme$7), ...appConfig2.ui?.chip || {} })({
+    const ui = computed(() => tv({ extend: tv(theme$8), ...appConfig2.ui?.chip || {} })({
       color: props.color,
       size: size.value,
       position: props.position,
@@ -4483,13 +4485,13 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$h = _sfc_main$h.setup;
-_sfc_main$h.setup = (props, ctx) => {
+const _sfc_setup$t = _sfc_main$t.setup;
+_sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
-  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
+  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
-const theme$6 = {
+const theme$7 = {
   "slots": {
     "root": "inline-flex items-center justify-center shrink-0 select-none rounded-full align-middle bg-elevated",
     "image": "h-full w-full rounded-[inherit] object-cover",
@@ -4531,7 +4533,7 @@ const theme$6 = {
     "size": "md"
   }
 };
-const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UAvatar",
   __ssrInlineRender: true,
   props: {
@@ -4558,7 +4560,7 @@ const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     const appConfig2 = useAppConfig();
     const uiProp = useComponentUI("avatar", props);
     const { size } = useAvatarGroup(props);
-    const ui = computed(() => tv({ extend: tv(theme$6), ...appConfig2.ui?.avatar || {} })({
+    const ui = computed(() => tv({ extend: tv(theme$7), ...appConfig2.ui?.avatar || {} })({
       size: size.value
     }));
     const sizePx = computed(() => ({
@@ -4582,7 +4584,7 @@ const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       error.value = true;
     }
     return (_ctx, _push, _parent, _attrs) => {
-      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$h : unref(Primitive)), mergeProps({
+      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$t : unref(Primitive)), mergeProps({
         as: as.value.root
       }, props.chip ? typeof props.chip === "object" ? { inset: true, ...props.chip } : { inset: true } : {}, {
         "data-slot": "root",
@@ -4608,7 +4610,7 @@ const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   if (_push3) {
                     ssrRenderSlot(_ctx.$slots, "default", {}, () => {
                       if (__props.icon) {
-                        _push3(ssrRenderComponent(_sfc_main$i, {
+                        _push3(ssrRenderComponent(_sfc_main$u, {
                           name: __props.icon,
                           "data-slot": "icon",
                           class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -4620,7 +4622,7 @@ const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   } else {
                     return [
                       renderSlot(_ctx.$slots, "default", {}, () => [
-                        __props.icon ? (openBlock(), createBlock(_sfc_main$i, {
+                        __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
                           key: 0,
                           name: __props.icon,
                           "data-slot": "icon",
@@ -4652,7 +4654,7 @@ const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
               }), null, 16, ["src", "alt", "width", "height", "class"])) : (openBlock(), createBlock(unref(Slot), mergeProps({ key: 1 }, _ctx.$attrs), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "default", {}, () => [
-                    __props.icon ? (openBlock(), createBlock(_sfc_main$i, {
+                    __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
                       key: 0,
                       name: __props.icon,
                       "data-slot": "icon",
@@ -4674,11 +4676,11 @@ const _sfc_main$g = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$g = _sfc_main$g.setup;
-_sfc_main$g.setup = (props, ctx) => {
+const _sfc_setup$s = _sfc_main$s.setup;
+_sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
-  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
+  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
 function useComponentIcons(componentProps) {
   const appConfig2 = useAppConfig();
@@ -4774,7 +4776,7 @@ function isPartiallyEqual(item1, item2) {
   const item2Filtered = Object.fromEntries(Object.entries(item2).filter(([key]) => !diffedKeys.has(key)));
   return isEqual(item1Filtered, item2Filtered);
 }
-const _sfc_main$f = {
+const _sfc_main$r = {
   __name: "ULinkBase",
   __ssrInlineRender: true,
   props: {
@@ -4838,13 +4840,13 @@ const _sfc_main$f = {
     };
   }
 };
-const _sfc_setup$f = _sfc_main$f.setup;
-_sfc_main$f.setup = (props, ctx) => {
+const _sfc_setup$r = _sfc_main$r.setup;
+_sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
-  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
-const theme$5 = {
+const theme$6 = {
   "base": "focus-visible:outline-primary",
   "variants": {
     "active": {
@@ -4866,7 +4868,7 @@ const theme$5 = {
     }
   ]
 };
-const _sfc_main$e = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "ULink",
   __ssrInlineRender: true,
   props: {
@@ -4904,7 +4906,7 @@ const _sfc_main$e = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     const appConfig2 = useAppConfig();
     const nuxtLinkProps = useForwardProps(reactiveOmit(props, "as", "type", "disabled", "active", "exact", "exactQuery", "exactHash", "activeClass", "inactiveClass", "to", "href", "raw", "custom", "class"));
     const ui = computed(() => tv({
-      extend: tv(theme$5),
+      extend: tv(theme$6),
       ...defu({
         variants: {
           active: {
@@ -4943,7 +4945,7 @@ const _sfc_main$e = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       return ui.value({ class: props.class, active, disabled: props.disabled });
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(ssrRenderComponent(_component_NuxtLink, mergeProps(unref(nuxtLinkProps), {
         to: to.value,
         custom: ""
@@ -4965,7 +4967,7 @@ const _sfc_main$e = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
               }, null, _push2, _parent2, _scopeId);
             } else {
-              _push2(ssrRenderComponent(_sfc_main$f, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$r, mergeProps({
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -5009,7 +5011,7 @@ const _sfc_main$e = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 target: rest.target,
                 isExternal: rest.isExternal,
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
-              })) : (openBlock(), createBlock(_sfc_main$f, mergeProps({ key: 1 }, {
+              })) : (openBlock(), createBlock(_sfc_main$r, mergeProps({ key: 1 }, {
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -5038,13 +5040,13 @@ const _sfc_main$e = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$e = _sfc_main$e.setup;
-_sfc_main$e.setup = (props, ctx) => {
+const _sfc_setup$q = _sfc_main$q.setup;
+_sfc_main$q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
-  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
+  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
 };
-const theme$4 = {
+const theme$5 = {
   "slots": {
     "base": [
       "rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75",
@@ -5395,7 +5397,7 @@ const theme$4 = {
     "size": "md"
   }
 };
-const _sfc_main$d = {
+const _sfc_main$p = {
   __name: "UButton",
   __ssrInlineRender: true,
   props: {
@@ -5469,7 +5471,7 @@ const _sfc_main$d = {
       computed(() => ({ ...props, loading: isLoading.value }))
     );
     const ui = computed(() => tv({
-      extend: tv(theme$4),
+      extend: tv(theme$5),
       ...defu({
         variants: {
           active: {
@@ -5494,13 +5496,13 @@ const _sfc_main$d = {
       fieldGroup: orientation.value
     }));
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$e, mergeProps({
+      _push(ssrRenderComponent(_sfc_main$q, mergeProps({
         type: __props.type,
         disabled: __props.disabled || isLoading.value
       }, unref(omit)(unref(linkProps), ["type", "disabled", "onClick"]), { custom: "" }, _attrs), {
         default: withCtx(({ active, ...slotProps }, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_sfc_main$f, mergeProps(slotProps, {
+            _push2(ssrRenderComponent(_sfc_main$r, mergeProps(slotProps, {
               "data-slot": "base",
               class: ui.value.base({
                 class: [unref(uiProp)?.base, props.class],
@@ -5514,13 +5516,13 @@ const _sfc_main$d = {
                 if (_push3) {
                   ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
                     if (unref(isLeading) && unref(leadingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$i, {
+                      _push3(ssrRenderComponent(_sfc_main$u, {
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
                       }, null, _parent3, _scopeId2));
                     } else if (!!__props.avatar) {
-                      _push3(ssrRenderComponent(_sfc_main$g, mergeProps({
+                      _push3(ssrRenderComponent(_sfc_main$s, mergeProps({
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
                         "data-slot": "leadingAvatar",
@@ -5539,7 +5541,7 @@ const _sfc_main$d = {
                   }, _push3, _parent3, _scopeId2);
                   ssrRenderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => {
                     if (unref(isTrailing) && unref(trailingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$i, {
+                      _push3(ssrRenderComponent(_sfc_main$u, {
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
                         class: ui.value.trailingIcon({ class: unref(uiProp)?.trailingIcon, active })
@@ -5551,12 +5553,12 @@ const _sfc_main$d = {
                 } else {
                   return [
                     renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$i, {
+                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                         key: 0,
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$g, mergeProps({
+                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
                         key: 1,
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
@@ -5572,7 +5574,7 @@ const _sfc_main$d = {
                       }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                     ]),
                     renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$i, {
+                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                         key: 0,
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
@@ -5586,7 +5588,7 @@ const _sfc_main$d = {
             }, _parent2, _scopeId));
           } else {
             return [
-              createVNode(_sfc_main$f, mergeProps(slotProps, {
+              createVNode(_sfc_main$r, mergeProps(slotProps, {
                 "data-slot": "base",
                 class: ui.value.base({
                   class: [unref(uiProp)?.base, props.class],
@@ -5598,12 +5600,12 @@ const _sfc_main$d = {
               }), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$i, {
+                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                       key: 0,
                       name: unref(leadingIconName),
                       "data-slot": "leadingIcon",
                       class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$g, mergeProps({
+                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
                       key: 1,
                       size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                     }, __props.avatar, {
@@ -5619,7 +5621,7 @@ const _sfc_main$d = {
                     }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                   ]),
                   renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$i, {
+                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
                       key: 0,
                       name: unref(trailingIconName),
                       "data-slot": "trailingIcon",
@@ -5637,13 +5639,13 @@ const _sfc_main$d = {
     };
   }
 };
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
+const _sfc_setup$p = _sfc_main$p.setup;
+_sfc_main$p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
 };
-const theme$3 = {
+const theme$4 = {
   "slots": {
     "root": "gap-2",
     "base": "relative overflow-hidden rounded-full bg-accented",
@@ -5901,7 +5903,7 @@ const theme$3 = {
     "size": "md"
   }
 };
-const _sfc_main$c = {
+const _sfc_main$o = {
   __name: "UProgress",
   __ssrInlineRender: true,
   props: {
@@ -5998,7 +6000,7 @@ const _sfc_main$c = {
       }
       return "other";
     }
-    const ui = computed(() => tv({ extend: tv(theme$3), ...appConfig2.ui?.progress || {} })({
+    const ui = computed(() => tv({ extend: tv(theme$4), ...appConfig2.ui?.progress || {} })({
       animation: props.animation,
       size: props.size,
       color: props.color,
@@ -6113,13 +6115,13 @@ const _sfc_main$c = {
     };
   }
 };
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
+const _sfc_setup$o = _sfc_main$o.setup;
+_sfc_main$o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
 };
-const theme$2 = {
+const theme$3 = {
   "slots": {
     "root": "relative group overflow-hidden bg-default shadow-lg rounded-lg ring ring-default p-4 flex gap-2.5 focus:outline-none",
     "wrapper": "w-0 flex-1 flex flex-col",
@@ -6183,7 +6185,7 @@ const theme$2 = {
     "color": "primary"
   }
 };
-const _sfc_main$b = {
+const _sfc_main$n = {
   __name: "UToast",
   __ssrInlineRender: true,
   props: {
@@ -6214,7 +6216,7 @@ const _sfc_main$b = {
     const appConfig2 = useAppConfig();
     const uiProp = useComponentUI("toast", props);
     const rootProps = useForwardPropsEmits(reactivePick(props, "as", "defaultOpen", "open", "duration", "type"), emits);
-    const ui = computed(() => tv({ extend: tv(theme$2), ...appConfig2.ui?.toast || {} })({
+    const ui = computed(() => tv({ extend: tv(theme$3), ...appConfig2.ui?.toast || {} })({
       color: props.color,
       orientation: props.orientation,
       title: !!props.title || !!slots.title
@@ -6238,14 +6240,14 @@ const _sfc_main$b = {
           if (_push2) {
             ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
               if (__props.avatar) {
-                _push2(ssrRenderComponent(_sfc_main$g, mergeProps({
+                _push2(ssrRenderComponent(_sfc_main$s, mergeProps({
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
                 }), null, _parent2, _scopeId));
               } else if (__props.icon) {
-                _push2(ssrRenderComponent(_sfc_main$i, {
+                _push2(ssrRenderComponent(_sfc_main$u, {
                   name: __props.icon,
                   "data-slot": "icon",
                   class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -6331,13 +6333,13 @@ const _sfc_main$b = {
                   }, {
                     default: withCtx((_, _push3, _parent3, _scopeId2) => {
                       if (_push3) {
-                        _push3(ssrRenderComponent(_sfc_main$d, mergeProps({
+                        _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, _parent3, _scopeId2));
                       } else {
                         return [
-                          createVNode(_sfc_main$d, mergeProps({
+                          createVNode(_sfc_main$p, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -6369,13 +6371,13 @@ const _sfc_main$b = {
                     }, {
                       default: withCtx((_, _push3, _parent3, _scopeId2) => {
                         if (_push3) {
-                          _push3(ssrRenderComponent(_sfc_main$d, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, _parent3, _scopeId2));
                         } else {
                           return [
-                            createVNode(_sfc_main$d, mergeProps({
+                            createVNode(_sfc_main$p, mergeProps({
                               size: "xs",
                               color: __props.color
                             }, { ref_for: true }, action), null, 16, ["color"])
@@ -6396,7 +6398,7 @@ const _sfc_main$b = {
                     if (_push3) {
                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                         if (__props.close) {
-                          _push3(ssrRenderComponent(_sfc_main$d, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
                             variant: "link",
@@ -6414,7 +6416,7 @@ const _sfc_main$b = {
                     } else {
                       return [
                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                          __props.close ? (openBlock(), createBlock(_sfc_main$d, mergeProps({
+                          __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                             key: 0,
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
@@ -6440,7 +6442,7 @@ const _sfc_main$b = {
               _push2(`<!---->`);
             }
             if (__props.progress && open && remaining > 0 && duration) {
-              _push2(ssrRenderComponent(_sfc_main$c, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$o, mergeProps({
                 "model-value": remaining / duration * 100,
                 color: __props.color
               }, typeof __props.progress === "object" ? __props.progress : {}, {
@@ -6454,13 +6456,13 @@ const _sfc_main$b = {
           } else {
             return [
               renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                __props.avatar ? (openBlock(), createBlock(_sfc_main$g, mergeProps({
+                __props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
                   key: 0,
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
-                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$i, {
+                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
                   key: 1,
                   name: __props.icon,
                   "data-slot": "icon",
@@ -6514,7 +6516,7 @@ const _sfc_main$b = {
                         }, ["stop"])
                       }, {
                         default: withCtx(() => [
-                          createVNode(_sfc_main$d, mergeProps({
+                          createVNode(_sfc_main$p, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -6540,7 +6542,7 @@ const _sfc_main$b = {
                       }, ["stop"])
                     }, {
                       default: withCtx(() => [
-                        createVNode(_sfc_main$d, mergeProps({
+                        createVNode(_sfc_main$p, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, 16, ["color"])
@@ -6555,7 +6557,7 @@ const _sfc_main$b = {
                 }, {
                   default: withCtx(() => [
                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                      __props.close ? (openBlock(), createBlock(_sfc_main$d, mergeProps({
+                      __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
                         key: 0,
                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                         color: "neutral",
@@ -6572,7 +6574,7 @@ const _sfc_main$b = {
                   _: 3
                 })) : createCommentVNode("", true)
               ], 2)) : createCommentVNode("", true),
-              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$c, mergeProps({
+              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
                 key: 1,
                 "model-value": remaining / duration * 100,
                 color: __props.color
@@ -6589,13 +6591,13 @@ const _sfc_main$b = {
     };
   }
 };
-const _sfc_setup$b = _sfc_main$b.setup;
-_sfc_main$b.setup = (props, ctx) => {
+const _sfc_setup$n = _sfc_main$n.setup;
+_sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
-  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
-const theme$1 = {
+const theme$2 = {
   "slots": {
     "viewport": "fixed flex flex-col w-[calc(100%-2rem)] sm:w-96 z-[100] data-[expanded=true]:h-(--height) focus:outline-none",
     "base": "pointer-events-auto absolute inset-x-0 z-(--index) transform-(--transform) data-[expanded=false]:data-[front=false]:h-(--front-height) data-[expanded=false]:data-[front=false]:*:opacity-0 data-[front=false]:*:transition-opacity data-[front=false]:*:duration-100 data-[state=closed]:animate-[toast-closed_200ms_ease-in-out] data-[state=closed]:data-[expanded=false]:data-[front=false]:animate-[toast-collapsed-closed_200ms_ease-in-out] data-[state=open]:data-[pulsing=odd]:animate-[toast-pulse-a_300ms_ease-out] data-[state=open]:data-[pulsing=even]:animate-[toast-pulse-b_300ms_ease-out] data-[swipe=move]:transition-none transition-[transform,translate,height] duration-200 ease-out"
@@ -6673,7 +6675,7 @@ const theme$1 = {
 const __default__$1 = {
   name: "Toaster"
 };
-const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$1, {
+const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
   __ssrInlineRender: true,
   props: {
     position: { type: null, required: false },
@@ -6711,7 +6713,7 @@ const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$1, {
       }
       return "right";
     });
-    const ui = computed(() => tv({ extend: tv(theme$1), ...appConfig2.ui?.toaster || {} })({
+    const ui = computed(() => tv({ extend: tv(theme$2), ...appConfig2.ui?.toaster || {} })({
       position: props.position,
       swipeDirection: swipeDirection.value
     }));
@@ -6736,7 +6738,7 @@ const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$1, {
             ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
             _push2(`<!--[-->`);
             ssrRenderList(unref(toasts), (toast, index2) => {
-              _push2(ssrRenderComponent(_sfc_main$b, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$n, mergeProps({
                 key: toast.id,
                 ref_for: true,
                 ref_key: "refs",
@@ -6804,7 +6806,7 @@ const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$1, {
             return [
               renderSlot(_ctx.$slots, "default"),
               (openBlock(true), createBlock(Fragment, null, renderList(unref(toasts), (toast, index2) => {
-                return openBlock(), createBlock(_sfc_main$b, mergeProps({
+                return openBlock(), createBlock(_sfc_main$n, mergeProps({
                   key: toast.id,
                   ref_for: true,
                   ref_key: "refs",
@@ -6856,13 +6858,13 @@ const _sfc_main$a = /* @__PURE__ */ Object.assign(__default__$1, {
     };
   }
 });
-const _sfc_setup$a = _sfc_main$a.setup;
-_sfc_main$a.setup = (props, ctx) => {
+const _sfc_setup$m = _sfc_main$m.setup;
+_sfc_main$m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
-  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
 };
-const UToaster = Object.assign(_sfc_main$a, { __name: "UToaster" });
+const UToaster = Object.assign(_sfc_main$m, { __name: "UToaster" });
 function _useOverlay() {
   const overlays = shallowReactive([]);
   const create = (component, _options) => {
@@ -6947,7 +6949,7 @@ function _useOverlay() {
   };
 }
 const useOverlay = /* @__PURE__ */ createSharedComposable(_useOverlay);
-const _sfc_main$9 = {
+const _sfc_main$l = {
   __name: "UOverlayProvider",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6976,16 +6978,16 @@ const _sfc_main$9 = {
     };
   }
 };
-const _sfc_setup$9 = _sfc_main$9.setup;
-_sfc_main$9.setup = (props, ctx) => {
+const _sfc_setup$l = _sfc_main$l.setup;
+_sfc_main$l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
-  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
 };
 const __default__ = {
   name: "App"
 };
-const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__, {
+const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
   __ssrInlineRender: true,
   props: {
     tooltip: { type: Object, required: false },
@@ -7032,7 +7034,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__, {
                   } else {
                     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
                   }
-                  _push3(ssrRenderComponent(_sfc_main$9, null, null, _parent3, _scopeId2));
+                  _push3(ssrRenderComponent(_sfc_main$l, null, null, _parent3, _scopeId2));
                 } else {
                   return [
                     __props.toaster !== null ? (openBlock(), createBlock(UToaster, mergeProps({ key: 0 }, toasterProps.value), {
@@ -7041,7 +7043,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__, {
                       ]),
                       _: 3
                     }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                    createVNode(_sfc_main$9)
+                    createVNode(_sfc_main$l)
                   ];
                 }
               }),
@@ -7057,7 +7059,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__, {
                     ]),
                     _: 3
                   }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                  createVNode(_sfc_main$9)
+                  createVNode(_sfc_main$l)
                 ]),
                 _: 3
               }, 16)
@@ -7069,13 +7071,13 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign(__default__, {
     };
   }
 });
-const _sfc_setup$8 = _sfc_main$8.setup;
-_sfc_main$8.setup = (props, ctx) => {
+const _sfc_setup$k = _sfc_main$k.setup;
+_sfc_main$k.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/App.vue");
-  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
 };
-const __nuxt_component_0 = Object.assign(_sfc_main$8, { __name: "UApp" });
+const __nuxt_component_0$1 = Object.assign(_sfc_main$k, { __name: "UApp" });
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -7083,7 +7085,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$7 = {
+const _sfc_main$j = {
   __name: "DevGridOverlay",
   __ssrInlineRender: true,
   props: {
@@ -7139,13 +7141,13 @@ const _sfc_main$7 = {
     };
   }
 };
-const _sfc_setup$7 = _sfc_main$7.setup;
-_sfc_main$7.setup = (props, ctx) => {
+const _sfc_setup$j = _sfc_main$j.setup;
+_sfc_main$j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/DevGridOverlay.vue");
-  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-e31d3a8a"]]);
+const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e31d3a8a"]]);
 const alert16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 7.5V4H9V7.5H7ZM9.25 11C9.25 11.6904 8.69036 12.25 8 12.25C7.30964 12.25 6.75 11.6904 6.75 11C6.75 10.3096 7.30964 9.75 8 9.75C8.69036 9.75 9.25 10.3096 9.25 11Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const arrowRight16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 13.4142 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M6 0.292893C6.39052 -0.0976311 7.02369 -0.0976311 7.41421 0.292893L13.4142 6.29289L12 7.70711L7.70711 3.41421V13H5.70711V3.41421L1.41421 7.70711L0 6.29289L6 0.292893Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const arrowRight24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15.4141 14.8755" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Union" d="M6.88672 0.291507C7.36328 -0.0971695 8.05078 -0.0971683 8.52734 0.291507L8.62598 0.380374L15.4141 7.16846L14 8.58252L8.70703 3.28955V14.8755H6.70703V3.28955L1.41406 8.58252L0 7.16846L6.78809 0.380374L6.88672 0.291507Z" fill="var(--fill-0, white)"/>\n</svg>\n';
@@ -7173,7 +7175,7 @@ const termLow12 = '<svg preserveAspectRatio="none" width="100%" height="100%" ov
 const termMedium12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
 const termShort12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #0ABD5D)"/>\n</svg>\n';
 const invoiceTime24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24ZM10.5 4.5V12C10.5 12.5383 10.7884 13.0353 11.2558 13.3024L16.5058 16.3024L17.9942 13.6976L13.5 11.1295V4.5H10.5Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
-const _sfc_main$6 = {
+const _sfc_main$i = {
   __name: "AppIcon",
   __ssrInlineRender: true,
   props: {
@@ -7599,26 +7601,2936 @@ const _sfc_main$6 = {
     };
   }
 };
+const _sfc_setup$i = _sfc_main$i.setup;
+_sfc_main$i.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
+  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
+};
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-40683738"]]);
+function pointerDownOutside(e, options = {}) {
+  const originalEvent = e.detail.originalEvent;
+  const target = originalEvent.target;
+  if (!target?.isConnected) {
+    e.preventDefault();
+    return;
+  }
+  if (options.scrollable) {
+    if (originalEvent.offsetX > target.clientWidth || originalEvent.offsetY > target.clientHeight) {
+      e.preventDefault();
+    }
+  }
+}
+const theme$1 = {
+  "slots": {
+    "overlay": "fixed inset-0",
+    "content": "bg-default divide-y divide-default flex flex-col focus:outline-none",
+    "header": "flex items-center gap-1.5 p-4 sm:px-6 min-h-16",
+    "wrapper": "",
+    "body": "flex-1 p-4 sm:p-6",
+    "footer": "flex items-center gap-1.5 p-4 sm:px-6",
+    "title": "text-highlighted font-semibold",
+    "description": "mt-1 text-muted text-sm",
+    "close": "absolute top-4 end-4"
+  },
+  "variants": {
+    "transition": {
+      "true": {
+        "overlay": "data-[state=open]:animate-[fade-in_200ms_ease-out] data-[state=closed]:animate-[fade-out_200ms_ease-in]",
+        "content": "data-[state=open]:animate-[scale-in_200ms_ease-out] data-[state=closed]:animate-[scale-out_200ms_ease-in]"
+      }
+    },
+    "fullscreen": {
+      "true": {
+        "content": "inset-0"
+      },
+      "false": {
+        "content": "w-[calc(100vw-2rem)] max-w-lg rounded-lg shadow-lg ring ring-default"
+      }
+    },
+    "overlay": {
+      "true": {
+        "overlay": "bg-elevated/75"
+      }
+    },
+    "scrollable": {
+      "true": {
+        "overlay": "overflow-y-auto",
+        "content": "relative"
+      },
+      "false": {
+        "content": "fixed",
+        "body": "overflow-y-auto"
+      }
+    }
+  },
+  "compoundVariants": [
+    {
+      "scrollable": true,
+      "fullscreen": false,
+      "class": {
+        "overlay": "grid place-items-center p-4 sm:py-8"
+      }
+    },
+    {
+      "scrollable": false,
+      "fullscreen": false,
+      "class": {
+        "content": "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] overflow-hidden"
+      }
+    }
+  ]
+};
+const _sfc_main$h = {
+  __name: "UModal",
+  __ssrInlineRender: true,
+  props: {
+    title: { type: String, required: false },
+    description: { type: String, required: false },
+    content: { type: Object, required: false },
+    overlay: { type: Boolean, required: false, default: true },
+    scrollable: { type: Boolean, required: false },
+    transition: { type: Boolean, required: false, default: true },
+    fullscreen: { type: Boolean, required: false },
+    portal: { type: [Boolean, String], required: false, skipCheck: true, default: true },
+    close: { type: [Boolean, Object], required: false, default: true },
+    closeIcon: { type: null, required: false },
+    dismissible: { type: Boolean, required: false, default: true },
+    class: { type: null, required: false },
+    ui: { type: Object, required: false },
+    open: { type: Boolean, required: false },
+    defaultOpen: { type: Boolean, required: false },
+    modal: { type: Boolean, required: false, default: true }
+  },
+  emits: ["after:leave", "after:enter", "close:prevent", "update:open"],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    const emits = __emit;
+    const slots = useSlots();
+    const { t } = useLocale();
+    const appConfig2 = useAppConfig();
+    const uiProp = useComponentUI("modal", props);
+    const rootProps = useForwardPropsEmits(reactivePick(props, "open", "defaultOpen", "modal"), emits);
+    const portalProps = usePortal(toRef(() => props.portal));
+    const contentProps = toRef(() => props.content);
+    const contentEvents = computed(() => {
+      if (!props.dismissible) {
+        const events = ["pointerDownOutside", "interactOutside", "escapeKeyDown"];
+        return events.reduce((acc, curr) => {
+          acc[curr] = (e) => {
+            e.preventDefault();
+            emits("close:prevent");
+          };
+          return acc;
+        }, {});
+      }
+      return {
+        pointerDownOutside: (e) => pointerDownOutside(e, { scrollable: props.scrollable })
+      };
+    });
+    const [DefineContentTemplate, ReuseContentTemplate] = createReusableTemplate();
+    const ui = computed(() => tv({ extend: tv(theme$1), ...appConfig2.ui?.modal || {} })({
+      transition: props.transition,
+      fullscreen: props.fullscreen,
+      overlay: props.overlay,
+      scrollable: props.scrollable
+    }));
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(DialogRoot), mergeProps(unref(rootProps), _attrs), {
+        default: withCtx(({ open, close }, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(ssrRenderComponent(unref(DefineContentTemplate), null, {
+              default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(ssrRenderComponent(unref(DialogContent), mergeProps({
+                    "data-slot": "content",
+                    class: ui.value.content({ class: [!slots.default && props.class, unref(uiProp)?.content] })
+                  }, contentProps.value, {
+                    onAfterEnter: ($event) => emits("after:enter"),
+                    onAfterLeave: ($event) => emits("after:leave")
+                  }, toHandlers(contentEvents.value)), {
+                    default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                      if (_push4) {
+                        if (!!slots.content && (__props.title || !!slots.title || (__props.description || !!slots.description))) {
+                          _push4(ssrRenderComponent(unref(VisuallyHidden), null, {
+                            default: withCtx((_3, _push5, _parent5, _scopeId4) => {
+                              if (_push5) {
+                                if (__props.title || !!slots.title) {
+                                  _push5(ssrRenderComponent(unref(DialogTitle), null, {
+                                    default: withCtx((_4, _push6, _parent6, _scopeId5) => {
+                                      if (_push6) {
+                                        ssrRenderSlot(_ctx.$slots, "title", {}, () => {
+                                          _push6(`${ssrInterpolate(__props.title)}`);
+                                        }, _push6, _parent6, _scopeId5);
+                                      } else {
+                                        return [
+                                          renderSlot(_ctx.$slots, "title", {}, () => [
+                                            createTextVNode(toDisplayString(__props.title), 1)
+                                          ])
+                                        ];
+                                      }
+                                    }),
+                                    _: 2
+                                  }, _parent5, _scopeId4));
+                                } else {
+                                  _push5(`<!---->`);
+                                }
+                                if (__props.description || !!slots.description) {
+                                  _push5(ssrRenderComponent(unref(DialogDescription), null, {
+                                    default: withCtx((_4, _push6, _parent6, _scopeId5) => {
+                                      if (_push6) {
+                                        ssrRenderSlot(_ctx.$slots, "description", {}, () => {
+                                          _push6(`${ssrInterpolate(__props.description)}`);
+                                        }, _push6, _parent6, _scopeId5);
+                                      } else {
+                                        return [
+                                          renderSlot(_ctx.$slots, "description", {}, () => [
+                                            createTextVNode(toDisplayString(__props.description), 1)
+                                          ])
+                                        ];
+                                      }
+                                    }),
+                                    _: 2
+                                  }, _parent5, _scopeId4));
+                                } else {
+                                  _push5(`<!---->`);
+                                }
+                              } else {
+                                return [
+                                  __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), { key: 0 }, {
+                                    default: withCtx(() => [
+                                      renderSlot(_ctx.$slots, "title", {}, () => [
+                                        createTextVNode(toDisplayString(__props.title), 1)
+                                      ])
+                                    ]),
+                                    _: 3
+                                  })) : createCommentVNode("", true),
+                                  __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), { key: 1 }, {
+                                    default: withCtx(() => [
+                                      renderSlot(_ctx.$slots, "description", {}, () => [
+                                        createTextVNode(toDisplayString(__props.description), 1)
+                                      ])
+                                    ]),
+                                    _: 3
+                                  })) : createCommentVNode("", true)
+                                ];
+                              }
+                            }),
+                            _: 2
+                          }, _parent4, _scopeId3));
+                        } else {
+                          _push4(`<!---->`);
+                        }
+                        ssrRenderSlot(_ctx.$slots, "content", { close }, () => {
+                          if (!!slots.header || (__props.title || !!slots.title) || (__props.description || !!slots.description) || (props.close || !!slots.close)) {
+                            _push4(`<div data-slot="header" class="${ssrRenderClass(ui.value.header({ class: unref(uiProp)?.header }))}"${_scopeId3}>`);
+                            ssrRenderSlot(_ctx.$slots, "header", { close }, () => {
+                              _push4(`<div data-slot="wrapper" class="${ssrRenderClass(ui.value.wrapper({ class: unref(uiProp)?.wrapper }))}"${_scopeId3}>`);
+                              if (__props.title || !!slots.title) {
+                                _push4(ssrRenderComponent(unref(DialogTitle), {
+                                  "data-slot": "title",
+                                  class: ui.value.title({ class: unref(uiProp)?.title })
+                                }, {
+                                  default: withCtx((_3, _push5, _parent5, _scopeId4) => {
+                                    if (_push5) {
+                                      ssrRenderSlot(_ctx.$slots, "title", {}, () => {
+                                        _push5(`${ssrInterpolate(__props.title)}`);
+                                      }, _push5, _parent5, _scopeId4);
+                                    } else {
+                                      return [
+                                        renderSlot(_ctx.$slots, "title", {}, () => [
+                                          createTextVNode(toDisplayString(__props.title), 1)
+                                        ])
+                                      ];
+                                    }
+                                  }),
+                                  _: 2
+                                }, _parent4, _scopeId3));
+                              } else {
+                                _push4(`<!---->`);
+                              }
+                              if (__props.description || !!slots.description) {
+                                _push4(ssrRenderComponent(unref(DialogDescription), {
+                                  "data-slot": "description",
+                                  class: ui.value.description({ class: unref(uiProp)?.description })
+                                }, {
+                                  default: withCtx((_3, _push5, _parent5, _scopeId4) => {
+                                    if (_push5) {
+                                      ssrRenderSlot(_ctx.$slots, "description", {}, () => {
+                                        _push5(`${ssrInterpolate(__props.description)}`);
+                                      }, _push5, _parent5, _scopeId4);
+                                    } else {
+                                      return [
+                                        renderSlot(_ctx.$slots, "description", {}, () => [
+                                          createTextVNode(toDisplayString(__props.description), 1)
+                                        ])
+                                      ];
+                                    }
+                                  }),
+                                  _: 2
+                                }, _parent4, _scopeId3));
+                              } else {
+                                _push4(`<!---->`);
+                              }
+                              _push4(`</div>`);
+                              ssrRenderSlot(_ctx.$slots, "actions", {}, null, _push4, _parent4, _scopeId3);
+                              if (props.close || !!slots.close) {
+                                _push4(ssrRenderComponent(unref(DialogClose), { "as-child": "" }, {
+                                  default: withCtx((_3, _push5, _parent5, _scopeId4) => {
+                                    if (_push5) {
+                                      ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
+                                        if (props.close) {
+                                          _push5(ssrRenderComponent(_sfc_main$p, mergeProps({
+                                            icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
+                                            color: "neutral",
+                                            variant: "ghost",
+                                            "aria-label": unref(t)("modal.close")
+                                          }, typeof props.close === "object" ? props.close : {}, {
+                                            "data-slot": "close",
+                                            class: ui.value.close({ class: unref(uiProp)?.close })
+                                          }), null, _parent5, _scopeId4));
+                                        } else {
+                                          _push5(`<!---->`);
+                                        }
+                                      }, _push5, _parent5, _scopeId4);
+                                    } else {
+                                      return [
+                                        renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
+                                          props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                            key: 0,
+                                            icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
+                                            color: "neutral",
+                                            variant: "ghost",
+                                            "aria-label": unref(t)("modal.close")
+                                          }, typeof props.close === "object" ? props.close : {}, {
+                                            "data-slot": "close",
+                                            class: ui.value.close({ class: unref(uiProp)?.close })
+                                          }), null, 16, ["icon", "aria-label", "class"])) : createCommentVNode("", true)
+                                        ])
+                                      ];
+                                    }
+                                  }),
+                                  _: 2
+                                }, _parent4, _scopeId3));
+                              } else {
+                                _push4(`<!---->`);
+                              }
+                            }, _push4, _parent4, _scopeId3);
+                            _push4(`</div>`);
+                          } else {
+                            _push4(`<!---->`);
+                          }
+                          if (!!slots.body) {
+                            _push4(`<div data-slot="body" class="${ssrRenderClass(ui.value.body({ class: unref(uiProp)?.body }))}"${_scopeId3}>`);
+                            ssrRenderSlot(_ctx.$slots, "body", { close }, null, _push4, _parent4, _scopeId3);
+                            _push4(`</div>`);
+                          } else {
+                            _push4(`<!---->`);
+                          }
+                          if (!!slots.footer) {
+                            _push4(`<div data-slot="footer" class="${ssrRenderClass(ui.value.footer({ class: unref(uiProp)?.footer }))}"${_scopeId3}>`);
+                            ssrRenderSlot(_ctx.$slots, "footer", { close }, null, _push4, _parent4, _scopeId3);
+                            _push4(`</div>`);
+                          } else {
+                            _push4(`<!---->`);
+                          }
+                        }, _push4, _parent4, _scopeId3);
+                      } else {
+                        return [
+                          !!slots.content && (__props.title || !!slots.title || (__props.description || !!slots.description)) ? (openBlock(), createBlock(unref(VisuallyHidden), { key: 0 }, {
+                            default: withCtx(() => [
+                              __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), { key: 0 }, {
+                                default: withCtx(() => [
+                                  renderSlot(_ctx.$slots, "title", {}, () => [
+                                    createTextVNode(toDisplayString(__props.title), 1)
+                                  ])
+                                ]),
+                                _: 3
+                              })) : createCommentVNode("", true),
+                              __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), { key: 1 }, {
+                                default: withCtx(() => [
+                                  renderSlot(_ctx.$slots, "description", {}, () => [
+                                    createTextVNode(toDisplayString(__props.description), 1)
+                                  ])
+                                ]),
+                                _: 3
+                              })) : createCommentVNode("", true)
+                            ]),
+                            _: 3
+                          })) : createCommentVNode("", true),
+                          renderSlot(_ctx.$slots, "content", { close }, () => [
+                            !!slots.header || (__props.title || !!slots.title) || (__props.description || !!slots.description) || (props.close || !!slots.close) ? (openBlock(), createBlock("div", {
+                              key: 0,
+                              "data-slot": "header",
+                              class: ui.value.header({ class: unref(uiProp)?.header })
+                            }, [
+                              renderSlot(_ctx.$slots, "header", { close }, () => [
+                                createVNode("div", {
+                                  "data-slot": "wrapper",
+                                  class: ui.value.wrapper({ class: unref(uiProp)?.wrapper })
+                                }, [
+                                  __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), {
+                                    key: 0,
+                                    "data-slot": "title",
+                                    class: ui.value.title({ class: unref(uiProp)?.title })
+                                  }, {
+                                    default: withCtx(() => [
+                                      renderSlot(_ctx.$slots, "title", {}, () => [
+                                        createTextVNode(toDisplayString(__props.title), 1)
+                                      ])
+                                    ]),
+                                    _: 3
+                                  }, 8, ["class"])) : createCommentVNode("", true),
+                                  __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), {
+                                    key: 1,
+                                    "data-slot": "description",
+                                    class: ui.value.description({ class: unref(uiProp)?.description })
+                                  }, {
+                                    default: withCtx(() => [
+                                      renderSlot(_ctx.$slots, "description", {}, () => [
+                                        createTextVNode(toDisplayString(__props.description), 1)
+                                      ])
+                                    ]),
+                                    _: 3
+                                  }, 8, ["class"])) : createCommentVNode("", true)
+                                ], 2),
+                                renderSlot(_ctx.$slots, "actions"),
+                                props.close || !!slots.close ? (openBlock(), createBlock(unref(DialogClose), {
+                                  key: 0,
+                                  "as-child": ""
+                                }, {
+                                  default: withCtx(() => [
+                                    renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
+                                      props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                        key: 0,
+                                        icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
+                                        color: "neutral",
+                                        variant: "ghost",
+                                        "aria-label": unref(t)("modal.close")
+                                      }, typeof props.close === "object" ? props.close : {}, {
+                                        "data-slot": "close",
+                                        class: ui.value.close({ class: unref(uiProp)?.close })
+                                      }), null, 16, ["icon", "aria-label", "class"])) : createCommentVNode("", true)
+                                    ])
+                                  ]),
+                                  _: 2
+                                }, 1024)) : createCommentVNode("", true)
+                              ])
+                            ], 2)) : createCommentVNode("", true),
+                            !!slots.body ? (openBlock(), createBlock("div", {
+                              key: 1,
+                              "data-slot": "body",
+                              class: ui.value.body({ class: unref(uiProp)?.body })
+                            }, [
+                              renderSlot(_ctx.$slots, "body", { close })
+                            ], 2)) : createCommentVNode("", true),
+                            !!slots.footer ? (openBlock(), createBlock("div", {
+                              key: 2,
+                              "data-slot": "footer",
+                              class: ui.value.footer({ class: unref(uiProp)?.footer })
+                            }, [
+                              renderSlot(_ctx.$slots, "footer", { close })
+                            ], 2)) : createCommentVNode("", true)
+                          ])
+                        ];
+                      }
+                    }),
+                    _: 2
+                  }, _parent3, _scopeId2));
+                } else {
+                  return [
+                    createVNode(unref(DialogContent), mergeProps({
+                      "data-slot": "content",
+                      class: ui.value.content({ class: [!slots.default && props.class, unref(uiProp)?.content] })
+                    }, contentProps.value, {
+                      onAfterEnter: ($event) => emits("after:enter"),
+                      onAfterLeave: ($event) => emits("after:leave")
+                    }, toHandlers(contentEvents.value)), {
+                      default: withCtx(() => [
+                        !!slots.content && (__props.title || !!slots.title || (__props.description || !!slots.description)) ? (openBlock(), createBlock(unref(VisuallyHidden), { key: 0 }, {
+                          default: withCtx(() => [
+                            __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), { key: 0 }, {
+                              default: withCtx(() => [
+                                renderSlot(_ctx.$slots, "title", {}, () => [
+                                  createTextVNode(toDisplayString(__props.title), 1)
+                                ])
+                              ]),
+                              _: 3
+                            })) : createCommentVNode("", true),
+                            __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), { key: 1 }, {
+                              default: withCtx(() => [
+                                renderSlot(_ctx.$slots, "description", {}, () => [
+                                  createTextVNode(toDisplayString(__props.description), 1)
+                                ])
+                              ]),
+                              _: 3
+                            })) : createCommentVNode("", true)
+                          ]),
+                          _: 3
+                        })) : createCommentVNode("", true),
+                        renderSlot(_ctx.$slots, "content", { close }, () => [
+                          !!slots.header || (__props.title || !!slots.title) || (__props.description || !!slots.description) || (props.close || !!slots.close) ? (openBlock(), createBlock("div", {
+                            key: 0,
+                            "data-slot": "header",
+                            class: ui.value.header({ class: unref(uiProp)?.header })
+                          }, [
+                            renderSlot(_ctx.$slots, "header", { close }, () => [
+                              createVNode("div", {
+                                "data-slot": "wrapper",
+                                class: ui.value.wrapper({ class: unref(uiProp)?.wrapper })
+                              }, [
+                                __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), {
+                                  key: 0,
+                                  "data-slot": "title",
+                                  class: ui.value.title({ class: unref(uiProp)?.title })
+                                }, {
+                                  default: withCtx(() => [
+                                    renderSlot(_ctx.$slots, "title", {}, () => [
+                                      createTextVNode(toDisplayString(__props.title), 1)
+                                    ])
+                                  ]),
+                                  _: 3
+                                }, 8, ["class"])) : createCommentVNode("", true),
+                                __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), {
+                                  key: 1,
+                                  "data-slot": "description",
+                                  class: ui.value.description({ class: unref(uiProp)?.description })
+                                }, {
+                                  default: withCtx(() => [
+                                    renderSlot(_ctx.$slots, "description", {}, () => [
+                                      createTextVNode(toDisplayString(__props.description), 1)
+                                    ])
+                                  ]),
+                                  _: 3
+                                }, 8, ["class"])) : createCommentVNode("", true)
+                              ], 2),
+                              renderSlot(_ctx.$slots, "actions"),
+                              props.close || !!slots.close ? (openBlock(), createBlock(unref(DialogClose), {
+                                key: 0,
+                                "as-child": ""
+                              }, {
+                                default: withCtx(() => [
+                                  renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
+                                    props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                      key: 0,
+                                      icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
+                                      color: "neutral",
+                                      variant: "ghost",
+                                      "aria-label": unref(t)("modal.close")
+                                    }, typeof props.close === "object" ? props.close : {}, {
+                                      "data-slot": "close",
+                                      class: ui.value.close({ class: unref(uiProp)?.close })
+                                    }), null, 16, ["icon", "aria-label", "class"])) : createCommentVNode("", true)
+                                  ])
+                                ]),
+                                _: 2
+                              }, 1024)) : createCommentVNode("", true)
+                            ])
+                          ], 2)) : createCommentVNode("", true),
+                          !!slots.body ? (openBlock(), createBlock("div", {
+                            key: 1,
+                            "data-slot": "body",
+                            class: ui.value.body({ class: unref(uiProp)?.body })
+                          }, [
+                            renderSlot(_ctx.$slots, "body", { close })
+                          ], 2)) : createCommentVNode("", true),
+                          !!slots.footer ? (openBlock(), createBlock("div", {
+                            key: 2,
+                            "data-slot": "footer",
+                            class: ui.value.footer({ class: unref(uiProp)?.footer })
+                          }, [
+                            renderSlot(_ctx.$slots, "footer", { close })
+                          ], 2)) : createCommentVNode("", true)
+                        ])
+                      ]),
+                      _: 2
+                    }, 1040, ["class", "onAfterEnter", "onAfterLeave"])
+                  ];
+                }
+              }),
+              _: 2
+            }, _parent2, _scopeId));
+            if (!!slots.default) {
+              _push2(ssrRenderComponent(unref(DialogTrigger), {
+                "as-child": "",
+                class: props.class
+              }, {
+                default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    ssrRenderSlot(_ctx.$slots, "default", { open }, null, _push3, _parent3, _scopeId2);
+                  } else {
+                    return [
+                      renderSlot(_ctx.$slots, "default", { open })
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(ssrRenderComponent(unref(DialogPortal), unref(portalProps), {
+              default: withCtx((_, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  if (__props.scrollable) {
+                    _push3(ssrRenderComponent(unref(DialogOverlay), {
+                      "data-slot": "overlay",
+                      class: ui.value.overlay({ class: unref(uiProp)?.overlay })
+                    }, {
+                      default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          _push4(ssrRenderComponent(unref(ReuseContentTemplate), null, null, _parent4, _scopeId3));
+                        } else {
+                          return [
+                            createVNode(unref(ReuseContentTemplate))
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  } else {
+                    _push3(`<!--[-->`);
+                    if (__props.overlay) {
+                      _push3(ssrRenderComponent(unref(DialogOverlay), {
+                        "data-slot": "overlay",
+                        class: ui.value.overlay({ class: unref(uiProp)?.overlay })
+                      }, null, _parent3, _scopeId2));
+                    } else {
+                      _push3(`<!---->`);
+                    }
+                    _push3(ssrRenderComponent(unref(ReuseContentTemplate), null, null, _parent3, _scopeId2));
+                    _push3(`<!--]-->`);
+                  }
+                } else {
+                  return [
+                    __props.scrollable ? (openBlock(), createBlock(unref(DialogOverlay), {
+                      key: 0,
+                      "data-slot": "overlay",
+                      class: ui.value.overlay({ class: unref(uiProp)?.overlay })
+                    }, {
+                      default: withCtx(() => [
+                        createVNode(unref(ReuseContentTemplate))
+                      ]),
+                      _: 1
+                    }, 8, ["class"])) : (openBlock(), createBlock(Fragment, { key: 1 }, [
+                      __props.overlay ? (openBlock(), createBlock(unref(DialogOverlay), {
+                        key: 0,
+                        "data-slot": "overlay",
+                        class: ui.value.overlay({ class: unref(uiProp)?.overlay })
+                      }, null, 8, ["class"])) : createCommentVNode("", true),
+                      createVNode(unref(ReuseContentTemplate))
+                    ], 64))
+                  ];
+                }
+              }),
+              _: 2
+            }, _parent2, _scopeId));
+          } else {
+            return [
+              createVNode(unref(DefineContentTemplate), null, {
+                default: withCtx(() => [
+                  createVNode(unref(DialogContent), mergeProps({
+                    "data-slot": "content",
+                    class: ui.value.content({ class: [!slots.default && props.class, unref(uiProp)?.content] })
+                  }, contentProps.value, {
+                    onAfterEnter: ($event) => emits("after:enter"),
+                    onAfterLeave: ($event) => emits("after:leave")
+                  }, toHandlers(contentEvents.value)), {
+                    default: withCtx(() => [
+                      !!slots.content && (__props.title || !!slots.title || (__props.description || !!slots.description)) ? (openBlock(), createBlock(unref(VisuallyHidden), { key: 0 }, {
+                        default: withCtx(() => [
+                          __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), { key: 0 }, {
+                            default: withCtx(() => [
+                              renderSlot(_ctx.$slots, "title", {}, () => [
+                                createTextVNode(toDisplayString(__props.title), 1)
+                              ])
+                            ]),
+                            _: 3
+                          })) : createCommentVNode("", true),
+                          __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), { key: 1 }, {
+                            default: withCtx(() => [
+                              renderSlot(_ctx.$slots, "description", {}, () => [
+                                createTextVNode(toDisplayString(__props.description), 1)
+                              ])
+                            ]),
+                            _: 3
+                          })) : createCommentVNode("", true)
+                        ]),
+                        _: 3
+                      })) : createCommentVNode("", true),
+                      renderSlot(_ctx.$slots, "content", { close }, () => [
+                        !!slots.header || (__props.title || !!slots.title) || (__props.description || !!slots.description) || (props.close || !!slots.close) ? (openBlock(), createBlock("div", {
+                          key: 0,
+                          "data-slot": "header",
+                          class: ui.value.header({ class: unref(uiProp)?.header })
+                        }, [
+                          renderSlot(_ctx.$slots, "header", { close }, () => [
+                            createVNode("div", {
+                              "data-slot": "wrapper",
+                              class: ui.value.wrapper({ class: unref(uiProp)?.wrapper })
+                            }, [
+                              __props.title || !!slots.title ? (openBlock(), createBlock(unref(DialogTitle), {
+                                key: 0,
+                                "data-slot": "title",
+                                class: ui.value.title({ class: unref(uiProp)?.title })
+                              }, {
+                                default: withCtx(() => [
+                                  renderSlot(_ctx.$slots, "title", {}, () => [
+                                    createTextVNode(toDisplayString(__props.title), 1)
+                                  ])
+                                ]),
+                                _: 3
+                              }, 8, ["class"])) : createCommentVNode("", true),
+                              __props.description || !!slots.description ? (openBlock(), createBlock(unref(DialogDescription), {
+                                key: 1,
+                                "data-slot": "description",
+                                class: ui.value.description({ class: unref(uiProp)?.description })
+                              }, {
+                                default: withCtx(() => [
+                                  renderSlot(_ctx.$slots, "description", {}, () => [
+                                    createTextVNode(toDisplayString(__props.description), 1)
+                                  ])
+                                ]),
+                                _: 3
+                              }, 8, ["class"])) : createCommentVNode("", true)
+                            ], 2),
+                            renderSlot(_ctx.$slots, "actions"),
+                            props.close || !!slots.close ? (openBlock(), createBlock(unref(DialogClose), {
+                              key: 0,
+                              "as-child": ""
+                            }, {
+                              default: withCtx(() => [
+                                renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
+                                  props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                    key: 0,
+                                    icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
+                                    color: "neutral",
+                                    variant: "ghost",
+                                    "aria-label": unref(t)("modal.close")
+                                  }, typeof props.close === "object" ? props.close : {}, {
+                                    "data-slot": "close",
+                                    class: ui.value.close({ class: unref(uiProp)?.close })
+                                  }), null, 16, ["icon", "aria-label", "class"])) : createCommentVNode("", true)
+                                ])
+                              ]),
+                              _: 2
+                            }, 1024)) : createCommentVNode("", true)
+                          ])
+                        ], 2)) : createCommentVNode("", true),
+                        !!slots.body ? (openBlock(), createBlock("div", {
+                          key: 1,
+                          "data-slot": "body",
+                          class: ui.value.body({ class: unref(uiProp)?.body })
+                        }, [
+                          renderSlot(_ctx.$slots, "body", { close })
+                        ], 2)) : createCommentVNode("", true),
+                        !!slots.footer ? (openBlock(), createBlock("div", {
+                          key: 2,
+                          "data-slot": "footer",
+                          class: ui.value.footer({ class: unref(uiProp)?.footer })
+                        }, [
+                          renderSlot(_ctx.$slots, "footer", { close })
+                        ], 2)) : createCommentVNode("", true)
+                      ])
+                    ]),
+                    _: 2
+                  }, 1040, ["class", "onAfterEnter", "onAfterLeave"])
+                ]),
+                _: 2
+              }, 1024),
+              !!slots.default ? (openBlock(), createBlock(unref(DialogTrigger), {
+                key: 0,
+                "as-child": "",
+                class: props.class
+              }, {
+                default: withCtx(() => [
+                  renderSlot(_ctx.$slots, "default", { open })
+                ]),
+                _: 2
+              }, 1032, ["class"])) : createCommentVNode("", true),
+              createVNode(unref(DialogPortal), unref(portalProps), {
+                default: withCtx(() => [
+                  __props.scrollable ? (openBlock(), createBlock(unref(DialogOverlay), {
+                    key: 0,
+                    "data-slot": "overlay",
+                    class: ui.value.overlay({ class: unref(uiProp)?.overlay })
+                  }, {
+                    default: withCtx(() => [
+                      createVNode(unref(ReuseContentTemplate))
+                    ]),
+                    _: 1
+                  }, 8, ["class"])) : (openBlock(), createBlock(Fragment, { key: 1 }, [
+                    __props.overlay ? (openBlock(), createBlock(unref(DialogOverlay), {
+                      key: 0,
+                      "data-slot": "overlay",
+                      class: ui.value.overlay({ class: unref(uiProp)?.overlay })
+                    }, null, 8, ["class"])) : createCommentVNode("", true),
+                    createVNode(unref(ReuseContentTemplate))
+                  ], 64))
+                ]),
+                _: 1
+              }, 16)
+            ];
+          }
+        }),
+        _: 3
+      }, _parent));
+    };
+  }
+};
+const _sfc_setup$h = _sfc_main$h.setup;
+_sfc_main$h.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
+  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
+};
+const _sfc_main$g = {
+  __name: "AuthSuccessView",
+  __ssrInlineRender: true,
+  emits: ["close"],
+  setup(__props, { emit: __emit }) {
+    const flow = inject("authFlow");
+    const successTitle = flow.successTitle;
+    const successDescription = flow.successDescription;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppIcon = __nuxt_component_1$1;
+      _push(`<!--[--><button type="button" class="auth-entry__success-close" aria-label="Закрыть окно регистрации" data-v-4777aa4f>`);
+      _push(ssrRenderComponent(_component_AppIcon, {
+        name: "close",
+        size: 16,
+        class: "auth-entry__success-close-icon"
+      }, null, _parent));
+      _push(`</button><div class="auth-entry__success-content" data-v-4777aa4f><div class="auth-entry__success-main" data-v-4777aa4f><div class="auth-entry__success-header" data-v-4777aa4f><span class="auth-entry__success-mark" data-v-4777aa4f></span><h2 class="auth-entry__success-title" data-v-4777aa4f>${ssrInterpolate(unref(successTitle))}</h2></div><p class="auth-entry__success-description" data-v-4777aa4f>${ssrInterpolate(unref(successDescription))}</p></div><button type="button" class="auth-entry__success-button" data-v-4777aa4f> К покупкам </button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthSuccessView.vue");
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
+};
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-4777aa4f"]]);
+const _sfc_main$f = /* @__PURE__ */ Object.assign({
+  inheritAttrs: false
+}, {
+  __name: "AppInput",
+  __ssrInlineRender: true,
+  props: /* @__PURE__ */ mergeModels({
+    type: {
+      type: String,
+      default: "text"
+    },
+    placeholder: {
+      type: String,
+      default: ""
+    },
+    description: {
+      type: String,
+      default: ""
+    },
+    icon: {
+      type: String,
+      default: null
+    },
+    suffix: {
+      type: String,
+      default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    min: {
+      type: Number,
+      default: void 0
+    },
+    max: {
+      type: Number,
+      default: void 0
+    },
+    mask: {
+      type: String,
+      default: null
+    }
+  }, {
+    "modelValue": { type: String, default: "" },
+    "modelModifiers": {}
+  }),
+  emits: ["update:modelValue"],
+  setup(__props) {
+    const model = useModel(__props, "modelValue");
+    const inputRef = ref(null);
+    const attrs = useAttrs();
+    const wrapperAttributes = computed(() => ({
+      class: attrs.class,
+      style: attrs.style
+    }));
+    const inputAttributes = computed(() => {
+      const {
+        class: _class,
+        style: _style,
+        ...rest
+      } = attrs;
+      return rest;
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UIcon = _sfc_main$u;
+      let _temp0;
+      _push(`<div${ssrRenderAttrs(mergeProps({
+        class: ["app-input-wrapper", unref(wrapperAttributes).class],
+        style: unref(wrapperAttributes).style
+      }, _attrs))} data-v-8406adb8><div class="${ssrRenderClass([
+        "app-input",
+        { "app-input--disabled": __props.disabled }
+      ])}" data-v-8406adb8>`);
+      if (__props.icon) {
+        _push(ssrRenderComponent(_component_UIcon, {
+          name: __props.icon,
+          class: "app-input__icon"
+        }, null, _parent));
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<input${ssrRenderAttrs((_temp0 = mergeProps({
+        ref_key: "inputRef",
+        ref: inputRef,
+        type: __props.type,
+        placeholder: __props.placeholder,
+        disabled: __props.disabled,
+        min: __props.min,
+        max: __props.max,
+        class: "app-input__field"
+      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-8406adb8>`);
+      ssrRenderSlot(_ctx.$slots, "suffix", {}, null, _push, _parent);
+      if (__props.suffix) {
+        _push(`<span class="app-input__suffix" data-v-8406adb8>${ssrInterpolate(__props.suffix)}</span>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div>`);
+      if (__props.description) {
+        _push(`<p class="app-input-description" data-v-8406adb8>${ssrInterpolate(__props.description)}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div>`);
+    };
+  }
+});
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+};
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-8406adb8"]]);
+const _sfc_main$e = {
+  __name: "AuthEntryForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const visibleError = flow.visibleError;
+    const hasIdentifier = flow.hasIdentifier;
+    const isEntryRequestPending = flow.isEntryRequestPending;
+    const inputMode = flow.inputMode;
+    const identifier = flow.identifier;
+    const entryRequestError = flow.entryRequestError;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
+      const _component_AppIcon = __nuxt_component_1$1;
+      _push(`<div${ssrRenderAttrs(mergeProps({
+        class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
+      }, _attrs))} data-v-42c52b56><label class="auth-entry__label" for="auth-entry-identifier" data-v-42c52b56> Почта или телефон </label><span class="auth-entry__input-row" data-v-42c52b56><span class="auth-entry__input-box" data-v-42c52b56>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-identifier",
+        modelValue: unref(identifier),
+        "onUpdate:modelValue": ($event) => isRef(identifier) ? identifier.value = $event : null,
+        class: "auth-entry__input",
+        type: "text",
+        placeholder: "Email или телефон",
+        autocomplete: "username",
+        inputmode: unref(inputMode),
+        "aria-invalid": Boolean(unref(visibleError)),
+        "aria-describedby": unref(visibleError) ? "auth-entry-error" : void 0,
+        onInput: unref(flow).onIdentifierInput,
+        onBlur: unref(flow).onIdentifierBlur
+      }, {
+        suffix: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (unref(visibleError)) {
+              _push2(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-42c52b56${_scopeId}>`);
+              _push2(ssrRenderComponent(_component_AppIcon, {
+                name: "reset",
+                size: 16,
+                class: "auth-entry__reset-icon"
+              }, null, _parent2, _scopeId));
+              _push2(`</button>`);
+            } else {
+              _push2(`<!---->`);
+            }
+          } else {
+            return [
+              unref(visibleError) ? (openBlock(), createBlock("button", {
+                key: 0,
+                type: "button",
+                class: "auth-entry__reset",
+                "aria-label": "Сбросить поле",
+                onMousedown: withModifiers(() => {
+                }, ["prevent"]),
+                onClick: unref(flow).resetIdentifier
+              }, [
+                createVNode(_component_AppIcon, {
+                  name: "reset",
+                  size: 16,
+                  class: "auth-entry__reset-icon"
+                })
+              ], 40, ["onMousedown", "onClick"])) : createCommentVNode("", true)
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`</span>`);
+      if (unref(hasIdentifier)) {
+        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Получить код")} data-v-42c52b56>`);
+        _push(ssrRenderComponent(_component_AppIcon, {
+          name: "arrow-right-line",
+          size: 24,
+          class: "auth-entry__submit-icon"
+        }, null, _parent));
+        _push(`</button>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</span>`);
+      if (unref(visibleError) || unref(entryRequestError)) {
+        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-42c52b56>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div>`);
+    };
+  }
+};
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
+};
+const __nuxt_component_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-42c52b56"]]);
+const _sfc_main$d = {
+  __name: "AuthLoginForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const visibleError = flow.visibleError;
+    const identifier = flow.identifier;
+    const inputMode = flow.inputMode;
+    const password = flow.password;
+    const passwordInputType = flow.passwordInputType;
+    const visibleLoginPasswordError = flow.visibleLoginPasswordError;
+    const isPasswordVisible = flow.isPasswordVisible;
+    const loginRequestError = flow.loginRequestError;
+    const isLoginRequestPending = flow.isLoginRequestPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
+      const _component_AppIcon = __nuxt_component_1$1;
+      _push(`<!--[--><div class="auth-entry__login-fields" data-v-022a0cae><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-022a0cae> Email или телефон </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-login-identifier",
+        modelValue: unref(identifier),
+        "onUpdate:modelValue": ($event) => isRef(identifier) ? identifier.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact",
+        type: "text",
+        placeholder: "Email или телефон",
+        autocomplete: "username",
+        inputmode: unref(inputMode),
+        "aria-invalid": Boolean(unref(visibleError)),
+        "aria-describedby": unref(visibleError) ? "auth-entry-login-error" : void 0,
+        onInput: unref(flow).onIdentifierInput,
+        onBlur: unref(flow).onIdentifierBlur
+      }, null, _parent));
+      if (unref(visibleError)) {
+        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-022a0cae>${ssrInterpolate(unref(visibleError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-password" data-v-022a0cae> Пароль </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-login-password",
+        modelValue: unref(password),
+        "onUpdate:modelValue": ($event) => isRef(password) ? password.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact auth-entry__input--password",
+        type: unref(passwordInputType),
+        placeholder: "Введите пароль",
+        autocomplete: "current-password",
+        "aria-invalid": Boolean(unref(visibleLoginPasswordError)),
+        "aria-describedby": unref(visibleLoginPasswordError) || unref(loginRequestError) ? "auth-entry-login-password-error" : void 0,
+        onInput: unref(flow).onPasswordInput
+      }, {
+        suffix: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-022a0cae${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_AppIcon, {
+              name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+              size: 16,
+              class: "auth-entry__password-toggle-icon"
+            }, null, _parent2, _scopeId));
+            _push2(`</button>`);
+          } else {
+            return [
+              createVNode("button", {
+                type: "button",
+                class: "auth-entry__password-toggle",
+                "aria-label": unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль",
+                onClick: ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
+              }, [
+                createVNode(_component_AppIcon, {
+                  name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+                  size: 16,
+                  class: "auth-entry__password-toggle-icon"
+                }, null, 8, ["name"])
+              ], 8, ["aria-label", "onClick"])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      if (unref(visibleLoginPasswordError) || unref(loginRequestError)) {
+        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-022a0cae>${ssrInterpolate(unref(visibleLoginPasswordError) || unref(loginRequestError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<button type="button" class="auth-entry__forgot-password" data-v-022a0cae> Забыли пароль? </button></div></div><div class="auth-entry__login-actions" data-v-022a0cae><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-022a0cae>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+};
+const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-022a0cae"]]);
+const _sfc_main$c = {
+  __name: "AuthPasswordRecoveryForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const passwordRecoveryEmail = flow.passwordRecoveryEmail;
+    const visiblePasswordRecoveryEmailError = flow.visiblePasswordRecoveryEmailError;
+    const passwordRecoveryRequestError = flow.passwordRecoveryRequestError;
+    const passwordRecoveryRequestMessage = flow.passwordRecoveryRequestMessage;
+    const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-0e9fe146><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-0e9fe146><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-0e9fe146> Почта или телефон </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="text" placeholder="Почта или телефон" autocomplete="username" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-0e9fe146>`);
+      if (unref(visiblePasswordRecoveryEmailError)) {
+        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-0e9fe146>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></div>`);
+      if (unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage)) {
+        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-0e9fe146>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<div class="auth-entry__recovery-actions" data-v-0e9fe146><button type="button" class="auth-entry__secondary-button" data-v-0e9fe146> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-0e9fe146>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Продолжить")}</button></div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+};
+const __nuxt_component_5$2 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-0e9fe146"]]);
+const _sfc_main$b = {
+  __name: "AuthPasswordRecoverySentView",
+  __ssrInlineRender: true,
+  emits: ["close"],
+  setup(__props) {
+    const flow = inject("authFlow");
+    const isPasswordRecoveryPhone = flow.isPasswordRecoveryPhone;
+    const passwordRecoveryPhone = flow.passwordRecoveryPhone;
+    const smsCode = flow.smsCode;
+    const smsCodePlaceholder = flow.smsCodePlaceholder;
+    const SMS_CODE_LENGTH = flow.SMS_CODE_LENGTH;
+    const canResendCode = flow.canResendCode;
+    const resendButtonText = flow.resendButtonText;
+    const passwordRecoveryRequestError = flow.passwordRecoveryRequestError;
+    const passwordRecoveryCodeError = flow.passwordRecoveryCodeError;
+    const isCodeVerifyPending = flow.isCodeVerifyPending;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
+      if (unref(isPasswordRecoveryPhone)) {
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__phone-recovery" }, _attrs))} data-v-e42088da><div class="auth-entry__phone-recovery-fields" data-v-e42088da><div class="auth-entry__field auth-entry__phone-field" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-phone" data-v-e42088da> Номер телефона </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-password-recovery-phone",
+          "model-value": unref(passwordRecoveryPhone),
+          class: "auth-entry__input auth-entry__input--phone auth-entry__input--readonly",
+          type: "tel",
+          readonly: ""
+        }, null, _parent));
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(passwordRecoveryCodeError) }, "auth-entry__field auth-entry__sms-code-field"])}" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-sms-code" data-v-e42088da> Код из СМС </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-password-recovery-sms-code",
+          "model-value": unref(smsCode),
+          class: "auth-entry__input auth-entry__input--sms-code",
+          type: "text",
+          placeholder: unref(smsCodePlaceholder),
+          autocomplete: "one-time-code",
+          inputmode: "numeric",
+          maxlength: unref(SMS_CODE_LENGTH),
+          disabled: unref(isCodeVerifyPending),
+          "aria-invalid": Boolean(unref(passwordRecoveryCodeError)),
+          "aria-describedby": unref(passwordRecoveryCodeError) ? "auth-entry-password-recovery-code-error" : void 0,
+          onInput: unref(flow).onSmsCodeInput
+        }, null, _parent));
+        _push(`</div></div>`);
+        if (unref(passwordRecoveryCodeError)) {
+          _push(`<p id="auth-entry-password-recovery-code-error" class="auth-entry__error" data-v-e42088da>${ssrInterpolate(unref(passwordRecoveryCodeError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        if (unref(passwordRecoveryRequestError)) {
+          _push(`<p class="auth-entry__error" data-v-e42088da>${ssrInterpolate(unref(passwordRecoveryRequestError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`<button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-e42088da>${ssrInterpolate(unref(resendButtonText))}</button></div>`);
+      } else {
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__sent-actions" }, _attrs))} data-v-e42088da><button type="button" class="auth-entry__sent-button" data-v-e42088da> Хорошо </button></div>`);
+      }
+    };
+  }
+};
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+};
+const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-e42088da"]]);
+const _sfc_main$a = {
+  __name: "AppCheckbox",
+  __ssrInlineRender: true,
+  props: /* @__PURE__ */ mergeModels({
+    label: {
+      type: String,
+      default: ""
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  }, {
+    "modelValue": { type: Boolean, default: false },
+    "modelModifiers": {}
+  }),
+  emits: ["update:modelValue"],
+  setup(__props) {
+    const model = useModel(__props, "modelValue");
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<label${ssrRenderAttrs(mergeProps({
+        class: [
+          "app-checkbox",
+          { "app-checkbox--checked": model.value, "app-checkbox--disabled": __props.disabled }
+        ]
+      }, _attrs))} data-v-5c83338d><input${ssrIncludeBooleanAttr(Array.isArray(model.value) ? ssrLooseContain(model.value, null) : model.value) ? " checked" : ""} type="checkbox" class="app-checkbox__input"${ssrIncludeBooleanAttr(__props.disabled) ? " disabled" : ""} data-v-5c83338d><span class="app-checkbox__box" data-v-5c83338d>`);
+      if (model.value) {
+        _push(`<svg class="app-checkbox__icon" viewBox="0 0 16 16" fill="none" data-v-5c83338d><path d="M3.5 8.5L6.5 11.5L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-v-5c83338d></path></svg>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</span>`);
+      if (__props.label) {
+        _push(`<span class="app-checkbox__label" data-v-5c83338d>${ssrInterpolate(__props.label)}</span>`);
+      } else {
+        _push(`<span class="app-checkbox__label" data-v-5c83338d>`);
+        ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+        _push(`</span>`);
+      }
+      _push(`</label>`);
+    };
+  }
+};
+const _sfc_setup$a = _sfc_main$a.setup;
+_sfc_main$a.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppCheckbox.vue");
+  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+};
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-5c83338d"]]);
+const _sfc_main$9 = {
+  __name: "AuthRegisterStartForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const fullName = flow.fullName;
+    const registrationPhone = flow.registrationPhone;
+    const canRequestCode = flow.canRequestCode;
+    const isCodeRequestPending = flow.isCodeRequestPending;
+    const codeButtonText = flow.codeButtonText;
+    const codeRequestError = flow.codeRequestError;
+    const isCodeRequestSent = flow.isCodeRequestSent;
+    const isLegalRepresentative = flow.isLegalRepresentative;
+    const isPersonalDataAccepted = flow.isPersonalDataAccepted;
+    const isUserAgreementAccepted = flow.isUserAgreementAccepted;
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
+      const _component_AppCheckbox = __nuxt_component_3;
+      const _component_NuxtLink = __nuxt_component_0$3;
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-name" data-v-e0a4769e> Имя и фамилия </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-name",
+        modelValue: unref(fullName),
+        "onUpdate:modelValue": ($event) => isRef(fullName) ? fullName.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact",
+        type: "text",
+        placeholder: "Иван Иванов",
+        autocomplete: "name",
+        onInput: unref(flow).onFullNameInput
+      }, null, _parent));
+      _push(`</div><div class="auth-entry__registration-phone" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-phone" data-v-e0a4769e> Номер телефона </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-phone",
+        modelValue: unref(registrationPhone),
+        "onUpdate:modelValue": ($event) => isRef(registrationPhone) ? registrationPhone.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact auth-entry__input--phone",
+        type: "tel",
+        placeholder: "+7(999)-999-99-99",
+        autocomplete: "tel",
+        inputmode: "tel",
+        onInput: unref(flow).onRegistrationPhoneInput
+      }, null, _parent));
+      _push(`</div><button type="button" class="auth-entry__code-button"${ssrIncludeBooleanAttr(!unref(canRequestCode) || unref(isCodeRequestPending)) ? " disabled" : ""} data-v-e0a4769e>${ssrInterpolate(unref(codeButtonText))}</button></div><p class="auth-entry__hint" data-v-e0a4769e> Отправим вам смс с кодом подтверждения, после того как ознакомитесь с Политиками </p>`);
+      if (unref(codeRequestError)) {
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-e0a4769e>${ssrInterpolate(unref(codeRequestError))}</p>`);
+      } else if (unref(isCodeRequestSent)) {
+        _push(`<p class="auth-entry__request-status" data-v-e0a4769e> Код отправлен </p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div><div class="auth-entry__checkboxes" data-v-e0a4769e>`);
+      _push(ssrRenderComponent(_component_AppCheckbox, {
+        modelValue: unref(isLegalRepresentative),
+        "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
+        class: "auth-entry__checkbox"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я представитель юрлица или ИП </span>`);
+          } else {
+            return [
+              createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(ssrRenderComponent(_component_AppCheckbox, {
+        modelValue: unref(isPersonalDataAccepted),
+        "onUpdate:modelValue": ($event) => isRef(isPersonalDataAccepted) ? isPersonalDataAccepted.value = $event : null,
+        class: "auth-entry__checkbox auth-entry__checkbox--top"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-e0a4769e${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_NuxtLink, {
+              to: "/privacy-policy",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              class: "auth-entry__link",
+              onClick: () => {
+              }
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(` с Политикой обработки персональных данных `);
+                } else {
+                  return [
+                    createTextVNode(" с Политикой обработки персональных данных ")
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+            _push2(`</span></span>`);
+          } else {
+            return [
+              createVNode("span", { class: "auth-entry__checkbox-text" }, [
+                createTextVNode(" Я ознакомлен и согласен "),
+                createVNode("span", { class: "auth-entry__checkbox-link-line" }, [
+                  createVNode(_component_NuxtLink, {
+                    to: "/privacy-policy",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    class: "auth-entry__link",
+                    onClick: withModifiers(() => {
+                    }, ["stop"])
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(" с Политикой обработки персональных данных ")
+                    ]),
+                    _: 1
+                  }, 8, ["onClick"])
+                ])
+              ])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(ssrRenderComponent(_component_AppCheckbox, {
+        modelValue: unref(isUserAgreementAccepted),
+        "onUpdate:modelValue": ($event) => isRef(isUserAgreementAccepted) ? isUserAgreementAccepted.value = $event : null,
+        class: "auth-entry__checkbox auth-entry__checkbox--top"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-e0a4769e${_scopeId}>`);
+            _push2(ssrRenderComponent(_component_NuxtLink, {
+              to: "/user-agreement",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              class: "auth-entry__link",
+              onClick: () => {
+              }
+            }, {
+              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(` с Пользовательским соглашением `);
+                } else {
+                  return [
+                    createTextVNode(" с Пользовательским соглашением ")
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+            _push2(`</span></span>`);
+          } else {
+            return [
+              createVNode("span", { class: "auth-entry__checkbox-text" }, [
+                createTextVNode(" Я ознакомлен и согласен "),
+                createVNode("span", { class: "auth-entry__checkbox-link-line" }, [
+                  createVNode(_component_NuxtLink, {
+                    to: "/user-agreement",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    class: "auth-entry__link",
+                    onClick: withModifiers(() => {
+                    }, ["stop"])
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(" с Пользовательским соглашением ")
+                    ]),
+                    _: 1
+                  }, 8, ["onClick"])
+                ])
+              ])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`</div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterStartForm.vue");
+  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+};
+const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e0a4769e"]]);
+const _sfc_main$8 = {
+  __name: "AuthRegisterCompleteForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const fullName = flow.fullName;
+    const isSmsCodeConfirmed = flow.isSmsCodeConfirmed;
+    const isPhoneConfirmed = flow.isPhoneConfirmed;
+    const registrationPhone = flow.registrationPhone;
+    const isSmsCodeInvalid = flow.isSmsCodeInvalid;
+    const smsCode = flow.smsCode;
+    const smsCodePlaceholder = flow.smsCodePlaceholder;
+    const SMS_CODE_LENGTH = flow.SMS_CODE_LENGTH;
+    const canResendCode = flow.canResendCode;
+    const resendButtonText = flow.resendButtonText;
+    const codeRequestError = flow.codeRequestError;
+    const codeVerifyError = flow.codeVerifyError;
+    const registrationEmail = flow.registrationEmail;
+    const visibleRegistrationEmailError = flow.visibleRegistrationEmailError;
+    const password = flow.password;
+    const passwordInputType = flow.passwordInputType;
+    const visiblePasswordError = flow.visiblePasswordError;
+    const isPasswordVisible = flow.isPasswordVisible;
+    const registrationRequestError = flow.registrationRequestError;
+    const isRegistrationRequestPending = flow.isRegistrationRequestPending;
+    const isLegalRepresentative = flow.isLegalRepresentative;
+    watch(isPhoneConfirmed, (confirmed) => {
+      if (confirmed) {
+        flow.stopResendTimer();
+        nextTick(() => {
+          (void 0).getElementById("auth-entry-email")?.focus();
+        });
+      }
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_AppInput = __nuxt_component_0;
+      const _component_AppIcon = __nuxt_component_1$1;
+      const _component_AppCheckbox = __nuxt_component_3;
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-name" data-v-1ef7f7a6> Имя и фамилия </label>`);
+      _push(ssrRenderComponent(_component_AppInput, {
+        id: "auth-entry-code-name",
+        modelValue: unref(fullName),
+        "onUpdate:modelValue": ($event) => isRef(fullName) ? fullName.value = $event : null,
+        class: "auth-entry__input auth-entry__input--compact",
+        type: "text",
+        placeholder: "Иван Иванов",
+        autocomplete: "name",
+        onInput: unref(flow).onFullNameInput
+      }, null, _parent));
+      _push(`</div><div class="auth-entry__code-fields" data-v-1ef7f7a6>`);
+      if (unref(isSmsCodeConfirmed)) {
+        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-1ef7f7a6> Номер телефона </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-confirmed-phone",
+          modelValue: unref(registrationPhone),
+          "onUpdate:modelValue": ($event) => isRef(registrationPhone) ? registrationPhone.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact auth-entry__input--phone auth-entry__input--confirmed",
+          type: "tel",
+          autocomplete: "tel",
+          readonly: ""
+        }, null, _parent));
+        _push(`</div><div class="auth-entry__confirmed-badge" data-v-1ef7f7a6> Подтверждён </div></div>`);
+      } else {
+        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-phone" data-v-1ef7f7a6> Номер телефона </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-code-phone",
+          modelValue: unref(registrationPhone),
+          "onUpdate:modelValue": ($event) => isRef(registrationPhone) ? registrationPhone.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact auth-entry__input--phone",
+          type: "tel",
+          placeholder: "+7(999)-999-99-99",
+          autocomplete: "tel",
+          inputmode: "tel",
+          readonly: ""
+        }, null, _parent));
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-sms-code" data-v-1ef7f7a6> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-1ef7f7a6><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-1ef7f7a6>`);
+        if (unref(isSmsCodeInvalid)) {
+          _push(ssrRenderComponent(_component_AppIcon, {
+            name: "reset",
+            size: 16,
+            class: "auth-entry__sms-code-error-icon"
+          }, null, _parent));
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-1ef7f7a6>${ssrInterpolate(unref(resendButtonText))}</button>`);
+        if (unref(codeRequestError) || unref(codeVerifyError)) {
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1ef7f7a6>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`<!--]-->`);
+      }
+      _push(`</div>`);
+      if (unref(isSmsCodeConfirmed)) {
+        _push(`<div class="auth-entry__profile-fields" data-v-1ef7f7a6><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-email" data-v-1ef7f7a6> Электронная почта </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-email",
+          modelValue: unref(registrationEmail),
+          "onUpdate:modelValue": ($event) => isRef(registrationEmail) ? registrationEmail.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact",
+          type: "text",
+          placeholder: "mail@example.com",
+          autocomplete: "email",
+          inputmode: "email",
+          "aria-invalid": Boolean(unref(visibleRegistrationEmailError)),
+          "aria-describedby": unref(visibleRegistrationEmailError) ? "auth-entry-email-error" : void 0,
+          onInput: unref(flow).onRegistrationEmailInput
+        }, null, _parent));
+        if (unref(visibleRegistrationEmailError)) {
+          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-1ef7f7a6>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-password" data-v-1ef7f7a6> Пароль </label>`);
+        _push(ssrRenderComponent(_component_AppInput, {
+          id: "auth-entry-password",
+          modelValue: unref(password),
+          "onUpdate:modelValue": ($event) => isRef(password) ? password.value = $event : null,
+          class: "auth-entry__input auth-entry__input--compact auth-entry__input--password",
+          type: unref(passwordInputType),
+          placeholder: "Введите пароль",
+          autocomplete: "new-password",
+          "aria-invalid": Boolean(unref(visiblePasswordError)),
+          "aria-describedby": unref(visiblePasswordError) ? "auth-entry-password-error" : void 0,
+          onInput: unref(flow).onPasswordInput
+        }, {
+          suffix: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-1ef7f7a6${_scopeId}>`);
+              _push2(ssrRenderComponent(_component_AppIcon, {
+                name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+                size: 16,
+                class: "auth-entry__password-toggle-icon"
+              }, null, _parent2, _scopeId));
+              _push2(`</button>`);
+            } else {
+              return [
+                createVNode("button", {
+                  type: "button",
+                  class: "auth-entry__password-toggle",
+                  "aria-label": unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль",
+                  onClick: ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
+                }, [
+                  createVNode(_component_AppIcon, {
+                    name: unref(isPasswordVisible) ? "password-hide" : "password-show",
+                    size: 16,
+                    class: "auth-entry__password-toggle-icon"
+                  }, null, 8, ["name"])
+                ], 8, ["aria-label", "onClick"])
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        if (unref(visiblePasswordError)) {
+          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-1ef7f7a6>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div></div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-1ef7f7a6>`);
+      _push(ssrRenderComponent(_component_AppCheckbox, {
+        modelValue: unref(isLegalRepresentative),
+        "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
+        class: "auth-entry__checkbox"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<span class="auth-entry__checkbox-text" data-v-1ef7f7a6${_scopeId}> Я представитель юрлица или ИП </span>`);
+          } else {
+            return [
+              createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`</div>`);
+      if (unref(registrationRequestError)) {
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1ef7f7a6>${ssrInterpolate(unref(registrationRequestError))}</p>`);
+      } else {
+        _push(`<!---->`);
+      }
+      if (unref(isSmsCodeConfirmed)) {
+        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-1ef7f7a6>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<!--]-->`);
+    };
+  }
+};
+const _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterCompleteForm.vue");
+  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+};
+const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-1ef7f7a6"]]), { __name: "AuthRegisterCompleteForm" });
+const _sfc_main$7 = {
+  __name: "AuthLegalForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const flow = inject("authFlow");
+    const step = flow.step;
+    const organizationInn = flow.organizationInn;
+    const shouldShowOrganizationSuggestions = flow.shouldShowOrganizationSuggestions;
+    const isOrganizationSuggestPending = flow.isOrganizationSuggestPending;
+    const organizationSuggestError = flow.organizationSuggestError;
+    const organizationSuggestions = flow.organizationSuggestions;
+    const selectedOrganization = flow.selectedOrganization;
+    const isOrganizationSavePending = flow.isOrganizationSavePending;
+    const organizationSaveError = flow.organizationSaveError;
+    return (_ctx, _push, _parent, _attrs) => {
+      if (unref(step) === "legal-details") {
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__field auth-entry__field--legal-inn" }, _attrs))} data-v-0c732cca><label class="auth-entry__label" for="auth-entry-organization-inn" data-v-0c732cca> ИНН </label><input id="auth-entry-organization-inn"${ssrRenderAttr("value", unref(organizationInn))} class="auth-entry__input" type="text" placeholder="Введите ИНН компании" autocomplete="off" inputmode="numeric" maxlength="12" data-v-0c732cca>`);
+        if (unref(shouldShowOrganizationSuggestions)) {
+          _push(`<div class="auth-entry__organization-options" data-v-0c732cca>`);
+          if (unref(isOrganizationSuggestPending)) {
+            _push(`<p class="auth-entry__organization-status" data-v-0c732cca> Ищем организацию </p>`);
+          } else if (unref(organizationSuggestError)) {
+            _push(`<p class="auth-entry__organization-status auth-entry__organization-status--error" data-v-0c732cca>${ssrInterpolate(unref(organizationSuggestError))}</p>`);
+          } else {
+            _push(`<!--[-->`);
+            ssrRenderList(unref(organizationSuggestions), (suggestion) => {
+              _push(`<button type="button" class="auth-entry__organization-option" data-v-0c732cca><span class="auth-entry__organization-name" data-v-0c732cca>${ssrInterpolate(suggestion.name)}</span>`);
+              if (suggestion.inn) {
+                _push(`<span class="auth-entry__organization-inn" data-v-0c732cca><span class="auth-entry__organization-inn-prefix" data-v-0c732cca>ИНН</span> ${ssrInterpolate(suggestion.inn)}</span>`);
+              } else {
+                _push(`<!---->`);
+              }
+              if (suggestion.address) {
+                _push(`<span class="auth-entry__organization-address" data-v-0c732cca>${ssrInterpolate(suggestion.address)}</span>`);
+              } else {
+                _push(`<!---->`);
+              }
+              _push(`</button>`);
+            });
+            _push(`<!--]-->`);
+          }
+          _push(`</div>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div>`);
+      } else if (unref(step) === "legal-confirmation") {
+        _push(`<div${ssrRenderAttrs(_attrs)} data-v-0c732cca>`);
+        if (unref(selectedOrganization)) {
+          _push(`<div class="auth-entry__organization-confirm-card" data-v-0c732cca><p class="auth-entry__organization-confirm-name" data-v-0c732cca>${ssrInterpolate(unref(selectedOrganization).name)}</p>`);
+          if (unref(selectedOrganization).inn) {
+            _push(`<p class="auth-entry__organization-confirm-meta" data-v-0c732cca> ИНН ${ssrInterpolate(unref(selectedOrganization).inn)}</p>`);
+          } else {
+            _push(`<!---->`);
+          }
+          if (unref(selectedOrganization).address) {
+            _push(`<p class="auth-entry__organization-confirm-meta" data-v-0c732cca>${ssrInterpolate(unref(selectedOrganization).address)}</p>`);
+          } else {
+            _push(`<!---->`);
+          }
+          _push(`</div>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`<button type="submit" class="auth-entry__organization-confirm-button"${ssrIncludeBooleanAttr(unref(isOrganizationSavePending)) ? " disabled" : ""} data-v-0c732cca>${ssrInterpolate(unref(isOrganizationSavePending) ? "Добавляем" : "Добавить организацию")}</button>`);
+        if (unref(organizationSaveError)) {
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-0c732cca>${ssrInterpolate(unref(organizationSaveError))}</p>`);
+        } else {
+          _push(`<!---->`);
+        }
+        _push(`</div>`);
+      } else {
+        _push(`<!---->`);
+      }
+    };
+  }
+};
+const _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLegalForm.vue");
+  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+};
+const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0c732cca"]]);
+const authClient = createAuthClient({
+  basePath: "/api/auth",
+  plugins: [
+    phoneNumberClient()
+  ]
+});
+const useProfileStore = defineStore("profile", () => {
+  const profileData = ref(null);
+  const isLoading = ref(false);
+  const error = ref(null);
+  let fetchPromise = null;
+  const user = computed(() => profileData.value?.profile?.user ?? null);
+  const organizations = computed(() => profileData.value?.profile?.organizations ?? []);
+  const recipients = computed(() => profileData.value?.profile?.recipients ?? []);
+  const isLoaded = computed(() => Boolean(profileData.value));
+  async function fetchProfile({ force = false } = {}) {
+    if (!force && profileData.value) {
+      return profileData.value;
+    }
+    if (fetchPromise) {
+      return fetchPromise;
+    }
+    isLoading.value = true;
+    error.value = null;
+    fetchPromise = $fetch("/api/profile", {
+      headers: useRequestHeaders(["cookie"])
+    }).then((data) => {
+      profileData.value = data;
+      return data;
+    }).catch((fetchError) => {
+      error.value = fetchError;
+      throw fetchError;
+    }).finally(() => {
+      isLoading.value = false;
+      fetchPromise = null;
+    });
+    return fetchPromise;
+  }
+  function fetchProfileOnce() {
+    return fetchProfile();
+  }
+  function refreshProfile() {
+    return fetchProfile({ force: true });
+  }
+  function clearProfile() {
+    profileData.value = null;
+    error.value = null;
+    isLoading.value = false;
+    fetchPromise = null;
+  }
+  return {
+    profileData,
+    user,
+    organizations,
+    recipients,
+    isLoaded,
+    isLoading,
+    error,
+    fetchProfileOnce,
+    refreshProfile,
+    clearProfile
+  };
+});
+const intervalError = "[nuxt] `setInterval` should not be used on the server. Consider wrapping it with an `onNuxtReady`, `onBeforeMount` or `onMounted` lifecycle hook, or ensure you only call it in the browser by checking `false`.";
+const setInterval = (() => {
+  console.error(intervalError);
+});
+function useAuthEntryFlow({
+  onRequestCode,
+  onCompleteLogin,
+  onCompleteRegistration
+} = {}) {
+  const profileStore = useProfileStore();
+  const step = ref("entry");
+  const identifier = ref("");
+  const isFieldTouched = ref(false);
+  const isSubmitted = ref(false);
+  const isLoginSubmitted = ref(false);
+  const isRegistrationSubmitted = ref(false);
+  const fullName = ref("");
+  const registrationEmail = ref("");
+  const registrationPhone = ref("");
+  const password = ref("");
+  const passwordRecoveryEmail = ref("");
+  const isPasswordRecoverySubmitted = ref(false);
+  const isPasswordRecoveryRequestPending = ref(false);
+  const passwordRecoveryRequestError = ref("");
+  const passwordRecoveryRequestMessage = ref("");
+  const passwordRecoveryCodeError = ref("");
+  const organizationInn = ref("");
+  const isPasswordVisible = ref(false);
+  const smsCode = ref("");
+  const isLegalRepresentative = ref(false);
+  const isPersonalDataAccepted = ref(false);
+  const isUserAgreementAccepted = ref(false);
+  const isCodeRequestPending = ref(false);
+  const codeRequestError = ref("");
+  const isCodeRequestSent = ref(false);
+  const codeAuthenticationId = ref("");
+  const isCodeVerifyPending = ref(false);
+  const codeVerifyError = ref("");
+  const isPhoneConfirmed = ref(false);
+  const resendSeconds = ref(0);
+  const isEntryRequestPending = ref(false);
+  const entryRequestError = ref("");
+  const isLoginRequestPending = ref(false);
+  const loginRequestError = ref("");
+  const isRegistrationRequestPending = ref(false);
+  const registrationRequestError = ref("");
+  const successMode = ref("registration");
+  const organizationSuggestions = ref([]);
+  const selectedOrganization = ref(null);
+  const isOrganizationSuggestPending = ref(false);
+  const organizationSuggestError = ref("");
+  const isOrganizationSuggestionsOpen = ref(false);
+  const isOrganizationSavePending = ref(false);
+  const organizationSaveError = ref("");
+  const SMS_CODE_LENGTH = 4;
+  const MIN_PASSWORD_LENGTH = 8;
+  const ORGANIZATION_SUGGEST_DELAY = 350;
+  let resendTimerId;
+  let organizationSuggestTimerId;
+  let organizationSuggestRequestId = 0;
+  const hasIdentifier = computed(() => identifier.value.trim().length > 0);
+  const isPhoneMode = computed(() => isPhoneLike(identifier.value));
+  const identifierError = computed(() => getIdentifierError(identifier.value));
+  const visibleError = computed(() => isFieldTouched.value || isSubmitted.value ? identifierError.value : "");
+  const registrationEmailError = computed(() => getRegistrationEmailError(registrationEmail.value));
+  const visibleRegistrationEmailError = computed(() => isRegistrationSubmitted.value ? registrationEmailError.value : "");
+  const passwordError = computed(() => getPasswordError(password.value));
+  const visibleLoginPasswordError = computed(() => isLoginSubmitted.value ? passwordError.value : "");
+  const visiblePasswordError = computed(() => isRegistrationSubmitted.value ? passwordError.value : "");
+  const passwordRecoveryIdentifierError = computed(() => getIdentifierError(passwordRecoveryEmail.value));
+  const visiblePasswordRecoveryEmailError = computed(() => isPasswordRecoverySubmitted.value ? passwordRecoveryIdentifierError.value : "");
+  const inputMode = computed(() => isPhoneMode.value ? "tel" : "email");
+  const canRequestCode = computed(() => normalizePhoneDigits(registrationPhone.value).length === 11 && isPersonalDataAccepted.value && isUserAgreementAccepted.value);
+  const canResendCode = computed(() => resendSeconds.value === 0 && !isCodeRequestPending.value && !isPasswordRecoveryRequestPending.value && !isCodeVerifyPending.value);
+  const isSmsCodeConfirmed = computed(() => isPhoneConfirmed.value);
+  const isSmsCodeInvalid = computed(() => Boolean(codeVerifyError.value));
+  const smsCodePlaceholder = computed(() => Array.from({ length: SMS_CODE_LENGTH }, () => "—").join(" "));
+  const shouldShowOrganizationSuggestions = computed(() => isOrganizationSuggestionsOpen.value && (isOrganizationSuggestPending.value || Boolean(organizationSuggestError.value) || organizationSuggestions.value.length > 0));
+  const isLegalRegistrationStep = computed(() => step.value === "legal-details" || step.value === "legal-confirmation");
+  const passwordInputType = computed(() => isPasswordVisible.value ? "text" : "password");
+  const codeButtonText = computed(() => {
+    if (isCodeRequestPending.value) {
+      return "Получить код";
+    }
+    return "Получить код";
+  });
+  const resendCountdownText = computed(() => `Получить повторно можно через ${resendSeconds.value} ${getRussianSecondsWord(resendSeconds.value)}`);
+  const resendButtonText = computed(() => {
+    if (isCodeRequestPending.value || isPasswordRecoveryRequestPending.value) {
+      return "Отправляем код";
+    }
+    return canResendCode.value ? "Отправить повторно" : resendCountdownText.value;
+  });
+  const successTitle = computed(() => successMode.value === "login" ? "Готово, вы вошли!" : "Ура, зарегистрировались!");
+  const successDescription = "Теперь у вас есть доступ к личному кабинету, избранному, отслеживанию заказов и безналичной оплате.";
+  const passwordRecoveryDescription = "Введите адрес электронной почты или телефон, мы отправим вам инструкцию по восстановлению пароля.";
+  const isPasswordRecoveryPhone = computed(() => isPhoneLike(passwordRecoveryEmail.value));
+  const passwordRecoverySentDescription = computed(() => {
+    const destination = passwordRecoveryEmail.value.trim() || (isPasswordRecoveryPhone.value ? "+7 (000) 000 00 00" : "Почта@домен.ру");
+    if (isPasswordRecoveryPhone.value) {
+      return "Мы отправили СМС\nс кодом для сброса пароля";
+    }
+    return `Мы отправили письмо со ссылкой для сброса пароля на почту ${destination}.`;
+  });
+  const passwordRecoverySentHint = computed(() => isPasswordRecoveryPhone.value ? "Если вы его не получили, повторите попытку через 10 минут или напишите нам" : "Если вы его не получили, проверьте папку Спам или напишите нам адрес почты");
+  const passwordRecoveryPhone = computed(() => formatCompactPhone(passwordRecoveryEmail.value));
+  const modalTitle = computed(() => {
+    if (step.value === "entry") {
+      return "Вход или регистрация";
+    }
+    if (step.value === "login") {
+      return "Вход";
+    }
+    if (step.value === "password-recovery") {
+      return "Восстановление пароля";
+    }
+    if (step.value === "password-recovery-sent") {
+      return isPasswordRecoveryPhone.value ? "Проверьте телефон" : "Проверьте почту";
+    }
+    return "Регистрация";
+  });
+  function getPasswordError(value) {
+    if (!value) {
+      return "Введите пароль";
+    }
+    return value.length >= MIN_PASSWORD_LENGTH ? "" : `Минимум ${MIN_PASSWORD_LENGTH} символов`;
+  }
+  function onIdentifierInput(event) {
+    const value = event.target.value;
+    isSubmitted.value = false;
+    entryRequestError.value = "";
+    loginRequestError.value = "";
+    if (isPhoneLike(value)) {
+      identifier.value = formatPhone(value);
+      return;
+    }
+    identifier.value = isPhoneMode.value ? unmaskPhoneToEmail(value) : value;
+  }
+  function onIdentifierBlur() {
+    isFieldTouched.value = true;
+  }
+  function resetIdentifier() {
+    identifier.value = "";
+    isFieldTouched.value = false;
+    isSubmitted.value = false;
+    entryRequestError.value = "";
+    loginRequestError.value = "";
+  }
+  function onRegistrationPhoneInput(event) {
+    registrationPhone.value = formatCompactPhone(event.target.value);
+    codeRequestError.value = "";
+    codeAuthenticationId.value = "";
+    codeVerifyError.value = "";
+    isPhoneConfirmed.value = false;
+    isCodeRequestSent.value = false;
+    smsCode.value = "";
+  }
+  function onFullNameInput(event) {
+    const rawValue = String(event?.target?.value ?? "");
+    fullName.value = rawValue.replace(/[^\p{L}\s]/gu, "").replace(/\s{2,}/g, " ").replace(/^\s+/, "");
+  }
+  function onRegistrationEmailInput() {
+    isRegistrationSubmitted.value = false;
+    registrationRequestError.value = "";
+  }
+  function onPasswordInput() {
+    isLoginSubmitted.value = false;
+    isRegistrationSubmitted.value = false;
+    loginRequestError.value = "";
+    registrationRequestError.value = "";
+  }
+  function onPasswordRecoveryEmailInput(event) {
+    const value = event.target.value;
+    isPasswordRecoverySubmitted.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
+    if (isPhoneLike(value)) {
+      passwordRecoveryEmail.value = formatPhone(value);
+      return;
+    }
+    passwordRecoveryEmail.value = isPhoneLike(passwordRecoveryEmail.value) ? unmaskPhoneToEmail(value) : value;
+  }
+  function onSmsCodeInput(event) {
+    smsCode.value = event.target.value.replace(/\D/g, "").slice(0, SMS_CODE_LENGTH);
+    codeVerifyError.value = "";
+    passwordRecoveryCodeError.value = "";
+    registrationRequestError.value = "";
+  }
+  function onOrganizationInnInput(event) {
+    organizationInn.value = event.target.value.replace(/\D/g, "").slice(0, 12);
+    selectedOrganization.value = null;
+    organizationSuggestError.value = "";
+    isOrganizationSuggestionsOpen.value = true;
+    scheduleOrganizationSuggest();
+  }
+  function onOrganizationInnFocus() {
+    if (organizationSuggestions.value.length > 0 || organizationInn.value.length >= 3) {
+      isOrganizationSuggestionsOpen.value = true;
+    }
+  }
+  function onOrganizationInnBlur() {
+    setTimeout(() => {
+      isOrganizationSuggestionsOpen.value = false;
+    }, 120);
+  }
+  function resetCodeRequestStatus() {
+    codeRequestError.value = "";
+    codeAuthenticationId.value = "";
+    codeVerifyError.value = "";
+    isPhoneConfirmed.value = false;
+    isCodeRequestSent.value = false;
+    smsCode.value = "";
+  }
+  watch([isPersonalDataAccepted, isUserAgreementAccepted], resetCodeRequestStatus);
+  function stopResendTimer() {
+    if (resendTimerId) {
+      clearInterval(resendTimerId);
+      resendTimerId = void 0;
+    }
+  }
+  function stopOrganizationSuggestTimer() {
+    if (organizationSuggestTimerId) {
+      clearTimeout(organizationSuggestTimerId);
+      organizationSuggestTimerId = void 0;
+    }
+  }
+  function startResendTimer() {
+    stopResendTimer();
+    resendSeconds.value = 60;
+    resendTimerId = setInterval();
+  }
+  function scheduleOrganizationSuggest() {
+    stopOrganizationSuggestTimer();
+    if (organizationInn.value.length < 3) {
+      organizationSuggestions.value = [];
+      isOrganizationSuggestPending.value = false;
+      return;
+    }
+    organizationSuggestTimerId = setTimeout(fetchOrganizationSuggestions, ORGANIZATION_SUGGEST_DELAY);
+  }
+  function resetAuthFlow() {
+    step.value = "entry";
+    identifier.value = "";
+    isFieldTouched.value = false;
+    isSubmitted.value = false;
+    isLoginSubmitted.value = false;
+    isRegistrationSubmitted.value = false;
+    fullName.value = "";
+    registrationEmail.value = "";
+    registrationPhone.value = "";
+    password.value = "";
+    passwordRecoveryEmail.value = "";
+    isPasswordRecoverySubmitted.value = false;
+    isPasswordRecoveryRequestPending.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    organizationInn.value = "";
+    organizationSuggestions.value = [];
+    selectedOrganization.value = null;
+    isOrganizationSuggestPending.value = false;
+    organizationSuggestError.value = "";
+    isOrganizationSuggestionsOpen.value = false;
+    isOrganizationSavePending.value = false;
+    organizationSaveError.value = "";
+    isPasswordVisible.value = false;
+    smsCode.value = "";
+    isLegalRepresentative.value = false;
+    isPersonalDataAccepted.value = false;
+    isUserAgreementAccepted.value = false;
+    isCodeRequestPending.value = false;
+    codeRequestError.value = "";
+    isCodeRequestSent.value = false;
+    codeAuthenticationId.value = "";
+    isCodeVerifyPending.value = false;
+    codeVerifyError.value = "";
+    isPhoneConfirmed.value = false;
+    resendSeconds.value = 0;
+    isEntryRequestPending.value = false;
+    entryRequestError.value = "";
+    isLoginRequestPending.value = false;
+    loginRequestError.value = "";
+    isRegistrationRequestPending.value = false;
+    registrationRequestError.value = "";
+    successMode.value = "registration";
+  }
+  function getEntryRequestErrorMessage(error) {
+    if (error?.data?.message) {
+      return error.data.message;
+    }
+    if (error?.message) {
+      return error.message;
+    }
+    return "Не удалось проверить почту или телефон";
+  }
+  async function continueFromEntry() {
+    if (isEntryRequestPending.value) {
+      return;
+    }
+    isSubmitted.value = true;
+    isFieldTouched.value = true;
+    entryRequestError.value = "";
+    if (!identifier.value.trim()) {
+      return;
+    }
+    if (identifierError.value) {
+      return;
+    }
+    isEntryRequestPending.value = true;
+    try {
+      const result = await $fetch("/api/auth-identifier", {
+        method: "POST",
+        timeout: 6e3,
+        body: {
+          identifier: isPhoneLike(identifier.value) ? formatAuthPhone(identifier.value) : identifier.value.trim()
+        }
+      });
+      if (!result.exists) {
+        startRegistration();
+        return;
+      }
+      isLoginSubmitted.value = false;
+      loginRequestError.value = "";
+      password.value = "";
+      step.value = "login";
+      nextTick(() => {
+        (void 0).getElementById("auth-entry-login-password")?.focus();
+      });
+    } catch (error) {
+      entryRequestError.value = getEntryRequestErrorMessage(error);
+    } finally {
+      isEntryRequestPending.value = false;
+    }
+  }
+  function startRegistration() {
+    const currentIdentifier = identifierError.value ? "" : identifier.value;
+    isLoginSubmitted.value = false;
+    isSubmitted.value = false;
+    isFieldTouched.value = false;
+    loginRequestError.value = "";
+    password.value = "";
+    registrationPhone.value = isPhoneLike(currentIdentifier) ? formatCompactPhone(currentIdentifier) : "";
+    registrationEmail.value = isPhoneLike(currentIdentifier) ? "" : currentIdentifier.trim();
+    step.value = "registration";
+    nextTick(() => {
+      if (!registrationPhone.value) {
+        (void 0).getElementById("auth-entry-phone")?.focus();
+      }
+    });
+  }
+  function onFormSubmit() {
+    if (step.value === "entry") {
+      continueFromEntry();
+      return;
+    }
+    if (step.value === "login") {
+      completeLogin();
+      return;
+    }
+    if (step.value === "password-recovery") {
+      requestPasswordRecovery();
+      return;
+    }
+    if (step.value === "password-recovery-sent" && isPasswordRecoveryPhone.value) {
+      verifyCode();
+      return;
+    }
+    if (step.value === "registration") {
+      requestCode();
+      return;
+    }
+    if (step.value === "legal-details") {
+      return;
+    }
+    if (step.value === "legal-confirmation") {
+      completeOrganizationRegistration();
+      return;
+    }
+    if (!isSmsCodeConfirmed.value) {
+      verifyCode();
+      return;
+    }
+    if (step.value === "code") {
+      completeRegistration();
+    }
+  }
+  function getAuthErrorMessage(error, fallbackMessage = "Не удалось зарегистрироваться") {
+    const message = [
+      error?.message,
+      error?.statusText,
+      error?.data?.message,
+      error?.error?.message,
+      error?.cause?.message
+    ].find((value) => typeof value === "string" && value.trim()) || "";
+    if (message === "Invalid email or password") {
+      return "Неверная почта или пароль";
+    }
+    if (message === "Invalid phone number or password") {
+      return "Неверный телефон или пароль";
+    }
+    if (message === "Invalid phone number") {
+      return "Введите корректный номер телефона";
+    }
+    if (message === "Password too short") {
+      return `Пароль должен быть не короче ${MIN_PASSWORD_LENGTH} символов`;
+    }
+    if (message === "Failed to create user") {
+      return "Не удалось создать аккаунт. Возможно, этот телефон уже используется.";
+    }
+    return message || fallbackMessage;
+  }
+  function startPasswordRecovery() {
+    passwordRecoveryEmail.value = isPhoneLike(identifier.value) ? "" : identifier.value.trim();
+    isPasswordRecoverySubmitted.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
+    step.value = "password-recovery";
+    nextTick(() => {
+      (void 0).getElementById("auth-entry-password-recovery-email")?.focus();
+    });
+  }
+  function backToLoginFromPasswordRecovery() {
+    isPasswordRecoverySubmitted.value = false;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
+    step.value = "login";
+    nextTick(() => {
+      (void 0).getElementById("auth-entry-login-password")?.focus();
+    });
+  }
+  async function requestPasswordRecovery() {
+    if (isPasswordRecoveryRequestPending.value) {
+      return;
+    }
+    isPasswordRecoverySubmitted.value = true;
+    passwordRecoveryRequestError.value = "";
+    passwordRecoveryRequestMessage.value = "";
+    passwordRecoveryCodeError.value = "";
+    codeAuthenticationId.value = "";
+    codeVerifyError.value = "";
+    if (passwordRecoveryIdentifierError.value) {
+      return;
+    }
+    const isPhoneRecovery = isPhoneLike(passwordRecoveryEmail.value);
+    if (isPhoneRecovery) {
+      isPasswordRecoveryRequestPending.value = true;
+      passwordRecoveryRequestMessage.value = "";
+      codeAuthenticationId.value = "";
+      codeVerifyError.value = "";
+      smsCode.value = "";
+      isPhoneConfirmed.value = false;
+      startResendTimer();
+      step.value = "password-recovery-sent";
+      nextTick(() => {
+        (void 0).getElementById("auth-entry-password-recovery-sms-code")?.focus();
+      });
+      try {
+        const result = await $fetch("/api/auth/password-recovery/request-code", {
+          method: "POST",
+          timeout: 4e4,
+          body: {
+            phone: passwordRecoveryEmail.value.trim()
+          }
+        });
+        codeAuthenticationId.value = result.authenticationId || "";
+        return;
+      } catch (error) {
+        stopResendTimer();
+        resendSeconds.value = 0;
+        passwordRecoveryRequestError.value = getAuthErrorMessage(error, "Не удалось отправить код");
+        return;
+      } finally {
+        isPasswordRecoveryRequestPending.value = false;
+      }
+    }
+    isPasswordRecoveryRequestPending.value = true;
+    try {
+      if (typeof authClient.forgetPassword === "function") {
+        const result = await authClient.forgetPassword({
+          email: passwordRecoveryEmail.value.trim()
+        });
+        if (result?.error) {
+          passwordRecoveryRequestError.value = getAuthErrorMessage(result.error, "Не удалось отправить ссылку");
+          return;
+        }
+      }
+      passwordRecoveryRequestMessage.value = "";
+      step.value = "password-recovery-sent";
+    } catch (error) {
+      passwordRecoveryRequestError.value = getAuthErrorMessage(error, "Не удалось отправить ссылку");
+    } finally {
+      isPasswordRecoveryRequestPending.value = false;
+    }
+  }
+  async function completeLogin() {
+    if (isLoginRequestPending.value) {
+      return;
+    }
+    isLoginSubmitted.value = true;
+    isSubmitted.value = true;
+    isFieldTouched.value = true;
+    loginRequestError.value = "";
+    if (!identifier.value.trim()) {
+      return;
+    }
+    if (identifierError.value) {
+      return;
+    }
+    if (passwordError.value) {
+      return;
+    }
+    const currentIdentifier = identifier.value;
+    const isPhoneLogin = isPhoneLike(currentIdentifier);
+    isLoginRequestPending.value = true;
+    try {
+      const authResult = isPhoneLogin ? await authClient.signIn.phoneNumber({
+        phoneNumber: formatAuthPhone(currentIdentifier),
+        password: password.value
+      }) : await authClient.signIn.email({
+        email: currentIdentifier.trim(),
+        password: password.value
+      });
+      if (authResult.error) {
+        loginRequestError.value = getAuthErrorMessage(authResult.error, "Не удалось войти");
+        return;
+      }
+      successMode.value = "login";
+      onCompleteLogin?.({
+        identifier: isPhoneLogin ? formatCompactPhone(currentIdentifier) : currentIdentifier.trim(),
+        result: authResult.data
+      });
+      step.value = "success";
+    } catch (error) {
+      loginRequestError.value = getAuthErrorMessage(error, "Не удалось войти");
+    } finally {
+      isLoginRequestPending.value = false;
+    }
+  }
+  async function completeRegistration() {
+    if (isRegistrationRequestPending.value) {
+      return;
+    }
+    isRegistrationSubmitted.value = true;
+    registrationRequestError.value = "";
+    if (registrationEmailError.value) {
+      return;
+    }
+    if (passwordError.value) {
+      return;
+    }
+    const payload = {
+      fullName: fullName.value.trim(),
+      email: registrationEmail.value.trim(),
+      phone: registrationPhone.value.trim(),
+      authPhone: formatAuthPhone(registrationPhone.value),
+      password: password.value,
+      isLegalRepresentative: isLegalRepresentative.value
+    };
+    isRegistrationRequestPending.value = true;
+    try {
+      const authResult = await authClient.signUp.email({
+        name: payload.fullName || payload.email,
+        email: payload.email,
+        password: payload.password,
+        phoneNumber: payload.authPhone
+      });
+      if (authResult.error) {
+        registrationRequestError.value = getAuthErrorMessage(authResult.error);
+        return;
+      }
+      onCompleteRegistration?.({
+        ...payload,
+        result: authResult.data
+      });
+      successMode.value = "registration";
+      if (payload.isLegalRepresentative) {
+        step.value = "legal-details";
+        nextTick(() => {
+          (void 0).getElementById("auth-entry-organization-inn")?.focus();
+        });
+        return;
+      }
+      step.value = "success";
+    } catch (error) {
+      registrationRequestError.value = getAuthErrorMessage(error);
+    } finally {
+      isRegistrationRequestPending.value = false;
+    }
+  }
+  function getRequestErrorMessage(error) {
+    if (isTimeoutError(error)) {
+      return "Сервис СМС не ответил вовремя. Попробуйте отправить код ещё раз.";
+    }
+    if (error?.data?.message) {
+      return error.data.message;
+    }
+    if (error?.message) {
+      return error.message;
+    }
+    return "Не удалось отправить код подтверждения";
+  }
+  function getVerifyErrorMessage(error) {
+    if (isTimeoutError(error)) {
+      return "Сервис СМС не ответил вовремя. Попробуйте проверить код ещё раз.";
+    }
+    if (error?.data?.message) {
+      return error.data.message;
+    }
+    if (error?.message) {
+      return error.message;
+    }
+    return "Неверный код из СМС";
+  }
+  function isTimeoutError(error) {
+    const message = String(error?.message ?? "");
+    const causeMessage = String(error?.cause?.message ?? "");
+    return error?.name === "TimeoutError" || error?.code === 23 || error?.cause?.name === "TimeoutError" || error?.cause?.code === 23 || message.includes("timeout") || message.includes("no response") || causeMessage.includes("timeout");
+  }
+  function getOrganizationSuggestErrorMessage(error) {
+    if (error?.data?.message) {
+      return error.data.message;
+    }
+    if (error?.message) {
+      return error.message;
+    }
+    return "Не удалось получить данные организации";
+  }
+  async function fetchOrganizationSuggestions() {
+    const query = organizationInn.value;
+    if (query.length < 3) {
+      organizationSuggestions.value = [];
+      return;
+    }
+    const requestId = organizationSuggestRequestId + 1;
+    organizationSuggestRequestId = requestId;
+    isOrganizationSuggestPending.value = true;
+    organizationSuggestError.value = "";
+    try {
+      const result = await $fetch("/api/dadata/party-suggest", {
+        method: "POST",
+        timeout: 1e4,
+        body: { query }
+      });
+      if (requestId !== organizationSuggestRequestId) {
+        return;
+      }
+      organizationSuggestions.value = result.suggestions ?? [];
+      isOrganizationSuggestionsOpen.value = true;
+    } catch (error) {
+      if (requestId !== organizationSuggestRequestId) {
+        return;
+      }
+      organizationSuggestions.value = [];
+      organizationSuggestError.value = getOrganizationSuggestErrorMessage(error);
+    } finally {
+      if (requestId === organizationSuggestRequestId) {
+        isOrganizationSuggestPending.value = false;
+      }
+    }
+  }
+  function selectOrganization(suggestion) {
+    selectedOrganization.value = suggestion;
+    organizationInn.value = suggestion.inn;
+    organizationSuggestions.value = [];
+    organizationSuggestError.value = "";
+    organizationSaveError.value = "";
+    isOrganizationSuggestionsOpen.value = false;
+    step.value = "legal-confirmation";
+  }
+  function getOrganizationSaveErrorMessage(error) {
+    if (error?.data?.message) {
+      return error.data.message;
+    }
+    if (error?.message) {
+      return error.message;
+    }
+    return "Не удалось сохранить организацию";
+  }
+  async function completeOrganizationRegistration() {
+    if (isOrganizationSavePending.value) {
+      return;
+    }
+    if (!selectedOrganization.value) {
+      step.value = "legal-details";
+      return;
+    }
+    isOrganizationSavePending.value = true;
+    organizationSaveError.value = "";
+    try {
+      await $fetch("/api/organizations", {
+        method: "POST",
+        timeout: 1e4,
+        body: {
+          organization: selectedOrganization.value
+        }
+      });
+      await profileStore.refreshProfile();
+      step.value = "success";
+    } catch (error) {
+      organizationSaveError.value = getOrganizationSaveErrorMessage(error);
+    } finally {
+      isOrganizationSavePending.value = false;
+    }
+  }
+  async function requestCode() {
+    if (!canRequestCode.value || isCodeRequestPending.value) {
+      return;
+    }
+    const payload = {
+      fullName: fullName.value.trim(),
+      email: registrationEmail.value || null,
+      phone: registrationPhone.value.trim(),
+      isLegalRepresentative: isLegalRepresentative.value,
+      isPersonalDataAccepted: isPersonalDataAccepted.value,
+      isUserAgreementAccepted: isUserAgreementAccepted.value
+    };
+    isCodeRequestPending.value = true;
+    codeRequestError.value = "";
+    codeAuthenticationId.value = "";
+    codeVerifyError.value = "";
+    isPhoneConfirmed.value = false;
+    isCodeRequestSent.value = false;
+    smsCode.value = "";
+    try {
+      const result = await $fetch("/api/auth/request-code", {
+        method: "POST",
+        timeout: 4e4,
+        body: {
+          phone: payload.phone,
+          isPersonalDataAccepted: payload.isPersonalDataAccepted,
+          isUserAgreementAccepted: payload.isUserAgreementAccepted
+        }
+      });
+      if (!result.authenticationId) {
+        throw new Error("Не удалось получить код подтверждения");
+      }
+      codeAuthenticationId.value = result.authenticationId;
+      isCodeRequestSent.value = true;
+      startResendTimer();
+      step.value = "code";
+      onRequestCode?.({ ...payload, result });
+      nextTick(() => {
+        (void 0).getElementById("auth-entry-sms-code")?.focus();
+      });
+    } catch (error) {
+      codeRequestError.value = getRequestErrorMessage(error);
+    } finally {
+      isCodeRequestPending.value = false;
+    }
+  }
+  async function verifyCode() {
+    if (isCodeVerifyPending.value || isSmsCodeConfirmed.value) {
+      return;
+    }
+    if (smsCode.value.length !== SMS_CODE_LENGTH) {
+      return;
+    }
+    if (!codeAuthenticationId.value) {
+      codeVerifyError.value = "Отправьте код повторно";
+      return;
+    }
+    isCodeVerifyPending.value = true;
+    codeVerifyError.value = "";
+    registrationRequestError.value = "";
+    try {
+      await $fetch("/api/auth/verify-code", {
+        method: "POST",
+        timeout: 3e4,
+        body: {
+          authenticationId: codeAuthenticationId.value,
+          code: smsCode.value
+        }
+      });
+      isPhoneConfirmed.value = true;
+      if (step.value === "password-recovery-sent") {
+        passwordRecoveryCodeError.value = "";
+      }
+    } catch (error) {
+      codeVerifyError.value = getVerifyErrorMessage(error);
+      if (step.value === "password-recovery-sent") {
+        passwordRecoveryCodeError.value = codeVerifyError.value;
+      }
+    } finally {
+      isCodeVerifyPending.value = false;
+    }
+  }
+  return {
+    // state
+    step,
+    identifier,
+    isFieldTouched,
+    isSubmitted,
+    isLoginSubmitted,
+    isRegistrationSubmitted,
+    fullName,
+    registrationEmail,
+    registrationPhone,
+    password,
+    passwordRecoveryEmail,
+    isPasswordRecoverySubmitted,
+    isPasswordRecoveryRequestPending,
+    passwordRecoveryRequestError,
+    passwordRecoveryRequestMessage,
+    passwordRecoveryCodeError,
+    organizationInn,
+    isPasswordVisible,
+    smsCode,
+    isLegalRepresentative,
+    isPersonalDataAccepted,
+    isUserAgreementAccepted,
+    isCodeRequestPending,
+    codeRequestError,
+    isCodeRequestSent,
+    codeAuthenticationId,
+    isCodeVerifyPending,
+    codeVerifyError,
+    isPhoneConfirmed,
+    resendSeconds,
+    isEntryRequestPending,
+    entryRequestError,
+    isLoginRequestPending,
+    loginRequestError,
+    isRegistrationRequestPending,
+    registrationRequestError,
+    successMode,
+    organizationSuggestions,
+    selectedOrganization,
+    isOrganizationSuggestPending,
+    organizationSuggestError,
+    isOrganizationSuggestionsOpen,
+    isOrganizationSavePending,
+    organizationSaveError,
+    // constants
+    SMS_CODE_LENGTH,
+    MIN_PASSWORD_LENGTH,
+    ORGANIZATION_SUGGEST_DELAY,
+    // computed
+    hasIdentifier,
+    isPhoneMode,
+    identifierError,
+    visibleError,
+    registrationEmailError,
+    visibleRegistrationEmailError,
+    passwordError,
+    visibleLoginPasswordError,
+    visiblePasswordError,
+    passwordRecoveryEmailError: passwordRecoveryIdentifierError,
+    visiblePasswordRecoveryEmailError,
+    inputMode,
+    canRequestCode,
+    canResendCode,
+    isSmsCodeConfirmed,
+    isSmsCodeInvalid,
+    smsCodePlaceholder,
+    shouldShowOrganizationSuggestions,
+    isLegalRegistrationStep,
+    passwordInputType,
+    codeButtonText,
+    resendCountdownText,
+    resendButtonText,
+    successTitle,
+    successDescription,
+    passwordRecoveryDescription,
+    isPasswordRecoveryPhone,
+    passwordRecoverySentDescription,
+    passwordRecoverySentHint,
+    passwordRecoveryPhone,
+    modalTitle,
+    // methods
+    getPasswordError,
+    onIdentifierInput,
+    onIdentifierBlur,
+    resetIdentifier,
+    onFullNameInput,
+    onRegistrationPhoneInput,
+    onRegistrationEmailInput,
+    onPasswordInput,
+    onPasswordRecoveryEmailInput,
+    onSmsCodeInput,
+    onOrganizationInnInput,
+    onOrganizationInnFocus,
+    onOrganizationInnBlur,
+    resetCodeRequestStatus,
+    stopResendTimer,
+    stopOrganizationSuggestTimer,
+    startResendTimer,
+    scheduleOrganizationSuggest,
+    resetAuthFlow,
+    continueFromEntry,
+    startRegistration,
+    onFormSubmit,
+    getAuthErrorMessage,
+    startPasswordRecovery,
+    backToLoginFromPasswordRecovery,
+    requestPasswordRecovery,
+    completeLogin,
+    completeRegistration,
+    getRequestErrorMessage,
+    getVerifyErrorMessage,
+    getOrganizationSuggestErrorMessage,
+    fetchOrganizationSuggestions,
+    selectOrganization,
+    getOrganizationSaveErrorMessage,
+    completeOrganizationRegistration,
+    requestCode,
+    verifyCode
+  };
+}
+const _sfc_main$6 = {
+  __name: "AuthEntryModal",
+  __ssrInlineRender: true,
+  props: {
+    "modelValue": { type: Boolean, required: true },
+    "modelModifiers": {}
+  },
+  emits: /* @__PURE__ */ mergeModels(["request-code", "complete-login", "complete-registration"], ["update:modelValue"]),
+  setup(__props, { emit: __emit }) {
+    const isOpen = useModel(__props, "modelValue");
+    const emit = __emit;
+    const flow = useAuthEntryFlow({
+      onRequestCode: (payload) => emit("request-code", payload),
+      onCompleteLogin: (payload) => emit("complete-login", payload),
+      onCompleteRegistration: (payload) => emit("complete-registration", payload)
+    });
+    provide("authFlow", flow);
+    const step = flow.step;
+    const modalTitle = flow.modalTitle;
+    const isLegalRegistrationStep = flow.isLegalRegistrationStep;
+    const passwordRecoveryDescription = flow.passwordRecoveryDescription;
+    const passwordRecoverySentDescription = flow.passwordRecoverySentDescription;
+    const passwordRecoverySentHint = flow.passwordRecoverySentHint;
+    const isPasswordRecoveryPhone = flow.isPasswordRecoveryPhone;
+    const onFormSubmit = flow.onFormSubmit;
+    const stopResendTimer = flow.stopResendTimer;
+    const stopOrganizationSuggestTimer = flow.stopOrganizationSuggestTimer;
+    const resetAuthFlow = flow.resetAuthFlow;
+    const smsCode = flow.smsCode;
+    const SMS_CODE_LENGTH = flow.SMS_CODE_LENGTH;
+    const isSmsCodeConfirmed = flow.isSmsCodeConfirmed;
+    const verifyCode = flow.verifyCode;
+    watch(isOpen, (open) => {
+      if (!open) {
+        stopResendTimer();
+        stopOrganizationSuggestTimer();
+        return;
+      }
+      resetAuthFlow();
+      nextTick(() => {
+        (void 0).getElementById("auth-entry-identifier")?.focus();
+      });
+    });
+    watch(smsCode, (value) => {
+      if (value.length === SMS_CODE_LENGTH && !isSmsCodeConfirmed.value) {
+        verifyCode();
+      }
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UModal = _sfc_main$h;
+      const _component_AuthSuccessView = __nuxt_component_1;
+      const _component_AppIcon = __nuxt_component_1$1;
+      const _component_AuthEntryForm = __nuxt_component_3$1;
+      const _component_AuthLoginForm = __nuxt_component_4$1;
+      const _component_AuthPasswordRecoveryForm = __nuxt_component_5$2;
+      const _component_AuthPasswordRecoverySentView = __nuxt_component_6;
+      const _component_AuthRegisterStartForm = __nuxt_component_7;
+      const _component_AuthRegisterCompleteForm = __nuxt_component_8;
+      const _component_AuthLegalForm = __nuxt_component_9;
+      _push(ssrRenderComponent(_component_UModal, mergeProps({
+        open: isOpen.value,
+        "onUpdate:open": ($event) => isOpen.value = $event,
+        overlay: true,
+        close: false,
+        scrollable: true,
+        ui: {
+          content: "w-auto max-w-none bg-transparent ring-0 shadow-none p-0 rounded-none",
+          overlay: "bg-[rgba(4,18,27,0.74)]"
+        }
+      }, _attrs), {
+        content: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<form class="${ssrRenderClass([{
+              "auth-entry--login": unref(step) === "login",
+              "auth-entry--password-recovery": unref(step) === "password-recovery",
+              "auth-entry--password-recovery-sent": unref(step) === "password-recovery-sent",
+              "auth-entry--registration": unref(step) === "registration" || unref(step) === "code",
+              "auth-entry--legal-details": unref(step) === "legal-details",
+              "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
+              "auth-entry--success": unref(step) === "success"
+            }, "auth-entry"])}" data-v-83aaadc7${_scopeId}>`);
+            if (unref(step) === "success") {
+              _push2(ssrRenderComponent(_component_AuthSuccessView, {
+                onClose: ($event) => isOpen.value = false
+              }, null, _parent2, _scopeId));
+            } else {
+              _push2(`<!--[--><header class="auth-entry__header" data-v-83aaadc7${_scopeId}><div class="auth-entry__title-block" data-v-83aaadc7${_scopeId}><h2 class="auth-entry__title" data-v-83aaadc7${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
+              if (unref(isLegalRegistrationStep)) {
+                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
+              } else if (unref(step) === "password-recovery") {
+                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
+              } else if (unref(step) === "password-recovery-sent") {
+                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}><!--[-->`);
+                ssrRenderList(unref(passwordRecoverySentDescription).split("\n"), (line) => {
+                  _push2(`<!--[-->${ssrInterpolate(line)}<br data-v-83aaadc7${_scopeId}><!--]-->`);
+                });
+                _push2(`<!--]--><br data-v-83aaadc7${_scopeId}> ${ssrInterpolate(unref(passwordRecoverySentHint))} `);
+                if (unref(isPasswordRecoveryPhone)) {
+                  _push2(`<a class="auth-entry__subtitle-link" href="mailto:Info@indigo-mail.ru" target="_blank" rel="noopener noreferrer" data-v-83aaadc7${_scopeId}> на Info@indigo-mail.ru </a>`);
+                } else {
+                  _push2(`<!---->`);
+                }
+                _push2(`</p>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-83aaadc7${_scopeId}>`);
+              _push2(ssrRenderComponent(_component_AppIcon, {
+                name: "close",
+                size: 16,
+                class: "auth-entry__close-icon"
+              }, null, _parent2, _scopeId));
+              _push2(`</button></header>`);
+              if (unref(step) === "entry") {
+                _push2(ssrRenderComponent(_component_AuthEntryForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "login") {
+                _push2(ssrRenderComponent(_component_AuthLoginForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "password-recovery") {
+                _push2(ssrRenderComponent(_component_AuthPasswordRecoveryForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "password-recovery-sent") {
+                _push2(ssrRenderComponent(_component_AuthPasswordRecoverySentView, {
+                  onClose: ($event) => isOpen.value = false
+                }, null, _parent2, _scopeId));
+              } else if (unref(step) === "registration") {
+                _push2(ssrRenderComponent(_component_AuthRegisterStartForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "code") {
+                _push2(ssrRenderComponent(_component_AuthRegisterCompleteForm, null, null, _parent2, _scopeId));
+              } else if (unref(step) === "legal-details" || unref(step) === "legal-confirmation") {
+                _push2(ssrRenderComponent(_component_AuthLegalForm, null, null, _parent2, _scopeId));
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`<!--]-->`);
+            }
+            _push2(`</form>`);
+          } else {
+            return [
+              createVNode("form", {
+                class: ["auth-entry", {
+                  "auth-entry--login": unref(step) === "login",
+                  "auth-entry--password-recovery": unref(step) === "password-recovery",
+                  "auth-entry--password-recovery-sent": unref(step) === "password-recovery-sent",
+                  "auth-entry--registration": unref(step) === "registration" || unref(step) === "code",
+                  "auth-entry--legal-details": unref(step) === "legal-details",
+                  "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
+                  "auth-entry--success": unref(step) === "success"
+                }],
+                onSubmit: withModifiers(unref(onFormSubmit), ["prevent"])
+              }, [
+                unref(step) === "success" ? (openBlock(), createBlock(_component_AuthSuccessView, {
+                  key: 0,
+                  onClose: ($event) => isOpen.value = false
+                }, null, 8, ["onClose"])) : (openBlock(), createBlock(Fragment, { key: 1 }, [
+                  createVNode("header", { class: "auth-entry__header" }, [
+                    createVNode("div", { class: "auth-entry__title-block" }, [
+                      createVNode("h2", { class: "auth-entry__title" }, toDisplayString(unref(modalTitle)), 1),
+                      unref(isLegalRegistrationStep) ? (openBlock(), createBlock("p", {
+                        key: 0,
+                        class: "auth-entry__subtitle"
+                      }, " Укажите ИНН организации или ИП, остальные данные заполнятся автоматически ")) : unref(step) === "password-recovery" ? (openBlock(), createBlock("p", {
+                        key: 1,
+                        class: "auth-entry__subtitle"
+                      }, toDisplayString(unref(passwordRecoveryDescription)), 1)) : unref(step) === "password-recovery-sent" ? (openBlock(), createBlock("p", {
+                        key: 2,
+                        class: "auth-entry__subtitle"
+                      }, [
+                        (openBlock(true), createBlock(Fragment, null, renderList(unref(passwordRecoverySentDescription).split("\n"), (line) => {
+                          return openBlock(), createBlock(Fragment, { key: line }, [
+                            createTextVNode(toDisplayString(line), 1),
+                            createVNode("br")
+                          ], 64);
+                        }), 128)),
+                        createVNode("br"),
+                        createTextVNode(" " + toDisplayString(unref(passwordRecoverySentHint)) + " ", 1),
+                        unref(isPasswordRecoveryPhone) ? (openBlock(), createBlock("a", {
+                          key: 0,
+                          class: "auth-entry__subtitle-link",
+                          href: "mailto:Info@indigo-mail.ru",
+                          target: "_blank",
+                          rel: "noopener noreferrer"
+                        }, " на Info@indigo-mail.ru ")) : createCommentVNode("", true)
+                      ])) : createCommentVNode("", true)
+                    ]),
+                    createVNode("button", {
+                      type: "button",
+                      class: "auth-entry__close",
+                      "aria-label": "Закрыть окно входа или регистрации",
+                      onClick: ($event) => isOpen.value = false
+                    }, [
+                      createVNode(_component_AppIcon, {
+                        name: "close",
+                        size: 16,
+                        class: "auth-entry__close-icon"
+                      })
+                    ], 8, ["onClick"])
+                  ]),
+                  unref(step) === "entry" ? (openBlock(), createBlock(_component_AuthEntryForm, { key: 0 })) : unref(step) === "login" ? (openBlock(), createBlock(_component_AuthLoginForm, { key: 1 })) : unref(step) === "password-recovery" ? (openBlock(), createBlock(_component_AuthPasswordRecoveryForm, { key: 2 })) : unref(step) === "password-recovery-sent" ? (openBlock(), createBlock(_component_AuthPasswordRecoverySentView, {
+                    key: 3,
+                    onClose: ($event) => isOpen.value = false
+                  }, null, 8, ["onClose"])) : unref(step) === "registration" ? (openBlock(), createBlock(_component_AuthRegisterStartForm, { key: 4 })) : unref(step) === "code" ? (openBlock(), createBlock(_component_AuthRegisterCompleteForm, { key: 5 })) : unref(step) === "legal-details" || unref(step) === "legal-confirmation" ? (openBlock(), createBlock(_component_AuthLegalForm, { key: 6 })) : createCommentVNode("", true)
+                ], 64))
+              ], 42, ["onSubmit"])
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+    };
+  }
+};
 const _sfc_setup$6 = _sfc_main$6.setup;
 _sfc_main$6.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
   return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
-const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-40683738"]]);
+const __nuxt_component_5$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg4 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.919%20115.919'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Summertime%20Sadness'%20d='M69.8504%205.45261C59.5645%20-2.97403%2044.3949%20-1.46673%2035.9682%208.81925C27.5415%2019.1054%2029.0489%2034.2748%2039.3349%2042.7015C29.0489%2034.2748%2013.8794%2035.782%205.45266%2046.0681C-2.97411%2056.3543%20-1.46668%2071.5237%208.81931%2079.9503C19.1055%2088.3771%2034.2748%2086.8698%2042.7015%2076.5837C34.2748%2086.8698%2035.782%20102.039%2046.0682%20110.466C56.3543%20118.893%2071.5236%20117.385%2079.9504%20107.099C88.3772%2096.8131%2086.8699%2081.6438%2076.5837%2073.217C86.8699%2081.6438%20102.039%2080.1365%20110.466%2069.8504C118.893%2059.5644%20117.385%2044.3949%20107.099%2035.9682C96.8132%2027.5414%2081.6437%2029.0488%2073.2171%2039.3348C81.6437%2029.0488%2080.1366%2013.8794%2069.8504%205.45261Z'%20fill='var(--fill-0,%20%23F94A4F)'/%3e%3cpath%20id='Star%205'%20d='M70.2645%2014.7376C73.3477%2011.3099%2078.3943%2010.4759%2082.4164%2012.7295V12.7295C83.2834%2013.2153%2084.219%2013.5673%2085.1913%2013.7734V13.7734C89.7013%2014.7297%2092.9469%2018.6832%2093.0063%2023.2932V23.2932C93.0191%2024.287%2093.1821%2025.2732%2093.4897%2026.2182V26.2182C94.9166%2030.6022%2093.1155%2035.3898%2089.1529%2037.7462V37.7462C88.2986%2038.2542%2087.526%2038.8884%2086.8614%2039.6273V39.6273C83.7782%2043.0551%2078.7315%2043.889%2074.7095%2041.6355V41.6355C73.8424%2041.1497%2072.9069%2040.7977%2071.9346%2040.5916V40.5916C67.4245%2039.6353%2064.1789%2035.6818%2064.1195%2031.0718V31.0718C64.1067%2030.078%2063.9438%2029.0918%2063.6362%2028.1467V28.1467C62.2092%2023.7627%2064.0103%2018.9752%2067.973%2016.6188V16.6188C68.8273%2016.1108%2069.5998%2015.4766%2070.2645%2014.7376V14.7376Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoText = "" + __buildAssetsURL("header-logo-text.B_a9knhz.svg");
-function useClientAuthSession() {
-  const session = ref({
-    data: null,
-    isPending: true,
-    error: null
-  });
-  return session;
-}
 const __vite_glob_0_0 = "" + __buildAssetsURL("catalog_slider_1.BiVYIshC.png");
 const __vite_glob_0_1 = "" + __buildAssetsURL("catalog_slider_2.BH45i3L8.png");
 const __vite_glob_0_2 = "" + __buildAssetsURL("catalog_slider_3.qx5ywKHs.png");
@@ -8044,63 +10956,6 @@ function useFavorites() {
     toggleItem
   };
 }
-const useProfileStore = defineStore("profile", () => {
-  const profileData = ref(null);
-  const isLoading = ref(false);
-  const error = ref(null);
-  let fetchPromise = null;
-  const user = computed(() => profileData.value?.profile?.user ?? null);
-  const organizations = computed(() => profileData.value?.profile?.organizations ?? []);
-  const recipients = computed(() => profileData.value?.profile?.recipients ?? []);
-  const isLoaded = computed(() => Boolean(profileData.value));
-  async function fetchProfile({ force = false } = {}) {
-    if (!force && profileData.value) {
-      return profileData.value;
-    }
-    if (fetchPromise) {
-      return fetchPromise;
-    }
-    isLoading.value = true;
-    error.value = null;
-    fetchPromise = $fetch("/api/profile", {
-      headers: useRequestHeaders(["cookie"])
-    }).then((data) => {
-      profileData.value = data;
-      return data;
-    }).catch((fetchError) => {
-      error.value = fetchError;
-      throw fetchError;
-    }).finally(() => {
-      isLoading.value = false;
-      fetchPromise = null;
-    });
-    return fetchPromise;
-  }
-  function fetchProfileOnce() {
-    return fetchProfile();
-  }
-  function refreshProfile() {
-    return fetchProfile({ force: true });
-  }
-  function clearProfile() {
-    profileData.value = null;
-    error.value = null;
-    isLoading.value = false;
-    fetchPromise = null;
-  }
-  return {
-    profileData,
-    user,
-    organizations,
-    recipients,
-    isLoaded,
-    isLoading,
-    error,
-    fetchProfileOnce,
-    refreshProfile,
-    clearProfile
-  };
-});
 const _sfc_main$5 = {
   __name: "AppHeader",
   __ssrInlineRender: true,
@@ -8113,7 +10968,7 @@ const _sfc_main$5 = {
       { label: "Доставка", to: "/delivery" }
     ];
     const visibleNavLinks = computed(() => navLinks.filter((item) => !item.hidden));
-    const session = useClientAuthSession();
+    const session = authClient.useSession();
     const isSessionPending = computed(() => session.value?.isPending ?? true);
     const sessionUser = computed(() => session.value?.data?.user ?? null);
     const accountLabel = computed(() => {
@@ -8124,7 +10979,7 @@ const _sfc_main$5 = {
     });
     const { totalItems: cartTotalItems } = useCart();
     const { totalItems: favoriteTotalItems } = useFavorites();
-    useProfileStore();
+    const profileStore = useProfileStore();
     const baseActionItems = computed(() => [
       {
         key: "favorites",
@@ -8164,13 +11019,20 @@ const _sfc_main$5 = {
       ...baseActionItems.value,
       ...!sessionUser.value && !isSessionPending.value ? [accountAction.value] : []
     ]);
-    ref(false);
+    const isAuthEntryOpen = ref(false);
     const isSignOutPending = ref(false);
+    async function refreshSession() {
+      await session.value?.refetch?.();
+      if (session.value?.data?.user) {
+        profileStore.fetchProfileOnce().catch(() => {
+        });
+      }
+    }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
-      const _component_AppIcon = __nuxt_component_1;
-      const _component_ClientOnly = __nuxt_component_5$1;
-      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-3a9be391><div class="header__container" data-v-3a9be391><div class="header__inner" data-v-3a9be391>`);
+      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_AppIcon = __nuxt_component_1$1;
+      const _component_AuthEntryModal = __nuxt_component_5$1;
+      _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-5a0ec00e><div class="header__container" data-v-5a0ec00e><div class="header__inner" data-v-5a0ec00e>`);
       _push(ssrRenderComponent(_component_NuxtLink, {
         to: "/",
         class: "header__logo",
@@ -8178,7 +11040,7 @@ const _sfc_main$5 = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="header__logo-cloud" data-v-3a9be391${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-3a9be391${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-3a9be391${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-3a9be391${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-3a9be391${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-3a9be391${_scopeId}>`);
+            _push2(`<div class="header__logo-cloud" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg1))} alt="" class="header__logo-bg1" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg2))} alt="" class="header__logo-bg2" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg3))} alt="" class="header__logo-bg3" data-v-5a0ec00e${_scopeId}><img${ssrRenderAttr("src", unref(headerLogoBg4))} alt="" class="header__logo-bg4" data-v-5a0ec00e${_scopeId}></div><img${ssrRenderAttr("src", unref(headerLogoText))} alt="Индиго" class="header__logo-text" data-v-5a0ec00e${_scopeId}>`);
           } else {
             return [
               createVNode("div", { class: "header__logo-cloud" }, [
@@ -8213,7 +11075,7 @@ const _sfc_main$5 = {
         }),
         _: 1
       }, _parent));
-      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-3a9be391><!--[-->`);
+      _push(`<nav class="header__nav" aria-label="Основная навигация" data-v-5a0ec00e><!--[-->`);
       ssrRenderList(unref(visibleNavLinks), (item) => {
         _push(`<!--[-->`);
         if (item.to) {
@@ -8233,32 +11095,32 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-3a9be391>${ssrInterpolate(item.label)}</a>`);
+          _push(`<a href="#" class="header__nav-link" aria-disabled="true" data-v-5a0ec00e>${ssrInterpolate(item.label)}</a>`);
         }
         _push(`<!--]-->`);
       });
-      _push(`<!--]--></nav><div class="header__actions" data-v-3a9be391><!--[-->`);
+      _push(`<!--]--></nav><div class="header__actions" data-v-5a0ec00e><!--[-->`);
       ssrRenderList(unref(actionItems), (item) => {
-        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-3a9be391><span class="header-action__icon-wrap" data-v-3a9be391>`);
+        _push(`<button type="button" class="${ssrRenderClass([`header-action--${item.kind}`, "header-action"])}" data-v-5a0ec00e><span class="header-action__icon-wrap" data-v-5a0ec00e>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: item.icon,
           class: ["header-action__icon", item.iconClass]
         }, null, _parent));
         if (item.counter) {
-          _push(`<span class="header-action__counter" data-v-3a9be391>${ssrInterpolate(item.counter)}</span>`);
+          _push(`<span class="header-action__counter" data-v-5a0ec00e>${ssrInterpolate(item.counter)}</span>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</span><span class="header-action__label" data-v-3a9be391>${ssrInterpolate(item.label)}</span></button>`);
+        _push(`</span><span class="header-action__label" data-v-5a0ec00e>${ssrInterpolate(item.label)}</span></button>`);
       });
       _push(`<!--]-->`);
       if (unref(sessionUser)) {
-        _push(`<div class="header-account-authorized" data-v-3a9be391><div class="header-account-authorized__top" data-v-3a9be391><span class="header-account-authorized__icon-wrap" data-v-3a9be391>`);
+        _push(`<div class="header-account-authorized" data-v-5a0ec00e><div class="header-account-authorized__top" data-v-5a0ec00e><span class="header-account-authorized__icon-wrap" data-v-5a0ec00e>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-account-authorized",
           class: "header-account-authorized__icon"
         }, null, _parent));
-        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-3a9be391>`);
+        _push(`</span><button type="button" class="header-account-authorized__sign-out"${ssrIncludeBooleanAttr(unref(isSignOutPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isSignOutPending) ? "Выходим" : "Выйти")} data-v-5a0ec00e>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "header-sign-out-authorized",
           class: "header-account-authorized__sign-out-icon"
@@ -8284,7 +11146,12 @@ const _sfc_main$5 = {
         _push(`<!---->`);
       }
       _push(`</div></div></div>`);
-      _push(ssrRenderComponent(_component_ClientOnly, null, {}, _parent));
+      _push(ssrRenderComponent(_component_AuthEntryModal, {
+        modelValue: unref(isAuthEntryOpen),
+        "onUpdate:modelValue": ($event) => isRef(isAuthEntryOpen) ? isAuthEntryOpen.value = $event : null,
+        onCompleteLogin: refreshSession,
+        onCompleteRegistration: refreshSession
+      }, null, _parent));
       _push(`</header>`);
     };
   }
@@ -8295,7 +11162,7 @@ _sfc_main$5.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppHeader.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-3a9be391"]]);
+const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-5a0ec00e"]]);
 const theme = {
   "base": "min-h-[calc(100vh-var(--ui-header-height))]"
 };
@@ -8451,8 +11318,8 @@ const _sfc_main$3 = {
       { label: "Политика конфиденциальности", to: "/privacy-policy" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
-      const _component_AppIcon = __nuxt_component_1;
+      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_AppIcon = __nuxt_component_1$1;
       _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-c25597d5><div class="footer__container" data-v-c25597d5><div class="footer__card" data-v-c25597d5><div class="footer__top" data-v-c25597d5><div class="footer__column" data-v-c25597d5><h3 class="footer__title" data-v-c25597d5> Каталог </h3><!--[-->`);
       ssrRenderList(catalogLinks, (item) => {
         _push(`<!--[-->`);
@@ -8553,7 +11420,7 @@ const _sfc_main$2 = {
   __ssrInlineRender: true,
   setup(__props) {
     useRoute();
-    const session = useClientAuthSession();
+    const session = authClient.useSession();
     const profileStore = useProfileStore();
     const { isLoaded: isProfileLoaded } = storeToRefs(profileStore);
     const sessionUser = computed(() => session.value?.data?.user ?? null);
@@ -8584,8 +11451,8 @@ const _sfc_main$2 = {
       { immediate: true }
     );
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UApp = __nuxt_component_0;
-      const _component_DevGridOverlay = __nuxt_component_1$1;
+      const _component_UApp = __nuxt_component_0$1;
+      const _component_DevGridOverlay = __nuxt_component_1$2;
       const _component_AppHeader = __nuxt_component_2;
       const _component_UMain = _sfc_main$4;
       const _component_NuxtPage = __nuxt_component_4;
@@ -8651,8 +11518,8 @@ const _sfc_main$1 = {
     const statusText = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description2 = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-Cc3vK_Dm.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-DKMA56nL.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-UqXah273.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-6DKZm413.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ status: unref(status), statusText: unref(statusText), statusCode: unref(status), statusMessage: unref(statusText), description: unref(description2), stack: unref(stack) }, _attrs), null, _parent));
@@ -8733,5 +11600,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { __vite_glob_0_46 as $, __vite_glob_0_69 as A, __vite_glob_0_68 as B, __vite_glob_0_67 as C, __vite_glob_0_66 as D, __vite_glob_0_65 as E, FABRICS as F, __vite_glob_0_64 as G, __vite_glob_0_63 as H, __vite_glob_0_62 as I, __vite_glob_0_61 as J, __vite_glob_0_60 as K, __vite_glob_0_59 as L, MOUNTINGS as M, __vite_glob_0_58 as N, __vite_glob_0_57 as O, __vite_glob_0_56 as P, __vite_glob_0_55 as Q, __vite_glob_0_54 as R, SIZES as S, __vite_glob_0_53 as T, __vite_glob_0_52 as U, __vite_glob_0_51 as V, __vite_glob_0_50 as W, __vite_glob_0_49 as X, __vite_glob_0_48 as Y, __vite_glob_0_47 as Z, _export_sfc as _, __nuxt_component_0$2 as a, __vite_glob_0_45 as a0, __vite_glob_0_44 as a1, __vite_glob_0_43 as a2, __vite_glob_0_42 as a3, __vite_glob_0_41 as a4, __vite_glob_0_40 as a5, __vite_glob_0_39 as a6, __vite_glob_0_38 as a7, __vite_glob_0_36 as a8, __vite_glob_0_35 as a9, __vite_glob_0_8 as aA, __vite_glob_0_7 as aB, __vite_glob_0_6 as aC, __vite_glob_0_5 as aD, __vite_glob_0_4 as aE, __vite_glob_0_3 as aF, __vite_glob_0_2 as aG, __vite_glob_0_1 as aH, __vite_glob_0_0 as aI, MAX_UPLOAD_SIZE as aJ, ALLOWED_EXTENSIONS as aK, RASTER_EXTENSIONS as aL, useFavorites as aM, navigateTo as aN, defineNuxtRouteMiddleware as aO, __vite_glob_0_34 as aa, __vite_glob_0_33 as ab, __vite_glob_0_32 as ac, __vite_glob_0_31 as ad, __vite_glob_0_30 as ae, __vite_glob_0_29 as af, __vite_glob_0_28 as ag, __vite_glob_0_27 as ah, __vite_glob_0_26 as ai, __vite_glob_0_25 as aj, __vite_glob_0_24 as ak, __vite_glob_0_23 as al, __vite_glob_0_22 as am, __vite_glob_0_21 as an, __vite_glob_0_20 as ao, __vite_glob_0_19 as ap, __vite_glob_0_18 as aq, __vite_glob_0_17 as ar, __vite_glob_0_16 as as, __vite_glob_0_15 as at, __vite_glob_0_14 as au, __vite_glob_0_13 as av, __vite_glob_0_12 as aw, __vite_glob_0_11 as ax, __vite_glob_0_10 as ay, __vite_glob_0_9 as az, useRoute as b, useFetch as c, useCart as d, entry_default as default, useSeoMeta as e, __nuxt_component_1 as f, _sfc_main$i as g, __vite_glob_0_37 as h, useLocale as i, useAppConfig as j, useComponentUI as k, usePortal as l, _sfc_main$d as m, getFabricLabel as n, calcUnitPrice as o, calcDesignPrice as p, formatPriceRaw as q, resolveCartItemImage as r, useProfileStore as s, tv as t, useHead as u, useClientAuthSession as v, __nuxt_component_5$1 as w, usePricing as x, FABRIC_IMAGE_MAP as y, MOUNTING_IMAGE_MAP as z };
+export { __vite_glob_0_43 as $, __vite_glob_0_66 as A, __vite_glob_0_65 as B, __vite_glob_0_64 as C, __vite_glob_0_63 as D, __vite_glob_0_62 as E, FABRICS as F, __vite_glob_0_61 as G, __vite_glob_0_60 as H, __vite_glob_0_59 as I, __vite_glob_0_58 as J, __vite_glob_0_57 as K, __vite_glob_0_56 as L, MOUNTINGS as M, __vite_glob_0_55 as N, __vite_glob_0_54 as O, __vite_glob_0_53 as P, __vite_glob_0_52 as Q, __vite_glob_0_51 as R, SIZES as S, __vite_glob_0_50 as T, __vite_glob_0_49 as U, __vite_glob_0_48 as V, __vite_glob_0_47 as W, __vite_glob_0_46 as X, __vite_glob_0_45 as Y, __vite_glob_0_44 as Z, _export_sfc as _, __nuxt_component_0$3 as a, __vite_glob_0_42 as a0, __vite_glob_0_41 as a1, __vite_glob_0_40 as a2, __vite_glob_0_39 as a3, __vite_glob_0_38 as a4, __vite_glob_0_36 as a5, __vite_glob_0_35 as a6, __vite_glob_0_34 as a7, __vite_glob_0_33 as a8, __vite_glob_0_32 as a9, __vite_glob_0_5 as aA, __vite_glob_0_4 as aB, __vite_glob_0_3 as aC, __vite_glob_0_2 as aD, __vite_glob_0_1 as aE, __vite_glob_0_0 as aF, MAX_UPLOAD_SIZE as aG, ALLOWED_EXTENSIONS as aH, RASTER_EXTENSIONS as aI, useFavorites as aJ, setInterval as aK, navigateTo as aL, defineNuxtRouteMiddleware as aM, __vite_glob_0_31 as aa, __vite_glob_0_30 as ab, __vite_glob_0_29 as ac, __vite_glob_0_28 as ad, __vite_glob_0_27 as ae, __vite_glob_0_26 as af, __vite_glob_0_25 as ag, __vite_glob_0_24 as ah, __vite_glob_0_23 as ai, __vite_glob_0_22 as aj, __vite_glob_0_21 as ak, __vite_glob_0_20 as al, __vite_glob_0_19 as am, __vite_glob_0_18 as an, __vite_glob_0_17 as ao, __vite_glob_0_16 as ap, __vite_glob_0_15 as aq, __vite_glob_0_14 as ar, __vite_glob_0_13 as as, __vite_glob_0_12 as at, __vite_glob_0_11 as au, __vite_glob_0_10 as av, __vite_glob_0_9 as aw, __vite_glob_0_8 as ax, __vite_glob_0_7 as ay, __vite_glob_0_6 as az, __nuxt_component_0 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$u as h, __vite_glob_0_37 as i, _sfc_main$h as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, authClient as q, resolveCartItemImage as r, __nuxt_component_5$1 as s, usePricing as t, useHead as u, FABRIC_IMAGE_MAP as v, MOUNTING_IMAGE_MAP as w, __vite_glob_0_69 as x, __vite_glob_0_68 as y, __vite_glob_0_67 as z };
 //# sourceMappingURL=server.mjs.map

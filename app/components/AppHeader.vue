@@ -4,6 +4,7 @@ import headerLogoBg2 from '~/assets/icons/header-logo-bg-2.svg'
 import headerLogoBg3 from '~/assets/icons/header-logo-bg-3.svg'
 import headerLogoBg4 from '~/assets/icons/header-logo-bg-4.svg'
 import headerLogoText from '~/assets/icons/header-logo-text.svg'
+import { authClient } from '~/utils/auth-client.js'
 
 const navLinks = [
   { label: 'Каталог', to: '/catalog' },
@@ -15,7 +16,7 @@ const navLinks = [
 
 const visibleNavLinks = computed(() => navLinks.filter(item => !item.hidden))
 
-const session = useClientAuthSession()
+const session = authClient.useSession()
 
 const isSessionPending = computed(() => session.value?.isPending ?? true)
 const sessionUser = computed(() => session.value?.data?.user ?? null)
@@ -112,7 +113,6 @@ async function signOut() {
   isSignOutPending.value = true
 
   try {
-    const { authClient } = await import('~/utils/auth-client.js')
     await authClient.signOut()
     profileStore.clearProfile()
     await session.value?.refetch?.()
@@ -252,13 +252,11 @@ async function signOut() {
       </div>
     </div>
 
-    <ClientOnly>
-      <LazyAuthEntryModal
-        v-model="isAuthEntryOpen"
-        @complete-login="refreshSession"
-        @complete-registration="refreshSession"
-      />
-    </ClientOnly>
+    <AuthEntryModal
+      v-model="isAuthEntryOpen"
+      @complete-login="refreshSession"
+      @complete-registration="refreshSession"
+    />
   </header>
 </template>
 

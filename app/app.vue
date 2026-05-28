@@ -1,10 +1,11 @@
 <script setup>
 import { storeToRefs } from 'pinia'
+import { authClient } from '~/utils/auth-client.js'
 
 const title = 'Indigo — Печать флагов на заказ'
 const description = 'Типография Indigo: печать флагов любых размеров и конфигураций. Конструктор флагов, быстрый заказ, доставка по России.'
 const route = useRoute()
-const session = useClientAuthSession()
+const session = authClient.useSession()
 const profileStore = useProfileStore()
 const { isLoaded: isProfileLoaded } = storeToRefs(profileStore)
 

@@ -1,1 +1,0 @@
-import"./BsmcB0oG.js";const a=globalThis.setInterval;function o(e){const s=Math.abs(e),n=s%100;if(n>=11&&n<=14)return"секунд";const t=s%10;return t===1?"секунду":t>=2&&t<=4?"секунды":"секунд"}export{o as g,a as s};

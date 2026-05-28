@@ -1,9 +1,11 @@
 <script setup>
+import { authClient } from '~/utils/auth-client.js'
+
 const isOpen = defineModel({ required: true })
 const emit = defineEmits(['pay', 'continue-shopping'])
 
 const { items: cartItems, updateQuantity, removeItems, updateItem } = useCart()
-const session = useClientAuthSession()
+const session = authClient.useSession()
 
 const selectedItems = computed(() => cartItems.value.filter(item => item.selected))
 const sessionUser = computed(() => session.value?.data?.user ?? null)
@@ -189,13 +191,11 @@ async function refreshSession() {
       </div>
     </div>
 
-    <ClientOnly>
-      <LazyAuthEntryModal
-        v-model="isAuthEntryOpen"
-        @complete-login="refreshSession"
-        @complete-registration="refreshSession"
-      />
-    </ClientOnly>
+    <AuthEntryModal
+      v-model="isAuthEntryOpen"
+      @complete-login="refreshSession"
+      @complete-registration="refreshSession"
+    />
   </BaseModal>
 </template>
 

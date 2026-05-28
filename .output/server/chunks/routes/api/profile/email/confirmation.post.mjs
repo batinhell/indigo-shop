@@ -18,8 +18,8 @@ import 'consola';
 
 const TOKEN_TTL_MS = 60 * 60 * 1e3;
 const DEFAULT_SUPPORT_EMAIL = "info@indigo-mail.ru";
-const DEFAULT_EMAIL_LOGO_PATH = "/email/logo-indigo.svg";
-const DEFAULT_EMAIL_AVATAR_PATH = "/email/avatar-indigo.svg";
+const DEFAULT_EMAIL_LOGO_PATH = "/email/logo-indigo.png";
+const DEFAULT_EMAIL_AVATAR_PATH = "/email/avatar-indigo.png";
 const createToken = () => randomBytes(32).toString("base64url");
 const hashToken = (token) => createHash("sha256").update(token).digest("hex");
 const readEnv = (name) => {

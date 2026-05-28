@@ -1,9 +1,11 @@
 <script setup>
+import { authClient } from '~/utils/auth-client.js'
+
 const title = 'Корзина — Indigo'
 const description = 'Корзина заказов типографии Indigo.'
 
 const { items: cartItems, updateQuantity, removeItems, updateItem, clearCart } = useCart()
-const session = useClientAuthSession()
+const session = authClient.useSession()
 
 const selectedItems = computed(() => cartItems.value.filter(item => item.selected))
 const sessionUser = computed(() => session.value?.data?.user ?? null)
@@ -331,13 +333,11 @@ useSeoMeta({
       </div>
     </div>
 
-    <ClientOnly>
-      <LazyAuthEntryModal
-        v-model="isAuthEntryOpen"
-        @complete-login="refreshSession"
-        @complete-registration="refreshSession"
-      />
-    </ClientOnly>
+    <AuthEntryModal
+      v-model="isAuthEntryOpen"
+      @complete-login="refreshSession"
+      @complete-registration="refreshSession"
+    />
 
     <PaymentQrModal
       v-model="isPaymentQrOpen"

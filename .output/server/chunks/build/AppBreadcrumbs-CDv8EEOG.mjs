@@ -1,4 +1,4 @@
-import { _ as _export_sfc, a as __nuxt_component_0$2 } from './server.mjs';
+import { _ as _export_sfc, a as __nuxt_component_0$3 } from './server.mjs';
 import { mergeProps, withCtx, createTextVNode, toDisplayString, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderList, ssrRenderComponent, ssrInterpolate } from 'vue/server-renderer';
 
@@ -13,7 +13,7 @@ const _sfc_main = {
   },
   setup(__props) {
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$2;
+      const _component_NuxtLink = __nuxt_component_0$3;
       _push(`<nav${ssrRenderAttrs(mergeProps({
         class: "breadcrumbs",
         "aria-label": "Хлебные крошки"
