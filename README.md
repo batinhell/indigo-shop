@@ -32,3 +32,26 @@ npm run lint
 npm run build
 npm run dev
 ```
+
+## Production PM2 Environment
+
+If production is running under PM2 without an `ecosystem.config.js`, PM2 does not read `.env` automatically on restart. Load the file into the current shell first, then restart with `--update-env`:
+
+```bash
+cd /path/to/indigo-shop
+
+set -a
+. ./.env
+set +a
+
+pm2 restart <app-id-or-name> --update-env
+pm2 save
+```
+
+Verify that PM2 sees the variables:
+
+```bash
+pm2 env <app-id> | grep -E 'NOTIFICORE|NUXT_NOTIFICORE'
+```
+
+Run these commands as the same user that owns the PM2 process.

@@ -369,11 +369,17 @@ const getNotificoreEmailConfig = () => {
     || DEFAULT_EMAIL_API_BASE_URL
   )
 
-  if (!apiKey || !from || !Number.isInteger(templateId)) {
+  const missingConfig = []
+
+  if (!apiKey) missingConfig.push('NOTIFICORE_EMAIL_API_KEY/NOTIFICORE_API_KEY')
+  if (!from) missingConfig.push('NOTIFICORE_EMAIL_FROM')
+  if (!Number.isInteger(templateId)) missingConfig.push('NOTIFICORE_CONFIRMATION_EMAIL_TEMPLATE_ID/NOTIFICORE_EMAIL_TEMPLATE_ID')
+
+  if (missingConfig.length) {
     throw createError({
       statusCode: 500,
       statusMessage: 'Notificore email is not configured',
-      message: 'Missing NOTIFICORE_EMAIL_API_KEY/NOTIFICORE_API_KEY, NOTIFICORE_EMAIL_FROM or integer NOTIFICORE_CONFIRMATION_EMAIL_TEMPLATE_ID'
+      message: `Missing ${missingConfig.join(', ')}`
     })
   }
 

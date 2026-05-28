@@ -139,6 +139,9 @@ const confirmation_post = defineEventHandler(async (event) => {
   } catch (error) {
     const details = getNotificoreErrorDetails(error);
     console.error("[profile/email/confirmation] Notificore error:", details);
+    if ((error == null ? void 0 : error.statusMessage) === "Notificore email is not configured") {
+      throw error;
+    }
     if (isNotificoreTimeoutError(error)) {
       throw createError({
         statusCode: 504,

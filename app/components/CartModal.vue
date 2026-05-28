@@ -189,11 +189,13 @@ async function refreshSession() {
       </div>
     </div>
 
-    <AuthEntryModal
-      v-model="isAuthEntryOpen"
-      @complete-login="refreshSession"
-      @complete-registration="refreshSession"
-    />
+    <ClientOnly>
+      <LazyAuthEntryModal
+        v-model="isAuthEntryOpen"
+        @complete-login="refreshSession"
+        @complete-registration="refreshSession"
+      />
+    </ClientOnly>
   </BaseModal>
 </template>
 

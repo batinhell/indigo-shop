@@ -117,8 +117,8 @@ export default defineEventHandler(async (event) => {
   const supportUrl = buildPublicUrl(
     origin,
     getRuntimeString(notificoreConfig.supportUrl)
-      || readEnv('NOTIFICORE_EMAIL_SUPPORT_URL')
-      || `mailto:${supportEmail}`
+    || readEnv('NOTIFICORE_EMAIL_SUPPORT_URL')
+    || `mailto:${supportEmail}`
   )
   const logoUrl = getTemplateAssetUrl(
     origin,
@@ -179,6 +179,10 @@ export default defineEventHandler(async (event) => {
     const details = getNotificoreErrorDetails(error)
 
     console.error('[profile/email/confirmation] Notificore error:', details)
+
+    if (error?.statusMessage === 'Notificore email is not configured') {
+      throw error
+    }
 
     if (isNotificoreTimeoutError(error)) {
       throw createError({
