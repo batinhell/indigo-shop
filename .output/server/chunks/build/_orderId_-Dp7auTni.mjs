@@ -1,4 +1,4 @@
-import { _ as _export_sfc, c as useRoute, d as useFetch, e as useCart, f as useSeoMeta, g as __nuxt_component_1$1, h as _sfc_main$u, i as __vite_glob_0_37, r as resolveCartItemImage, b as __nuxt_component_0$1 } from './server.mjs';
+import { _ as _export_sfc, c as useRoute, d as useFetch, e as useCart, f as useSeoMeta, g as __nuxt_component_1$1, h as _sfc_main$w, i as __vite_glob_0_37, r as resolveCartItemImage, b as __nuxt_component_0$1 } from './server.mjs';
 import { computed, withAsyncContext, ref, mergeProps, unref, isRef, withCtx, createVNode, toDisplayString, watch, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttr, ssrIncludeBooleanAttr } from 'vue/server-renderer';
 import { _ as __nuxt_component_0 } from './BaseModal-C-A_Et6t.mjs';
@@ -149,7 +149,7 @@ const _sfc_main = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppIcon = __nuxt_component_1$1;
       const _component_ProfileOrderRecipientCard = __nuxt_component_1;
-      const _component_UIcon = _sfc_main$u;
+      const _component_UIcon = _sfc_main$w;
       const _component_BaseModal = __nuxt_component_0;
       _push(`<main${ssrRenderAttrs(mergeProps({ class: "order-page" }, _attrs))} data-v-da3b028b><div class="order-page__container" data-v-da3b028b><button type="button" class="order-page__back" data-v-da3b028b>`);
       _push(ssrRenderComponent(_component_AppIcon, {

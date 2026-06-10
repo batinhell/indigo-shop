@@ -1,0 +1,8 @@
+const CookieConsentBanner_vue_vue_type_style_index_0_scoped_c7cf2d49_lang = ".cookie-consent[data-v-c7cf2d49]{align-items:center;background:#fff;border-radius:2rem;bottom:2rem;box-shadow:0 0 12px #c925ff1a;display:flex;gap:1.5rem;justify-content:center;left:50%;max-width:calc(100vw - 2rem);padding:.75rem .75rem .75rem 2rem;position:fixed;transform:translate(-50%);width:50.0625rem;z-index:1000}.cookie-consent__text[data-v-c7cf2d49]{color:#091e2a;font-size:1rem;font-weight:600;line-height:1.25rem;margin:0;white-space:nowrap}.cookie-consent__link[data-v-c7cf2d49]{color:#de7aff;text-decoration:underline;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none;text-underline-position:from-font}.cookie-consent__link[data-v-c7cf2d49]:hover{color:#c925ff}.cookie-consent__link[data-v-c7cf2d49]:active{color:#a020c0}.cookie-consent__button[data-v-c7cf2d49]{flex:0 0 7.8125rem;height:2.5rem}.cookie-consent-enter-active[data-v-c7cf2d49],.cookie-consent-leave-active[data-v-c7cf2d49]{transition:opacity .2s ease,transform .2s ease}.cookie-consent-enter-from[data-v-c7cf2d49],.cookie-consent-leave-to[data-v-c7cf2d49]{opacity:0;transform:translate(-50%,.75rem)}@media(max-width:840px){.cookie-consent[data-v-c7cf2d49]{align-items:stretch;bottom:1rem;flex-direction:column;gap:1rem;padding:1.25rem;width:calc(100vw - 1.5rem)}.cookie-consent__text[data-v-c7cf2d49]{white-space:normal}.cookie-consent__button[data-v-c7cf2d49]{flex-basis:auto;width:100%}}";
+
+const CookieConsentBannerStyles_D5vGohnO = [
+  CookieConsentBanner_vue_vue_type_style_index_0_scoped_c7cf2d49_lang
+];
+
+export { CookieConsentBannerStyles_D5vGohnO as default };
+//# sourceMappingURL=CookieConsentBanner-styles.D5vGohnO.mjs.map

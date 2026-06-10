@@ -1,0 +1,8 @@
+const legalInformation_vue_vue_type_style_index_0_scoped_0b4cccba_lang = ".legal-page[data-v-0b4cccba]{padding-bottom:4rem;padding-top:0}.legal-page__container[data-v-0b4cccba]{margin:0 auto;max-width:1106px;width:calc(100% - 32px)}.legal-page__intro[data-v-0b4cccba]{display:flex;flex-direction:column}.legal-page__breadcrumbs[data-v-0b4cccba]{margin-bottom:0}.legal-page__title[data-v-0b4cccba]{color:#04121b;font-size:2rem;font-weight:800;line-height:1.6;margin:0}.legal-page__list[data-v-0b4cccba]{display:flex;flex-direction:column;gap:1rem;list-style:none;margin:4rem 0 0;padding:0}.legal-page__link[data-v-0b4cccba]{color:#de7aff;font-size:1.25rem;font-weight:700;line-height:1.5rem;text-decoration:none;text-decoration-line:underline}.legal-page__link[data-v-0b4cccba]:hover{color:#c925ff}.legal-page__link[data-v-0b4cccba]:active{color:#a020c0}.legal-page__link[data-v-0b4cccba]:focus-visible{border-radius:.25rem;outline:2px solid rgba(201,37,255,.45);outline-offset:.125rem}@media(max-width:1120px){.legal-page__title[data-v-0b4cccba]{line-height:1.4}}@media(max-width:720px){.legal-page[data-v-0b4cccba]{padding-bottom:3rem;padding-top:0}.legal-page__container[data-v-0b4cccba]{width:calc(100% - 24px)}.legal-page__title[data-v-0b4cccba]{font-size:1.75rem;line-height:2rem}.legal-page__list[data-v-0b4cccba]{margin-top:2.5rem}.legal-page__link[data-v-0b4cccba]{font-size:1.125rem;line-height:1.375rem}}";
+
+const legalInformationStyles_DBgtJAC = [
+  legalInformation_vue_vue_type_style_index_0_scoped_0b4cccba_lang
+];
+
+export { legalInformationStyles_DBgtJAC as default };
+//# sourceMappingURL=legal-information-styles.DBgt-jAC.mjs.map

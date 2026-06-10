@@ -2120,17 +2120,17 @@ const _routes = [
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-B6eNENIk.mjs')
+    component: () => import('./cart-UKBCwce6.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-BUG0dhxp.mjs')
+    component: () => import('./catalog-DiuhQQ67.mjs')
   },
   {
     name: "cookie-policy",
     path: "/cookie-policy",
-    component: () => import('./cookie-policy-BPwat5PP.mjs')
+    component: () => import('./cookie-policy-D-IvdQE5.mjs')
   },
   {
     name: "delivery",
@@ -2140,7 +2140,7 @@ const _routes = [
   {
     name: "legal-information",
     path: "/legal-information",
-    component: () => import('./legal-information-DUomjzun.mjs')
+    component: () => import('./legal-information-CFtNsVRL.mjs')
   },
   {
     name: "payment",
@@ -2156,7 +2156,12 @@ const _routes = [
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-DIwWRuK9.mjs')
+    component: () => import('./index-3jn3ydE3.mjs')
+  },
+  {
+    name: "return-cancellation",
+    path: "/return-cancellation",
+    component: () => import('./return-cancellation-DCrjfLuo.mjs')
   },
   {
     name: "user-agreement",
@@ -2166,7 +2171,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-CR7OnEsU.mjs')
+    component: () => import('./index-B7IwgYdF.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -2292,7 +2297,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./auth-DzLwixKu.mjs')
+  auth: () => import('./auth-DDIvSea_.mjs')
 };
 const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -3308,7 +3313,7 @@ function defineNuxtLink(options) {
     }
   });
 }
-const __nuxt_component_0$3 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
+const __nuxt_component_0$4 = /* @__PURE__ */ defineNuxtLink(nuxtLinkDefaults);
 function applyTrailingSlashBehavior(to, trailingSlash) {
   const normalizeFn = trailingSlash === "append" ? withTrailingSlash : withoutTrailingSlash;
   const hasProtocolDifferentFromHttp = hasProtocol(to) && !to.startsWith("http");
@@ -4244,7 +4249,7 @@ const NuxtIconSvg = /* @__PURE__ */ defineComponent({
     }, slots);
   }
 });
-const __nuxt_component_0$2 = defineComponent({
+const __nuxt_component_0$3 = defineComponent({
   name: "NuxtIcon",
   props: {
     name: {
@@ -4293,9 +4298,9 @@ const __nuxt_component_0$2 = defineComponent({
 });
 const index = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: __nuxt_component_0$2
+  default: __nuxt_component_0$3
 }, Symbol.toStringTag, { value: "Module" }));
-const _sfc_main$u = {
+const _sfc_main$w = {
   __name: "UIcon",
   __ssrInlineRender: true,
   props: {
@@ -4308,7 +4313,7 @@ const _sfc_main$u = {
     const props = __props;
     const iconProps = useForwardProps(reactivePick(props, "name", "mode", "size", "customize"));
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_Icon = __nuxt_component_0$2;
+      const _component_Icon = __nuxt_component_0$3;
       if (typeof __props.name === "string") {
         _push(ssrRenderComponent(_component_Icon, mergeProps(unref(iconProps), _attrs), null, _parent));
       } else {
@@ -4317,11 +4322,11 @@ const _sfc_main$u = {
     };
   }
 };
-const _sfc_setup$u = _sfc_main$u.setup;
-_sfc_main$u.setup = (props, ctx) => {
+const _sfc_setup$w = _sfc_main$w.setup;
+_sfc_main$w.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
-  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
+  return _sfc_setup$w ? _sfc_setup$w(props, ctx) : void 0;
 };
 const ImageComponent = "img";
 const avatarGroupInjectionKey = /* @__PURE__ */ Symbol("nuxt-ui.avatar-group");
@@ -4400,7 +4405,7 @@ const theme$8 = {
     "position": "top-right"
   }
 };
-const _sfc_main$t = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$v = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UChip",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -4485,11 +4490,11 @@ const _sfc_main$t = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$t = _sfc_main$t.setup;
-_sfc_main$t.setup = (props, ctx) => {
+const _sfc_setup$v = _sfc_main$v.setup;
+_sfc_main$v.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
-  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
+  return _sfc_setup$v ? _sfc_setup$v(props, ctx) : void 0;
 };
 const theme$7 = {
   "slots": {
@@ -4533,7 +4538,7 @@ const theme$7 = {
     "size": "md"
   }
 };
-const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$u = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "UAvatar",
   __ssrInlineRender: true,
   props: {
@@ -4584,7 +4589,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       error.value = true;
     }
     return (_ctx, _push, _parent, _attrs) => {
-      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$t : unref(Primitive)), mergeProps({
+      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(props.chip ? _sfc_main$v : unref(Primitive)), mergeProps({
         as: as.value.root
       }, props.chip ? typeof props.chip === "object" ? { inset: true, ...props.chip } : { inset: true } : {}, {
         "data-slot": "root",
@@ -4610,7 +4615,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   if (_push3) {
                     ssrRenderSlot(_ctx.$slots, "default", {}, () => {
                       if (__props.icon) {
-                        _push3(ssrRenderComponent(_sfc_main$u, {
+                        _push3(ssrRenderComponent(_sfc_main$w, {
                           name: __props.icon,
                           "data-slot": "icon",
                           class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -4622,7 +4627,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   } else {
                     return [
                       renderSlot(_ctx.$slots, "default", {}, () => [
-                        __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
+                        __props.icon ? (openBlock(), createBlock(_sfc_main$w, {
                           key: 0,
                           name: __props.icon,
                           "data-slot": "icon",
@@ -4654,7 +4659,7 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
               }), null, 16, ["src", "alt", "width", "height", "class"])) : (openBlock(), createBlock(unref(Slot), mergeProps({ key: 1 }, _ctx.$attrs), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "default", {}, () => [
-                    __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
+                    __props.icon ? (openBlock(), createBlock(_sfc_main$w, {
                       key: 0,
                       name: __props.icon,
                       "data-slot": "icon",
@@ -4676,11 +4681,11 @@ const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$s = _sfc_main$s.setup;
-_sfc_main$s.setup = (props, ctx) => {
+const _sfc_setup$u = _sfc_main$u.setup;
+_sfc_main$u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
-  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
+  return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
 };
 function useComponentIcons(componentProps) {
   const appConfig2 = useAppConfig();
@@ -4776,7 +4781,7 @@ function isPartiallyEqual(item1, item2) {
   const item2Filtered = Object.fromEntries(Object.entries(item2).filter(([key]) => !diffedKeys.has(key)));
   return isEqual(item1Filtered, item2Filtered);
 }
-const _sfc_main$r = {
+const _sfc_main$t = {
   __name: "ULinkBase",
   __ssrInlineRender: true,
   props: {
@@ -4840,11 +4845,11 @@ const _sfc_main$r = {
     };
   }
 };
-const _sfc_setup$r = _sfc_main$r.setup;
-_sfc_main$r.setup = (props, ctx) => {
+const _sfc_setup$t = _sfc_main$t.setup;
+_sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
-  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
+  return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
 const theme$6 = {
   "base": "focus-visible:outline-primary",
@@ -4868,7 +4873,7 @@ const theme$6 = {
     }
   ]
 };
-const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
+const _sfc_main$s = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
   __name: "ULink",
   __ssrInlineRender: true,
   props: {
@@ -4945,7 +4950,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
       return ui.value({ class: props.class, active, disabled: props.disabled });
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_NuxtLink = __nuxt_component_0$4;
       _push(ssrRenderComponent(_component_NuxtLink, mergeProps(unref(nuxtLinkProps), {
         to: to.value,
         custom: ""
@@ -4967,7 +4972,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
               }, null, _push2, _parent2, _scopeId);
             } else {
-              _push2(ssrRenderComponent(_sfc_main$r, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$t, mergeProps({
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -5011,7 +5016,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                 target: rest.target,
                 isExternal: rest.isExternal,
                 active: isLinkActive({ route: linkRoute, isActive, isExactActive })
-              })) : (openBlock(), createBlock(_sfc_main$r, mergeProps({ key: 1 }, {
+              })) : (openBlock(), createBlock(_sfc_main$t, mergeProps({ key: 1 }, {
                 ..._ctx.$attrs,
                 ...__props.exact && isExactActive ? { "aria-current": props.ariaCurrentValue } : {},
                 as: __props.as,
@@ -5040,11 +5045,11 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
     };
   }
 });
-const _sfc_setup$q = _sfc_main$q.setup;
-_sfc_main$q.setup = (props, ctx) => {
+const _sfc_setup$s = _sfc_main$s.setup;
+_sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
-  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
+  return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
 const theme$5 = {
   "slots": {
@@ -5397,7 +5402,7 @@ const theme$5 = {
     "size": "md"
   }
 };
-const _sfc_main$p = {
+const _sfc_main$r = {
   __name: "UButton",
   __ssrInlineRender: true,
   props: {
@@ -5496,13 +5501,13 @@ const _sfc_main$p = {
       fieldGroup: orientation.value
     }));
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$q, mergeProps({
+      _push(ssrRenderComponent(_sfc_main$s, mergeProps({
         type: __props.type,
         disabled: __props.disabled || isLoading.value
       }, unref(omit)(unref(linkProps), ["type", "disabled", "onClick"]), { custom: "" }, _attrs), {
         default: withCtx(({ active, ...slotProps }, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_sfc_main$r, mergeProps(slotProps, {
+            _push2(ssrRenderComponent(_sfc_main$t, mergeProps(slotProps, {
               "data-slot": "base",
               class: ui.value.base({
                 class: [unref(uiProp)?.base, props.class],
@@ -5516,13 +5521,13 @@ const _sfc_main$p = {
                 if (_push3) {
                   ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
                     if (unref(isLeading) && unref(leadingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$u, {
+                      _push3(ssrRenderComponent(_sfc_main$w, {
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
                       }, null, _parent3, _scopeId2));
                     } else if (!!__props.avatar) {
-                      _push3(ssrRenderComponent(_sfc_main$s, mergeProps({
+                      _push3(ssrRenderComponent(_sfc_main$u, mergeProps({
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
                         "data-slot": "leadingAvatar",
@@ -5541,7 +5546,7 @@ const _sfc_main$p = {
                   }, _push3, _parent3, _scopeId2);
                   ssrRenderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => {
                     if (unref(isTrailing) && unref(trailingIconName)) {
-                      _push3(ssrRenderComponent(_sfc_main$u, {
+                      _push3(ssrRenderComponent(_sfc_main$w, {
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
                         class: ui.value.trailingIcon({ class: unref(uiProp)?.trailingIcon, active })
@@ -5553,12 +5558,12 @@ const _sfc_main$p = {
                 } else {
                   return [
                     renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                      unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$w, {
                         key: 0,
                         name: unref(leadingIconName),
                         "data-slot": "leadingIcon",
                         class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
+                      }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$u, mergeProps({
                         key: 1,
                         size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                       }, __props.avatar, {
@@ -5574,7 +5579,7 @@ const _sfc_main$p = {
                       }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                     ]),
                     renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                      unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$w, {
                         key: 0,
                         name: unref(trailingIconName),
                         "data-slot": "trailingIcon",
@@ -5588,7 +5593,7 @@ const _sfc_main$p = {
             }, _parent2, _scopeId));
           } else {
             return [
-              createVNode(_sfc_main$r, mergeProps(slotProps, {
+              createVNode(_sfc_main$t, mergeProps(slotProps, {
                 "data-slot": "base",
                 class: ui.value.base({
                   class: [unref(uiProp)?.base, props.class],
@@ -5600,12 +5605,12 @@ const _sfc_main$p = {
               }), {
                 default: withCtx(() => [
                   renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                    unref(isLeading) && unref(leadingIconName) ? (openBlock(), createBlock(_sfc_main$w, {
                       key: 0,
                       name: unref(leadingIconName),
                       "data-slot": "leadingIcon",
                       class: ui.value.leadingIcon({ class: unref(uiProp)?.leadingIcon, active })
-                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
+                    }, null, 8, ["name", "class"])) : !!__props.avatar ? (openBlock(), createBlock(_sfc_main$u, mergeProps({
                       key: 1,
                       size: unref(uiProp)?.leadingAvatarSize || ui.value.leadingAvatarSize()
                     }, __props.avatar, {
@@ -5621,7 +5626,7 @@ const _sfc_main$p = {
                     }, toDisplayString(__props.label), 3)) : createCommentVNode("", true)
                   ]),
                   renderSlot(_ctx.$slots, "trailing", { ui: ui.value }, () => [
-                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$u, {
+                    unref(isTrailing) && unref(trailingIconName) ? (openBlock(), createBlock(_sfc_main$w, {
                       key: 0,
                       name: unref(trailingIconName),
                       "data-slot": "trailingIcon",
@@ -5639,11 +5644,11 @@ const _sfc_main$p = {
     };
   }
 };
-const _sfc_setup$p = _sfc_main$p.setup;
-_sfc_main$p.setup = (props, ctx) => {
+const _sfc_setup$r = _sfc_main$r.setup;
+_sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
-  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
+  return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
 const theme$4 = {
   "slots": {
@@ -5903,7 +5908,7 @@ const theme$4 = {
     "size": "md"
   }
 };
-const _sfc_main$o = {
+const _sfc_main$q = {
   __name: "UProgress",
   __ssrInlineRender: true,
   props: {
@@ -6115,11 +6120,11 @@ const _sfc_main$o = {
     };
   }
 };
-const _sfc_setup$o = _sfc_main$o.setup;
-_sfc_main$o.setup = (props, ctx) => {
+const _sfc_setup$q = _sfc_main$q.setup;
+_sfc_main$q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
-  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
+  return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
 };
 const theme$3 = {
   "slots": {
@@ -6185,7 +6190,7 @@ const theme$3 = {
     "color": "primary"
   }
 };
-const _sfc_main$n = {
+const _sfc_main$p = {
   __name: "UToast",
   __ssrInlineRender: true,
   props: {
@@ -6240,14 +6245,14 @@ const _sfc_main$n = {
           if (_push2) {
             ssrRenderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => {
               if (__props.avatar) {
-                _push2(ssrRenderComponent(_sfc_main$s, mergeProps({
+                _push2(ssrRenderComponent(_sfc_main$u, mergeProps({
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
                 }), null, _parent2, _scopeId));
               } else if (__props.icon) {
-                _push2(ssrRenderComponent(_sfc_main$u, {
+                _push2(ssrRenderComponent(_sfc_main$w, {
                   name: __props.icon,
                   "data-slot": "icon",
                   class: ui.value.icon({ class: unref(uiProp)?.icon })
@@ -6333,13 +6338,13 @@ const _sfc_main$n = {
                   }, {
                     default: withCtx((_, _push3, _parent3, _scopeId2) => {
                       if (_push3) {
-                        _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                        _push3(ssrRenderComponent(_sfc_main$r, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, _parent3, _scopeId2));
                       } else {
                         return [
-                          createVNode(_sfc_main$p, mergeProps({
+                          createVNode(_sfc_main$r, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -6371,13 +6376,13 @@ const _sfc_main$n = {
                     }, {
                       default: withCtx((_, _push3, _parent3, _scopeId2) => {
                         if (_push3) {
-                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$r, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, _parent3, _scopeId2));
                         } else {
                           return [
-                            createVNode(_sfc_main$p, mergeProps({
+                            createVNode(_sfc_main$r, mergeProps({
                               size: "xs",
                               color: __props.color
                             }, { ref_for: true }, action), null, 16, ["color"])
@@ -6398,7 +6403,7 @@ const _sfc_main$n = {
                     if (_push3) {
                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                         if (__props.close) {
-                          _push3(ssrRenderComponent(_sfc_main$p, mergeProps({
+                          _push3(ssrRenderComponent(_sfc_main$r, mergeProps({
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
                             variant: "link",
@@ -6416,7 +6421,7 @@ const _sfc_main$n = {
                     } else {
                       return [
                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                          __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                          __props.close ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                             key: 0,
                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                             color: "neutral",
@@ -6442,7 +6447,7 @@ const _sfc_main$n = {
               _push2(`<!---->`);
             }
             if (__props.progress && open && remaining > 0 && duration) {
-              _push2(ssrRenderComponent(_sfc_main$o, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$q, mergeProps({
                 "model-value": remaining / duration * 100,
                 color: __props.color
               }, typeof __props.progress === "object" ? __props.progress : {}, {
@@ -6456,13 +6461,13 @@ const _sfc_main$n = {
           } else {
             return [
               renderSlot(_ctx.$slots, "leading", { ui: ui.value }, () => [
-                __props.avatar ? (openBlock(), createBlock(_sfc_main$s, mergeProps({
+                __props.avatar ? (openBlock(), createBlock(_sfc_main$u, mergeProps({
                   key: 0,
                   size: unref(uiProp)?.avatarSize || ui.value.avatarSize()
                 }, __props.avatar, {
                   "data-slot": "avatar",
                   class: ui.value.avatar({ class: unref(uiProp)?.avatar })
-                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$u, {
+                }), null, 16, ["size", "class"])) : __props.icon ? (openBlock(), createBlock(_sfc_main$w, {
                   key: 1,
                   name: __props.icon,
                   "data-slot": "icon",
@@ -6516,7 +6521,7 @@ const _sfc_main$n = {
                         }, ["stop"])
                       }, {
                         default: withCtx(() => [
-                          createVNode(_sfc_main$p, mergeProps({
+                          createVNode(_sfc_main$r, mergeProps({
                             size: "xs",
                             color: __props.color
                           }, { ref_for: true }, action), null, 16, ["color"])
@@ -6542,7 +6547,7 @@ const _sfc_main$n = {
                       }, ["stop"])
                     }, {
                       default: withCtx(() => [
-                        createVNode(_sfc_main$p, mergeProps({
+                        createVNode(_sfc_main$r, mergeProps({
                           size: "xs",
                           color: __props.color
                         }, { ref_for: true }, action), null, 16, ["color"])
@@ -6557,7 +6562,7 @@ const _sfc_main$n = {
                 }, {
                   default: withCtx(() => [
                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                      __props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                      __props.close ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                         key: 0,
                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                         color: "neutral",
@@ -6574,7 +6579,7 @@ const _sfc_main$n = {
                   _: 3
                 })) : createCommentVNode("", true)
               ], 2)) : createCommentVNode("", true),
-              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$o, mergeProps({
+              __props.progress && open && remaining > 0 && duration ? (openBlock(), createBlock(_sfc_main$q, mergeProps({
                 key: 1,
                 "model-value": remaining / duration * 100,
                 color: __props.color
@@ -6591,11 +6596,11 @@ const _sfc_main$n = {
     };
   }
 };
-const _sfc_setup$n = _sfc_main$n.setup;
-_sfc_main$n.setup = (props, ctx) => {
+const _sfc_setup$p = _sfc_main$p.setup;
+_sfc_main$p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
-  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
+  return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
 };
 const theme$2 = {
   "slots": {
@@ -6675,7 +6680,7 @@ const theme$2 = {
 const __default__$1 = {
   name: "Toaster"
 };
-const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
+const _sfc_main$o = /* @__PURE__ */ Object.assign(__default__$1, {
   __ssrInlineRender: true,
   props: {
     position: { type: null, required: false },
@@ -6738,7 +6743,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
             ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
             _push2(`<!--[-->`);
             ssrRenderList(unref(toasts), (toast, index2) => {
-              _push2(ssrRenderComponent(_sfc_main$n, mergeProps({
+              _push2(ssrRenderComponent(_sfc_main$p, mergeProps({
                 key: toast.id,
                 ref_for: true,
                 ref_key: "refs",
@@ -6806,7 +6811,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
             return [
               renderSlot(_ctx.$slots, "default"),
               (openBlock(true), createBlock(Fragment, null, renderList(unref(toasts), (toast, index2) => {
-                return openBlock(), createBlock(_sfc_main$n, mergeProps({
+                return openBlock(), createBlock(_sfc_main$p, mergeProps({
                   key: toast.id,
                   ref_for: true,
                   ref_key: "refs",
@@ -6858,13 +6863,13 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__$1, {
     };
   }
 });
-const _sfc_setup$m = _sfc_main$m.setup;
-_sfc_main$m.setup = (props, ctx) => {
+const _sfc_setup$o = _sfc_main$o.setup;
+_sfc_main$o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
-  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
+  return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
 };
-const UToaster = Object.assign(_sfc_main$m, { __name: "UToaster" });
+const UToaster = Object.assign(_sfc_main$o, { __name: "UToaster" });
 function _useOverlay() {
   const overlays = shallowReactive([]);
   const create = (component, _options) => {
@@ -6949,7 +6954,7 @@ function _useOverlay() {
   };
 }
 const useOverlay = /* @__PURE__ */ createSharedComposable(_useOverlay);
-const _sfc_main$l = {
+const _sfc_main$n = {
   __name: "UOverlayProvider",
   __ssrInlineRender: true,
   setup(__props) {
@@ -6978,16 +6983,16 @@ const _sfc_main$l = {
     };
   }
 };
-const _sfc_setup$l = _sfc_main$l.setup;
-_sfc_main$l.setup = (props, ctx) => {
+const _sfc_setup$n = _sfc_main$n.setup;
+_sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
-  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
+  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
 const __default__ = {
   name: "App"
 };
-const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
+const _sfc_main$m = /* @__PURE__ */ Object.assign(__default__, {
   __ssrInlineRender: true,
   props: {
     tooltip: { type: Object, required: false },
@@ -7034,7 +7039,7 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
                   } else {
                     ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
                   }
-                  _push3(ssrRenderComponent(_sfc_main$l, null, null, _parent3, _scopeId2));
+                  _push3(ssrRenderComponent(_sfc_main$n, null, null, _parent3, _scopeId2));
                 } else {
                   return [
                     __props.toaster !== null ? (openBlock(), createBlock(UToaster, mergeProps({ key: 0 }, toasterProps.value), {
@@ -7043,7 +7048,7 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
                       ]),
                       _: 3
                     }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                    createVNode(_sfc_main$l)
+                    createVNode(_sfc_main$n)
                   ];
                 }
               }),
@@ -7059,7 +7064,7 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
                     ]),
                     _: 3
                   }, 16)) : renderSlot(_ctx.$slots, "default", { key: 1 }),
-                  createVNode(_sfc_main$l)
+                  createVNode(_sfc_main$n)
                 ]),
                 _: 3
               }, 16)
@@ -7071,13 +7076,13 @@ const _sfc_main$k = /* @__PURE__ */ Object.assign(__default__, {
     };
   }
 });
-const _sfc_setup$k = _sfc_main$k.setup;
-_sfc_main$k.setup = (props, ctx) => {
+const _sfc_setup$m = _sfc_main$m.setup;
+_sfc_main$m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/App.vue");
-  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
 };
-const __nuxt_component_0$1 = Object.assign(_sfc_main$k, { __name: "UApp" });
+const __nuxt_component_0$2 = Object.assign(_sfc_main$m, { __name: "UApp" });
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -7085,7 +7090,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$j = {
+const _sfc_main$l = {
   __name: "DevGridOverlay",
   __ssrInlineRender: true,
   props: {
@@ -7141,13 +7146,13 @@ const _sfc_main$j = {
     };
   }
 };
-const _sfc_setup$j = _sfc_main$j.setup;
-_sfc_main$j.setup = (props, ctx) => {
+const _sfc_setup$l = _sfc_main$l.setup;
+_sfc_main$l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/DevGridOverlay.vue");
-  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
+  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
 };
-const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["__scopeId", "data-v-e31d3a8a"]]);
+const __nuxt_component_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["__scopeId", "data-v-e31d3a8a"]]);
 const alert16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 7.5V4H9V7.5H7ZM9.25 11C9.25 11.6904 8.69036 12.25 8 12.25C7.30964 12.25 6.75 11.6904 6.75 11C6.75 10.3096 7.30964 9.75 8 9.75C8.69036 9.75 9.25 10.3096 9.25 11Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const arrowRight16 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 13.4142 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M6 0.292893C6.39052 -0.0976311 7.02369 -0.0976311 7.41421 0.292893L13.4142 6.29289L12 7.70711L7.70711 3.41421V13H5.70711V3.41421L1.41421 7.70711L0 6.29289L6 0.292893Z" fill="var(--fill-0, white)"/>\n</svg>\n';
 const arrowRight24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 15.4141 14.8755" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Union" d="M6.88672 0.291507C7.36328 -0.0971695 8.05078 -0.0971683 8.52734 0.291507L8.62598 0.380374L15.4141 7.16846L14 8.58252L8.70703 3.28955V14.8755H6.70703V3.28955L1.41406 8.58252L0 7.16846L6.78809 0.380374L6.88672 0.291507Z" fill="var(--fill-0, white)"/>\n</svg>\n';
@@ -7175,7 +7180,7 @@ const termLow12 = '<svg preserveAspectRatio="none" width="100%" height="100%" ov
 const termMedium12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
 const termShort12 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" d="M4.81878 6.77969H3.20614C1.56853 6.77969 0.749716 6.77969 0.403265 6.48025C0.103201 6.22091 -0.0436189 5.83522 0.0113598 5.45074C0.0748376 5.00681 0.699905 4.49786 1.95004 3.47996L4.35664 1.52043C5.61253 0.497844 6.24047 -0.0134486 6.70665 0.000268838C7.11037 0.0121488 7.48159 0.216258 7.69721 0.54492C7.94619 0.924419 7.80726 1.70459 7.52941 3.26494L7.18122 5.22031H8.79385C10.4315 5.22031 11.2503 5.22031 11.5967 5.51975C11.8968 5.77909 12.0436 6.16477 11.9886 6.54926C11.9252 6.99319 11.3001 7.50214 10.05 8.52004L7.64336 10.4796C6.38747 11.5022 5.75953 12.0134 5.29335 11.9997C4.88963 11.9879 4.51841 11.7837 4.30279 11.4551C4.05381 11.0756 4.19274 10.2954 4.47059 8.73506L4.81878 6.77969Z" fill="var(--fill-0, #0ABD5D)"/>\n</svg>\n';
 const invoiceTime24 = '<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24ZM10.5 4.5V12C10.5 12.5383 10.7884 13.0353 11.2558 13.3024L16.5058 16.3024L17.9942 13.6976L13.5 11.1295V4.5H10.5Z" fill="var(--fill-0, #D27714)"/>\n</svg>\n';
-const _sfc_main$i = {
+const _sfc_main$k = {
   __name: "AppIcon",
   __ssrInlineRender: true,
   props: {
@@ -7601,13 +7606,13 @@ const _sfc_main$i = {
     };
   }
 };
-const _sfc_setup$i = _sfc_main$i.setup;
-_sfc_main$i.setup = (props, ctx) => {
+const _sfc_setup$k = _sfc_main$k.setup;
+_sfc_main$k.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppIcon.vue");
-  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
+  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-40683738"]]);
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["__scopeId", "data-v-40683738"]]);
 function pointerDownOutside(e, options = {}) {
   const originalEvent = e.detail.originalEvent;
   const target = originalEvent.target;
@@ -7681,7 +7686,7 @@ const theme$1 = {
     }
   ]
 };
-const _sfc_main$h = {
+const _sfc_main$j = {
   __name: "UModal",
   __ssrInlineRender: true,
   props: {
@@ -7880,7 +7885,7 @@ const _sfc_main$h = {
                                     if (_push5) {
                                       ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                                         if (props.close) {
-                                          _push5(ssrRenderComponent(_sfc_main$p, mergeProps({
+                                          _push5(ssrRenderComponent(_sfc_main$r, mergeProps({
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
                                             variant: "ghost",
@@ -7896,7 +7901,7 @@ const _sfc_main$h = {
                                     } else {
                                       return [
                                         renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                          props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                          props.close ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                                             key: 0,
                                             icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                             color: "neutral",
@@ -8001,7 +8006,7 @@ const _sfc_main$h = {
                                 }, {
                                   default: withCtx(() => [
                                     renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                      props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                      props.close ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                                         key: 0,
                                         icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                         color: "neutral",
@@ -8111,7 +8116,7 @@ const _sfc_main$h = {
                               }, {
                                 default: withCtx(() => [
                                   renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                    props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                    props.close ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                                       key: 0,
                                       icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                       color: "neutral",
@@ -8301,7 +8306,7 @@ const _sfc_main$h = {
                             }, {
                               default: withCtx(() => [
                                 renderSlot(_ctx.$slots, "close", { ui: ui.value }, () => [
-                                  props.close ? (openBlock(), createBlock(_sfc_main$p, mergeProps({
+                                  props.close ? (openBlock(), createBlock(_sfc_main$r, mergeProps({
                                     key: 0,
                                     icon: __props.closeIcon || unref(appConfig2).ui.icons.close,
                                     color: "neutral",
@@ -8378,13 +8383,13 @@ const _sfc_main$h = {
     };
   }
 };
-const _sfc_setup$h = _sfc_main$h.setup;
-_sfc_main$h.setup = (props, ctx) => {
+const _sfc_setup$j = _sfc_main$j.setup;
+_sfc_main$j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
-  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
+  return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
-const _sfc_main$g = {
+const _sfc_main$i = {
   __name: "AuthSuccessView",
   __ssrInlineRender: true,
   emits: ["close"],
@@ -8404,14 +8409,14 @@ const _sfc_main$g = {
     };
   }
 };
-const _sfc_setup$g = _sfc_main$g.setup;
-_sfc_main$g.setup = (props, ctx) => {
+const _sfc_setup$i = _sfc_main$i.setup;
+_sfc_main$i.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthSuccessView.vue");
-  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
+  return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
-const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-4777aa4f"]]);
-const _sfc_main$f = /* @__PURE__ */ Object.assign({
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-4777aa4f"]]);
+const _sfc_main$h = /* @__PURE__ */ Object.assign({
   inheritAttrs: false
 }, {
   __name: "AppInput",
@@ -8475,7 +8480,7 @@ const _sfc_main$f = /* @__PURE__ */ Object.assign({
       return rest;
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UIcon = _sfc_main$u;
+      const _component_UIcon = _sfc_main$w;
       let _temp0;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["app-input-wrapper", unref(wrapperAttributes).class],
@@ -8518,14 +8523,14 @@ const _sfc_main$f = /* @__PURE__ */ Object.assign({
     };
   }
 });
-const _sfc_setup$f = _sfc_main$f.setup;
-_sfc_main$f.setup = (props, ctx) => {
+const _sfc_setup$h = _sfc_main$h.setup;
+_sfc_main$h.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
-  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
+  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
 };
-const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-8406adb8"]]);
-const _sfc_main$e = {
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["__scopeId", "data-v-8406adb8"]]);
+const _sfc_main$g = {
   __name: "AuthEntryForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -8537,7 +8542,7 @@ const _sfc_main$e = {
     const identifier = flow.identifier;
     const entryRequestError = flow.entryRequestError;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
+      const _component_AppInput = __nuxt_component_0$1;
       const _component_AppIcon = __nuxt_component_1$1;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
@@ -8613,14 +8618,14 @@ const _sfc_main$e = {
     };
   }
 };
-const _sfc_setup$e = _sfc_main$e.setup;
-_sfc_main$e.setup = (props, ctx) => {
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
-  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
-const __nuxt_component_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-42c52b56"]]);
-const _sfc_main$d = {
+const __nuxt_component_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-42c52b56"]]);
+const _sfc_main$f = {
   __name: "AuthLoginForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -8635,7 +8640,7 @@ const _sfc_main$d = {
     const loginRequestError = flow.loginRequestError;
     const isLoginRequestPending = flow.isLoginRequestPending;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
+      const _component_AppInput = __nuxt_component_0$1;
       const _component_AppIcon = __nuxt_component_1$1;
       _push(`<!--[--><div class="auth-entry__login-fields" data-v-022a0cae><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-022a0cae> Email или телефон </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
@@ -8707,14 +8712,14 @@ const _sfc_main$d = {
     };
   }
 };
-const _sfc_setup$d = _sfc_main$d.setup;
-_sfc_main$d.setup = (props, ctx) => {
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
-  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-022a0cae"]]);
-const _sfc_main$c = {
+const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-022a0cae"]]);
+const _sfc_main$e = {
   __name: "AuthPasswordRecoveryForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -8741,14 +8746,14 @@ const _sfc_main$c = {
     };
   }
 };
-const _sfc_setup$c = _sfc_main$c.setup;
-_sfc_main$c.setup = (props, ctx) => {
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
-  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const __nuxt_component_5$2 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-0e9fe146"]]);
-const _sfc_main$b = {
+const __nuxt_component_5$2 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-0e9fe146"]]);
+const _sfc_main$d = {
   __name: "AuthPasswordRecoverySentView",
   __ssrInlineRender: true,
   emits: ["close"],
@@ -8765,7 +8770,7 @@ const _sfc_main$b = {
     const passwordRecoveryCodeError = flow.passwordRecoveryCodeError;
     const isCodeVerifyPending = flow.isCodeVerifyPending;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
+      const _component_AppInput = __nuxt_component_0$1;
       if (unref(isPasswordRecoveryPhone)) {
         _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__phone-recovery" }, _attrs))} data-v-e42088da><div class="auth-entry__phone-recovery-fields" data-v-e42088da><div class="auth-entry__field auth-entry__phone-field" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-phone" data-v-e42088da> Номер телефона </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
@@ -8808,14 +8813,14 @@ const _sfc_main$b = {
     };
   }
 };
-const _sfc_setup$b = _sfc_main$b.setup;
-_sfc_main$b.setup = (props, ctx) => {
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
-  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
-const __nuxt_component_6 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-e42088da"]]);
-const _sfc_main$a = {
+const __nuxt_component_6$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-e42088da"]]);
+const _sfc_main$c = {
   __name: "AppCheckbox",
   __ssrInlineRender: true,
   props: /* @__PURE__ */ mergeModels({
@@ -8858,14 +8863,14 @@ const _sfc_main$a = {
     };
   }
 };
-const _sfc_setup$a = _sfc_main$a.setup;
-_sfc_main$a.setup = (props, ctx) => {
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppCheckbox.vue");
-  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
-const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-5c83338d"]]);
-const _sfc_main$9 = {
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-5c83338d"]]);
+const _sfc_main$b = {
   __name: "AuthRegisterStartForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -8881,9 +8886,9 @@ const _sfc_main$9 = {
     const isPersonalDataAccepted = flow.isPersonalDataAccepted;
     const isUserAgreementAccepted = flow.isUserAgreementAccepted;
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
+      const _component_AppInput = __nuxt_component_0$1;
       const _component_AppCheckbox = __nuxt_component_3;
-      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_NuxtLink = __nuxt_component_0$4;
       _push(`<!--[--><div class="auth-entry__registration-fields" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-name" data-v-e0a4769e> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-name",
@@ -9042,14 +9047,14 @@ const _sfc_main$9 = {
     };
   }
 };
-const _sfc_setup$9 = _sfc_main$9.setup;
-_sfc_main$9.setup = (props, ctx) => {
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterStartForm.vue");
-  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
 };
-const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-e0a4769e"]]);
-const _sfc_main$8 = {
+const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-e0a4769e"]]);
+const _sfc_main$a = {
   __name: "AuthRegisterCompleteForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -9084,7 +9089,7 @@ const _sfc_main$8 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_AppInput = __nuxt_component_0;
+      const _component_AppInput = __nuxt_component_0$1;
       const _component_AppIcon = __nuxt_component_1$1;
       const _component_AppCheckbox = __nuxt_component_3;
       _push(`<!--[--><div class="auth-entry__registration-fields" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-name" data-v-1ef7f7a6> Имя и фамилия </label>`);
@@ -9245,14 +9250,14 @@ const _sfc_main$8 = {
     };
   }
 };
-const _sfc_setup$8 = _sfc_main$8.setup;
-_sfc_main$8.setup = (props, ctx) => {
+const _sfc_setup$a = _sfc_main$a.setup;
+_sfc_main$a.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterCompleteForm.vue");
-  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-1ef7f7a6"]]), { __name: "AuthRegisterCompleteForm" });
-const _sfc_main$7 = {
+const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$a, [["__scopeId", "data-v-1ef7f7a6"]]), { __name: "AuthRegisterCompleteForm" });
+const _sfc_main$9 = {
   __name: "AuthLegalForm",
   __ssrInlineRender: true,
   setup(__props) {
@@ -9329,13 +9334,13 @@ const _sfc_main$7 = {
     };
   }
 };
-const _sfc_setup$7 = _sfc_main$7.setup;
-_sfc_main$7.setup = (props, ctx) => {
+const _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLegalForm.vue");
-  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
-const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0c732cca"]]);
+const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-0c732cca"]]);
 const authClient = createAuthClient({
   basePath: "/api/auth",
   plugins: [
@@ -10309,7 +10314,7 @@ function useAuthEntryFlow({
     verifyCode
   };
 }
-const _sfc_main$6 = {
+const _sfc_main$8 = {
   __name: "AuthEntryModal",
   __ssrInlineRender: true,
   props: {
@@ -10358,13 +10363,13 @@ const _sfc_main$6 = {
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UModal = _sfc_main$h;
+      const _component_UModal = _sfc_main$j;
       const _component_AuthSuccessView = __nuxt_component_1;
       const _component_AppIcon = __nuxt_component_1$1;
       const _component_AuthEntryForm = __nuxt_component_3$1;
       const _component_AuthLoginForm = __nuxt_component_4$1;
       const _component_AuthPasswordRecoveryForm = __nuxt_component_5$2;
-      const _component_AuthPasswordRecoverySentView = __nuxt_component_6;
+      const _component_AuthPasswordRecoverySentView = __nuxt_component_6$1;
       const _component_AuthRegisterStartForm = __nuxt_component_7;
       const _component_AuthRegisterCompleteForm = __nuxt_component_8;
       const _component_AuthLegalForm = __nuxt_component_9;
@@ -10519,13 +10524,13 @@ const _sfc_main$6 = {
     };
   }
 };
-const _sfc_setup$6 = _sfc_main$6.setup;
-_sfc_main$6.setup = (props, ctx) => {
+const _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
-  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
-const __nuxt_component_5$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$6, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
+const __nuxt_component_5$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
@@ -10956,7 +10961,7 @@ function useFavorites() {
     toggleItem
   };
 }
-const _sfc_main$5 = {
+const _sfc_main$7 = {
   __name: "AppHeader",
   __ssrInlineRender: true,
   setup(__props) {
@@ -11029,7 +11034,7 @@ const _sfc_main$5 = {
       }
     }
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_NuxtLink = __nuxt_component_0$4;
       const _component_AppIcon = __nuxt_component_1$1;
       const _component_AuthEntryModal = __nuxt_component_5$1;
       _push(`<header${ssrRenderAttrs(mergeProps({ class: "header" }, _attrs))} data-v-5a0ec00e><div class="header__container" data-v-5a0ec00e><div class="header__inner" data-v-5a0ec00e>`);
@@ -11156,17 +11161,17 @@ const _sfc_main$5 = {
     };
   }
 };
-const _sfc_setup$5 = _sfc_main$5.setup;
-_sfc_main$5.setup = (props, ctx) => {
+const _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppHeader.vue");
-  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
 };
-const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-5a0ec00e"]]);
+const __nuxt_component_2 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-5a0ec00e"]]);
 const theme = {
   "base": "min-h-[calc(100vh-var(--ui-header-height))]"
 };
-const _sfc_main$4 = {
+const _sfc_main$6 = {
   __name: "UMain",
   __ssrInlineRender: true,
   props: {
@@ -11198,11 +11203,11 @@ const _sfc_main$4 = {
     };
   }
 };
-const _sfc_setup$4 = _sfc_main$4.setup;
-_sfc_main$4.setup = (props, ctx) => {
+const _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/@nuxt/ui/dist/runtime/components/Main.vue");
-  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
 const defineRouteProvider = (name = "RouteProvider") => defineComponent({
   name,
@@ -11289,7 +11294,7 @@ function normalizeSlot(slot, data) {
 }
 const footerLogo = "" + __buildAssetsURL("footer-logo.NO_QlmsK.svg");
 const footerSbp = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2051.2236%2027.0625'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Vector'%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M10.329%200L23.9926%207.71665L13.6757%2013.5312L23.9926%2019.3578L10.329%2027.0625V15.4213L0%2021.2599V5.82661L10.317%2011.6532V0H10.329ZM13.6757%2021.4044L17.2872%2019.3578L13.6757%2017.3233V21.4044ZM3.34669%2015.5778L6.95823%2013.5433L3.34669%2011.5088V15.5778ZM13.6757%209.76319L17.2872%207.71665L13.6757%205.68215V9.76319Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M41.4364%209.703H39.1852C38.6314%209.67892%2038.0897%209.87153%2037.6563%2010.2207C37.2349%2010.5698%2036.9581%2011.0633%2036.8738%2011.6051C37.572%2011.0152%2038.4749%2010.7022%2039.4019%2010.7142C40.2325%2010.7263%2041.0391%2011.0513%2041.629%2011.6291C42.2189%2012.195%2042.568%2012.9775%2042.6041%2013.784V14.1572C42.4235%2015.975%2040.8224%2017.2391%2038.6073%2017.2391C36.3682%2017.2391%2034.4781%2015.9148%2034.4781%2012.6885C34.4781%209.9558%2036.2719%207.69257%2038.9083%207.65646H42.5921L41.4243%209.71503L41.4364%209.703ZM38.3545%2012.4839C38.0656%2012.532%2037.8008%2012.6645%2037.5841%2012.8691C37.3674%2013.0738%2037.2229%2013.3266%2037.1627%2013.6035C37.1025%2013.8803%2037.1266%2014.1813%2037.2229%2014.4461C37.3313%2014.711%2037.5118%2014.9518%2037.7526%2015.1083C37.9934%2015.2768%2038.2823%2015.3731%2038.5712%2015.3731C38.7638%2015.3731%2038.9685%2015.349%2039.1491%2015.2768C39.3296%2015.2046%2039.5102%2015.1083%2039.6547%2014.9638C39.7991%2014.8314%2039.9075%2014.6628%2039.9918%2014.4823C40.064%2014.3017%2040.1121%2014.1091%2040.1121%2013.9165C40.1121%2013.6275%2040.0279%2013.3506%2039.8714%2013.1099C39.7149%2012.8691%2039.4861%2012.6765%2039.2093%2012.5681C38.9444%2012.4598%2038.6434%2012.4237%2038.3545%2012.4718V12.4839Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20d='M30.7462%209.87153C31.7454%209.87153%2032.7085%2010.1725%2033.491%2010.7744L32.552%2012.4117C31.9621%2012.0625%2031.288%2011.8699%2030.6018%2011.882C30.1684%2011.906%2029.7591%2012.0866%2029.4701%2012.3996C29.1692%2012.7006%2029.0006%2013.1099%2029.0006%2013.5312C29.0006%2013.9526%2029.1692%2014.3619%2029.4701%2014.6628C29.7711%2014.9638%2030.1684%2015.1564%2030.6018%2015.1805C31.288%2015.1805%2031.9741%2014.9999%2032.552%2014.6508L33.491%2016.3001C32.7085%2016.902%2031.7213%2017.227%2030.7221%2017.227C28.5071%2017.227%2026.617%2015.5537%2026.617%2013.5433C26.617%2011.8218%2028.2904%209.88357%2030.7342%209.88357L30.7462%209.87153Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3cpath%20d='M48.7317%2017.0224V12.1348H46.324V17.0224H43.82V10.0762H51.2236V17.0224H48.7317Z'%20fill='var(--fill-0,%20%2304121B)'%20fill-opacity='0.24'/%3e%3c/g%3e%3c/svg%3e";
-const _sfc_main$3 = {
+const _sfc_main$5 = {
   __name: "AppFooter",
   __ssrInlineRender: true,
   setup(__props) {
@@ -11318,7 +11323,7 @@ const _sfc_main$3 = {
       { label: "Политика конфиденциальности", to: "/privacy-policy" }
     ];
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_NuxtLink = __nuxt_component_0$3;
+      const _component_NuxtLink = __nuxt_component_0$4;
       const _component_AppIcon = __nuxt_component_1$1;
       _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-c25597d5><div class="footer__container" data-v-c25597d5><div class="footer__card" data-v-c25597d5><div class="footer__top" data-v-c25597d5><div class="footer__column" data-v-c25597d5><h3 class="footer__title" data-v-c25597d5> Каталог </h3><!--[-->`);
       ssrRenderList(catalogLinks, (item) => {
@@ -11406,13 +11411,194 @@ const _sfc_main$3 = {
     };
   }
 };
+const _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppFooter.vue");
+  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+};
+const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-c25597d5"]]);
+const _sfc_main$4 = {
+  __name: "AppButton",
+  __ssrInlineRender: true,
+  props: {
+    variant: {
+      type: String,
+      default: "primary",
+      validator: (v) => ["primary", "secondary", "ghost", "negative"].includes(v)
+    },
+    size: {
+      type: String,
+      default: "l",
+      validator: (v) => ["s", "sm", "md", "m", "lg", "l"].includes(v)
+    },
+    tone: {
+      type: String,
+      default: "regular",
+      validator: (v) => ["regular", "inverted"].includes(v)
+    },
+    icon: {
+      type: String,
+      default: null
+    },
+    iconOnly: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    tag: {
+      type: String,
+      default: "button"
+    },
+    type: {
+      type: String,
+      default: "button"
+    }
+  },
+  emits: ["click"],
+  setup(__props) {
+    const props = __props;
+    const normalizedVariant = computed(() => {
+      return props.variant === "ghost" ? "secondary" : props.variant;
+    });
+    const normalizedSize = computed(() => {
+      if (props.size === "lg") return "l";
+      if (props.size === "md") return "m";
+      return props.size;
+    });
+    const componentTag = computed(() => {
+      return props.tag === "NuxtLink" ? __nuxt_component_0$4 : props.tag;
+    });
+    const nativeButtonType = computed(() => {
+      return props.tag === "button" ? props.type : void 0;
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_UIcon = _sfc_main$w;
+      ssrRenderVNode(_push, createVNode(resolveDynamicComponent(unref(componentTag)), mergeProps({
+        class: [
+          "app-button",
+          `app-button--${unref(normalizedVariant)}`,
+          `app-button--${unref(normalizedSize)}`,
+          `app-button--${__props.tone}`,
+          { "app-button--icon-only": __props.iconOnly, "app-button--disabled": __props.disabled }
+        ],
+        disabled: __props.disabled,
+        type: unref(nativeButtonType),
+        onClick: ($event) => _ctx.$emit("click", $event)
+      }, _attrs), {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            if (__props.icon) {
+              _push2(ssrRenderComponent(_component_UIcon, {
+                name: __props.icon,
+                class: "app-button__icon"
+              }, null, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
+            if (!__props.iconOnly) {
+              _push2(`<span class="app-button__content" data-v-233c6bfd${_scopeId}>`);
+              ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
+              _push2(`</span>`);
+            } else {
+              _push2(`<!---->`);
+            }
+          } else {
+            return [
+              __props.icon ? (openBlock(), createBlock(_component_UIcon, {
+                key: 0,
+                name: __props.icon,
+                class: "app-button__icon"
+              }, null, 8, ["name"])) : createCommentVNode("", true),
+              !__props.iconOnly ? (openBlock(), createBlock("span", {
+                key: 1,
+                class: "app-button__content"
+              }, [
+                renderSlot(_ctx.$slots, "default", {}, void 0, true)
+              ])) : createCommentVNode("", true)
+            ];
+          }
+        }),
+        _: 3
+      }), _parent);
+    };
+  }
+};
+const _sfc_setup$4 = _sfc_main$4.setup;
+_sfc_main$4.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppButton.vue");
+  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+};
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-233c6bfd"]]);
+const CONSENT_STORAGE_KEY = "indigo_cookie_consent";
+const _sfc_main$3 = {
+  __name: "CookieConsentBanner",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const isVisible = ref(false);
+    function acceptCookies() {
+      (void 0).localStorage.setItem(CONSENT_STORAGE_KEY, "accepted");
+      isVisible.value = false;
+    }
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_NuxtLink = __nuxt_component_0$4;
+      const _component_AppButton = __nuxt_component_0;
+      if (unref(isVisible)) {
+        _push(`<aside${ssrRenderAttrs(mergeProps({
+          class: "cookie-consent",
+          "aria-label": "Уведомление об использовании cookies"
+        }, _attrs))} data-v-c7cf2d49><p class="cookie-consent__text" data-v-c7cf2d49> Пользуясь нашим сайтом, вы соглашаетесь с тем, что мы используем `);
+        _push(ssrRenderComponent(_component_NuxtLink, {
+          to: "/cookie-policy",
+          class: "cookie-consent__link"
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(` cookies `);
+            } else {
+              return [
+                createTextVNode(" cookies ")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(`</p>`);
+        _push(ssrRenderComponent(_component_AppButton, {
+          class: "cookie-consent__button",
+          size: "m",
+          type: "button",
+          onClick: acceptCookies
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(` Ок `);
+            } else {
+              return [
+                createTextVNode(" Ок ")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(`</aside>`);
+      } else {
+        _push(`<!---->`);
+      }
+    };
+  }
+};
 const _sfc_setup$3 = _sfc_main$3.setup;
 _sfc_main$3.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppFooter.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/CookieConsentBanner.vue");
   return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
 };
-const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-c25597d5"]]);
+const __nuxt_component_6 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$3, [["__scopeId", "data-v-c7cf2d49"]]), { __name: "CookieConsentBanner" });
 const title = "Indigo — Печать флагов на заказ";
 const description = "Типография Indigo: печать флагов любых размеров и конфигураций. Конструктор флагов, быстрый заказ, доставка по России.";
 const _sfc_main$2 = {
@@ -11451,12 +11637,13 @@ const _sfc_main$2 = {
       { immediate: true }
     );
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UApp = __nuxt_component_0$1;
+      const _component_UApp = __nuxt_component_0$2;
       const _component_DevGridOverlay = __nuxt_component_1$2;
       const _component_AppHeader = __nuxt_component_2;
-      const _component_UMain = _sfc_main$4;
+      const _component_UMain = _sfc_main$6;
       const _component_NuxtPage = __nuxt_component_4;
       const _component_AppFooter = __nuxt_component_5;
+      const _component_CookieConsentBanner = __nuxt_component_6;
       _push(ssrRenderComponent(_component_UApp, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
@@ -11479,6 +11666,7 @@ const _sfc_main$2 = {
               _: 1
             }, _parent2, _scopeId));
             _push2(ssrRenderComponent(_component_AppFooter, null, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_CookieConsentBanner, null, null, _parent2, _scopeId));
           } else {
             return [
               unref(isGridEnabled) ? (openBlock(), createBlock(_component_DevGridOverlay, { key: 0 })) : createCommentVNode("", true),
@@ -11489,7 +11677,8 @@ const _sfc_main$2 = {
                 ]),
                 _: 1
               }),
-              createVNode(_component_AppFooter)
+              createVNode(_component_AppFooter),
+              createVNode(_component_CookieConsentBanner)
             ];
           }
         }),
@@ -11600,5 +11789,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { __vite_glob_0_43 as $, __vite_glob_0_66 as A, __vite_glob_0_65 as B, __vite_glob_0_64 as C, __vite_glob_0_63 as D, __vite_glob_0_62 as E, FABRICS as F, __vite_glob_0_61 as G, __vite_glob_0_60 as H, __vite_glob_0_59 as I, __vite_glob_0_58 as J, __vite_glob_0_57 as K, __vite_glob_0_56 as L, MOUNTINGS as M, __vite_glob_0_55 as N, __vite_glob_0_54 as O, __vite_glob_0_53 as P, __vite_glob_0_52 as Q, __vite_glob_0_51 as R, SIZES as S, __vite_glob_0_50 as T, __vite_glob_0_49 as U, __vite_glob_0_48 as V, __vite_glob_0_47 as W, __vite_glob_0_46 as X, __vite_glob_0_45 as Y, __vite_glob_0_44 as Z, _export_sfc as _, __nuxt_component_0$3 as a, __vite_glob_0_42 as a0, __vite_glob_0_41 as a1, __vite_glob_0_40 as a2, __vite_glob_0_39 as a3, __vite_glob_0_38 as a4, __vite_glob_0_36 as a5, __vite_glob_0_35 as a6, __vite_glob_0_34 as a7, __vite_glob_0_33 as a8, __vite_glob_0_32 as a9, __vite_glob_0_5 as aA, __vite_glob_0_4 as aB, __vite_glob_0_3 as aC, __vite_glob_0_2 as aD, __vite_glob_0_1 as aE, __vite_glob_0_0 as aF, MAX_UPLOAD_SIZE as aG, ALLOWED_EXTENSIONS as aH, RASTER_EXTENSIONS as aI, useFavorites as aJ, setInterval as aK, navigateTo as aL, defineNuxtRouteMiddleware as aM, __vite_glob_0_31 as aa, __vite_glob_0_30 as ab, __vite_glob_0_29 as ac, __vite_glob_0_28 as ad, __vite_glob_0_27 as ae, __vite_glob_0_26 as af, __vite_glob_0_25 as ag, __vite_glob_0_24 as ah, __vite_glob_0_23 as ai, __vite_glob_0_22 as aj, __vite_glob_0_21 as ak, __vite_glob_0_20 as al, __vite_glob_0_19 as am, __vite_glob_0_18 as an, __vite_glob_0_17 as ao, __vite_glob_0_16 as ap, __vite_glob_0_15 as aq, __vite_glob_0_14 as ar, __vite_glob_0_13 as as, __vite_glob_0_12 as at, __vite_glob_0_11 as au, __vite_glob_0_10 as av, __vite_glob_0_9 as aw, __vite_glob_0_8 as ax, __vite_glob_0_7 as ay, __vite_glob_0_6 as az, __nuxt_component_0 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$u as h, __vite_glob_0_37 as i, _sfc_main$h as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, authClient as q, resolveCartItemImage as r, __nuxt_component_5$1 as s, usePricing as t, useHead as u, FABRIC_IMAGE_MAP as v, MOUNTING_IMAGE_MAP as w, __vite_glob_0_69 as x, __vite_glob_0_68 as y, __vite_glob_0_67 as z };
+export { __vite_glob_0_44 as $, __vite_glob_0_67 as A, __vite_glob_0_66 as B, __vite_glob_0_65 as C, __vite_glob_0_64 as D, __vite_glob_0_63 as E, FABRICS as F, __vite_glob_0_62 as G, __vite_glob_0_61 as H, __vite_glob_0_60 as I, __vite_glob_0_59 as J, __vite_glob_0_58 as K, __vite_glob_0_57 as L, MOUNTINGS as M, __vite_glob_0_56 as N, __vite_glob_0_55 as O, __vite_glob_0_54 as P, __vite_glob_0_53 as Q, __vite_glob_0_52 as R, SIZES as S, __vite_glob_0_51 as T, __vite_glob_0_50 as U, __vite_glob_0_49 as V, __vite_glob_0_48 as W, __vite_glob_0_47 as X, __vite_glob_0_46 as Y, __vite_glob_0_45 as Z, _export_sfc as _, __nuxt_component_0$4 as a, __vite_glob_0_43 as a0, __vite_glob_0_42 as a1, __vite_glob_0_41 as a2, __vite_glob_0_40 as a3, __vite_glob_0_39 as a4, __vite_glob_0_38 as a5, __vite_glob_0_36 as a6, __vite_glob_0_35 as a7, __vite_glob_0_34 as a8, __vite_glob_0_33 as a9, __vite_glob_0_6 as aA, __vite_glob_0_5 as aB, __vite_glob_0_4 as aC, __vite_glob_0_3 as aD, __vite_glob_0_2 as aE, __vite_glob_0_1 as aF, __vite_glob_0_0 as aG, MAX_UPLOAD_SIZE as aH, ALLOWED_EXTENSIONS as aI, RASTER_EXTENSIONS as aJ, useFavorites as aK, setInterval as aL, navigateTo as aM, defineNuxtRouteMiddleware as aN, __vite_glob_0_32 as aa, __vite_glob_0_31 as ab, __vite_glob_0_30 as ac, __vite_glob_0_29 as ad, __vite_glob_0_28 as ae, __vite_glob_0_27 as af, __vite_glob_0_26 as ag, __vite_glob_0_25 as ah, __vite_glob_0_24 as ai, __vite_glob_0_23 as aj, __vite_glob_0_22 as ak, __vite_glob_0_21 as al, __vite_glob_0_20 as am, __vite_glob_0_19 as an, __vite_glob_0_18 as ao, __vite_glob_0_17 as ap, __vite_glob_0_16 as aq, __vite_glob_0_15 as ar, __vite_glob_0_14 as as, __vite_glob_0_13 as at, __vite_glob_0_12 as au, __vite_glob_0_11 as av, __vite_glob_0_10 as aw, __vite_glob_0_9 as ax, __vite_glob_0_8 as ay, __vite_glob_0_7 as az, __nuxt_component_0$1 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$w as h, __vite_glob_0_37 as i, _sfc_main$j as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, __nuxt_component_0 as q, resolveCartItemImage as r, authClient as s, __nuxt_component_5$1 as t, useHead as u, usePricing as v, FABRIC_IMAGE_MAP as w, MOUNTING_IMAGE_MAP as x, __vite_glob_0_69 as y, __vite_glob_0_68 as z };
 //# sourceMappingURL=server.mjs.map

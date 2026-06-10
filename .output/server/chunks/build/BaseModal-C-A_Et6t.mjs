@@ -1,4 +1,4 @@
-import { _ as _export_sfc, j as _sfc_main$h } from './server.mjs';
+import { _ as _export_sfc, j as _sfc_main$j } from './server.mjs';
 import { useModel, mergeProps, withCtx, createVNode, openBlock, createBlock, renderSlot, toDisplayString, createCommentVNode, mergeModels, useSSRContext } from 'vue';
 import { ssrRenderComponent, ssrRenderClass, ssrRenderStyle, ssrRenderSlot, ssrInterpolate } from 'vue/server-renderer';
 
@@ -34,7 +34,7 @@ const _sfc_main = {
   setup(__props) {
     const isOpen = useModel(__props, "modelValue");
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_UModal = _sfc_main$h;
+      const _component_UModal = _sfc_main$j;
       _push(ssrRenderComponent(_component_UModal, mergeProps({
         open: isOpen.value,
         "onUpdate:open": ($event) => isOpen.value = $event,

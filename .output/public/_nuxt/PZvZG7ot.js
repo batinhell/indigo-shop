@@ -1,1 +1,0 @@
-import{br as a,bs as n,Y as o,v as u,x as i}from"./BEPQvesG.js";const c=a(async()=>{let e,s;const{data:t}=([e,s]=n(()=>o.useSession(u)),e=await e,s(),e);if(!t.value)return i("/")});export{c as default};
