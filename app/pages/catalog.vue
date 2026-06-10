@@ -143,48 +143,6 @@ useSeoMeta({
             @toggle-favorite="toggleFavorite(item)"
           />
         </div>
-
-        <div
-          v-show="!collapsedCategories[category.id]"
-          class="catalog-page__placeholder"
-          aria-label="Разделы каталога в разработке"
-        >
-          <div
-            class="catalog-page__placeholder-grid"
-            aria-hidden="true"
-          >
-            <div
-              v-for="index in 8"
-              :key="index"
-              class="catalog-page__skeleton-card"
-            >
-              <div class="catalog-page__skeleton-image" />
-              <div class="catalog-page__skeleton-content">
-                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--full" />
-                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--medium" />
-                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--small" />
-                <div class="catalog-page__skeleton-line catalog-page__skeleton-line--price" />
-                <div class="catalog-page__skeleton-button" />
-              </div>
-            </div>
-          </div>
-
-          <div class="catalog-page__notice">
-            <h2 class="catalog-page__notice-title">
-              Мы еще работаем<br>
-              над наполнением каталога
-            </h2>
-            <p class="catalog-page__notice-description">
-              Скоро тут появятся: корпоративная продукция, товары для свадеб и&nbsp;оформления магазинов, фотоальбомы и&nbsp;товары для&nbsp;художников
-            </p>
-            <img
-              :src="progressSmile"
-              alt=""
-              class="catalog-page__notice-arrow"
-              aria-hidden="true"
-            >
-          </div>
-        </div>
       </section>
     </div>
 

@@ -10,6 +10,13 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  fonts: {
+    provider: 'local',
+    families: [
+      { name: 'Manrope', provider: 'none' }
+    ]
+  },
+
   app: {
     head: {
       htmlAttrs: { lang: 'ru' },

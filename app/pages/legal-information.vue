@@ -21,17 +21,17 @@ const legalPages = [
     to: '/privacy-policy'
   },
   {
-    label: 'Правовая информация',
-    to: '/legal-information'
-  },
-  {
     label: 'Пользовательское соглашение интернет-магазина типографии «Индиго»',
     to: '/user-agreement'
   },
   {
     label: 'Политика использования файлов cookie',
     to: '/cookie-policy'
-  }
+  },
+  {
+    label: 'Возврат и отмена заказа',
+    to: '/return-cancellation'
+  },
 ]
 
 useSeoMeta({

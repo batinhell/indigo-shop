@@ -57,5 +57,7 @@ watch(
     </UMain>
 
     <AppFooter />
+
+    <CookieConsentBanner />
   </UApp>
 </template>
