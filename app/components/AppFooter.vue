@@ -14,10 +14,10 @@ const catalogLinks = [
 ]
 
 const companyLinks = [
-  { label: 'О нас', to: '' },
+  // { label: 'О нас', to: '' },
   { label: 'Что мы изготавливаем', to: '/catalog' },
-  { label: 'Материалы', to: '' },
-  { label: 'Примеры работ', to: '' },
+  // { label: 'Материалы', to: '' },
+  // { label: 'Примеры работ', to: '' },
   { label: 'Правовая информация', to: '/legal-information' },
   { label: 'Оплата', to: '/payment' },
   { label: 'Доставка', to: '/delivery' }

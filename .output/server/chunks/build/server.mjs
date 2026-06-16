@@ -11309,10 +11309,10 @@ const _sfc_main$5 = {
       { label: "К мероприятиям", to: "/catalog" }
     ];
     const companyLinks = [
-      { label: "О нас", to: "" },
+      // { label: 'О нас', to: '' },
       { label: "Что мы изготавливаем", to: "/catalog" },
-      { label: "Материалы", to: "" },
-      { label: "Примеры работ", to: "" },
+      // { label: 'Материалы', to: '' },
+      // { label: 'Примеры работ', to: '' },
       { label: "Правовая информация", to: "/legal-information" },
       { label: "Оплата", to: "/payment" },
       { label: "Доставка", to: "/delivery" }
@@ -11325,7 +11325,7 @@ const _sfc_main$5 = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_NuxtLink = __nuxt_component_0$4;
       const _component_AppIcon = __nuxt_component_1$1;
-      _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-c25597d5><div class="footer__container" data-v-c25597d5><div class="footer__card" data-v-c25597d5><div class="footer__top" data-v-c25597d5><div class="footer__column" data-v-c25597d5><h3 class="footer__title" data-v-c25597d5> Каталог </h3><!--[-->`);
+      _push(`<footer${ssrRenderAttrs(mergeProps({ class: "footer" }, _attrs))} data-v-7a22479e><div class="footer__container" data-v-7a22479e><div class="footer__card" data-v-7a22479e><div class="footer__top" data-v-7a22479e><div class="footer__column" data-v-7a22479e><h3 class="footer__title" data-v-7a22479e> Каталог </h3><!--[-->`);
       ssrRenderList(catalogLinks, (item) => {
         _push(`<!--[-->`);
         if (item.to) {
@@ -11345,11 +11345,11 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<a href="#" class="footer__link" data-v-c25597d5>${ssrInterpolate(item.label)}</a>`);
+          _push(`<a href="#" class="footer__link" data-v-7a22479e>${ssrInterpolate(item.label)}</a>`);
         }
         _push(`<!--]-->`);
       });
-      _push(`<!--]--></div><div class="footer__column" data-v-c25597d5><h3 class="footer__title" data-v-c25597d5> Компания </h3><!--[-->`);
+      _push(`<!--]--></div><div class="footer__column" data-v-7a22479e><h3 class="footer__title" data-v-7a22479e> Компания </h3><!--[-->`);
       ssrRenderList(companyLinks, (item) => {
         _push(`<!--[-->`);
         if (item.to) {
@@ -11369,21 +11369,21 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<a href="#" class="footer__link" data-v-c25597d5>${ssrInterpolate(item.label)}</a>`);
+          _push(`<a href="#" class="footer__link" data-v-7a22479e>${ssrInterpolate(item.label)}</a>`);
         }
         _push(`<!--]-->`);
       });
-      _push(`<!--]--></div><div class="footer__column footer__contacts" data-v-c25597d5><p class="footer__phone-main" data-v-c25597d5> +7 (949) 131-45-44 </p><div class="footer__contact-group" data-v-c25597d5><p class="footer__contact-line" data-v-c25597d5> +7 (949) 131-45-45 </p><p class="footer__contact-line" data-v-c25597d5> +7 (949) 499-69-79 </p><a href="#" class="footer__email" data-v-c25597d5> info@indigo-mail.ru </a></div><div class="footer__contact-group" data-v-c25597d5><p class="footer__contact-line" data-v-c25597d5> Донецк, ул. Постышева, 60 </p><p class="footer__contact-line" data-v-c25597d5> Пн-Пт с 09:00 до 18:00 </p></div><div class="footer__social" data-v-c25597d5><a href="#" class="footer__social-button" aria-label="Telegram" data-v-c25597d5>`);
+      _push(`<!--]--></div><div class="footer__column footer__contacts" data-v-7a22479e><p class="footer__phone-main" data-v-7a22479e> +7 (949) 131-45-44 </p><div class="footer__contact-group" data-v-7a22479e><p class="footer__contact-line" data-v-7a22479e> +7 (949) 131-45-45 </p><p class="footer__contact-line" data-v-7a22479e> +7 (949) 499-69-79 </p><a href="#" class="footer__email" data-v-7a22479e> info@indigo-mail.ru </a></div><div class="footer__contact-group" data-v-7a22479e><p class="footer__contact-line" data-v-7a22479e> Донецк, ул. Постышева, 60 </p><p class="footer__contact-line" data-v-7a22479e> Пн-Пт с 09:00 до 18:00 </p></div><div class="footer__social" data-v-7a22479e><a href="#" class="footer__social-button" aria-label="Telegram" data-v-7a22479e>`);
       _push(ssrRenderComponent(_component_AppIcon, {
         name: "tg",
         class: "footer__social-icon footer__social-icon_tg"
       }, null, _parent));
-      _push(`</a><a href="#" class="footer__social-button" aria-label="ВКонтакте" data-v-c25597d5>`);
+      _push(`</a><a href="#" class="footer__social-button" aria-label="ВКонтакте" data-v-7a22479e>`);
       _push(ssrRenderComponent(_component_AppIcon, {
         name: "vk",
         class: "footer__social-icon footer__social-icon_vk"
       }, null, _parent));
-      _push(`</a></div></div></div><div class="footer__info" data-v-c25597d5><div class="footer__info-column" data-v-c25597d5><div class="footer__info-media" data-v-c25597d5><img${ssrRenderAttr("src", unref(footerLogo))} alt="Типография Индиго" class="footer__logo" data-v-c25597d5></div><p class="footer__legal-text" data-v-c25597d5> ИП РУЧКО АНАСТАСИЯ ВИКТОРОВНА<br data-v-c25597d5> ИНН 930900107014<br data-v-c25597d5> ОГРНИП 323930100105541 от 25.01.2023г.<br data-v-c25597d5> РФ, ДНР. Донецкий г.о., 283054, г. Донецк, ул. Аристова, д.1. </p></div><div class="footer__info-column" data-v-c25597d5><div class="footer__info-media" data-v-c25597d5><img${ssrRenderAttr("src", unref(footerSbp))} alt="СБП" class="footer__sbp" data-v-c25597d5></div><div class="footer__payment-info" data-v-c25597d5><p class="footer__legal-text" data-v-c25597d5> Безналичный расчет<br data-v-c25597d5> для юридических лиц и ИП. </p><p class="footer__legal-text" data-v-c25597d5> Информация по приказу Минцифры #511 от 02.06.2025 </p></div></div></div></div><div class="footer__bottom" data-v-c25597d5><span class="footer__bottom-item footer__bottom-item_static" data-v-c25597d5>© ${ssrInterpolate((/* @__PURE__ */ new Date()).getFullYear())}, Типография Индиго</span><!--[-->`);
+      _push(`</a></div></div></div><div class="footer__info" data-v-7a22479e><div class="footer__info-column" data-v-7a22479e><div class="footer__info-media" data-v-7a22479e><img${ssrRenderAttr("src", unref(footerLogo))} alt="Типография Индиго" class="footer__logo" data-v-7a22479e></div><p class="footer__legal-text" data-v-7a22479e> ИП РУЧКО АНАСТАСИЯ ВИКТОРОВНА<br data-v-7a22479e> ИНН 930900107014<br data-v-7a22479e> ОГРНИП 323930100105541 от 25.01.2023г.<br data-v-7a22479e> РФ, ДНР. Донецкий г.о., 283054, г. Донецк, ул. Аристова, д.1. </p></div><div class="footer__info-column" data-v-7a22479e><div class="footer__info-media" data-v-7a22479e><img${ssrRenderAttr("src", unref(footerSbp))} alt="СБП" class="footer__sbp" data-v-7a22479e></div><div class="footer__payment-info" data-v-7a22479e><p class="footer__legal-text" data-v-7a22479e> Безналичный расчет<br data-v-7a22479e> для юридических лиц и ИП. </p><p class="footer__legal-text" data-v-7a22479e> Информация по приказу Минцифры #511 от 02.06.2025 </p></div></div></div></div><div class="footer__bottom" data-v-7a22479e><span class="footer__bottom-item footer__bottom-item_static" data-v-7a22479e>© ${ssrInterpolate((/* @__PURE__ */ new Date()).getFullYear())}, Типография Индиго</span><!--[-->`);
       ssrRenderList(bottomItems, (item) => {
         _push(`<!--[-->`);
         if (item.to) {
@@ -11403,7 +11403,7 @@ const _sfc_main$5 = {
             _: 2
           }, _parent));
         } else {
-          _push(`<span class="footer__bottom-item footer__bottom-item_static" data-v-c25597d5>${ssrInterpolate(item.label)}</span>`);
+          _push(`<span class="footer__bottom-item footer__bottom-item_static" data-v-7a22479e>${ssrInterpolate(item.label)}</span>`);
         }
         _push(`<!--]-->`);
       });
@@ -11417,7 +11417,7 @@ _sfc_main$5.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppFooter.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
-const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-c25597d5"]]);
+const __nuxt_component_5 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-7a22479e"]]);
 const _sfc_main$4 = {
   __name: "AppButton",
   __ssrInlineRender: true,
