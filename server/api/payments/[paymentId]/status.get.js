@@ -1,88 +1,52 @@
 import { useDatabase } from '../../../utils/database.js'
 import {
-  getOrderPayment,
-  updateOrderPaymentStatus
+  getSiteOrderPaymentState,
+  updateSiteOrderPaymentStatus
 } from '../../../utils/order-payment.js'
-import {
-  getPaymentStatusFromVtbQr,
-  getVtbDynamicQrStatus
-} from '../../../utils/vtb-payment.js'
-
-function mergePayload(payload, patch) {
-  let base = {}
-
-  try {
-    base = payload ? JSON.parse(payload) : {}
-  } catch {
-    base = {}
-  }
-
-  return JSON.stringify({ ...base, ...patch })
-}
+import { refreshVtbPaymentStatus } from '../../../utils/vtb-payment-status.js'
 
 export default defineEventHandler(async (event) => {
-  const paymentId = Number(getRouterParam(event, 'paymentId'))
+  // Public route remains /payments/:paymentId for backwards compatibility;
+  // internally the id is site_orders.id because payment state is stored on the order.
+  const siteOrderId = Number(getRouterParam(event, 'paymentId'))
 
-  if (!Number.isInteger(paymentId) || paymentId <= 0) {
+  if (!Number.isInteger(siteOrderId) || siteOrderId <= 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid payment id',
-      message: 'Некорректный идентификатор платежа'
+      statusMessage: 'Invalid order id',
+      message: 'Некорректный идентификатор заказа'
     })
   }
 
   const database = useDatabase()
-  const payment = await getOrderPayment(database, paymentId)
+  const siteOrder = await getSiteOrderPaymentState(database, siteOrderId)
 
-  if (!payment) {
+  if (!siteOrder) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Payment not found',
-      message: 'Платеж не найден'
+      statusMessage: 'Order not found',
+      message: 'Заказ не найден'
     })
   }
 
-  const paymentStatus = payment.payment_status ?? payment.status
+  const paymentStatus = siteOrder.payment_status ?? siteOrder.status
 
-  if (paymentStatus === 'paid' || paymentStatus === 'failed' || paymentStatus === 'expired' || paymentStatus === 'cancelled') {
-    return { payment: { ...payment, status: paymentStatus } }
+  if (['paid', 'failed', 'expired', 'cancelled'].includes(paymentStatus)) {
+    return { payment: { ...siteOrder, status: paymentStatus } }
   }
 
-  if (payment.expires_at && new Date(payment.expires_at).getTime() < Date.now()) {
-    await updateOrderPaymentStatus(database, paymentId, 'expired')
+  if (siteOrder.expires_at && new Date(siteOrder.expires_at).getTime() < Date.now()) {
+    await updateSiteOrderPaymentStatus(database, siteOrderId, 'expired')
     return {
       payment: {
-        ...payment,
+        ...siteOrder,
         payment_status: 'expired',
         status: 'expired'
       }
     }
   }
 
-  if (!payment.vtb_md_order || !payment.vtb_qr_id) {
-    return { payment: { ...payment, status: paymentStatus } }
-  }
+  const { siteOrder: refreshedSiteOrder } = await refreshVtbPaymentStatus(database, siteOrder)
 
-  const statusResponse = await getVtbDynamicQrStatus({
-    mdOrder: payment.vtb_md_order,
-    qrId: payment.vtb_qr_id
-  })
-
-  const status = getPaymentStatusFromVtbQr(
-    statusResponse.qrStatus ?? statusResponse.status,
-    statusResponse.transactionState
-  )
-
-  await updateOrderPaymentStatus(database, paymentId, status, {
-    payload: mergePayload(payment.payload, { vtbStatusResponse: statusResponse })
-  })
-
-  const updatedPayment = await getOrderPayment(database, paymentId)
-
-  return {
-    payment: {
-      ...updatedPayment,
-      status: updatedPayment?.payment_status ?? status
-    }
-  }
+  return { payment: refreshedSiteOrder }
 })

@@ -68,14 +68,15 @@ export default defineNuxtConfig({
       token: ''
     },
     vtbPayment: {
-      baseUrl: 'https://vtb.rbsuat.com/payment/rest/',
-      token: '',
-      userName: '',
-      password: '',
+      sbpBaseUrl: 'https://test3.api.vtb.ru:8443/openapi/smb/efcp/sbp-gateway/v1/',
+      tokenUrl: 'https://epa-ift-sbp.vtb.ru:443/passport/oauth2/token',
+      clientId: '',
+      clientSecret: '',
+      headerClientId: '',
+      merchantAuthorization: '',
       returnUrl: '',
-      failUrl: '',
       callbackUrl: '',
-      qrTtlSeconds: 900
+      qrTtlSeconds: 1200
     },
     rarusKkt: {
       baseUrl: 'https://kkm.rarus-cloud.ru',

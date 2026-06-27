@@ -79,7 +79,7 @@ function getReceiptContact(order) {
 }
 
 function createReceiptId(order) {
-  return `INDIGO-ORDER-${order.id}`.slice(0, 40)
+  return `INDIGO-ORDER-${String(order.id).padStart(20, '0')}`.slice(0, 40)
 }
 
 function toMoney(value) {
@@ -173,7 +173,7 @@ async function claimFiscalReceipt(database, orderId) {
     })
     .where('id', '=', orderId)
     .where('fiscal_receipt_operation_id', 'is', null)
-    .where((eb) => eb.or([
+    .where(eb => eb.or([
       eb('fiscal_receipt_status', 'is', null),
       eb('fiscal_receipt_status', '=', ''),
       eb('fiscal_receipt_status', '=', FISCAL_RECEIPT_STATUS.FAILED)

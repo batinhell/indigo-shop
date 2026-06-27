@@ -46,9 +46,9 @@ const qrSource = computed(() => {
   return `data:image/png;base64,${value}`
 })
 const statusText = computed(() => {
-  if (isLoading.value) return 'Готовим QR-код'
+  if (isLoading.value) return 'Готовим оплату'
   if (isPaid.value) return 'Оплата получена'
-  if (props.status === 'expired') return 'QR-код истёк'
+  if (props.status === 'expired') return 'Срок оплаты истёк'
   if (props.status === 'failed') return 'Оплата не прошла'
   return 'Наведите камеру телефона на QR-код'
 })

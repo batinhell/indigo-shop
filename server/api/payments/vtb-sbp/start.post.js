@@ -1,8 +1,8 @@
 import { useDatabase } from '../../../utils/database.js'
 import {
-  createPendingSiteOrderPayment,
-  saveVtbQr,
-  saveVtbRegistration
+  markSiteOrderPaymentPending,
+  mergeVtbPaymentPayload,
+  saveSiteOrderVtbQr
 } from '../../../utils/order-payment.js'
 import {
   createSiteOrder,
@@ -13,15 +13,18 @@ import {
 } from '../../../utils/site-orders.js'
 import {
   getVtbDynamicQr,
-  getVtbQrExpiresAt,
-  registerVtbOrder
-} from '../../../utils/vtb-payment.js'
+  getVtbQrExpiresAt
+} from '../../../utils/vtb-sbp-api.js'
 
 async function resolveOrder(event, database, body, items, amount) {
   const orderId = Number(body?.orderId)
 
   if (!Number.isInteger(orderId) || orderId <= 0) {
-    const order = await createSiteOrder(database, event, { items, amount })
+    const order = await createSiteOrder(database, event, {
+      items,
+      amount,
+      checkout: body?.checkout
+    })
     return order.id
   }
 
@@ -48,34 +51,25 @@ export default defineEventHandler(async (event) => {
   const orderId = await resolveOrder(event, database, body, items, amount)
   const existingOrder = await database
     .selectFrom('site_orders')
-    .select(['order_number'])
+    .selectAll()
     .where('id', '=', orderId)
     .executeTakeFirst()
   const orderNumber = existingOrder?.order_number || createSiteOrderNumber(orderId)
-  const paymentId = await createPendingSiteOrderPayment(database, {
+  const siteOrderId = await markSiteOrderPaymentPending(database, {
     siteOrderId: orderId,
     orderNumber,
     amount
   })
 
   try {
-    const amountMinor = Math.round(amount * 100)
-    const registration = await registerVtbOrder({
-      orderNumber,
-      amountMinor,
-      description: `Заказ Indigo #${orderId}`,
-      ip: getRequestIP(event, { xForwardedFor: true })
-    })
-
-    await saveVtbRegistration(database, paymentId, registration)
-
-    const qr = await getVtbDynamicQr(registration.orderId)
+    const description = `Заказ Indigo #${orderId}`
+    const qr = await getVtbDynamicQr(orderNumber, { amount, description })
     const expiresAt = getVtbQrExpiresAt()
-    await saveVtbQr(database, paymentId, qr, expiresAt)
+    await saveSiteOrderVtbQr(database, siteOrderId, qr, expiresAt)
 
     return {
       payment: {
-        id: paymentId,
+        id: siteOrderId,
         orderId,
         orderNumber,
         status: 'pending',
@@ -87,17 +81,26 @@ export default defineEventHandler(async (event) => {
       }
     }
   } catch (error) {
+    const order = await database
+      .selectFrom('site_orders')
+      .select(['payload'])
+      .where('id', '=', siteOrderId)
+      .executeTakeFirst()
+
     await database
       .updateTable('site_orders')
       .set({
         payment_status: 'failed',
-        payload: JSON.stringify({
-          errorCode: error?.data?.errorCode ? String(error.data.errorCode) : null,
-          errorMessage: error?.data?.errorMessage || error?.message || 'VTB payment failed'
+        payload: mergeVtbPaymentPayload(order?.payload, {
+          lastError: {
+            errorCode: error?.data?.errorCode ? String(error.data.errorCode) : null,
+            errorMessage: error?.data?.errorMessage || error?.message || 'VTB payment failed',
+            response: error?.data || null
+          }
         }),
         updated_at: new Date()
       })
-      .where('id', '=', paymentId)
+      .where('id', '=', siteOrderId)
       .execute()
 
     throw error

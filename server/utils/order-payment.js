@@ -2,19 +2,57 @@ import { sendFiscalReceiptForPaidOrder } from './rarus-kkt.js'
 
 const PAYMENT_PROVIDER = 'vtb_sbp'
 
+function parseSiteOrderPayload(value) {
+  if (!value) return {}
+  if (typeof value === 'object') return value
+
+  try {
+    return JSON.parse(value) || {}
+  } catch {
+    return {}
+  }
+}
+
+function asObject(value) {
+  return value && typeof value === 'object' && !Array.isArray(value) ? value : {}
+}
+
+export function mergeVtbPaymentPayload(payload, patch = {}) {
+  const base = parseSiteOrderPayload(payload)
+  const payment = asObject(base.payment)
+  const vtb = asObject(payment.vtb)
+  const { callback, ...vtbPatch } = patch
+  const callbacks = callback
+    ? [...(Array.isArray(vtb.callbacks) ? vtb.callbacks : []), callback].slice(-20)
+    : vtb.callbacks
+
+  return JSON.stringify({
+    ...base,
+    payment: {
+      ...payment,
+      provider: PAYMENT_PROVIDER,
+      vtb: {
+        ...vtb,
+        ...vtbPatch,
+        ...(callbacks ? { callbacks } : {})
+      }
+    }
+  })
+}
+
 export function normalizePaymentStatus(status) {
   return ['pending', 'paid', 'failed', 'expired', 'cancelled'].includes(status) ? status : 'pending'
 }
 
-export async function getOrderPayment(database, paymentId) {
+export async function getSiteOrderPaymentState(database, siteOrderId) {
   return database
     .selectFrom('site_orders')
     .selectAll()
-    .where('id', '=', paymentId)
+    .where('id', '=', siteOrderId)
     .executeTakeFirst()
 }
 
-export async function updateOrderPaymentStatus(database, paymentId, status, patch = {}) {
+export async function updateSiteOrderPaymentStatus(database, siteOrderId, status, patch = {}) {
   const normalizedStatus = normalizePaymentStatus(status)
   const now = new Date()
 
@@ -31,47 +69,39 @@ export async function updateOrderPaymentStatus(database, paymentId, status, patc
   await database
     .updateTable('site_orders')
     .set(update)
-    .where('id', '=', paymentId)
+    .where('id', '=', siteOrderId)
     .execute()
 }
 
-export async function settleOrderPayment(database, paymentId, status, patch = {}) {
-  await updateOrderPaymentStatus(database, paymentId, status, patch)
+export async function settleSiteOrderPayment(database, siteOrderId, status, patch = {}) {
+  await updateSiteOrderPaymentStatus(database, siteOrderId, status, patch)
 
-  const payment = await getOrderPayment(database, paymentId)
-  if (payment?.payment_status === 'paid') {
-    sendFiscalReceiptForPaidOrder(database, payment).catch((error) => {
+  const siteOrder = await getSiteOrderPaymentState(database, siteOrderId)
+  if (siteOrder?.payment_status === 'paid') {
+    sendFiscalReceiptForPaidOrder(database, siteOrder).catch((error) => {
       console.error('[rarus-kkt] Async fiscal receipt failed:', error)
     })
   }
 
-  return payment
+  return siteOrder
 }
 
-export async function saveVtbRegistration(database, paymentId, response) {
-  await database
-    .updateTable('site_orders')
-    .set({
-      vtb_md_order: response.orderId,
-      updated_at: new Date()
-    })
-    .where('id', '=', paymentId)
-    .execute()
-}
+export async function saveSiteOrderVtbQr(database, siteOrderId, response, expiresAt) {
+  const siteOrder = await getSiteOrderPaymentState(database, siteOrderId)
 
-export async function saveVtbQr(database, paymentId, response, expiresAt) {
   await database
     .updateTable('site_orders')
     .set({
       vtb_qr_id: response.qrId,
       expires_at: expiresAt,
+      payload: mergeVtbPaymentPayload(siteOrder?.payload, { qr: response }),
       updated_at: new Date()
     })
-    .where('id', '=', paymentId)
+    .where('id', '=', siteOrderId)
     .execute()
 }
 
-export async function createPendingSiteOrderPayment(database, { siteOrderId, orderNumber, amount }) {
+export async function markSiteOrderPaymentPending(database, { siteOrderId, orderNumber, amount }) {
   await database
     .updateTable('site_orders')
     .set({
