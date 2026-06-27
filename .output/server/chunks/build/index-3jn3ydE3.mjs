@@ -2,7 +2,7 @@ import { _ as __nuxt_component_0$3 } from './AppBreadcrumbs-CDv8EEOG.mjs';
 import { _ as _export_sfc, c as useRoute, p as useProfileStore, aM as navigateTo, aK as useFavorites, g as __nuxt_component_1$1$1, b as __nuxt_component_0$1$1, q as __nuxt_component_0$5, j as _sfc_main$j, e as useCart, d as useFetch, a as __nuxt_component_0$4$1, aL as setInterval, s as authClient, h as _sfc_main$w } from './server.mjs';
 import { ref, computed, watch, mergeProps, unref, isRef, useModel, withCtx, createVNode, mergeModels, openBlock, createBlock, createTextVNode, createCommentVNode, toDisplayString, withAsyncContext, nextTick, Fragment, withModifiers, renderList, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrRenderClass, ssrInterpolate, ssrIncludeBooleanAttr, ssrRenderAttr } from 'vue/server-renderer';
-import { az as formatCompactPhone, ay as getRussianSecondsWord, b as normalizePhoneDigits } from '../nitro/nitro.mjs';
+import { av as formatCompactPhone, au as getRussianSecondsWord, b as normalizePhoneDigits } from '../nitro/nitro.mjs';
 import { _ as __nuxt_component_0$4 } from './AppSwitch-B6KdDVqJ.mjs';
 import { a as catalogProducts, _ as __nuxt_component_1$2 } from './catalog-products-zmOniPqV.mjs';
 import { storeToRefs } from 'pinia';

@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readBody, D as normalizeSiteOrderItems, E as getSiteOrderItemsAmount, c as createError, u as useDatabase, O as createSiteOrderNumber, P as createPendingSiteOrderPayment, Q as registerVtbOrder, R as getRequestIP, S as saveVtbRegistration, T as getVtbDynamicQr, U as getVtbQrExpiresAt, V as saveVtbQr, F as createSiteOrder, z as getOwnedSiteOrder } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as readBody, D as normalizeSiteOrderItems, E as getSiteOrderItemsAmount, c as createError, u as useDatabase, M as createSiteOrderNumber, N as markSiteOrderPaymentPending, O as getVtbDynamicQr, P as getVtbQrExpiresAt, Q as saveSiteOrderVtbQr, R as mergeVtbPaymentPayload, F as createSiteOrder, z as getOwnedSiteOrder } from '../../../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';
@@ -19,7 +19,11 @@ import 'consola';
 async function resolveOrder(event, database, body, items, amount) {
   const orderId = Number(body == null ? void 0 : body.orderId);
   if (!Number.isInteger(orderId) || orderId <= 0) {
-    const order2 = await createSiteOrder(database, event, { items, amount });
+    const order2 = await createSiteOrder(database, event, {
+      items,
+      amount,
+      checkout: body == null ? void 0 : body.checkout
+    });
     return order2.id;
   }
   const order = await getOwnedSiteOrder(database, event, orderId, body == null ? void 0 : body.accessToken);
@@ -41,28 +45,21 @@ const start_post = defineEventHandler(async (event) => {
   }
   const database = useDatabase();
   const orderId = await resolveOrder(event, database, body, items, amount);
-  const existingOrder = await database.selectFrom("site_orders").select(["order_number"]).where("id", "=", orderId).executeTakeFirst();
+  const existingOrder = await database.selectFrom("site_orders").selectAll().where("id", "=", orderId).executeTakeFirst();
   const orderNumber = (existingOrder == null ? void 0 : existingOrder.order_number) || createSiteOrderNumber(orderId);
-  const paymentId = await createPendingSiteOrderPayment(database, {
+  const siteOrderId = await markSiteOrderPaymentPending(database, {
     siteOrderId: orderId,
     orderNumber,
     amount
   });
   try {
-    const amountMinor = Math.round(amount * 100);
-    const registration = await registerVtbOrder({
-      orderNumber,
-      amountMinor,
-      description: `\u0417\u0430\u043A\u0430\u0437 Indigo #${orderId}`,
-      ip: getRequestIP(event, { xForwardedFor: true })
-    });
-    await saveVtbRegistration(database, paymentId, registration);
-    const qr = await getVtbDynamicQr(registration.orderId);
+    const description = `\u0417\u0430\u043A\u0430\u0437 Indigo #${orderId}`;
+    const qr = await getVtbDynamicQr(orderNumber, { amount, description });
     const expiresAt = getVtbQrExpiresAt();
-    await saveVtbQr(database, paymentId, qr, expiresAt);
+    await saveSiteOrderVtbQr(database, siteOrderId, qr, expiresAt);
     return {
       payment: {
-        id: paymentId,
+        id: siteOrderId,
         orderId,
         orderNumber,
         status: "pending",
@@ -74,14 +71,18 @@ const start_post = defineEventHandler(async (event) => {
       }
     };
   } catch (error) {
+    const order = await database.selectFrom("site_orders").select(["payload"]).where("id", "=", siteOrderId).executeTakeFirst();
     await database.updateTable("site_orders").set({
       payment_status: "failed",
-      payload: JSON.stringify({
-        errorCode: ((_c = error == null ? void 0 : error.data) == null ? void 0 : _c.errorCode) ? String(error.data.errorCode) : null,
-        errorMessage: ((_d = error == null ? void 0 : error.data) == null ? void 0 : _d.errorMessage) || (error == null ? void 0 : error.message) || "VTB payment failed"
+      payload: mergeVtbPaymentPayload(order == null ? void 0 : order.payload, {
+        lastError: {
+          errorCode: ((_c = error == null ? void 0 : error.data) == null ? void 0 : _c.errorCode) ? String(error.data.errorCode) : null,
+          errorMessage: ((_d = error == null ? void 0 : error.data) == null ? void 0 : _d.errorMessage) || (error == null ? void 0 : error.message) || "VTB payment failed",
+          response: (error == null ? void 0 : error.data) || null
+        }
       }),
       updated_at: /* @__PURE__ */ new Date()
-    }).where("id", "=", paymentId).execute();
+    }).where("id", "=", siteOrderId).execute();
     throw error;
   }
 });

@@ -1,4 +1,4 @@
-import { d as defineEventHandler, A as getQuery, u as useDatabase, Y as getProducts } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, A as getQuery, u as useDatabase, U as getProducts } from '../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';

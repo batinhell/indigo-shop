@@ -1,4 +1,4 @@
-import { d as defineEventHandler, q as getRouterParam, c as createError, u as useDatabase, W as getProductBySlug, r as readBody, X as calculateProductPrice } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, q as getRouterParam, c as createError, u as useDatabase, S as getProductBySlug, r as readBody, T as calculateProductPrice } from '../../../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';

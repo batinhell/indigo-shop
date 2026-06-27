@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, G as getRequestHeaders, c as createError, r as readBody, Z as getRegistrationEmailError, u as useDatabase, e as ensureSiteClient } from '../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, G as getRequestHeaders, c as createError, r as readBody, V as getRegistrationEmailError, u as useDatabase, e as ensureSiteClient } from '../../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';
