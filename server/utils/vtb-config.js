@@ -1,4 +1,5 @@
 const DEFAULT_SBP_BASE_URL = 'https://test3.api.vtb.ru:8443/openapi/smb/efcp/sbp-gateway/v1/'
+const DEFAULT_ECOMMERCE_BASE_URL = 'https://test3.api.vtb.ru:8443/openapi/smb/efcp/e-commerce/v1/'
 const DEFAULT_TOKEN_URL = 'https://epa-ift-sbp.vtb.ru:443/passport/oauth2/token'
 const DEFAULT_QR_TTL_SECONDS = 1200
 
@@ -34,6 +35,7 @@ export function getMockPaymentStatus() {
 export function getVtbPaymentConfig() {
   const config = useRuntimeConfig()
   const sbpBaseUrl = readConfigValue(config, 'sbpBaseUrl', 'VTB_PAYMENT_SBP_BASE_URL') || DEFAULT_SBP_BASE_URL
+  const ecommerceBaseUrl = readConfigValue(config, 'ecommerceBaseUrl', 'VTB_PAYMENT_ECOMMERCE_BASE_URL') || DEFAULT_ECOMMERCE_BASE_URL
   const tokenUrl = readConfigValue(config, 'tokenUrl', 'VTB_PAYMENT_TOKEN_URL') || DEFAULT_TOKEN_URL
   const clientId = readConfigValue(config, 'clientId', 'VTB_PAYMENT_CLIENT_ID')
   const headerClientId = readConfigValue(config, 'headerClientId', 'VTB_PAYMENT_HEADER_CLIENT_ID') || getVtbHeaderClientId(clientId)
@@ -41,6 +43,7 @@ export function getVtbPaymentConfig() {
 
   return {
     sbpBaseUrl: normalizeBaseUrl(sbpBaseUrl),
+    ecommerceBaseUrl: normalizeBaseUrl(ecommerceBaseUrl),
     tokenUrl,
     clientId,
     clientSecret: readConfigValue(config, 'clientSecret', 'VTB_PAYMENT_CLIENT_SECRET'),

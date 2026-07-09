@@ -1,9 +1,11 @@
+import QRCode from 'qrcode'
+
 import {
   getMockPaymentStatus,
   getVtbPaymentConfig,
   isVtbPaymentMockEnabled
 } from './vtb-config.js'
-import { requestVtbSbp } from './vtb-http-client.js'
+import { requestVtbEcommerce } from './vtb-http-client.js'
 
 function createVtbQrExpiresAt(config) {
   return new Date(Date.now() + config.qrTtlSeconds * 1000)
@@ -26,30 +28,47 @@ export async function getVtbDynamicQr(requestId, options = {}) {
   }
 
   const config = getVtbPaymentConfig()
-  const data = await requestVtbSbp('qr/dynamics', {
-    requestId,
-    qrTtl: String(Math.max(1, Math.min(129600, Math.ceil(config.qrTtlSeconds / 60)))),
-    amount: Number(options.amount || 0),
-    currency: 'RUB',
-    purpose: String(options.description || `Заказ Indigo #${requestId}`).slice(0, 140),
-    redirectUrl: config.returnUrl || undefined
+  const data = await requestVtbEcommerce('orders', {
+    method: 'POST',
+    body: {
+      orderId: requestId,
+      orderName: String(options.description || `Заказ Indigo #${requestId}`).slice(0, 255),
+      expire: createVtbQrExpiresAt(config).toISOString(),
+      amount: {
+        value: Number(options.amount || 0),
+        code: 'RUB'
+      },
+      returnPaymentData: 'sbp',
+      returnUrl: config.returnUrl || undefined
+    }
   })
-  const qr = data?.data || {}
+  const order = data?.object || {}
+  const sbpPayment = Array.isArray(order.preparedPayments)
+    ? order.preparedPayments.find(payment => String(payment?.type || '').toLowerCase() === 'sbp')
+    : null
+  const paymentUrl = sbpPayment?.object?.url || sbpPayment?.url
 
-  if (!qr.qrcId || !qr.payload) {
+  if (!order.orderId || !paymentUrl) {
     throw createError({
       statusCode: 502,
-      statusMessage: 'VTB QR payload is missing',
-      message: 'ВТБ не вернул данные QR-кода СБП',
+      statusMessage: 'VTB SBP payment url is missing',
+      message: 'ВТБ не вернул ссылку для оплаты СБП',
       data
     })
   }
 
+  const renderedQr = await QRCode.toString(paymentUrl, {
+    type: 'svg',
+    errorCorrectionLevel: 'M',
+    margin: 1,
+    width: 512
+  })
+
   return {
-    qrId: qr.qrcId,
-    payload: qr.payload,
-    renderedQr: null,
-    qrStatus: qr.status || 'CREATED',
+    qrId: sbpPayment?.object?.qrcId || order.orderCode || order.orderId,
+    payload: paymentUrl,
+    renderedQr,
+    qrStatus: order.status?.value || 'CREATED',
     raw: data
   }
 }
@@ -67,13 +86,19 @@ export async function getVtbDynamicQrStatus({ requestId, qrId }) {
     }
   }
 
-  const data = await requestVtbSbp('qr/dynamics/info', { qrcId: qrId })
+  const data = await requestVtbEcommerce(`orders/${encodeURIComponent(requestId)}`, {
+    method: 'GET'
+  })
+  const order = data?.object || {}
+  const payments = Array.isArray(order.transactions?.payments) ? order.transactions.payments : []
+  const sbpPayment = payments.find(payment => String(payment?.object?.paymentData?.type || '').toLowerCase() === 'sbp')?.object
+    || payments[0]?.object
 
   return {
     requestId,
     qrId,
-    qrStatus: data.state,
-    transactionState: data.state,
+    qrStatus: order.status?.value,
+    transactionState: sbpPayment?.status?.value,
     raw: data
   }
 }

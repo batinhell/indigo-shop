@@ -20,6 +20,7 @@ const checkoutData = ref({})
 const isPayPending = ref(false)
 const isInvoiceSuccessOpen = ref(false)
 const invoice = ref(null)
+let paymentStatusTimer = null
 
 const allSelected = computed({
   get: () => cartItems.value.length > 0 && cartItems.value.every(i => i.selected),
@@ -121,6 +122,39 @@ async function startInvoicePayment(order) {
   paymentStatus.value = 'pending'
 }
 
+function stopPaymentStatusPolling() {
+  if (!paymentStatusTimer) return
+  clearInterval(paymentStatusTimer)
+  paymentStatusTimer = null
+}
+
+async function refreshSbpPaymentStatus() {
+  if (!payment.value?.id || ['paid', 'failed', 'expired', 'cancelled'].includes(paymentStatus.value)) {
+    stopPaymentStatusPolling()
+    return
+  }
+
+  const result = await $fetch(`/api/payments/${payment.value.id}/status`)
+  payment.value = {
+    ...payment.value,
+    ...result.payment
+  }
+  paymentStatus.value = result.payment?.status || result.payment?.payment_status || paymentStatus.value
+
+  if (['paid', 'failed', 'expired', 'cancelled'].includes(paymentStatus.value)) {
+    stopPaymentStatusPolling()
+  }
+}
+
+function startPaymentStatusPolling() {
+  stopPaymentStatusPolling()
+  paymentStatusTimer = setInterval(() => {
+    refreshSbpPaymentStatus().catch((error) => {
+      paymentError.value = error?.data?.message || error?.message || 'Не удалось проверить статус оплаты'
+    })
+  }, 3000)
+}
+
 async function startSbpPayment(order) {
   isPaymentQrOpen.value = true
 
@@ -135,6 +169,10 @@ async function startSbpPayment(order) {
 
   payment.value = result.payment
   paymentStatus.value = result.payment?.status ?? 'pending'
+
+  if (paymentStatus.value === 'pending') {
+    startPaymentStatusPolling()
+  }
 }
 
 async function startPayment(order) {
@@ -173,6 +211,14 @@ function downloadInvoice() {
 async function refreshSession() {
   await session.value?.refetch?.()
 }
+
+watch(isPaymentQrOpen, (isOpen) => {
+  if (!isOpen) stopPaymentStatusPolling()
+})
+
+onBeforeUnmount(() => {
+  stopPaymentStatusPolling()
+})
 
 useSeoMeta({
   title,
