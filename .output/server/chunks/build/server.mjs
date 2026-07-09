@@ -20,11 +20,12 @@ import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'mysql2';
-import 'node:http';
+import 'qrcode';
+import 'node:fs';
 import 'node:https';
+import 'node:http';
 import 'node:events';
 import 'node:buffer';
-import 'node:fs';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -2120,12 +2121,12 @@ const _routes = [
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-DewSq5Oi.mjs')
+    component: () => import('./cart-BFjgftv2.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-DiuhQQ67.mjs')
+    component: () => import('./catalog-ldo9vjjE.mjs')
   },
   {
     name: "cookie-policy",
@@ -2156,7 +2157,7 @@ const _routes = [
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-3jn3ydE3.mjs')
+    component: () => import('./index-BvXUfcpb.mjs')
   },
   {
     name: "return-cancellation",
@@ -11789,5 +11790,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { __vite_glob_0_44 as $, __vite_glob_0_67 as A, __vite_glob_0_66 as B, __vite_glob_0_65 as C, __vite_glob_0_64 as D, __vite_glob_0_63 as E, FABRICS as F, __vite_glob_0_62 as G, __vite_glob_0_61 as H, __vite_glob_0_60 as I, __vite_glob_0_59 as J, __vite_glob_0_58 as K, __vite_glob_0_57 as L, MOUNTINGS as M, __vite_glob_0_56 as N, __vite_glob_0_55 as O, __vite_glob_0_54 as P, __vite_glob_0_53 as Q, __vite_glob_0_52 as R, SIZES as S, __vite_glob_0_51 as T, __vite_glob_0_50 as U, __vite_glob_0_49 as V, __vite_glob_0_48 as W, __vite_glob_0_47 as X, __vite_glob_0_46 as Y, __vite_glob_0_45 as Z, _export_sfc as _, __nuxt_component_0$4 as a, __vite_glob_0_43 as a0, __vite_glob_0_42 as a1, __vite_glob_0_41 as a2, __vite_glob_0_40 as a3, __vite_glob_0_39 as a4, __vite_glob_0_38 as a5, __vite_glob_0_36 as a6, __vite_glob_0_35 as a7, __vite_glob_0_34 as a8, __vite_glob_0_33 as a9, __vite_glob_0_6 as aA, __vite_glob_0_5 as aB, __vite_glob_0_4 as aC, __vite_glob_0_3 as aD, __vite_glob_0_2 as aE, __vite_glob_0_1 as aF, __vite_glob_0_0 as aG, MAX_UPLOAD_SIZE as aH, ALLOWED_EXTENSIONS as aI, RASTER_EXTENSIONS as aJ, useFavorites as aK, setInterval as aL, navigateTo as aM, defineNuxtRouteMiddleware as aN, __vite_glob_0_32 as aa, __vite_glob_0_31 as ab, __vite_glob_0_30 as ac, __vite_glob_0_29 as ad, __vite_glob_0_28 as ae, __vite_glob_0_27 as af, __vite_glob_0_26 as ag, __vite_glob_0_25 as ah, __vite_glob_0_24 as ai, __vite_glob_0_23 as aj, __vite_glob_0_22 as ak, __vite_glob_0_21 as al, __vite_glob_0_20 as am, __vite_glob_0_19 as an, __vite_glob_0_18 as ao, __vite_glob_0_17 as ap, __vite_glob_0_16 as aq, __vite_glob_0_15 as ar, __vite_glob_0_14 as as, __vite_glob_0_13 as at, __vite_glob_0_12 as au, __vite_glob_0_11 as av, __vite_glob_0_10 as aw, __vite_glob_0_9 as ax, __vite_glob_0_8 as ay, __vite_glob_0_7 as az, __nuxt_component_0$1 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$w as h, __vite_glob_0_37 as i, _sfc_main$j as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, __nuxt_component_0 as q, resolveCartItemImage as r, authClient as s, __nuxt_component_5$1 as t, useHead as u, usePricing as v, FABRIC_IMAGE_MAP as w, MOUNTING_IMAGE_MAP as x, __vite_glob_0_69 as y, __vite_glob_0_68 as z };
+export { __vite_glob_0_45 as $, __vite_glob_0_68 as A, __vite_glob_0_67 as B, __vite_glob_0_66 as C, __vite_glob_0_65 as D, __vite_glob_0_64 as E, FABRICS as F, __vite_glob_0_63 as G, __vite_glob_0_62 as H, __vite_glob_0_61 as I, __vite_glob_0_60 as J, __vite_glob_0_59 as K, __vite_glob_0_58 as L, MOUNTINGS as M, __vite_glob_0_57 as N, __vite_glob_0_56 as O, __vite_glob_0_55 as P, __vite_glob_0_54 as Q, __vite_glob_0_53 as R, SIZES as S, __vite_glob_0_52 as T, __vite_glob_0_51 as U, __vite_glob_0_50 as V, __vite_glob_0_49 as W, __vite_glob_0_48 as X, __vite_glob_0_47 as Y, __vite_glob_0_46 as Z, _export_sfc as _, __nuxt_component_0$4 as a, __vite_glob_0_44 as a0, __vite_glob_0_43 as a1, __vite_glob_0_42 as a2, __vite_glob_0_41 as a3, __vite_glob_0_40 as a4, __vite_glob_0_39 as a5, __vite_glob_0_38 as a6, __vite_glob_0_36 as a7, __vite_glob_0_35 as a8, __vite_glob_0_34 as a9, __vite_glob_0_7 as aA, __vite_glob_0_6 as aB, __vite_glob_0_5 as aC, __vite_glob_0_4 as aD, __vite_glob_0_3 as aE, __vite_glob_0_2 as aF, __vite_glob_0_1 as aG, __vite_glob_0_0 as aH, MAX_UPLOAD_SIZE as aI, ALLOWED_EXTENSIONS as aJ, RASTER_EXTENSIONS as aK, useFavorites as aL, navigateTo as aM, defineNuxtRouteMiddleware as aN, __vite_glob_0_33 as aa, __vite_glob_0_32 as ab, __vite_glob_0_31 as ac, __vite_glob_0_30 as ad, __vite_glob_0_29 as ae, __vite_glob_0_28 as af, __vite_glob_0_27 as ag, __vite_glob_0_26 as ah, __vite_glob_0_25 as ai, __vite_glob_0_24 as aj, __vite_glob_0_23 as ak, __vite_glob_0_22 as al, __vite_glob_0_21 as am, __vite_glob_0_20 as an, __vite_glob_0_19 as ao, __vite_glob_0_18 as ap, __vite_glob_0_17 as aq, __vite_glob_0_16 as ar, __vite_glob_0_15 as as, __vite_glob_0_14 as at, __vite_glob_0_13 as au, __vite_glob_0_12 as av, __vite_glob_0_11 as aw, __vite_glob_0_10 as ax, __vite_glob_0_9 as ay, __vite_glob_0_8 as az, __nuxt_component_0$1 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$w as h, __vite_glob_0_37 as i, _sfc_main$j as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, __nuxt_component_0 as q, resolveCartItemImage as r, authClient as s, __nuxt_component_5$1 as t, useHead as u, setInterval as v, usePricing as w, FABRIC_IMAGE_MAP as x, MOUNTING_IMAGE_MAP as y, __vite_glob_0_69 as z };
 //# sourceMappingURL=server.mjs.map

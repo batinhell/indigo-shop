@@ -1,5 +1,5 @@
 import { _ as __nuxt_component_0$3 } from './AppBreadcrumbs-CDv8EEOG.mjs';
-import { _ as _export_sfc, c as useRoute, p as useProfileStore, aM as navigateTo, aK as useFavorites, g as __nuxt_component_1$1$1, b as __nuxt_component_0$1$1, q as __nuxt_component_0$5, j as _sfc_main$j, e as useCart, d as useFetch, a as __nuxt_component_0$4$1, aL as setInterval, s as authClient, h as _sfc_main$w } from './server.mjs';
+import { _ as _export_sfc, c as useRoute, p as useProfileStore, aM as navigateTo, aL as useFavorites, g as __nuxt_component_1$1$1, b as __nuxt_component_0$1$1, q as __nuxt_component_0$5, j as _sfc_main$j, e as useCart, d as useFetch, a as __nuxt_component_0$4$1, v as setInterval, s as authClient, h as _sfc_main$w } from './server.mjs';
 import { ref, computed, watch, mergeProps, unref, isRef, useModel, withCtx, createVNode, mergeModels, openBlock, createBlock, createTextVNode, createCommentVNode, toDisplayString, withAsyncContext, nextTick, Fragment, withModifiers, renderList, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrRenderClass, ssrInterpolate, ssrIncludeBooleanAttr, ssrRenderAttr } from 'vue/server-renderer';
 import { av as formatCompactPhone, au as getRussianSecondsWord, b as normalizePhoneDigits } from '../nitro/nitro.mjs';
@@ -29,11 +29,12 @@ import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'mysql2';
-import 'node:http';
+import 'qrcode';
+import 'node:fs';
 import 'node:https';
+import 'node:http';
 import 'node:events';
 import 'node:buffer';
-import 'node:fs';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -3070,4 +3071,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-23251e77"]]);
 
 export { index as default };
-//# sourceMappingURL=index-3jn3ydE3.mjs.map
+//# sourceMappingURL=index-BvXUfcpb.mjs.map

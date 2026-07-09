@@ -1,5 +1,5 @@
 import { _ as __nuxt_component_0 } from './AppBreadcrumbs-CDv8EEOG.mjs';
-import { _ as _export_sfc, aK as useFavorites, e as useCart, f as useSeoMeta, g as __nuxt_component_1$1, h as _sfc_main$w, F as FABRICS, S as SIZES, v as usePricing, w as FABRIC_IMAGE_MAP, x as MOUNTING_IMAGE_MAP, M as MOUNTINGS, n as __nuxt_component_3$2, q as __nuxt_component_0$3, y as __vite_glob_0_69, z as __vite_glob_0_68, A as __vite_glob_0_67, B as __vite_glob_0_66, C as __vite_glob_0_65, D as __vite_glob_0_64, E as __vite_glob_0_63, G as __vite_glob_0_62, H as __vite_glob_0_61, I as __vite_glob_0_60, J as __vite_glob_0_59, K as __vite_glob_0_58, L as __vite_glob_0_57, N as __vite_glob_0_56, O as __vite_glob_0_55, P as __vite_glob_0_54, Q as __vite_glob_0_53, R as __vite_glob_0_52, T as __vite_glob_0_51, U as __vite_glob_0_50, V as __vite_glob_0_49, W as __vite_glob_0_48, X as __vite_glob_0_47, Y as __vite_glob_0_46, Z as __vite_glob_0_45, $ as __vite_glob_0_44, a0 as __vite_glob_0_43, a1 as __vite_glob_0_42, a2 as __vite_glob_0_41, a3 as __vite_glob_0_40, a4 as __vite_glob_0_39, a5 as __vite_glob_0_38, i as __vite_glob_0_37, a6 as __vite_glob_0_36, a7 as __vite_glob_0_35, a8 as __vite_glob_0_34, a9 as __vite_glob_0_33, aa as __vite_glob_0_32, ab as __vite_glob_0_31, ac as __vite_glob_0_30, ad as __vite_glob_0_29, ae as __vite_glob_0_28, af as __vite_glob_0_27, ag as __vite_glob_0_26, ah as __vite_glob_0_25, ai as __vite_glob_0_24, aj as __vite_glob_0_23, ak as __vite_glob_0_22, al as __vite_glob_0_21, am as __vite_glob_0_20, an as __vite_glob_0_19, ao as __vite_glob_0_18, ap as __vite_glob_0_17, aq as __vite_glob_0_16, ar as __vite_glob_0_15, as as __vite_glob_0_14, at as __vite_glob_0_13, au as __vite_glob_0_12, av as __vite_glob_0_11, aw as __vite_glob_0_10, ax as __vite_glob_0_9, ay as __vite_glob_0_8, az as __vite_glob_0_7, aA as __vite_glob_0_6, aB as __vite_glob_0_5, aC as __vite_glob_0_4, aD as __vite_glob_0_3, aE as __vite_glob_0_2, aF as __vite_glob_0_1, aG as __vite_glob_0_0, aH as MAX_UPLOAD_SIZE, aI as ALLOWED_EXTENSIONS, aJ as RASTER_EXTENSIONS } from './server.mjs';
+import { _ as _export_sfc, aL as useFavorites, e as useCart, f as useSeoMeta, g as __nuxt_component_1$1, h as _sfc_main$w, F as FABRICS, S as SIZES, w as usePricing, x as FABRIC_IMAGE_MAP, y as MOUNTING_IMAGE_MAP, M as MOUNTINGS, n as __nuxt_component_3$2, q as __nuxt_component_0$3, z as __vite_glob_0_69, A as __vite_glob_0_68, B as __vite_glob_0_67, C as __vite_glob_0_66, D as __vite_glob_0_65, E as __vite_glob_0_64, G as __vite_glob_0_63, H as __vite_glob_0_62, I as __vite_glob_0_61, J as __vite_glob_0_60, K as __vite_glob_0_59, L as __vite_glob_0_58, N as __vite_glob_0_57, O as __vite_glob_0_56, P as __vite_glob_0_55, Q as __vite_glob_0_54, R as __vite_glob_0_53, T as __vite_glob_0_52, U as __vite_glob_0_51, V as __vite_glob_0_50, W as __vite_glob_0_49, X as __vite_glob_0_48, Y as __vite_glob_0_47, Z as __vite_glob_0_46, $ as __vite_glob_0_45, a0 as __vite_glob_0_44, a1 as __vite_glob_0_43, a2 as __vite_glob_0_42, a3 as __vite_glob_0_41, a4 as __vite_glob_0_40, a5 as __vite_glob_0_39, a6 as __vite_glob_0_38, i as __vite_glob_0_37, a7 as __vite_glob_0_36, a8 as __vite_glob_0_35, a9 as __vite_glob_0_34, aa as __vite_glob_0_33, ab as __vite_glob_0_32, ac as __vite_glob_0_31, ad as __vite_glob_0_30, ae as __vite_glob_0_29, af as __vite_glob_0_28, ag as __vite_glob_0_27, ah as __vite_glob_0_26, ai as __vite_glob_0_25, aj as __vite_glob_0_24, ak as __vite_glob_0_23, al as __vite_glob_0_22, am as __vite_glob_0_21, an as __vite_glob_0_20, ao as __vite_glob_0_19, ap as __vite_glob_0_18, aq as __vite_glob_0_17, ar as __vite_glob_0_16, as as __vite_glob_0_15, at as __vite_glob_0_14, au as __vite_glob_0_13, av as __vite_glob_0_12, aw as __vite_glob_0_11, ax as __vite_glob_0_10, ay as __vite_glob_0_9, az as __vite_glob_0_8, aA as __vite_glob_0_7, aB as __vite_glob_0_6, aC as __vite_glob_0_5, aD as __vite_glob_0_4, aE as __vite_glob_0_3, aF as __vite_glob_0_2, aG as __vite_glob_0_1, aH as __vite_glob_0_0, aI as MAX_UPLOAD_SIZE, aJ as ALLOWED_EXTENSIONS, aK as RASTER_EXTENSIONS } from './server.mjs';
 import { c as catalogCategoryItems, a as catalogProducts, _ as __nuxt_component_1$2 } from './catalog-products-zmOniPqV.mjs';
 import { computed, reactive, ref, mergeProps, unref, isRef, watch, useModel, withCtx, createVNode, createTextVNode, openBlock, createBlock, withDirectives, vModelText, Fragment, renderList, toDisplayString, createCommentVNode, mergeModels, useSSRContext } from 'vue';
 import { ssrRenderAttrs, ssrRenderComponent, ssrRenderList, ssrRenderAttr, ssrRenderClass, ssrInterpolate, ssrRenderStyle, ssrIncludeBooleanAttr } from 'vue/server-renderer';
@@ -14,11 +14,12 @@ import 'node:path';
 import 'better-auth';
 import 'better-auth/plugins';
 import 'mysql2';
-import 'node:http';
+import 'qrcode';
+import 'node:fs';
 import 'node:https';
+import 'node:http';
 import 'node:events';
 import 'node:buffer';
-import 'node:fs';
 import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
@@ -1151,4 +1152,4 @@ _sfc_main.setup = (props, ctx) => {
 const catalog = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-cb099a31"]]);
 
 export { catalog as default };
-//# sourceMappingURL=catalog-DiuhQQ67.mjs.map
+//# sourceMappingURL=catalog-ldo9vjjE.mjs.map
