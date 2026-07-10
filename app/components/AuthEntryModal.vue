@@ -237,7 +237,7 @@ onBeforeUnmount(() => {
 }
 
 .auth-entry__subtitle-link {
-  color: #de7aff;
+  color: $color-purple;
   text-decoration: underline;
   text-decoration-thickness: 0.0625rem;
   text-underline-offset: 0.125rem;

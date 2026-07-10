@@ -237,7 +237,7 @@ function onItemsWheel(event) {
   }
 
   &__status--purple {
-    color: #de7aff;
+    color: $color-purple;
   }
 
   &__status--positive {
@@ -289,7 +289,7 @@ function onItemsWheel(event) {
 
   &__button--secondary {
     background: rgba(227, 143, 255, 0.1);
-    color: #de7aff;
+    color: $color-purple;
 
     &:hover {
       background: rgba(227, 143, 255, 0.16);
@@ -302,11 +302,11 @@ function onItemsWheel(event) {
   }
 
   &__button--primary {
-    background: #de7aff;
+    background: $color-purple;
     color: #ffffff;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

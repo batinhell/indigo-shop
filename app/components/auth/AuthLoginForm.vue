@@ -230,7 +230,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
 .auth-entry__forgot-password {
   align-self: flex-start;
   padding: 0.125rem;
-  color: #de7aff;
+  color: $color-purple;
   text-decoration: underline;
   text-decoration-thickness: 0.0625rem;
   text-underline-offset: 0.125rem;
@@ -244,7 +244,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &:hover {
-    color: #e38fff;
+    color: $color-purple-hover;
   }
 
   &:focus-visible {
@@ -286,7 +286,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
   margin-top: auto;
   padding: 0.875rem 1rem;
   color: #fff;
-  background: #de7aff;
+  background: $color-purple;
   border-radius: 0.75rem;
   font-family: 'Manrope', sans-serif;
   font-size: 1.25rem;
@@ -298,7 +298,7 @@ const isLoginRequestPending = flow.isLoginRequestPending
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &:hover:not(:disabled) {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   &:active:not(:disabled) {

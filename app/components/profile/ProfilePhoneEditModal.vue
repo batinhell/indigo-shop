@@ -597,7 +597,7 @@ onBeforeUnmount(() => {
   padding: 0 0.875rem;
   color: $color-base;
   background: #fff;
-  border: 0.125rem solid #de7aff;
+  border: 0.125rem solid $color-purple;
   border-radius: $radius-control;
   outline: none;
   font-family: 'Manrope', sans-serif;
@@ -611,7 +611,7 @@ onBeforeUnmount(() => {
   }
 
   &:focus {
-    border-color: #de7aff;
+    border-color: $color-purple;
   }
 
   .auth-entry__sms-code-field--invalid & {
@@ -641,7 +641,7 @@ onBeforeUnmount(() => {
   min-width: 0;
   height: 2.5rem;
   padding: 0.5rem 0.875rem 0.5625rem;
-  color: #de7aff;
+  color: $color-purple;
   background: rgba(227, 143, 255, 0.1);
   border-radius: $radius-control;
   font-family: 'Manrope', sans-serif;
@@ -705,7 +705,7 @@ onBeforeUnmount(() => {
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &:hover:not(:disabled) {
-    color: #e38fff;
+    color: $color-purple-hover;
   }
 
   &:disabled {
@@ -714,7 +714,7 @@ onBeforeUnmount(() => {
 }
 
 .auth-entry__resend--active {
-  color: #de7aff;
+  color: $color-purple;
   text-decoration: underline;
   text-decoration-thickness: 0.0625rem;
   text-underline-offset: 0.125rem;

@@ -173,7 +173,7 @@ const isCodeVerifyPending = flow.isCodeVerifyPending
   :deep(.app-input) {
     --app-input-background: #fff;
 
-    border-color: #de7aff;
+    border-color: $color-purple;
   }
 
   :deep(.app-input__field) {
@@ -219,14 +219,14 @@ const isCodeVerifyPending = flow.isCodeVerifyPending
 }
 
 .auth-entry__resend--active {
-  color: #de7aff;
+  color: $color-purple;
   text-decoration: underline;
   text-decoration-thickness: 0.0625rem;
   text-underline-offset: 0.125rem;
   cursor: pointer;
 
   &:hover {
-    color: #e38fff;
+    color: $color-purple-hover;
   }
 }
 
@@ -245,7 +245,7 @@ const isCodeVerifyPending = flow.isCodeVerifyPending
   height: 3.25rem;
   padding: 0.875rem 1.125rem;
   color: #fff;
-  background: #de7aff;
+  background: $color-purple;
   border-radius: 0.75rem;
   font-family: 'Manrope', sans-serif;
   font-size: 1.25rem;
@@ -257,7 +257,7 @@ const isCodeVerifyPending = flow.isCodeVerifyPending
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &:hover {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   &:active {

@@ -249,7 +249,7 @@ const payButtonLabel = computed(() => {
 .pay-btn {
   width: 100%;
   height: 3.25rem;
-  background: #de7aff;
+  background: $color-purple;
   border-radius: $radius-control;
   font-size: 1.25rem;
   font-weight: 700;
@@ -259,7 +259,7 @@ const payButtonLabel = computed(() => {
   transition: background-color 0.2s;
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
-  &:not(:disabled):hover { background: #e38fff; }
+  &:not(:disabled):hover { background: $color-purple-hover; }
   &:not(:disabled):active { background: #c000ff; }
 
   &:disabled {
@@ -268,7 +268,7 @@ const payButtonLabel = computed(() => {
   }
 
   &--pending:disabled {
-    background: #de7aff;
+    background: $color-purple;
     cursor: wait;
   }
 
@@ -302,7 +302,7 @@ const payButtonLabel = computed(() => {
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &__link {
-    color: #de7aff;
+    color: $color-purple;
     text-decoration: underline;
     text-decoration-thickness: 0.0625rem;
     text-underline-offset: 0.125rem;
@@ -395,7 +395,7 @@ const payButtonLabel = computed(() => {
 
   &__action--mail {
     background: rgba(222, 122, 255, 0.3);
-    color: #de7aff;
+    color: $color-purple;
 
     &:hover {
       background: rgba(222, 122, 255, 0.38);
@@ -403,11 +403,11 @@ const payButtonLabel = computed(() => {
   }
 
   &__action--phone {
-    background: #de7aff;
+    background: $color-purple;
     color: white;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
   }
 

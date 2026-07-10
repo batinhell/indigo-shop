@@ -104,7 +104,7 @@ function commitEdit() {
   transition: border-color 0.15s, background-color 0.15s;
 
   &:focus-within {
-    border-color: #de7aff;
+    border-color: $color-purple;
     background: white;
   }
 

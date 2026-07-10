@@ -52,7 +52,6 @@ defineEmits(['cancel', 'save'])
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-purple: #de7aff;
 
 .profile-save-bar {
   display: flex;
@@ -133,7 +132,7 @@ $color-purple: #de7aff;
     color: #ffffff;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

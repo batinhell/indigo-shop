@@ -261,7 +261,7 @@ defineEmits(['pay', 'add-to-cart'])
 // -- Hover states (triggered only by buy button hover) --
 
 .buy-btn:hover {
-  background: #e38fff;
+  background: $color-purple-hover;
 
   .buy-btn__extra {
     max-width: 4rem;

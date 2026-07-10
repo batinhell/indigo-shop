@@ -604,7 +604,6 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-purple: #de7aff;
 
 .profile-personal {
   width: 100%;
@@ -697,7 +696,7 @@ $color-purple: #de7aff;
     color: #ffffff;
 
     &:hover:not(:disabled) {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active:not(:disabled) {
@@ -1015,7 +1014,7 @@ $color-purple: #de7aff;
     color: #ffffff;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

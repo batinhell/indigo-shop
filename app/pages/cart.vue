@@ -460,7 +460,7 @@ useSeoMeta({
   }
 
   &__button {
-    background: #de7aff;
+    background: $color-purple;
     border-radius: $radius-control;
     color: white;
     cursor: pointer;
@@ -475,7 +475,7 @@ useSeoMeta({
     transition: background-color 0.15s;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

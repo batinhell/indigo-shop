@@ -410,7 +410,7 @@ function onAddToCart() {
     transition: border-color 0.15s, background-color 0.15s;
 
     &:focus-within {
-      border-color: #de7aff;
+      border-color: $color-purple;
       background: white;
     }
 
@@ -472,7 +472,7 @@ function onAddToCart() {
     transition: background-color 0.15s;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

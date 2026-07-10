@@ -127,7 +127,7 @@ $color-base: #04121b;
 
     &:deep(.app-switch--active) {
       .app-switch__track {
-        background: #de7aff;
+        background: $color-purple;
       }
     }
   }

@@ -247,7 +247,7 @@ useSeoMeta({
 }
 
 .catalog-page__subcategory-toggle-icon {
-  color: #de7aff;
+  color: $color-purple;
   transition: transform 0.15s ease;
 }
 

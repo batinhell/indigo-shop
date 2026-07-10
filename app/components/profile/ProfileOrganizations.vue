@@ -383,7 +383,6 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-purple: #de7aff;
 
 .profile-organizations {
   width: 100%;

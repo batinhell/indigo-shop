@@ -198,7 +198,7 @@ const favoriteProducts = computed(() => (
     transition: background-color 0.15s;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

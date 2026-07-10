@@ -196,13 +196,13 @@ $color-dropdown-bg: #f6f6f6;
 
   // Open state
   &--open &__trigger {
-    border-color: #de7aff;
+    border-color: $color-purple;
     background: white;
   }
 
   &__trigger:focus-visible {
     background: white;
-    border-color: #de7aff;
+    border-color: $color-purple;
     outline: none;
   }
 

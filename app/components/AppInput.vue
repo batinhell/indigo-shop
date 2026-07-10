@@ -151,7 +151,7 @@ $color-input-bg: #f4f5f6;
   &:focus-within {
     --app-input-background: white;
 
-    border-color: #de7aff;
+    border-color: $color-purple;
   }
 
   &__icon {

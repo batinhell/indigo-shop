@@ -72,7 +72,6 @@ const supportEmail = 'Info@indigo-mail.ru'
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-purple: #de7aff;
 
 .password-recovery-sent-modal {
   display: flex;

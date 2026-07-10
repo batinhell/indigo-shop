@@ -163,13 +163,13 @@ const entryRequestError = flow.entryRequestError
   width: 3.25rem;
   height: 3.25rem;
   color: #fff;
-  background: #de7aff;
+  background: $color-purple;
   border-radius: $radius-control;
   cursor: pointer;
   transition: background-color 0.15s, opacity 0.15s;
 
   &:hover:not(:disabled) {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   &:active:not(:disabled) {
