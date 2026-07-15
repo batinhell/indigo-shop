@@ -110,7 +110,7 @@ $thumb-offset: 0.125rem; // 2px
   }
 
   &--active:hover &__track {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   // Disabled

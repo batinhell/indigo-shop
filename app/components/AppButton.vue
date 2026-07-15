@@ -90,7 +90,6 @@ const nativeButtonType = computed(() => {
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-purple: #de7aff;
 
 .app-button {
   border: 0;
@@ -156,7 +155,7 @@ $color-purple: #de7aff;
     color: white;
 
     &:not(:disabled):not(.app-button--disabled):hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:not(:disabled):not(.app-button--disabled):active {

@@ -76,7 +76,6 @@ const supportEmail = 'Info@indigo-mail.ru'
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-purple: #de7aff;
 
 .email-confirm-modal {
   display: flex;
@@ -197,7 +196,7 @@ $color-purple: #de7aff;
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &:hover {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   &:active {

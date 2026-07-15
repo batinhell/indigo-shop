@@ -401,7 +401,7 @@ function onPrimaryAction() {
   &__small-button {
     background: rgba(227, 143, 255, 0.1);
     border-radius: 0.375rem;
-    color: #de7aff;
+    color: $color-purple;
     cursor: pointer;
     font-size: 0.625rem;
     font-weight: 700;
@@ -570,7 +570,7 @@ function onPrimaryAction() {
   }
 
   &__repeat {
-    background: #de7aff;
+    background: $color-purple;
     border-radius: $radius-control;
     color: #ffffff;
     cursor: pointer;
@@ -581,7 +581,7 @@ function onPrimaryAction() {
     transition: background-color 0.15s;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {
@@ -591,7 +591,7 @@ function onPrimaryAction() {
 
   &__receipt {
     align-self: center;
-    color: #de7aff;
+    color: $color-purple;
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.125rem;
@@ -652,7 +652,7 @@ function onPrimaryAction() {
 
   &__icon-button--secondary {
     background: rgba(222, 122, 255, 0.3);
-    color: #de7aff;
+    color: $color-purple;
 
     &:hover {
       background: rgba(222, 122, 255, 0.36);
@@ -665,11 +665,11 @@ function onPrimaryAction() {
   }
 
   &__icon-button--primary {
-    background: #de7aff;
+    background: $color-purple;
     color: #ffffff;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

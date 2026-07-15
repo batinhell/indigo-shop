@@ -110,8 +110,8 @@ $color-base: #04121b;
   }
 
   &--checked:hover &__box {
-    background: #e38fff;
-    border-color: #e38fff;
+    background: $color-purple-hover;
+    border-color: $color-purple-hover;
   }
 
   // Disabled

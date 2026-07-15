@@ -422,7 +422,7 @@ async function savePassword() {
 
 <style lang="scss" scoped>
 $color-base: #04121b;
-$color-brand: #de7aff;
+$color-brand: $color-purple;
 $color-error: #e12e3c;
 $color-error-bg: #ffebed;
 

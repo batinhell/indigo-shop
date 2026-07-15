@@ -640,7 +640,7 @@ onBeforeUnmount(() => {
   }
 
   &--active &__radio {
-    border: 0.3125rem solid #de7aff;
+    border: 0.3125rem solid $color-purple;
   }
 
   &__remove {
@@ -652,7 +652,7 @@ onBeforeUnmount(() => {
   }
 
   &--active &__remove {
-    color: #de7aff;
+    color: $color-purple;
   }
 
   &__content {
@@ -782,7 +782,7 @@ onBeforeUnmount(() => {
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1rem;
-  color: #de7aff;
+  color: $color-purple;
   cursor: pointer;
 
   &__icon {

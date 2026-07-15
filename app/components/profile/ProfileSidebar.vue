@@ -117,7 +117,7 @@ async function logout() {
     }
 
     &--active {
-      background: #de7aff;
+      background: $color-purple;
 
       .profile-sidebar__label {
         color: #ffffff;

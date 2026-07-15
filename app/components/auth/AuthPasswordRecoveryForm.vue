@@ -123,7 +123,7 @@ const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending
   }
 
   &:focus {
-    border-color: #de7aff;
+    border-color: $color-purple;
   }
 }
 
@@ -180,10 +180,10 @@ const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending
 .auth-entry__primary-button {
   min-width: 10.125rem;
   color: #fff;
-  background: #de7aff;
+  background: $color-purple;
 
   &:hover:not(:disabled) {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   &:disabled {
@@ -194,7 +194,7 @@ const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending
 
 .auth-entry__secondary-button {
   min-width: 6.0625rem;
-  color: #de7aff;
+  color: $color-purple;
   background: #f8edfc;
 
   &:hover {

@@ -277,7 +277,7 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
 }
 
 .auth-entry__link {
-  color: #de7aff;
+  color: $color-purple;
   text-decoration: underline;
   text-decoration-thickness: 0.0625rem;
   text-underline-offset: 0.125rem;
@@ -291,7 +291,7 @@ const isUserAgreementAccepted = flow.isUserAgreementAccepted
   min-width: 0;
   height: 2.5rem;
   padding: 0.5rem 0.875rem 0.5625rem;
-  color: #de7aff;
+  color: $color-purple;
   background: rgba(227, 143, 255, 0.1);
   border-radius: $radius-control;
   font-family: 'Manrope', sans-serif;

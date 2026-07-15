@@ -131,7 +131,7 @@ function repeatOrder(order) {
     background: rgba(227, 143, 255, 0.1);
     border: 0;
     border-radius: 0.375rem;
-    color: #de7aff;
+    color: $color-purple;
     cursor: pointer;
     font-size: 0.75rem;
     font-weight: 700;
@@ -168,7 +168,7 @@ function repeatOrder(order) {
 
     &--active {
       background: rgba(227, 143, 255, 0.1);
-      color: #de7aff;
+      color: $color-purple;
     }
   }
 

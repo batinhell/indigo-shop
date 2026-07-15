@@ -158,7 +158,7 @@ const emailStatusPrefix = computed(() => {
   line-height: 1.75rem;
 
   span {
-    color: #de7aff;
+    color: $color-purple;
   }
 }
 
@@ -210,7 +210,7 @@ const emailStatusPrefix = computed(() => {
 }
 
 .invoice-card__note-link {
-  color: #de7aff;
+  color: $color-purple;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.125rem;

@@ -228,7 +228,7 @@ async function refreshSession() {
   &__button {
     height: 2.5rem;
     padding: 0.5rem 1.125rem 0.5625rem;
-    background: #de7aff;
+    background: $color-purple;
     border-radius: $radius-control;
     color: white;
     font-family: 'Manrope', sans-serif;
@@ -241,7 +241,7 @@ async function refreshSession() {
     font-feature-settings: 'lnum' 1, 'pnum' 1;
 
     &:hover {
-      background: #e38fff;
+      background: $color-purple-hover;
     }
 
     &:active {

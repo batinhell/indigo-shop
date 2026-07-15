@@ -188,7 +188,7 @@ async function saveRecipient() {
   &__small-button {
     background: rgba(227, 143, 255, 0.1);
     border-radius: 0.375rem;
-    color: #de7aff;
+    color: $color-purple;
     cursor: pointer;
     font-size: 0.625rem;
     font-weight: 700;
@@ -228,7 +228,7 @@ async function saveRecipient() {
     }
 
     :deep(.app-input:focus-within) {
-      border-color: #de7aff;
+      border-color: $color-purple;
     }
   }
 

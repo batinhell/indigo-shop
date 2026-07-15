@@ -169,7 +169,7 @@ const organizationSaveError = flow.organizationSaveError
   }
 
   &:focus {
-    border-color: #de7aff;
+    border-color: $color-purple;
   }
 }
 
@@ -278,7 +278,7 @@ const organizationSaveError = flow.organizationSaveError
   height: 3.25rem;
   padding: 0.875rem 1.125rem;
   color: #fff;
-  background: #de7aff;
+  background: $color-purple;
   border-radius: 0.75rem;
   font-family: 'Manrope', sans-serif;
   font-size: 1.25rem;
@@ -290,7 +290,7 @@ const organizationSaveError = flow.organizationSaveError
   font-feature-settings: 'lnum' 1, 'pnum' 1;
 
   &:hover:not(:disabled) {
-    background: #e38fff;
+    background: $color-purple-hover;
   }
 
   &:active:not(:disabled) {
