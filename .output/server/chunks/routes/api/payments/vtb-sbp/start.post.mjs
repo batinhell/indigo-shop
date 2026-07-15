@@ -31,7 +31,7 @@ async function resolveOrder(event, database, body, items, amount) {
   return Number(order.id);
 }
 const start_post = defineEventHandler(async (event) => {
-  var _a, _b, _c, _d;
+  var _a, _b, _c, _d, _e;
   const body = await readBody(event);
   const items = normalizeSiteOrderItems(body == null ? void 0 : body.items);
   const bodyAmount = Number(body == null ? void 0 : body.amount);
@@ -68,7 +68,8 @@ const start_post = defineEventHandler(async (event) => {
         expiresAt,
         qrId: qr.qrId,
         qrPayload: (_a = qr.payload) != null ? _a : null,
-        qrImage: (_b = qr.renderedQr) != null ? _b : null
+        qrImage: (_b = qr.renderedQr) != null ? _b : null,
+        testAmountOverride: (_c = qr.testAmountOverride) != null ? _c : null
       }
     };
   } catch (error) {
@@ -77,8 +78,8 @@ const start_post = defineEventHandler(async (event) => {
       payment_status: "failed",
       payload: mergeVtbPaymentPayload(order == null ? void 0 : order.payload, {
         lastError: {
-          errorCode: ((_c = error == null ? void 0 : error.data) == null ? void 0 : _c.errorCode) ? String(error.data.errorCode) : null,
-          errorMessage: ((_d = error == null ? void 0 : error.data) == null ? void 0 : _d.errorMessage) || (error == null ? void 0 : error.message) || "VTB payment failed",
+          errorCode: ((_d = error == null ? void 0 : error.data) == null ? void 0 : _d.errorCode) ? String(error.data.errorCode) : null,
+          errorMessage: ((_e = error == null ? void 0 : error.data) == null ? void 0 : _e.errorMessage) || (error == null ? void 0 : error.message) || "VTB payment failed",
           response: (error == null ? void 0 : error.data) || null
         }
       }),
