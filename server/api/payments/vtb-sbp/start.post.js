@@ -77,7 +77,8 @@ export default defineEventHandler(async (event) => {
         expiresAt,
         qrId: qr.qrId,
         qrPayload: qr.payload ?? null,
-        qrImage: qr.renderedQr ?? null
+        qrImage: qr.renderedQr ?? null,
+        testAmountOverride: qr.testAmountOverride ?? null
       }
     }
   } catch (error) {

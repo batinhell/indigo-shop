@@ -11,6 +11,18 @@ function createVtbQrExpiresAt(config) {
   return new Date(Date.now() + config.qrTtlSeconds * 1000)
 }
 
+function getTestAmountOverride(config, amount) {
+  const overrideAmount = Number(process.env.VTB_PAYMENT_TEST_AMOUNT_OVERRIDE)
+
+  if (!Number.isFinite(overrideAmount) || overrideAmount <= 0) return null
+  if (!config.ecommerceBaseUrl.includes('test3.api.vtb.ru')) return null
+
+  return {
+    originalAmount: Number(amount || 0),
+    sentAmount: Math.round(overrideAmount * 100) / 100
+  }
+}
+
 export function getVtbQrExpiresAt() {
   const config = getVtbPaymentConfig()
   return createVtbQrExpiresAt(config)
@@ -28,14 +40,21 @@ export async function getVtbDynamicQr(requestId, options = {}) {
   }
 
   const config = getVtbPaymentConfig()
+  const amount = Number(options.amount || 0)
+  const testAmountOverride = getTestAmountOverride(config, amount)
+  const paymentAmount = testAmountOverride?.sentAmount ?? amount
+  const description = String(options.description || `Заказ Indigo #${requestId}`)
+  const orderName = testAmountOverride
+    ? `${description} TEST amount override: original ${testAmountOverride.originalAmount}`
+    : description
   const data = await requestVtbEcommerce('orders', {
     method: 'POST',
     body: {
       orderId: requestId,
-      orderName: String(options.description || `Заказ Indigo #${requestId}`).slice(0, 255),
+      orderName: orderName.slice(0, 255),
       expire: createVtbQrExpiresAt(config).toISOString(),
       amount: {
-        value: Number(options.amount || 0),
+        value: paymentAmount,
         code: 'RUB'
       },
       returnPaymentData: 'sbp',
@@ -69,6 +88,7 @@ export async function getVtbDynamicQr(requestId, options = {}) {
     payload: paymentUrl,
     renderedQr,
     qrStatus: order.status?.value || 'CREATED',
+    ...(testAmountOverride ? { testAmountOverride } : {}),
     raw: data
   }
 }
