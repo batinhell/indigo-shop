@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, G as getRequestHeaders, c as createError, r as readBody, u as useDatabase } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, M as getRequestHeaders, c as createError, r as readBody, u as useDatabase } from '../../nitro/nitro.mjs';
 import { randomUUID } from 'node:crypto';
 import 'node:fs/promises';
 import 'kysely';

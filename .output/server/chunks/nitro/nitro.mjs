@@ -4537,7 +4537,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "40a32998-21e1-4776-928b-c600b5a58bf2",
+    "buildId": "8091dc6e-a8eb-4d5c-993f-829f72539b6c",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4616,7 +4616,7 @@ const _inlineRuntimeConfig = {
   },
   "rarusKkt": {
     "baseUrl": "https://kkm.rarus-cloud.ru",
-    "apiVersion": "1.1.7",
+    "apiVersion": "v1",
     "apiKey": "",
     "inn": "6234117358",
     "taxSystem": "OSN",
@@ -5082,1079 +5082,1079 @@ const plugins = [
 const assets = {
   "/_payload.json": {
     "type": "application/json;charset=utf-8",
-    "etag": "\"45-M1YaHv7rD5ESRZgdofTNDzU4lSs\"",
-    "mtime": "2026-07-15T12:25:56.073Z",
+    "etag": "\"45-7UVkcZ3/JW7V/a2c2w6C/N/05/s\"",
+    "mtime": "2026-07-17T15:15:42.163Z",
     "size": 69,
     "path": "../public/_payload.json"
   },
   "/favicon.ico": {
     "type": "image/vnd.microsoft.icon",
     "etag": "\"3c2e-ZM+VbhpLBjdyZJWzsxeFNgtyI1c\"",
-    "mtime": "2026-07-15T12:25:56.462Z",
+    "mtime": "2026-07-17T15:15:42.583Z",
     "size": 15406,
     "path": "../public/favicon.ico"
   },
   "/index.html": {
     "type": "text/html;charset=utf-8",
-    "etag": "\"10550-ZP+RWdiM9PlJ7mLwq5wngIZL8QE\"",
-    "mtime": "2026-07-15T12:25:56.065Z",
+    "etag": "\"10550-ijTdneW1vKbS2DFmCYnfRH4bN9g\"",
+    "mtime": "2026-07-17T15:15:42.155Z",
     "size": 66896,
     "path": "../public/index.html"
   },
   "/sw.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"cf-Yaz0W3MuC8fvUl2UpJuR3JzbKX0\"",
-    "mtime": "2026-07-15T12:25:56.462Z",
+    "mtime": "2026-07-17T15:15:42.583Z",
     "size": 207,
     "path": "../public/sw.js"
   },
-  "/_nuxt/35jhyKHE.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1b5f-lz5zLwFEgTZrC9FySbPwXY9789A\"",
-    "mtime": "2026-07-15T12:25:56.374Z",
-    "size": 7007,
-    "path": "../public/_nuxt/35jhyKHE.js"
-  },
-  "/_nuxt/8G-d1SDT.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"791-YhCqSxw60Q/yhza3mZ9VR8K9GlY\"",
-    "mtime": "2026-07-15T12:25:56.374Z",
-    "size": 1937,
-    "path": "../public/_nuxt/8G-d1SDT.js"
+  "/email/avatar-indigo.png": {
+    "type": "image/png",
+    "etag": "\"19a2-Tc7VVzwgC/EeB4ey/2sd98zrS/8\"",
+    "mtime": "2026-07-17T15:15:42.569Z",
+    "size": 6562,
+    "path": "../public/email/avatar-indigo.png"
   },
   "/_nuxt/AppBreadcrumbs.D4A7nhcc.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"33d-UT8XP1UjG1rgljHe0/Zqy1RSimc\"",
-    "mtime": "2026-07-15T12:25:56.374Z",
+    "mtime": "2026-07-17T15:15:42.438Z",
     "size": 829,
     "path": "../public/_nuxt/AppBreadcrumbs.D4A7nhcc.css"
   },
-  "/_nuxt/AppSwitch.CSgRb82J.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"4d9-Sg8+wuhbS+VBr7Eqb3hb//Nq634\"",
-    "mtime": "2026-07-15T12:25:56.375Z",
-    "size": 1241,
-    "path": "../public/_nuxt/AppSwitch.CSgRb82J.css"
+  "/email/logo-indigo.png": {
+    "type": "image/png",
+    "etag": "\"2244-aJ1qfKmmNhK95C2FlNGKtJJDyI0\"",
+    "mtime": "2026-07-17T15:15:42.571Z",
+    "size": 8772,
+    "path": "../public/email/logo-indigo.png"
   },
-  "/_nuxt/BBWYEM3j.js": {
+  "/_nuxt/AppSwitch.CTUXQfWA.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"4d9-memKDPycjZOwv+WIlxoSwviGOqE\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
+    "size": 1241,
+    "path": "../public/_nuxt/AppSwitch.CTUXQfWA.css"
+  },
+  "/_nuxt/B5Xeeejg.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"9935-fZQlqFBNqXusrvgqfbE1VWkuklk\"",
-    "mtime": "2026-07-15T12:25:56.375Z",
-    "size": 39221,
-    "path": "../public/_nuxt/BBWYEM3j.js"
+    "etag": "\"1e85-rLsDVyy1CCYIL2KedP2XlWL6b4k\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
+    "size": 7813,
+    "path": "../public/_nuxt/B5Xeeejg.js"
+  },
+  "/_nuxt/B5zolAdh.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1b5f-IBRDSk43v7+0viFKD7Bkf+be2mE\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
+    "size": 7007,
+    "path": "../public/_nuxt/B5zolAdh.js"
+  },
+  "/_nuxt/BFv6iDl3.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"169a-iRhtHUiCPt7Hgd5ZACDi6QQTr/4\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
+    "size": 5786,
+    "path": "../public/_nuxt/BFv6iDl3.js"
+  },
+  "/_nuxt/BTcEaTjy.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"807-IUbZTGEsgPZqPgLTBNgVt3EwM8I\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
+    "size": 2055,
+    "path": "../public/_nuxt/BTcEaTjy.js"
   },
   "/_nuxt/BaseModal.ChyWkGPf.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"401-Dcvmicl9h/o7Ic936Ha1Di9m4ds\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
+    "mtime": "2026-07-17T15:15:42.438Z",
     "size": 1025,
     "path": "../public/_nuxt/BaseModal.ChyWkGPf.css"
-  },
-  "/_nuxt/BHu6ssH-.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"d7b-MIFOyudTFsEERblgqyB4fbdOcPE\"",
-    "mtime": "2026-07-15T12:25:56.375Z",
-    "size": 3451,
-    "path": "../public/_nuxt/BHu6ssH-.js"
   },
   "/_nuxt/BcScItuj.js": {
     "type": "text/javascript; charset=utf-8",
     "etag": "\"1b88-W/mqPn0HSiXUZKjxGUJXxTfNwVo\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
+    "mtime": "2026-07-17T15:15:42.438Z",
     "size": 7048,
     "path": "../public/_nuxt/BcScItuj.js"
   },
-  "/_nuxt/BiqHM5k7.js": {
+  "/_nuxt/BqS7F3iR.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"eb00-u60q0UyOkBdVDkuCHfqSCKC0l+w\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
-    "size": 60160,
-    "path": "../public/_nuxt/BiqHM5k7.js"
+    "etag": "\"791-6NY8qgajRvFN59G5qm4NqtnmFXY\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
+    "size": 1937,
+    "path": "../public/_nuxt/BqS7F3iR.js"
   },
-  "/_nuxt/BmBFlwHY.js": {
+  "/_nuxt/BxKQO5XL.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"12a2-hbCMIRnZA0dm9LYT2Mc4jQzTvCQ\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
-    "size": 4770,
-    "path": "../public/_nuxt/BmBFlwHY.js"
-  },
-  "/_nuxt/BvEk_xXu.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e09-cwswwn2K1nAeqVJ7BC3mxpWdmeg\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
-    "size": 3593,
-    "path": "../public/_nuxt/BvEk_xXu.js"
-  },
-  "/_nuxt/C2QSKg7r.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"7ca3-86iiOZiSg5lmSDj+twZ+kUx/DC4\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
-    "size": 31907,
-    "path": "../public/_nuxt/C2QSKg7r.js"
-  },
-  "/_nuxt/CDWTSsAZ.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"807-FKdHXxrKHGm5+5MoLdu7wkcq4dA\"",
-    "mtime": "2026-07-15T12:25:56.377Z",
-    "size": 2055,
-    "path": "../public/_nuxt/CDWTSsAZ.js"
-  },
-  "/_nuxt/CjLNz9iI.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"3ab-ugmsbie5/Yp6sNa5u+tn7aCxC+k\"",
-    "mtime": "2026-07-15T12:25:56.377Z",
-    "size": 939,
-    "path": "../public/_nuxt/CjLNz9iI.js"
-  },
-  "/_nuxt/DJw2Tge8.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e99-Uy2G3cw5sJbpzA7We3WbmuEJvZg\"",
-    "mtime": "2026-07-15T12:25:56.377Z",
+    "etag": "\"e99-+oUBBjjCCZuzUMGtdNw6hCnwhx0\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
     "size": 3737,
-    "path": "../public/_nuxt/DJw2Tge8.js"
+    "path": "../public/_nuxt/BxKQO5XL.js"
   },
-  "/_nuxt/DU4o3Tac.js": {
+  "/_nuxt/C1HKsSPO.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"28e1-z5QDseP4E2Hw82chy1Kq6LX6CnQ\"",
-    "mtime": "2026-07-15T12:25:56.377Z",
-    "size": 10465,
-    "path": "../public/_nuxt/DU4o3Tac.js"
+    "etag": "\"d7b-XnZ64WmoopxEnPPtQM9lHtb6L24\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 3451,
+    "path": "../public/_nuxt/C1HKsSPO.js"
   },
-  "/_nuxt/Dmo1S0Hj.js": {
+  "/_nuxt/C9a5k-1i.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"cb-83kKct9BNe7qAZv5oOonEAQ4G8o\"",
-    "mtime": "2026-07-15T12:25:56.377Z",
+    "etag": "\"cb-PuHVSu2nRLuboOE2sVoBCYhlxZ8\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
     "size": 203,
-    "path": "../public/_nuxt/Dmo1S0Hj.js"
+    "path": "../public/_nuxt/C9a5k-1i.js"
   },
-  "/_nuxt/DwO8ASjQ.js": {
+  "/_nuxt/CA6VyBO7.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"809e-bKZK/7KUKyp5NBJ6dyWNjp8VLv0\"",
-    "mtime": "2026-07-15T12:25:56.377Z",
-    "size": 32926,
-    "path": "../public/_nuxt/DwO8ASjQ.js"
+    "etag": "\"2d79-/kKkjZrXldLP/UvEUzajiqTTDy4\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 11641,
+    "path": "../public/_nuxt/CA6VyBO7.js"
   },
-  "/_nuxt/DxrB2wy-.js": {
+  "/_nuxt/CEVqJX0I.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"656-O4aOl8RbscKAh2mPYejxmv8E7Po\"",
-    "mtime": "2026-07-15T12:25:56.378Z",
+    "etag": "\"eb00-mzPxJ5lTzsOGpsrjucVpjxX8TcE\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 60160,
+    "path": "../public/_nuxt/CEVqJX0I.js"
+  },
+  "/_nuxt/CF3RyO2q.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"656-6Km8L+Hs2uUgTI0NBAPEtaRDcQY\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
     "size": 1622,
-    "path": "../public/_nuxt/DxrB2wy-.js"
+    "path": "../public/_nuxt/CF3RyO2q.js"
   },
-  "/_nuxt/FC2K4gtm.js": {
+  "/_nuxt/CHKiQRtw.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"1e85-UhVWswB57SuRfwvX1VauTNP3jgY\"",
-    "mtime": "2026-07-15T12:25:56.378Z",
-    "size": 7813,
-    "path": "../public/_nuxt/FC2K4gtm.js"
+    "etag": "\"12a2-/sI+JcBLAmIgoxXARBmXxyXcv/8\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 4770,
+    "path": "../public/_nuxt/CHKiQRtw.js"
   },
-  "/_nuxt/BCG_L7Kq.js": {
+  "/_nuxt/CKiDXT8F.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"84bc6-c/OiWAB3xt+hbK8zN9VulJkke+s\"",
-    "mtime": "2026-07-15T12:25:56.376Z",
+    "etag": "\"e09-tyjMmX+5KPd2iRHAVZ+1jlEDe9I\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 3593,
+    "path": "../public/_nuxt/CKiDXT8F.js"
+  },
+  "/_nuxt/Cf7bGO7e.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"7ca3-gLLJLdw1+zHJdlnVDsXmKenGV10\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 31907,
+    "path": "../public/_nuxt/Cf7bGO7e.js"
+  },
+  "/_nuxt/BOTUbYwC.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"84bc6-1QMxbn8TzB/JKi66BkUFS/6ocMA\"",
+    "mtime": "2026-07-17T15:15:42.438Z",
     "size": 543686,
-    "path": "../public/_nuxt/BCG_L7Kq.js"
+    "path": "../public/_nuxt/BOTUbYwC.js"
   },
-  "/_nuxt/QuantityInput.NhC1HKdD.css": {
+  "/_nuxt/ChRb8IGU.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"28e1-4S+RwwPoDjWOGwwKghcHCCv7XBI\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 10465,
+    "path": "../public/_nuxt/ChRb8IGU.js"
+  },
+  "/_nuxt/CrdLz5m-.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2f4-GiuonF4h5BA4iY9nTN6MINsVws8\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 756,
+    "path": "../public/_nuxt/CrdLz5m-.js"
+  },
+  "/_nuxt/D2zfSXqy.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"3ab-FXlOEPYYErum+1ApELkzkDtQ6Z0\"",
+    "mtime": "2026-07-17T15:15:42.439Z",
+    "size": 939,
+    "path": "../public/_nuxt/D2zfSXqy.js"
+  },
+  "/_nuxt/DIt-XC6F.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"7551-oiD5AHojjakB1RxVApgp/cRbd0I\"",
+    "mtime": "2026-07-17T15:15:42.440Z",
+    "size": 30033,
+    "path": "../public/_nuxt/DIt-XC6F.js"
+  },
+  "/_nuxt/DJmCZVTj.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"af09-TNMQdcVU+vwKbxENLUKFRCuIFYc\"",
+    "mtime": "2026-07-17T15:15:42.440Z",
+    "size": 44809,
+    "path": "../public/_nuxt/DJmCZVTj.js"
+  },
+  "/_nuxt/QuantityInput.B50rH_VR.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"44b-AupH9JYJ2O5ETZsO2W0/Mj00vnU\"",
-    "mtime": "2026-07-15T12:25:56.378Z",
+    "etag": "\"44b-wMAxSC7y6ItaJLau9RdaznCpS7Y\"",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 1099,
-    "path": "../public/_nuxt/QuantityInput.NhC1HKdD.css"
+    "path": "../public/_nuxt/QuantityInput.B50rH_VR.css"
   },
-  "/_nuxt/_orderId_.bncsZaXq.css": {
+  "/_nuxt/_orderId_.CG2DQ2Mh.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"2416-2zYXBXSmiNY8WlyZISd2kZ8n4lo\"",
-    "mtime": "2026-07-15T12:25:56.378Z",
+    "etag": "\"2416-RydXIwQSgSvtdBRmZald0e40ITI\"",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 9238,
-    "path": "../public/_nuxt/_orderId_.bncsZaXq.css"
+    "path": "../public/_nuxt/_orderId_.CG2DQ2Mh.css"
   },
-  "/_nuxt/cart.l9_GZ-KZ.css": {
+  "/_nuxt/cart.BhToPPvd.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"57a7-jxYd0WisXSB8u5aygOW9ComcUVk\"",
-    "mtime": "2026-07-15T12:25:56.378Z",
-    "size": 22439,
-    "path": "../public/_nuxt/cart.l9_GZ-KZ.css"
+    "etag": "\"5f85-+mvTFwmgHqfDFUxnmQjkkLupWU0\"",
+    "mtime": "2026-07-17T15:15:42.440Z",
+    "size": 24453,
+    "path": "../public/_nuxt/cart.BhToPPvd.css"
+  },
+  "/_nuxt/catalog.CbN-FlAx.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"538c-g4FQitSJwrU1PPnfrGIvdonQr4E\"",
+    "mtime": "2026-07-17T15:15:42.440Z",
+    "size": 21388,
+    "path": "../public/_nuxt/catalog.CbN-FlAx.css"
   },
   "/_nuxt/catalog-products.CSz2nG3j.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"332-ufYNtgYdupeActYd1CdVDGzc30A\"",
-    "mtime": "2026-07-15T12:25:56.378Z",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 818,
     "path": "../public/_nuxt/catalog-products.CSz2nG3j.css"
-  },
-  "/_nuxt/catalog.BXqEt_Ie.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"538c-LbbAaf3pxGY/eBH534D7WDuZOBY\"",
-    "mtime": "2026-07-15T12:25:56.379Z",
-    "size": 21388,
-    "path": "../public/_nuxt/catalog.BXqEt_Ie.css"
   },
   "/_nuxt/catalog_slider_2.BH45i3L8.png": {
     "type": "image/png",
     "etag": "\"5262d-4c8UpFC77yPLHqigal4rgiTKR4g\"",
-    "mtime": "2026-07-15T12:25:56.379Z",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 337453,
     "path": "../public/_nuxt/catalog_slider_2.BH45i3L8.png"
   },
   "/_nuxt/catalog_slider_5.J76b3FyM.png": {
     "type": "image/png",
     "etag": "\"7ae65-13onMZeTGAYGPrS6zKQG05uoHKY\"",
-    "mtime": "2026-07-15T12:25:56.382Z",
+    "mtime": "2026-07-17T15:15:42.443Z",
     "size": 503397,
     "path": "../public/_nuxt/catalog_slider_5.J76b3FyM.png"
-  },
-  "/_nuxt/cookie-policy.05WGT0fW.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"9a9-vV4xhIPUFOGVyrCqS3rRhHsfO3c\"",
-    "mtime": "2026-07-15T12:25:56.381Z",
-    "size": 2473,
-    "path": "../public/_nuxt/cookie-policy.05WGT0fW.css"
-  },
-  "/_nuxt/dIojz3dI.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2d79-T3xPoXophi5OZ7lv2lNQXqXRl4U\"",
-    "mtime": "2026-07-15T12:25:56.381Z",
-    "size": 11641,
-    "path": "../public/_nuxt/dIojz3dI.js"
   },
   "/_nuxt/delivery.eNplfU_M.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"89b-9um6TuALWIIUhtVK3c7zTL6Z3Ts\"",
-    "mtime": "2026-07-15T12:25:56.382Z",
+    "mtime": "2026-07-17T15:15:42.443Z",
     "size": 2203,
     "path": "../public/_nuxt/delivery.eNplfU_M.css"
+  },
+  "/_nuxt/cookie-policy.05WGT0fW.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"9a9-vV4xhIPUFOGVyrCqS3rRhHsfO3c\"",
+    "mtime": "2026-07-17T15:15:42.443Z",
+    "size": 2473,
+    "path": "../public/_nuxt/cookie-policy.05WGT0fW.css"
   },
   "/_nuxt/catalog_slider_3.qx5ywKHs.png": {
     "type": "image/png",
     "etag": "\"db421-XPTQRXfj0AwjWEXQjihfrMmx6Ok\"",
-    "mtime": "2026-07-15T12:25:56.379Z",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 898081,
     "path": "../public/_nuxt/catalog_slider_3.qx5ywKHs.png"
   },
   "/_nuxt/catalog_slider_4.C0q_KMLO.png": {
     "type": "image/png",
     "etag": "\"da674-xfTbUkrpoLqvpDxyWfmtU63bZ8g\"",
-    "mtime": "2026-07-15T12:25:56.379Z",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 894580,
     "path": "../public/_nuxt/catalog_slider_4.C0q_KMLO.png"
   },
   "/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png": {
     "type": "image/png",
     "etag": "\"c1c3c-WPXrPMYN1haE73E/bhw5EvrxsfM\"",
-    "mtime": "2026-07-15T12:25:56.382Z",
+    "mtime": "2026-07-17T15:15:42.444Z",
     "size": 793660,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_double.za9T4eXU.png"
-  },
-  "/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png": {
-    "type": "image/png",
-    "etag": "\"afe45-+U/r8gotREKnoFkqjAXjFeAf3KU\"",
-    "mtime": "2026-07-15T12:25:56.386Z",
-    "size": 720453,
-    "path": "../public/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png"
   },
   "/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png": {
     "type": "image/png",
     "etag": "\"e6c7e-BW6nR+IDPI88oNumjyYWhoVU+9w\"",
-    "mtime": "2026-07-15T12:25:56.383Z",
+    "mtime": "2026-07-17T15:15:42.444Z",
     "size": 945278,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_double_fringe.CS_CY77A.png"
   },
   "/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png": {
     "type": "image/png",
     "etag": "\"974af-rFo4G91FF29VCRxG8Uj8Rd96c2I\"",
-    "mtime": "2026-07-15T12:25:56.384Z",
+    "mtime": "2026-07-17T15:15:42.444Z",
     "size": 619695,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_single.DKCu2Fiq.png"
   },
   "/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png": {
     "type": "image/png",
     "etag": "\"c6368-Ruf+t2JpbGOKa1TSV1RJZsdcexo\"",
-    "mtime": "2026-07-15T12:25:56.384Z",
+    "mtime": "2026-07-17T15:15:42.445Z",
     "size": 811880,
     "path": "../public/_nuxt/dense_polyester_grommets_60x90_single_fringe.mRkfvSRV.png"
+  },
+  "/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png": {
+    "type": "image/png",
+    "etag": "\"afe45-+U/r8gotREKnoFkqjAXjFeAf3KU\"",
+    "mtime": "2026-07-17T15:15:42.445Z",
+    "size": 720453,
+    "path": "../public/_nuxt/dense_polyester_grommets_90x135_double.Cd_hhpv8.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png": {
     "type": "image/png",
     "etag": "\"cf2fd-rzZNc2ktEkMoKtGIWhp1nhObTzM\"",
-    "mtime": "2026-07-15T12:25:56.386Z",
+    "mtime": "2026-07-17T15:15:42.447Z",
     "size": 848637,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_double_fringe.De_EkLXt.png"
-  },
-  "/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png": {
-    "type": "image/png",
-    "etag": "\"d0274-TzhC58l3kLcrY4xJnFNFaKdyjJc\"",
-    "mtime": "2026-07-15T12:25:56.387Z",
-    "size": 852596,
-    "path": "../public/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png"
   },
   "/_nuxt/dense_polyester_grommets_90x135_single.BVUsePy3.png": {
     "type": "image/png",
     "etag": "\"b51dc-IQ1iRAmeZp+RV9y2TQ7Z4EVzeU0\"",
-    "mtime": "2026-07-15T12:25:56.387Z",
+    "mtime": "2026-07-17T15:15:42.445Z",
     "size": 741852,
     "path": "../public/_nuxt/dense_polyester_grommets_90x135_single.BVUsePy3.png"
   },
-  "/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png": {
+  "/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png": {
     "type": "image/png",
-    "etag": "\"b5adf-icXnosKHM1Dr7M9BqslsTjgtYTQ\"",
-    "mtime": "2026-07-15T12:25:56.387Z",
-    "size": 744159,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png"
+    "etag": "\"d0274-TzhC58l3kLcrY4xJnFNFaKdyjJc\"",
+    "mtime": "2026-07-17T15:15:42.447Z",
+    "size": 852596,
+    "path": "../public/_nuxt/dense_polyester_grommets_90x135_single_fringe.BvTafySI.png"
   },
-  "/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png": {
-    "type": "image/png",
-    "etag": "\"ad8bf-XqXSmL08NF69/BRtKJOyUXye1d8\"",
-    "mtime": "2026-07-15T12:25:56.387Z",
-    "size": 710847,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png": {
-    "type": "image/png",
-    "etag": "\"af2e3-rHg7lA2xtgll8lyyR2els45M8WI\"",
-    "mtime": "2026-07-15T12:25:56.389Z",
-    "size": 717539,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png": {
-    "type": "image/png",
-    "etag": "\"c5922-DjKZ5tyA9pa7yb6LcHWW//vP69g\"",
-    "mtime": "2026-07-15T12:25:56.389Z",
-    "size": 809250,
-    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png"
-  },
-  "/_nuxt/entry.DtinDMkQ.css": {
+  "/_nuxt/entry.ryxb072E.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"36b71-077P4kNi+pxSFpvsGdBz+j4gk04\"",
-    "mtime": "2026-07-15T12:25:56.391Z",
+    "etag": "\"36b71-5Y9dsl/GvFWRkJBH2nZJqaX7OYw\"",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 224113,
-    "path": "../public/_nuxt/entry.DtinDMkQ.css"
+    "path": "../public/_nuxt/entry.ryxb072E.css"
   },
   "/_nuxt/error-404.C-Ezrlz-.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"97e-YLcQ2HBNLea0KJoUeqSqSCendIU\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 2430,
     "path": "../public/_nuxt/error-404.C-Ezrlz-.css"
   },
   "/_nuxt/error-500.DBWf9FGj.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"773-9MNIE+ztUss3x7HN62QKMFz0rhs\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 1907,
     "path": "../public/_nuxt/error-500.DBWf9FGj.css"
   },
   "/_nuxt/footer-logo.NO_QlmsK.svg": {
     "type": "image/svg+xml",
     "etag": "\"274f-rMfX6K7iAgviNYpOMM5fKOfRcFw\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 10063,
     "path": "../public/_nuxt/footer-logo.NO_QlmsK.svg"
-  },
-  "/_nuxt/gCvGlLY4.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"7551-nhCiGfFBXLOilrDqlL76JOguh7Y\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
-    "size": 30033,
-    "path": "../public/_nuxt/gCvGlLY4.js"
   },
   "/_nuxt/header-logo-text.B_a9knhz.svg": {
     "type": "image/svg+xml",
     "etag": "\"272f-YQkkTXHp4uPT4lIdOvHHm6SqpVM\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 10031,
     "path": "../public/_nuxt/header-logo-text.B_a9knhz.svg"
-  },
-  "/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png": {
-    "type": "image/png",
-    "etag": "\"94eed-tmHpVV5QnTclEjHqfn8Mt9DYv/Q\"",
-    "mtime": "2026-07-15T12:25:56.390Z",
-    "size": 610029,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png"
   },
   "/_nuxt/index.CFCRDarC.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"115b-adv4bzNDSspXrHgD58IIgzc3zkQ\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 4443,
     "path": "../public/_nuxt/index.CFCRDarC.css"
+  },
+  "/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png": {
+    "type": "image/png",
+    "etag": "\"b5adf-icXnosKHM1Dr7M9BqslsTjgtYTQ\"",
+    "mtime": "2026-07-17T15:15:42.449Z",
+    "size": 744159,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double.ACc-aKlY.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png": {
+    "type": "image/png",
+    "etag": "\"ad8bf-XqXSmL08NF69/BRtKJOyUXye1d8\"",
+    "mtime": "2026-07-17T15:15:42.449Z",
+    "size": 710847,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_double_fringe.BUeuNOen.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png": {
+    "type": "image/png",
+    "etag": "\"af2e3-rHg7lA2xtgll8lyyR2els45M8WI\"",
+    "mtime": "2026-07-17T15:15:42.450Z",
+    "size": 717539,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single._p5eDjvq.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png": {
+    "type": "image/png",
+    "etag": "\"c5922-DjKZ5tyA9pa7yb6LcHWW//vP69g\"",
+    "mtime": "2026-07-17T15:15:42.452Z",
+    "size": 809250,
+    "path": "../public/_nuxt/dense_polyester_sleeve_60x90_single_fringe.UEyS7zTb.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png": {
+    "type": "image/png",
+    "etag": "\"e626d-DuxpsFNbK6xJ6y4ZD74yIqrYEhI\"",
+    "mtime": "2026-07-17T15:15:42.455Z",
+    "size": 942701,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png"
+  },
+  "/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png": {
+    "type": "image/png",
+    "etag": "\"94eed-tmHpVV5QnTclEjHqfn8Mt9DYv/Q\"",
+    "mtime": "2026-07-17T15:15:42.453Z",
+    "size": 610029,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double.BrJn4Xaq.png"
   },
   "/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png": {
     "type": "image/png",
     "etag": "\"a4488-DIo4O1BbqcnbmdhJC5NNBCRkA3s\"",
-    "mtime": "2026-07-15T12:25:56.391Z",
+    "mtime": "2026-07-17T15:15:42.456Z",
     "size": 672904,
     "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single.051p5EBo.png"
   },
-  "/_nuxt/index.CcIbSNsK.css": {
+  "/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png": {
+    "type": "image/png",
+    "etag": "\"f7f0e-KLHb6o1ndMEUC0u9JIJpgj83K3k\"",
+    "mtime": "2026-07-17T15:15:42.459Z",
+    "size": 1015566,
+    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png"
+  },
+  "/_nuxt/index.HmKwFYAp.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"d892-sN7648cKhcWxu/mOr6FUsnaYM8M\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "etag": "\"d892-HgnfdqRW6QJcCo97vtWzEH6ciZs\"",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 55442,
-    "path": "../public/_nuxt/index.CcIbSNsK.css"
+    "path": "../public/_nuxt/index.HmKwFYAp.css"
   },
   "/_nuxt/landing-hero-pattern.DfC6rtHl.svg": {
     "type": "image/svg+xml",
     "etag": "\"148e7-F5jHI/7VIhHnkT7/1QLmCvmMgAc\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.463Z",
     "size": 84199,
     "path": "../public/_nuxt/landing-hero-pattern.DfC6rtHl.svg"
   },
   "/_nuxt/legal-information.uTZ0CG1o.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"53d-bh3fzcI+X97EdlF0ugaq2n93NHg\"",
-    "mtime": "2026-07-15T12:25:56.393Z",
+    "mtime": "2026-07-17T15:15:42.462Z",
     "size": 1341,
     "path": "../public/_nuxt/legal-information.uTZ0CG1o.css"
   },
   "/_nuxt/logo.nBvKnBnY.png": {
     "type": "image/png",
     "etag": "\"21ce-Wn/SI/UarbICKdyHxjjj7x1B43A\"",
-    "mtime": "2026-07-15T12:25:56.393Z",
+    "mtime": "2026-07-17T15:15:42.463Z",
     "size": 8654,
     "path": "../public/_nuxt/logo.nBvKnBnY.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png": {
-    "type": "image/png",
-    "etag": "\"e626d-DuxpsFNbK6xJ6y4ZD74yIqrYEhI\"",
-    "mtime": "2026-07-15T12:25:56.391Z",
-    "size": 942701,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_double_fringe.Dk0vLEjX.png"
-  },
-  "/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png": {
-    "type": "image/png",
-    "etag": "\"f7f0e-KLHb6o1ndMEUC0u9JIJpgj83K3k\"",
-    "mtime": "2026-07-15T12:25:56.393Z",
-    "size": 1015566,
-    "path": "../public/_nuxt/dense_polyester_sleeve_90x135_single_fringe.BAlleuEE.png"
   },
   "/_nuxt/mesh_grommets_60x90_double.DUTuOgHv.png": {
     "type": "image/png",
     "etag": "\"ca2ab-7RE/t9akhiXfSecyDfP6rwzvxgM\"",
-    "mtime": "2026-07-15T12:25:56.394Z",
+    "mtime": "2026-07-17T15:15:42.463Z",
     "size": 828075,
     "path": "../public/_nuxt/mesh_grommets_60x90_double.DUTuOgHv.png"
-  },
-  "/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png": {
-    "type": "image/png",
-    "etag": "\"f9d3b-7PaD5v3wiR9QBJa4kU5m3HCjD3Q\"",
-    "mtime": "2026-07-15T12:25:56.395Z",
-    "size": 1023291,
-    "path": "../public/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png"
   },
   "/_nuxt/mesh_grommets_60x90_single.CQzq71gw.png": {
     "type": "image/png",
     "etag": "\"f4de3-SKSKAHzpvuwKtkxLyDWggYqq6sQ\"",
-    "mtime": "2026-07-15T12:25:56.395Z",
+    "mtime": "2026-07-17T15:15:42.463Z",
     "size": 1002979,
     "path": "../public/_nuxt/mesh_grommets_60x90_single.CQzq71gw.png"
+  },
+  "/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png": {
+    "type": "image/png",
+    "etag": "\"f9d3b-7PaD5v3wiR9QBJa4kU5m3HCjD3Q\"",
+    "mtime": "2026-07-17T15:15:42.466Z",
+    "size": 1023291,
+    "path": "../public/_nuxt/mesh_grommets_90x135_double.BtL6Voqz.png"
   },
   "/_nuxt/catalog_slider_1.BiVYIshC.png": {
     "type": "image/png",
     "etag": "\"3b66ed-8Fv6jlmmxiTrk+I5uuG29yjUS9o\"",
-    "mtime": "2026-07-15T12:25:56.392Z",
+    "mtime": "2026-07-17T15:15:42.440Z",
     "size": 3892973,
     "path": "../public/_nuxt/catalog_slider_1.BiVYIshC.png"
-  },
-  "/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png": {
-    "type": "image/png",
-    "etag": "\"10bc88-hDhg4NNq6kd1JyedBw7aLxQ0c6E\"",
-    "mtime": "2026-07-15T12:25:56.394Z",
-    "size": 1096840,
-    "path": "../public/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png"
   },
   "/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png": {
     "type": "image/png",
     "etag": "\"111fe9-QNxA0zMV3U5mePIStrhocShfGxM\"",
-    "mtime": "2026-07-15T12:25:56.395Z",
+    "mtime": "2026-07-17T15:15:42.465Z",
     "size": 1122281,
     "path": "../public/_nuxt/mesh_grommets_60x90_single_fringe.DU2MNMvp.png"
   },
-  "/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png": {
+  "/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png": {
     "type": "image/png",
-    "etag": "\"10309b-0UBE9mC6o4233B9fQYnITJDWJE4\"",
-    "mtime": "2026-07-15T12:25:56.396Z",
-    "size": 1061019,
-    "path": "../public/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png"
+    "etag": "\"10bc88-hDhg4NNq6kd1JyedBw7aLxQ0c6E\"",
+    "mtime": "2026-07-17T15:15:42.463Z",
+    "size": 1096840,
+    "path": "../public/_nuxt/mesh_grommets_60x90_double_fringe.C-pTSaox.png"
   },
   "/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png": {
     "type": "image/png",
     "etag": "\"10ed3b-6YML+cTdF2zmed7JEItYq1Vq3cc\"",
-    "mtime": "2026-07-15T12:25:56.396Z",
+    "mtime": "2026-07-17T15:15:42.467Z",
     "size": 1109307,
     "path": "../public/_nuxt/mesh_grommets_90x135_double_fringe.B69a68ry.png"
-  },
-  "/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png": {
-    "type": "image/png",
-    "etag": "\"1131f7-HIEsvRixV3Fw1m9dqsNm9u5JLSQ\"",
-    "mtime": "2026-07-15T12:25:56.398Z",
-    "size": 1126903,
-    "path": "../public/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png"
-  },
-  "/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png": {
-    "type": "image/png",
-    "etag": "\"106b6d-piT0AW5eiQK/BH5pmowglNu7wkk\"",
-    "mtime": "2026-07-15T12:25:56.398Z",
-    "size": 1076077,
-    "path": "../public/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png"
   },
   "/_nuxt/payment.DCbkYvlX.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"845-p8fION+5AxTbpuvyAv+0e8ruuPs\"",
-    "mtime": "2026-07-15T12:25:56.401Z",
+    "mtime": "2026-07-17T15:15:42.471Z",
     "size": 2117,
     "path": "../public/_nuxt/payment.DCbkYvlX.css"
   },
   "/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png": {
     "type": "image/png",
     "etag": "\"e41c2-gn3NuTZexL7pnIiYv/S3hN+WUwg\"",
-    "mtime": "2026-07-15T12:25:56.399Z",
+    "mtime": "2026-07-17T15:15:42.469Z",
     "size": 934338,
     "path": "../public/_nuxt/mesh_sleeve_60x90_single.CmS-puQr.png"
   },
   "/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png": {
     "type": "image/png",
     "etag": "\"f05f9-rTB5AQAPkQp9fWfDnP4xucGtV6U\"",
-    "mtime": "2026-07-15T12:25:56.400Z",
+    "mtime": "2026-07-17T15:15:42.469Z",
     "size": 984569,
     "path": "../public/_nuxt/mesh_sleeve_90x135_double.gzM_G-fO.png"
   },
-  "/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png": {
+  "/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png": {
     "type": "image/png",
-    "etag": "\"ef2e1-U1EIsAOt7xKod2tw9L328UEWxuo\"",
-    "mtime": "2026-07-15T12:25:56.401Z",
-    "size": 979681,
-    "path": "../public/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png"
-  },
-  "/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png": {
-    "type": "image/png",
-    "etag": "\"122924-XtwCzQHKGfBj4yjLa6Hs/n8f/PE\"",
-    "mtime": "2026-07-15T12:25:56.398Z",
-    "size": 1190180,
-    "path": "../public/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png"
-  },
-  "/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png": {
-    "type": "image/png",
-    "etag": "\"ed5a8-3gqMT6SJwRA3CDK4rnqpeVvg9GU\"",
-    "mtime": "2026-07-15T12:25:56.402Z",
-    "size": 972200,
-    "path": "../public/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png"
-  },
-  "/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png": {
-    "type": "image/png",
-    "etag": "\"1381de-QdbAltqQNo9BrbZzxKU3JdN83jw\"",
-    "mtime": "2026-07-15T12:25:56.399Z",
-    "size": 1278430,
-    "path": "../public/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png"
+    "etag": "\"10309b-0UBE9mC6o4233B9fQYnITJDWJE4\"",
+    "mtime": "2026-07-17T15:15:42.467Z",
+    "size": 1061019,
+    "path": "../public/_nuxt/mesh_grommets_90x135_single.DPD0554Q.png"
   },
   "/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png": {
     "type": "image/png",
     "etag": "\"cb64d-AccAjd5fD6gzJAS6aRM3hWSO370\"",
-    "mtime": "2026-07-15T12:25:56.402Z",
+    "mtime": "2026-07-17T15:15:42.472Z",
     "size": 833101,
     "path": "../public/_nuxt/polyester_grommets_60x90_double.D8jS7Lud.png"
   },
-  "/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png": {
+  "/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png": {
     "type": "image/png",
-    "etag": "\"13fbdb-+T5Tu9sY6BR9fmMOHSmHyoUIC/s\"",
-    "mtime": "2026-07-15T12:25:56.401Z",
-    "size": 1309659,
-    "path": "../public/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png"
+    "etag": "\"106b6d-piT0AW5eiQK/BH5pmowglNu7wkk\"",
+    "mtime": "2026-07-17T15:15:42.468Z",
+    "size": 1076077,
+    "path": "../public/_nuxt/mesh_sleeve_60x90_double.AU-psE_l.png"
+  },
+  "/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png": {
+    "type": "image/png",
+    "etag": "\"ef2e1-U1EIsAOt7xKod2tw9L328UEWxuo\"",
+    "mtime": "2026-07-17T15:15:42.472Z",
+    "size": 979681,
+    "path": "../public/_nuxt/mesh_sleeve_90x135_single.BF76aDEu.png"
+  },
+  "/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png": {
+    "type": "image/png",
+    "etag": "\"1131f7-HIEsvRixV3Fw1m9dqsNm9u5JLSQ\"",
+    "mtime": "2026-07-17T15:15:42.468Z",
+    "size": 1126903,
+    "path": "../public/_nuxt/mesh_grommets_90x135_single_fringe.DxWtrmVO.png"
+  },
+  "/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png": {
+    "type": "image/png",
+    "etag": "\"ed5a8-3gqMT6SJwRA3CDK4rnqpeVvg9GU\"",
+    "mtime": "2026-07-17T15:15:42.472Z",
+    "size": 972200,
+    "path": "../public/_nuxt/polyester_grommets_60x90_double_fringe.DVWDASzD.png"
   },
   "/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png": {
     "type": "image/png",
     "etag": "\"b8553-WzUniAyA7kugCNTak18gkF/lJ3E\"",
-    "mtime": "2026-07-15T12:25:56.404Z",
+    "mtime": "2026-07-17T15:15:42.474Z",
     "size": 755027,
     "path": "../public/_nuxt/polyester_grommets_90x135_double.Bc5E38oN.png"
   },
-  "/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png": {
+  "/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png": {
     "type": "image/png",
-    "etag": "\"d86ae-GjS3RmAtTiTfefVL4c2CKd0Oqtk\"",
-    "mtime": "2026-07-15T12:25:56.404Z",
-    "size": 886446,
-    "path": "../public/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png"
+    "etag": "\"122924-XtwCzQHKGfBj4yjLa6Hs/n8f/PE\"",
+    "mtime": "2026-07-17T15:15:42.469Z",
+    "size": 1190180,
+    "path": "../public/_nuxt/mesh_sleeve_60x90_double_fringe.SrC3VtWH.png"
   },
-  "/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png": {
+  "/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png": {
     "type": "image/png",
-    "etag": "\"a6a05-zHQ5JUB5vQWBn4bmOkonjmrZ3Ac\"",
-    "mtime": "2026-07-15T12:25:56.405Z",
-    "size": 682501,
-    "path": "../public/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png"
+    "etag": "\"1381de-QdbAltqQNo9BrbZzxKU3JdN83jw\"",
+    "mtime": "2026-07-17T15:15:42.469Z",
+    "size": 1278430,
+    "path": "../public/_nuxt/mesh_sleeve_60x90_single_fringe.C6ZFg3Lf.png"
   },
   "/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png": {
     "type": "image/png",
     "etag": "\"f32f6-Xz2DavSitbi8RxKBXOIINRhKSxk\"",
-    "mtime": "2026-07-15T12:25:56.404Z",
+    "mtime": "2026-07-17T15:15:42.475Z",
     "size": 996086,
     "path": "../public/_nuxt/polyester_grommets_60x90_single_fringe.4fPcYHcK.png"
+  },
+  "/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png": {
+    "type": "image/png",
+    "etag": "\"a6a05-zHQ5JUB5vQWBn4bmOkonjmrZ3Ac\"",
+    "mtime": "2026-07-17T15:15:42.475Z",
+    "size": 682501,
+    "path": "../public/_nuxt/polyester_grommets_90x135_single.DSceDMP9.png"
   },
   "/_nuxt/polyester_grommets_60x90_single.MOirczvX.png": {
     "type": "image/png",
     "etag": "\"f3975-ympc+goWybiiU2a/q6wZl8RxDuw\"",
-    "mtime": "2026-07-15T12:25:56.404Z",
+    "mtime": "2026-07-17T15:15:42.473Z",
     "size": 997749,
     "path": "../public/_nuxt/polyester_grommets_60x90_single.MOirczvX.png"
+  },
+  "/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png": {
+    "type": "image/png",
+    "etag": "\"d86ae-GjS3RmAtTiTfefVL4c2CKd0Oqtk\"",
+    "mtime": "2026-07-17T15:15:42.475Z",
+    "size": 886446,
+    "path": "../public/_nuxt/polyester_grommets_90x135_double_fringe.C_votDlE.png"
   },
   "/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png": {
     "type": "image/png",
     "etag": "\"102705-Kt6BfU8yL0+4ETJxCKuYg/g0Z/c\"",
-    "mtime": "2026-07-15T12:25:56.402Z",
+    "mtime": "2026-07-17T15:15:42.470Z",
     "size": 1058565,
     "path": "../public/_nuxt/mesh_sleeve_90x135_single_fringe.BMSZa4Gp.png"
+  },
+  "/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png": {
+    "type": "image/png",
+    "etag": "\"13fbdb-+T5Tu9sY6BR9fmMOHSmHyoUIC/s\"",
+    "mtime": "2026-07-17T15:15:42.469Z",
+    "size": 1309659,
+    "path": "../public/_nuxt/mesh_sleeve_90x135_double_fringe.Pjsv4A4q.png"
   },
   "/_nuxt/polyester_grommets_90x135_single_fringe.sevc2bgj.png": {
     "type": "image/png",
     "etag": "\"e9938-9Gcnas2YPWAro+VYRSG+O5aTQ9I\"",
-    "mtime": "2026-07-15T12:25:56.405Z",
+    "mtime": "2026-07-17T15:15:42.477Z",
     "size": 956728,
     "path": "../public/_nuxt/polyester_grommets_90x135_single_fringe.sevc2bgj.png"
   },
   "/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png": {
     "type": "image/png",
     "etag": "\"a378f-4IYJ/g2b9b7+PdhoFv4LJCq3T4k\"",
-    "mtime": "2026-07-15T12:25:56.404Z",
+    "mtime": "2026-07-17T15:15:42.477Z",
     "size": 669583,
     "path": "../public/_nuxt/polyester_sleeve_60x90_double.CuU2f0Nk.png"
   },
   "/_nuxt/polyester_sleeve_60x90_double_fringe.D5RRAdln.png": {
     "type": "image/png",
     "etag": "\"e5dfc-U+PIG4wh5pswa0Z2gkDBInftvYQ\"",
-    "mtime": "2026-07-15T12:25:56.406Z",
+    "mtime": "2026-07-17T15:15:42.478Z",
     "size": 941564,
     "path": "../public/_nuxt/polyester_sleeve_60x90_double_fringe.D5RRAdln.png"
   },
   "/_nuxt/polyester_sleeve_60x90_single.C7RVHdnM.png": {
     "type": "image/png",
     "etag": "\"cb680-QMmugOdQscuZwV/uGJyrkbGwxas\"",
-    "mtime": "2026-07-15T12:25:56.407Z",
+    "mtime": "2026-07-17T15:15:42.479Z",
     "size": 833152,
     "path": "../public/_nuxt/polyester_sleeve_60x90_single.C7RVHdnM.png"
-  },
-  "/_nuxt/privacy-policy.CyfpbZ6y.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"e85-yQnd66mtqESRG8Jq1F31yV8ldFY\"",
-    "mtime": "2026-07-15T12:25:56.409Z",
-    "size": 3717,
-    "path": "../public/_nuxt/privacy-policy.CyfpbZ6y.css"
   },
   "/_nuxt/polyester_sleeve_90x135_double.C2ikPQO1.png": {
     "type": "image/png",
     "etag": "\"d798d-y5DfsOIq6SvRIi4Prj4yfuFS0kQ\"",
-    "mtime": "2026-07-15T12:25:56.408Z",
+    "mtime": "2026-07-17T15:15:42.480Z",
     "size": 883085,
     "path": "../public/_nuxt/polyester_sleeve_90x135_double.C2ikPQO1.png"
-  },
-  "/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png": {
-    "type": "image/png",
-    "etag": "\"b90e9-iczceUWC1MO8ZH1l6cUVA8djbzo\"",
-    "mtime": "2026-07-15T12:25:56.408Z",
-    "size": 757993,
-    "path": "../public/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png"
-  },
-  "/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png": {
-    "type": "image/png",
-    "etag": "\"def1b-MCtCC+FIb8bV9WljcuIAaEgFl9I\"",
-    "mtime": "2026-07-15T12:25:56.409Z",
-    "size": 913179,
-    "path": "../public/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png"
   },
   "/_nuxt/polyester_sleeve_90x135_double_fringe.UUtANBuN.png": {
     "type": "image/png",
     "etag": "\"ec8ce-bXDQpn+MKNkHul4Yrt4e08SOjTo\"",
-    "mtime": "2026-07-15T12:25:56.408Z",
+    "mtime": "2026-07-17T15:15:42.481Z",
     "size": 968910,
     "path": "../public/_nuxt/polyester_sleeve_90x135_double_fringe.UUtANBuN.png"
+  },
+  "/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png": {
+    "type": "image/png",
+    "etag": "\"10cdc4-mpGEmUNiqetuLz2SpKLVH89y5PY\"",
+    "mtime": "2026-07-17T15:15:42.480Z",
+    "size": 1101252,
+    "path": "../public/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png"
+  },
+  "/_nuxt/privacy-policy.CyfpbZ6y.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"e85-yQnd66mtqESRG8Jq1F31yV8ldFY\"",
+    "mtime": "2026-07-17T15:15:42.482Z",
+    "size": 3717,
+    "path": "../public/_nuxt/privacy-policy.CyfpbZ6y.css"
   },
   "/_nuxt/qr-base.CKZU5BqH.svg": {
     "type": "image/svg+xml",
     "etag": "\"600c-+/7BSCORPJSa1PixN2Vn3cadFjw\"",
-    "mtime": "2026-07-15T12:25:56.409Z",
+    "mtime": "2026-07-17T15:15:42.482Z",
     "size": 24588,
     "path": "../public/_nuxt/qr-base.CKZU5BqH.svg"
   },
   "/_nuxt/return-cancellation.Dsks0Y6d.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"988-NUS1XNPdKx1VUVGcIxE8k9+JUps\"",
-    "mtime": "2026-07-15T12:25:56.409Z",
+    "mtime": "2026-07-17T15:15:42.482Z",
     "size": 2440,
     "path": "../public/_nuxt/return-cancellation.Dsks0Y6d.css"
   },
-  "/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png": {
+  "/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png": {
     "type": "image/png",
-    "etag": "\"10cdc4-mpGEmUNiqetuLz2SpKLVH89y5PY\"",
-    "mtime": "2026-07-15T12:25:56.408Z",
-    "size": 1101252,
-    "path": "../public/_nuxt/polyester_sleeve_60x90_single_fringe.CtfDHoBx.png"
+    "etag": "\"b90e9-iczceUWC1MO8ZH1l6cUVA8djbzo\"",
+    "mtime": "2026-07-17T15:15:42.481Z",
+    "size": 757993,
+    "path": "../public/_nuxt/polyester_sleeve_90x135_single.gck03kxQ.png"
+  },
+  "/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png": {
+    "type": "image/png",
+    "etag": "\"def1b-MCtCC+FIb8bV9WljcuIAaEgFl9I\"",
+    "mtime": "2026-07-17T15:15:42.482Z",
+    "size": 913179,
+    "path": "../public/_nuxt/polyester_sleeve_90x135_single_fringe.BiFaViDN.png"
   },
   "/_nuxt/satin_grommets_60x90_double.C8GIQrJU.png": {
     "type": "image/png",
     "etag": "\"b0692-VvIhoC2HzI7kw087DdrXVw/1Q9w\"",
-    "mtime": "2026-07-15T12:25:56.412Z",
+    "mtime": "2026-07-17T15:15:42.482Z",
     "size": 722578,
     "path": "../public/_nuxt/satin_grommets_60x90_double.C8GIQrJU.png"
   },
   "/_nuxt/satin_grommets_60x90_double_fringe.CRifW5D4.png": {
     "type": "image/png",
     "etag": "\"de611-yZCDteaYoLXqAlRBLeOwKC1Ll90\"",
-    "mtime": "2026-07-15T12:25:56.412Z",
+    "mtime": "2026-07-17T15:15:42.485Z",
     "size": 910865,
     "path": "../public/_nuxt/satin_grommets_60x90_double_fringe.CRifW5D4.png"
   },
   "/_nuxt/satin_grommets_60x90_single.-INYcgSl.png": {
     "type": "image/png",
     "etag": "\"ad2a5-6ZKaUShk7qklp1/ft90nm72W8ww\"",
-    "mtime": "2026-07-15T12:25:56.410Z",
+    "mtime": "2026-07-17T15:15:42.486Z",
     "size": 709285,
     "path": "../public/_nuxt/satin_grommets_60x90_single.-INYcgSl.png"
   },
   "/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png": {
     "type": "image/png",
     "etag": "\"e51a3-nXlTU08nBJ0fBPqR5ZcwOnNN/Y4\"",
-    "mtime": "2026-07-15T12:25:56.412Z",
+    "mtime": "2026-07-17T15:15:42.488Z",
     "size": 938403,
     "path": "../public/_nuxt/satin_grommets_60x90_single_fringe.B2c9NQZ0.png"
   },
   "/_nuxt/satin_grommets_90x135_double.CeveyNnt.png": {
     "type": "image/png",
     "etag": "\"a2330-4hE9FreV+uTOOZ7zJLbwuFN8Ki8\"",
-    "mtime": "2026-07-15T12:25:56.413Z",
+    "mtime": "2026-07-17T15:15:42.490Z",
     "size": 664368,
     "path": "../public/_nuxt/satin_grommets_90x135_double.CeveyNnt.png"
   },
   "/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png": {
     "type": "image/png",
     "etag": "\"e8927-Z7fFGSlVDw9VZaifLis437urM1o\"",
-    "mtime": "2026-07-15T12:25:56.414Z",
+    "mtime": "2026-07-17T15:15:42.491Z",
     "size": 952615,
     "path": "../public/_nuxt/satin_grommets_90x135_double_fringe.7Iinn9rA.png"
   },
   "/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png": {
     "type": "image/png",
     "etag": "\"ba0bd-47+Amr5hWKSBzbQhribYCDZ77C4\"",
-    "mtime": "2026-07-15T12:25:56.414Z",
+    "mtime": "2026-07-17T15:15:42.494Z",
     "size": 762045,
     "path": "../public/_nuxt/satin_grommets_90x135_single.DjgR8eU2.png"
-  },
-  "/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png": {
-    "type": "image/png",
-    "etag": "\"95a0a-fv885rf4Vx92DCE2vZrgPa19imM\"",
-    "mtime": "2026-07-15T12:25:56.414Z",
-    "size": 612874,
-    "path": "../public/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png"
   },
   "/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png": {
     "type": "image/png",
     "etag": "\"d0386-2eI7F0JMJ6QCK69GGZW02R/MTDI\"",
-    "mtime": "2026-07-15T12:25:56.414Z",
+    "mtime": "2026-07-17T15:15:42.495Z",
     "size": 852870,
     "path": "../public/_nuxt/satin_grommets_90x135_single_fringe.nyG-fLFQ.png"
+  },
+  "/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png": {
+    "type": "image/png",
+    "etag": "\"95a0a-fv885rf4Vx92DCE2vZrgPa19imM\"",
+    "mtime": "2026-07-17T15:15:42.497Z",
+    "size": 612874,
+    "path": "../public/_nuxt/satin_sleeve_60x90_double.B-d5Istq.png"
   },
   "/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png": {
     "type": "image/png",
     "etag": "\"c5286-+GJiujJs0Ilt4OapGvHIUnU3TCs\"",
-    "mtime": "2026-07-15T12:25:56.417Z",
+    "mtime": "2026-07-17T15:15:42.500Z",
     "size": 807558,
     "path": "../public/_nuxt/satin_sleeve_60x90_single.ByUDhn4E.png"
   },
   "/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png": {
     "type": "image/png",
     "etag": "\"fe4b9-Ty8Joy7bz3xKgyQZislTdbT9ZPw\"",
-    "mtime": "2026-07-15T12:25:56.417Z",
+    "mtime": "2026-07-17T15:15:42.502Z",
     "size": 1041593,
     "path": "../public/_nuxt/satin_sleeve_60x90_single_fringe.C2qvKlSZ.png"
+  },
+  "/_nuxt/textile-caps.BA0R0Z1M.png": {
+    "type": "image/png",
+    "etag": "\"169a2-3zIcb2eXwveZXW70/E7uSKvAseM\"",
+    "mtime": "2026-07-17T15:15:42.510Z",
+    "size": 92578,
+    "path": "../public/_nuxt/textile-caps.BA0R0Z1M.png"
   },
   "/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png": {
     "type": "image/png",
     "etag": "\"8ce33-/RIbujU9cWx3axHUtzDoiiSBPwA\"",
-    "mtime": "2026-07-15T12:25:56.417Z",
+    "mtime": "2026-07-17T15:15:42.504Z",
     "size": 577075,
     "path": "../public/_nuxt/satin_sleeve_90x135_double.Cat8n9H4.png"
   },
   "/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png": {
     "type": "image/png",
     "etag": "\"10f3fe-dAm0UZTUnnhtFzCmfzcKmt0nCqs\"",
-    "mtime": "2026-07-15T12:25:56.416Z",
+    "mtime": "2026-07-17T15:15:42.498Z",
     "size": 1111038,
     "path": "../public/_nuxt/satin_sleeve_60x90_double_fringe.mC-RM5cb.png"
   },
   "/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png": {
     "type": "image/png",
     "etag": "\"d2f2e-SfgOjN2hCEydf47UXfFpFZKtJCA\"",
-    "mtime": "2026-07-15T12:25:56.418Z",
+    "mtime": "2026-07-17T15:15:42.505Z",
     "size": 864046,
     "path": "../public/_nuxt/satin_sleeve_90x135_double_fringe.DUYdMMof.png"
-  },
-  "/_nuxt/textile-caps.BA0R0Z1M.png": {
-    "type": "image/png",
-    "etag": "\"169a2-3zIcb2eXwveZXW70/E7uSKvAseM\"",
-    "mtime": "2026-07-15T12:25:56.418Z",
-    "size": 92578,
-    "path": "../public/_nuxt/textile-caps.BA0R0Z1M.png"
   },
   "/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png": {
     "type": "image/png",
     "etag": "\"baef8-tAlxFs9fCrvQj0ErrKRF7uFzuSw\"",
-    "mtime": "2026-07-15T12:25:56.418Z",
+    "mtime": "2026-07-17T15:15:42.507Z",
     "size": 765688,
     "path": "../public/_nuxt/satin_sleeve_90x135_single.BWcmz37Z.png"
   },
   "/_nuxt/textile-embroidery-clothes.DDD3s30Y.png": {
     "type": "image/png",
     "etag": "\"271a0-o3+Mh+dGgY+uae1hCzLZudYdwnE\"",
-    "mtime": "2026-07-15T12:25:56.418Z",
+    "mtime": "2026-07-17T15:15:42.511Z",
     "size": 160160,
     "path": "../public/_nuxt/textile-embroidery-clothes.DDD3s30Y.png"
   },
   "/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png": {
     "type": "image/png",
     "etag": "\"f5cee-FlH7q5JBu3V8Lb0CNG6EFAvEmOU\"",
-    "mtime": "2026-07-15T12:25:56.419Z",
+    "mtime": "2026-07-17T15:15:42.508Z",
     "size": 1006830,
     "path": "../public/_nuxt/satin_sleeve_90x135_single_fringe.00B5d1PG.png"
   },
   "/_nuxt/textile-embroidery-patches.BI_T9z9c.png": {
     "type": "image/png",
     "etag": "\"22c14-V1mIH5fJiFyynbkbJLSWiuKoqt0\"",
-    "mtime": "2026-07-15T12:25:56.418Z",
+    "mtime": "2026-07-17T15:15:42.512Z",
     "size": 142356,
     "path": "../public/_nuxt/textile-embroidery-patches.BI_T9z9c.png"
   },
   "/_nuxt/textile-flags.CpmamLaJ.png": {
     "type": "image/png",
     "etag": "\"1d82b-nn9sxwOLEuOWB0ly34dBcDZDkg8\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
+    "mtime": "2026-07-17T15:15:42.512Z",
     "size": 120875,
     "path": "../public/_nuxt/textile-flags.CpmamLaJ.png"
   },
   "/_nuxt/textile-print-pillow.BE0p2UrK.png": {
     "type": "image/png",
     "etag": "\"1f8e2-LETLl3mNK9vs6+jJhR9diK6HS7g\"",
-    "mtime": "2026-07-15T12:25:56.419Z",
+    "mtime": "2026-07-17T15:15:42.513Z",
     "size": 129250,
     "path": "../public/_nuxt/textile-print-pillow.BE0p2UrK.png"
   },
   "/_nuxt/textile-print-tshirt.DSQ8CFf8.png": {
     "type": "image/png",
     "etag": "\"1a6a8-iRWO/8odDtQKvAArnQ0ITOyz2Lk\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
+    "mtime": "2026-07-17T15:15:42.514Z",
     "size": 108200,
     "path": "../public/_nuxt/textile-print-tshirt.DSQ8CFf8.png"
   },
   "/_nuxt/textile-ribbon-print.-15G9hIc.png": {
     "type": "image/png",
     "etag": "\"134d6-MCOFnbNlAt6X7klT1339OcHhe1Y\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
+    "mtime": "2026-07-17T15:15:42.514Z",
     "size": 79062,
     "path": "../public/_nuxt/textile-ribbon-print.-15G9hIc.png"
   },
   "/_nuxt/textile-shopper.ITFXD2Li.png": {
     "type": "image/png",
     "etag": "\"1cc49-VBW9gIn00sdlFDYzHta3spK0M+Q\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
+    "mtime": "2026-07-17T15:15:42.515Z",
     "size": 117833,
     "path": "../public/_nuxt/textile-shopper.ITFXD2Li.png"
   },
   "/_nuxt/user-agreement.CCKUbKOn.css": {
     "type": "text/css; charset=utf-8",
     "etag": "\"be8-EJSDmWhZ2vUFBl2Y6se1vZVTzfs\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
+    "mtime": "2026-07-17T15:15:42.516Z",
     "size": 3048,
     "path": "../public/_nuxt/user-agreement.CCKUbKOn.css"
   },
-  "/_nuxt/xNwnxVR1.js": {
+  "/_nuxt/zpvvnpJ3.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2f4-y0OFqq5hvuXD+l/TDSY7Y2hkMo0\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
-    "size": 756,
-    "path": "../public/_nuxt/xNwnxVR1.js"
+    "etag": "\"809e-N6YLMJBX1rdHJr3TgHJ3frzfj3g\"",
+    "mtime": "2026-07-17T15:15:42.516Z",
+    "size": 32926,
+    "path": "../public/_nuxt/zpvvnpJ3.js"
   },
-  "/_nuxt/zaLfjNEE.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"169a-el8TOrg3Q+ThZt2vh8jDp31DUVM\"",
-    "mtime": "2026-07-15T12:25:56.420Z",
-    "size": 5786,
-    "path": "../public/_nuxt/zaLfjNEE.js"
+  "/fonts/Manrope-Bold.woff": {
+    "type": "font/woff",
+    "etag": "\"2714-efct7tH5cmnJnDmMD/8kIJ4gSsc\"",
+    "mtime": "2026-07-17T15:15:42.580Z",
+    "size": 10004,
+    "path": "../public/fonts/Manrope-Bold.woff"
+  },
+  "/fonts/Manrope-SemiBold.woff": {
+    "type": "font/woff",
+    "etag": "\"274c-Zw+cU8cYr8xVg6ZwHz0/vQLyEtw\"",
+    "mtime": "2026-07-17T15:15:42.583Z",
+    "size": 10060,
+    "path": "../public/fonts/Manrope-SemiBold.woff"
+  },
+  "/fonts/Manrope-Regular.woff": {
+    "type": "font/woff",
+    "etag": "\"2730-MpSBSgjzr8d8U09B7qrhx5tQWGk\"",
+    "mtime": "2026-07-17T15:15:42.580Z",
+    "size": 10032,
+    "path": "../public/fonts/Manrope-Regular.woff"
   },
   "/favicon/android-chrome-192x192.png": {
     "type": "image/png",
     "etag": "\"30ee-wj1gNf5R0U0POpcHTCetRhWJHYY\"",
-    "mtime": "2026-07-15T12:25:56.456Z",
+    "mtime": "2026-07-17T15:15:42.569Z",
     "size": 12526,
     "path": "../public/favicon/android-chrome-192x192.png"
   },
   "/favicon/android-chrome-512x512.png": {
     "type": "image/png",
     "etag": "\"ce78-k+5LhFV4o58e+t9DYBeQUxuM2ZM\"",
-    "mtime": "2026-07-15T12:25:56.459Z",
+    "mtime": "2026-07-17T15:15:42.575Z",
     "size": 52856,
     "path": "../public/favicon/android-chrome-512x512.png"
   },
   "/favicon/apple-touch-icon.png": {
     "type": "image/png",
     "etag": "\"2b4a-dqJvpLMnQNNG7IF8f4OmHpSapj4\"",
-    "mtime": "2026-07-15T12:25:56.459Z",
+    "mtime": "2026-07-17T15:15:42.575Z",
     "size": 11082,
     "path": "../public/favicon/apple-touch-icon.png"
   },
   "/favicon/favicon-16x16.png": {
     "type": "image/png",
     "etag": "\"213-iFewOY7nK6wZqfEE7APZlqYbQgQ\"",
-    "mtime": "2026-07-15T12:25:56.459Z",
+    "mtime": "2026-07-17T15:15:42.580Z",
     "size": 531,
     "path": "../public/favicon/favicon-16x16.png"
   },
   "/favicon/favicon-32x32.png": {
     "type": "image/png",
     "etag": "\"460-M6n5EApmRW4GOPGB/JmrIsTkyVU\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.571Z",
     "size": 1120,
     "path": "../public/favicon/favicon-32x32.png"
   },
   "/favicon/favicon.ico": {
     "type": "image/vnd.microsoft.icon",
     "etag": "\"3c2e-ZM+VbhpLBjdyZJWzsxeFNgtyI1c\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.575Z",
     "size": 15406,
     "path": "../public/favicon/favicon.ico"
   },
   "/favicon/site.webmanifest": {
     "type": "application/manifest+json",
     "etag": "\"129-wgUZDFVnRHfDyR3HVeq2tzvjOhI\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.571Z",
     "size": 297,
     "path": "../public/favicon/site.webmanifest"
   },
-  "/email/avatar-indigo.png": {
-    "type": "image/png",
-    "etag": "\"19a2-Tc7VVzwgC/EeB4ey/2sd98zrS/8\"",
-    "mtime": "2026-07-15T12:25:56.455Z",
-    "size": 6562,
-    "path": "../public/email/avatar-indigo.png"
-  },
-  "/email/logo-indigo.png": {
-    "type": "image/png",
-    "etag": "\"2244-aJ1qfKmmNhK95C2FlNGKtJJDyI0\"",
-    "mtime": "2026-07-15T12:25:56.459Z",
-    "size": 8772,
-    "path": "../public/email/logo-indigo.png"
-  },
-  "/fonts/Manrope-Bold.woff": {
-    "type": "font/woff",
-    "etag": "\"2714-efct7tH5cmnJnDmMD/8kIJ4gSsc\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
-    "size": 10004,
-    "path": "../public/fonts/Manrope-Bold.woff"
-  },
-  "/fonts/Manrope-Regular.woff": {
-    "type": "font/woff",
-    "etag": "\"2730-MpSBSgjzr8d8U09B7qrhx5tQWGk\"",
-    "mtime": "2026-07-15T12:25:56.456Z",
-    "size": 10032,
-    "path": "../public/fonts/Manrope-Regular.woff"
-  },
-  "/fonts/Manrope-SemiBold.woff": {
-    "type": "font/woff",
-    "etag": "\"274c-Zw+cU8cYr8xVg6ZwHz0/vQLyEtw\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
-    "size": 10060,
-    "path": "../public/fonts/Manrope-SemiBold.woff"
-  },
   "/_nuxt/builds/latest.json": {
     "type": "application/json",
-    "etag": "\"47-taOMW9JZNXvGjaYNa1m7Is2FDi8\"",
-    "mtime": "2026-07-15T12:25:56.160Z",
+    "etag": "\"47-0XV2oXikno9NqYLoQdKNmnDxoK4\"",
+    "mtime": "2026-07-17T15:15:42.288Z",
     "size": 71,
     "path": "../public/_nuxt/builds/latest.json"
   },
   "/fonts/manrope/manrope-cyrillic-400-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"1ea0-r24bQvoe4IM0viqy4iW9eQGaEAs\"",
-    "mtime": "2026-07-15T12:25:56.458Z",
+    "mtime": "2026-07-17T15:15:42.585Z",
     "size": 7840,
     "path": "../public/fonts/manrope/manrope-cyrillic-400-normal.woff2"
   },
   "/fonts/manrope/manrope-cyrillic-500-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"1ec0-nhqY8ZhJXEdqhoyZ+BT8cX6p1f4\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.583Z",
     "size": 7872,
     "path": "../public/fonts/manrope/manrope-cyrillic-500-normal.woff2"
   },
   "/fonts/manrope/manrope-cyrillic-600-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"1ec0-p4NcbLnQ9Cw9Yn/yjSsp0IKPb0E\"",
-    "mtime": "2026-07-15T12:25:56.461Z",
+    "mtime": "2026-07-17T15:15:42.587Z",
     "size": 7872,
     "path": "../public/fonts/manrope/manrope-cyrillic-600-normal.woff2"
   },
   "/fonts/manrope/manrope-cyrillic-700-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"1eac-tAt0kxkYZ8iDauAt256jel1LmRk\"",
-    "mtime": "2026-07-15T12:25:56.461Z",
+    "mtime": "2026-07-17T15:15:42.587Z",
     "size": 7852,
     "path": "../public/fonts/manrope/manrope-cyrillic-700-normal.woff2"
   },
   "/fonts/manrope/manrope-cyrillic-800-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"1da4-9bfUOmLMwmggNkrL4aUEjhEXwu8\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.585Z",
     "size": 7588,
     "path": "../public/fonts/manrope/manrope-cyrillic-800-normal.woff2"
   },
   "/fonts/manrope/manrope-latin-400-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"371c-UpYQC/kqnfmqnPi4IPp15HTokX4\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.587Z",
     "size": 14108,
     "path": "../public/fonts/manrope/manrope-latin-400-normal.woff2"
   },
   "/fonts/manrope/manrope-latin-500-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"36dc-EZ29/81rmFJDUFZa2ZHBvwyWCdw\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.587Z",
     "size": 14044,
     "path": "../public/fonts/manrope/manrope-latin-500-normal.woff2"
   },
   "/fonts/manrope/manrope-latin-600-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"375c-w937G8IX30U7QbSdunJAIHm3ERo\"",
-    "mtime": "2026-07-15T12:25:56.461Z",
+    "mtime": "2026-07-17T15:15:42.595Z",
     "size": 14172,
     "path": "../public/fonts/manrope/manrope-latin-600-normal.woff2"
   },
   "/fonts/manrope/manrope-latin-700-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"3784-18lLTlrWBi6xECxef3iRXVY6UIs\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.595Z",
     "size": 14212,
     "path": "../public/fonts/manrope/manrope-latin-700-normal.woff2"
   },
   "/fonts/manrope/manrope-latin-800-normal.woff2": {
     "type": "font/woff2",
     "etag": "\"3550-QKnjoePzn3B3IuRTUN0E58EuW0c\"",
-    "mtime": "2026-07-15T12:25:56.460Z",
+    "mtime": "2026-07-17T15:15:42.595Z",
     "size": 13648,
     "path": "../public/fonts/manrope/manrope-latin-800-normal.woff2"
   },
-  "/_nuxt/builds/meta/40a32998-21e1-4776-928b-c600b5a58bf2.json": {
+  "/_nuxt/builds/meta/8091dc6e-a8eb-4d5c-993f-829f72539b6c.json": {
     "type": "application/json",
-    "etag": "\"5b-bKwGgS0uZQlEDNtV6uqbEoMdBxQ\"",
-    "mtime": "2026-07-15T12:25:56.146Z",
+    "etag": "\"5b-goCo+SOkZ0NhgnQqtFmJ+A6Vw7Y\"",
+    "mtime": "2026-07-17T15:15:42.278Z",
     "size": 91,
-    "path": "../public/_nuxt/builds/meta/40a32998-21e1-4776-928b-c600b5a58bf2.json"
+    "path": "../public/_nuxt/builds/meta/8091dc6e-a8eb-4d5c-993f-829f72539b6c.json"
   },
   "/uploads/site-orders/8/f11dd27b-0b0a-48ea-b4fa-70fedf7bab24.jpg": {
     "type": "image/jpeg",
     "etag": "\"210f0-Yo8uuJJ7G++R+B/zTrJjyr5FAZs\"",
-    "mtime": "2026-07-15T12:25:56.464Z",
+    "mtime": "2026-07-17T15:15:42.599Z",
     "size": 135408,
     "path": "../public/uploads/site-orders/8/f11dd27b-0b0a-48ea-b4fa-70fedf7bab24.jpg"
   },
   "/uploads/site-orders/8/036709d7-9491-45dd-b414-af2fdd5db6ab.jpg": {
     "type": "image/jpeg",
     "etag": "\"d13be-3cRJeGJ3N0LEml8qB3geXVican4\"",
-    "mtime": "2026-07-15T12:25:56.464Z",
+    "mtime": "2026-07-17T15:15:42.603Z",
     "size": 857022,
     "path": "../public/uploads/site-orders/8/036709d7-9491-45dd-b414-af2fdd5db6ab.jpg"
   }
@@ -7185,6 +7185,68 @@ const suggestDadataParties = async ({ query, count = 5 }) => {
   return ((_a = response.suggestions) != null ? _a : []).map(mapPartySuggestion);
 };
 
+const SALE_RECEIPT_TYPE = "sale";
+function createSaleDocumentId(siteOrderId) {
+  return `INDIGO-ORDER-${String(siteOrderId).padStart(20, "0")}`.slice(0, 40);
+}
+function parseJson$6(value, fallback = null) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+async function enqueueSaleFiscalReceipt(database, siteOrderId, paymentAttemptId = null) {
+  const orderId = Number(siteOrderId);
+  return database.transaction().execute(async (trx) => {
+    const order = await trx.selectFrom("site_orders").selectAll().where("id", "=", orderId).forUpdate().executeTakeFirst();
+    if (!order || order.payment_status !== "paid") return null;
+    const documentId = createSaleDocumentId(orderId);
+    let receipt = await trx.selectFrom("site_order_fiscal_receipts").selectAll().where("document_id", "=", documentId).executeTakeFirst();
+    if (!receipt) {
+      const items = await trx.selectFrom("site_order_items").select(["id", "product_id", "name", "description", "quantity", "unit_price", "design_price", "total", "payload"]).where("site_order_id", "=", orderId).orderBy("id").execute();
+      const now = /* @__PURE__ */ new Date();
+      const inserted = await trx.insertInto("site_order_fiscal_receipts").values({
+        site_order_id: orderId,
+        refund_id: null,
+        receipt_type: SALE_RECEIPT_TYPE,
+        document_id: documentId,
+        status: "queued",
+        amount: order.amount,
+        currency: order.currency || "RUB",
+        items_snapshot: JSON.stringify(items.map((item) => ({
+          ...item,
+          payload: parseJson$6(item.payload)
+        }))),
+        created_at: now,
+        updated_at: now
+      }).executeTakeFirst();
+      receipt = await trx.selectFrom("site_order_fiscal_receipts").selectAll().where("id", "=", Number(inserted.insertId)).executeTakeFirst();
+    }
+    const idempotencyKey = `fiscal:${receipt.id}:send`;
+    const existingJob = await trx.selectFrom("site_order_jobs").select(["id"]).where("idempotency_key", "=", idempotencyKey).executeTakeFirst();
+    if (!existingJob && !["completed", "sending"].includes(receipt.status)) {
+      const now = /* @__PURE__ */ new Date();
+      await trx.insertInto("site_order_jobs").values({
+        job_type: "send_fiscal_receipt",
+        idempotency_key: idempotencyKey,
+        site_order_id: orderId,
+        payment_attempt_id: paymentAttemptId ? Number(paymentAttemptId) : null,
+        fiscal_receipt_id: Number(receipt.id),
+        status: "pending",
+        attempts: 0,
+        max_attempts: 20,
+        next_attempt_at: now,
+        created_at: now,
+        updated_at: now
+      }).execute();
+    }
+    return receipt;
+  });
+}
+
 function assertInternalShopToken(event) {
   var _a;
   const config = useRuntimeConfig();
@@ -7221,7 +7283,7 @@ const PHP_INVOICE_GENERATOR = resolve$1(process.cwd(), "server/invoice-pdf/gener
 function dateRu(value) {
   return new Date(value).toLocaleDateString("ru-RU");
 }
-function parseJson$3(value, fallback = null) {
+function parseJson$5(value, fallback = null) {
   if (!value) return fallback;
   if (typeof value === "object") return value;
   try {
@@ -7298,9 +7360,9 @@ async function fileExists(path) {
   }
 }
 async function generateInvoicePdfFromSnapshot(invoice) {
-  const seller = parseJson$3(invoice.seller_snapshot, INVOICE_SELLER);
-  const payer = parseJson$3(invoice.payer_snapshot, {});
-  const lines = parseJson$3(invoice.lines_snapshot, []);
+  const seller = parseJson$5(invoice.seller_snapshot, INVOICE_SELLER);
+  const payer = parseJson$5(invoice.payer_snapshot, {});
+  const lines = parseJson$5(invoice.lines_snapshot, []);
   await generatePdfFile({ invoice, seller, payer, lines, path: invoice.pdf_path });
 }
 async function readInvoicePdf(invoice) {
@@ -7310,7 +7372,7 @@ async function readInvoicePdf(invoice) {
   return readFile$1(invoice.pdf_path);
 }
 
-function parseJson$2(value, fallback = null) {
+function parseJson$4(value, fallback = null) {
   if (!value) return fallback;
   if (typeof value === "object") return value;
   try {
@@ -7395,7 +7457,7 @@ async function createOrGetInvoice(database, event, order) {
     await markOrderAsInvoicePayment(database, orderId);
     return { invoice: existing, created: false };
   }
-  const payload = parseJson$2(order.payload, {});
+  const payload = parseJson$4(order.payload, {});
   const checkout = payload.checkout || {};
   const payer = normalizePayer(checkout);
   const customerEmail = validateInvoiceInput({ checkout, payer });
@@ -7488,7 +7550,7 @@ async function sendInvoiceEmail(database, event, invoice, order, accessToken = "
   }
 }
 
-function parseJson$1(value, fallback = null) {
+function parseJson$3(value, fallback = null) {
   if (!value) return fallback;
   if (typeof value === "object") return value;
   try {
@@ -7510,223 +7572,13 @@ function serializeInvoice(invoice, order, accessToken = "") {
     emailFallbackUsed: false,
     emailStatus: invoice.email_status,
     customerEmail: invoice.customer_email,
-    seller: parseJson$1(invoice.seller_snapshot, INVOICE_SELLER),
-    payer: parseJson$1(invoice.payer_snapshot, {}),
+    seller: parseJson$3(invoice.seller_snapshot, INVOICE_SELLER),
+    payer: parseJson$3(invoice.payer_snapshot, {}),
     vat: INVOICE_VAT
   };
 }
 
-const FISCAL_RECEIPT_STATUS = {
-  SENDING: "sending",
-  FAILED: "failed",
-  QUEUED: "queued"
-};
-const DEFAULT_BASE_URL = "https://kkm.rarus-cloud.ru";
-const DEFAULT_API_VERSION = "1.1.7";
-const DEFAULT_INN = "6234117358";
-const DEFAULT_TAX_SYSTEM = "OSN";
-const DEFAULT_TAX = "none";
-const DEFAULT_SIGN_METHOD_CALCULATION = "full_prepayment";
-const DEFAULT_SIGN_CALCULATION_OBJECT = "commodity";
-const DEFAULT_TAG_1011 = 2;
-const readEnv$1 = (name) => {
-  var _a, _b;
-  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
-};
-function readConfigValue$1(config, key, envName) {
-  var _a;
-  return readEnv$1(envName) || ((_a = config.rarusKkt) == null ? void 0 : _a[key]) || "";
-}
-function getRarusKktConfig() {
-  const config = useRuntimeConfig();
-  const baseUrl = readConfigValue$1(config, "baseUrl", "RARUS_KKT_BASE_URL") || DEFAULT_BASE_URL;
-  const apiVersion = readConfigValue$1(config, "apiVersion", "RARUS_KKT_API_VERSION") || DEFAULT_API_VERSION;
-  return {
-    baseUrl: baseUrl.replace(/\/+$/, ""),
-    apiVersion,
-    apiKey: readConfigValue$1(config, "apiKey", "RARUS_KKT_API_KEY"),
-    inn: readConfigValue$1(config, "inn", "RARUS_KKT_INN") || DEFAULT_INN,
-    taxSystem: readConfigValue$1(config, "taxSystem", "RARUS_KKT_TAX_SYSTEM") || DEFAULT_TAX_SYSTEM,
-    tax: readConfigValue$1(config, "tax", "RARUS_KKT_TAX") || DEFAULT_TAX,
-    paymentAddress: readConfigValue$1(config, "paymentAddress", "RARUS_KKT_PAYMENT_ADDRESS"),
-    paymentPlace: readConfigValue$1(config, "paymentPlace", "RARUS_KKT_PAYMENT_PLACE"),
-    senderEmail: readConfigValue$1(config, "senderEmail", "RARUS_KKT_SENDER_EMAIL"),
-    signMethodCalculation: readConfigValue$1(config, "signMethodCalculation", "RARUS_KKT_SIGN_METHOD_CALCULATION") || DEFAULT_SIGN_METHOD_CALCULATION,
-    signCalculationObject: readConfigValue$1(config, "signCalculationObject", "RARUS_KKT_SIGN_CALCULATION_OBJECT") || DEFAULT_SIGN_CALCULATION_OBJECT,
-    tag1011: Number(readConfigValue$1(config, "tag1011", "RARUS_KKT_TAG_1011")) || DEFAULT_TAG_1011,
-    enabled: !["0", "false", "no", "off"].includes(readEnv$1("RARUS_KKT_ENABLED").toLowerCase())
-  };
-}
-function parseJson(value) {
-  if (!value) return null;
-  if (typeof value === "object") return value;
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
-}
-function normalizePhone(value) {
-  const raw = String(value || "").trim();
-  if (!raw) return "";
-  const digits = raw.replace(/\D/g, "");
-  if (digits.length === 11 && digits.startsWith("8")) return `+7${digits.slice(1)}`;
-  if (digits.length === 11 && digits.startsWith("7")) return `+${digits}`;
-  if (digits.length === 10) return `+7${digits}`;
-  if (raw.startsWith("+") && digits.length >= 10) return `+${digits}`;
-  return "";
-}
-function getReceiptContact(order) {
-  var _a, _b, _c;
-  const payload = parseJson(order.payload) || {};
-  const checkout = payload.checkout || {};
-  const email = String(((_a = checkout.customer) == null ? void 0 : _a.email) || "").trim();
-  if (email) {
-    return { email };
-  }
-  const phone = normalizePhone(((_b = checkout.customer) == null ? void 0 : _b.phone) || ((_c = checkout.recipient) == null ? void 0 : _c.phone));
-  return phone ? { phone } : {};
-}
-function createReceiptId(order) {
-  return `INDIGO-ORDER-${String(order.id).padStart(20, "0")}`.slice(0, 40);
-}
-function toMoney(value) {
-  const amount = Number(value);
-  return Number.isFinite(amount) && amount > 0 ? Math.round(amount * 100) / 100 : 0;
-}
-async function getReceiptItems(database, orderId, config) {
-  const items = await database.selectFrom("site_order_items").select(["name", "quantity", "unit_price", "design_price", "total"]).where("site_order_id", "=", orderId).execute();
-  if (!items.length) {
-    return [];
-  }
-  return items.flatMap((item) => {
-    const quantity = Math.max(1, Number(item.quantity) || 1);
-    const unitPrice = toMoney(item.unit_price);
-    const designPrice = toMoney(item.design_price);
-    const rows = [];
-    if (unitPrice) {
-      rows.push({
-        name: String(item.name || "\u0422\u043E\u0432\u0430\u0440").slice(0, 128),
-        price: unitPrice,
-        quantity,
-        sum: toMoney(unitPrice * quantity),
-        tax: config.tax,
-        sign_method_calculation: config.signMethodCalculation,
-        sign_calculation_object: config.signCalculationObject
-      });
-    }
-    if (designPrice) {
-      rows.push({
-        name: `\u0414\u0438\u0437\u0430\u0439\u043D: ${String(item.name || "\u043F\u043E\u0437\u0438\u0446\u0438\u044F").slice(0, 120)}`,
-        price: designPrice,
-        quantity: 1,
-        sum: designPrice,
-        tax: config.tax,
-        sign_method_calculation: config.signMethodCalculation,
-        sign_calculation_object: "service"
-      });
-    }
-    return rows;
-  });
-}
-async function requestRarusKkt(config, receipt) {
-  const response = await fetch(`${config.baseUrl}/${config.apiVersion}/document`, {
-    method: "POST",
-    headers: {
-      "API-KEY": config.apiKey,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(receipt)
-  });
-  const text = await response.text();
-  let data;
-  try {
-    data = text ? JSON.parse(text) : {};
-  } catch {
-    data = { raw: text };
-  }
-  if (!response.ok) {
-    throw createError$1({
-      statusCode: 502,
-      statusMessage: "Rarus KKT request failed",
-      message: `Rarus KKT \u0432\u0435\u0440\u043D\u0443\u043B HTTP ${response.status}`,
-      data
-    });
-  }
-  return data;
-}
-async function claimFiscalReceipt(database, orderId) {
-  var _a;
-  const result = await database.updateTable("site_orders").set({
-    fiscal_receipt_status: FISCAL_RECEIPT_STATUS.SENDING,
-    fiscal_receipt_error: null,
-    updated_at: /* @__PURE__ */ new Date()
-  }).where("id", "=", orderId).where("fiscal_receipt_operation_id", "is", null).where((eb) => eb.or([
-    eb("fiscal_receipt_status", "is", null),
-    eb("fiscal_receipt_status", "=", ""),
-    eb("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.FAILED)
-  ])).executeTakeFirst();
-  return Number((_a = result.numUpdatedRows) != null ? _a : 0) > 0;
-}
-async function saveFiscalReceiptFailure(database, orderId, error) {
-  await database.updateTable("site_orders").set({
-    fiscal_receipt_status: FISCAL_RECEIPT_STATUS.FAILED,
-    fiscal_receipt_error: (error == null ? void 0 : error.data) ? JSON.stringify(error.data) : (error == null ? void 0 : error.message) || "Fiscal receipt failed",
-    updated_at: /* @__PURE__ */ new Date()
-  }).where("id", "=", orderId).where("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.SENDING).execute();
-}
-async function sendFiscalReceiptForPaidOrder(database, order) {
-  if (!order || order.payment_status !== "paid") return null;
-  if (order.fiscal_receipt_operation_id) return null;
-  if (order.fiscal_receipt_status && order.fiscal_receipt_status !== FISCAL_RECEIPT_STATUS.FAILED) return null;
-  const config = getRarusKktConfig();
-  if (!config.enabled || !config.apiKey) return null;
-  const orderId = Number(order.id);
-  if (!await claimFiscalReceipt(database, orderId)) return null;
-  try {
-    const contact = getReceiptContact(order);
-    if (!contact.email && !contact.phone) {
-      throw new Error("Missing customer email or phone for fiscal receipt");
-    }
-    const items = await getReceiptItems(database, orderId, config);
-    const total = toMoney(order.amount);
-    if (!items.length || !total) {
-      throw new Error("Missing fiscal receipt items or amount");
-    }
-    const timestamp = Math.floor(Date.now() / 1e3);
-    const receipt = {
-      id: createReceiptId(order),
-      doc_type: "sale",
-      timestamp_utc: timestamp,
-      timestamp_local: timestamp,
-      ...contact,
-      tax_system: config.taxSystem,
-      inn: config.inn,
-      payment_address: config.paymentAddress || void 0,
-      payment_place: config.paymentPlace || void 0,
-      senderEmail: config.senderEmail || void 0,
-      tag_1125: 1,
-      tag_1011: config.tag1011,
-      items,
-      total
-    };
-    const data = await requestRarusKkt(config, receipt);
-    const operation = (data == null ? void 0 : data.operation) || {};
-    await database.updateTable("site_orders").set({
-      fiscal_receipt_status: operation.status || FISCAL_RECEIPT_STATUS.QUEUED,
-      fiscal_receipt_operation_id: operation.operation_id || null,
-      fiscal_receipt_sent_at: /* @__PURE__ */ new Date(),
-      fiscal_receipt_error: null,
-      updated_at: /* @__PURE__ */ new Date()
-    }).where("id", "=", orderId).where("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.SENDING).execute();
-    return data;
-  } catch (error) {
-    await saveFiscalReceiptFailure(database, orderId, error);
-    return null;
-  }
-}
-
-const PAYMENT_PROVIDER = "vtb_sbp";
+const DEFAULT_PAYMENT_PROVIDER = "vtb_sbp";
 function parseSiteOrderPayload$1(value) {
   if (!value) return {};
   if (typeof value === "object") return value;
@@ -7743,13 +7595,13 @@ function mergeVtbPaymentPayload(payload, patch = {}) {
   const base = parseSiteOrderPayload$1(payload);
   const payment = asObject(base.payment);
   const vtb = asObject(payment.vtb);
-  const { callback, ...vtbPatch } = patch;
+  const { callback, provider = payment.provider || DEFAULT_PAYMENT_PROVIDER, ...vtbPatch } = patch;
   const callbacks = callback ? [...Array.isArray(vtb.callbacks) ? vtb.callbacks : [], callback].slice(-20) : vtb.callbacks;
   return JSON.stringify({
     ...base,
     payment: {
       ...payment,
-      provider: PAYMENT_PROVIDER,
+      provider,
       vtb: {
         ...vtb,
         ...vtbPatch,
@@ -7758,54 +7610,678 @@ function mergeVtbPaymentPayload(payload, patch = {}) {
     }
   });
 }
-function normalizePaymentStatus(status) {
-  return ["pending", "paid", "failed", "expired", "cancelled"].includes(status) ? status : "pending";
-}
 async function getSiteOrderPaymentState(database, siteOrderId) {
   return database.selectFrom("site_orders").selectAll().where("id", "=", siteOrderId).executeTakeFirst();
 }
-async function updateSiteOrderPaymentStatus(database, siteOrderId, status, patch = {}) {
-  const normalizedStatus = normalizePaymentStatus(status);
-  const now = /* @__PURE__ */ new Date();
-  const update = {
-    ...patch,
-    payment_status: normalizedStatus,
-    updated_at: now
-  };
-  if (normalizedStatus === "paid" && !patch.paid_at) {
-    update.paid_at = now;
-  }
-  await database.updateTable("site_orders").set(update).where("id", "=", siteOrderId).execute();
-}
-async function settleSiteOrderPayment(database, siteOrderId, status, patch = {}) {
-  await updateSiteOrderPaymentStatus(database, siteOrderId, status, patch);
-  const siteOrder = await getSiteOrderPaymentState(database, siteOrderId);
-  if ((siteOrder == null ? void 0 : siteOrder.payment_status) === "paid") {
-    sendFiscalReceiptForPaidOrder(database, siteOrder).catch((error) => {
-      console.error("[rarus-kkt] Async fiscal receipt failed:", error);
-    });
-  }
-  return siteOrder;
-}
-async function saveSiteOrderVtbQr(database, siteOrderId, response, expiresAt) {
+async function saveSiteOrderVtbPayment(database, siteOrderId, response, expiresAt, provider = DEFAULT_PAYMENT_PROVIDER) {
   const siteOrder = await getSiteOrderPaymentState(database, siteOrderId);
   await database.updateTable("site_orders").set({
-    vtb_qr_id: response.qrId,
+    vtb_qr_id: response.qrId || null,
     expires_at: expiresAt,
-    payload: mergeVtbPaymentPayload(siteOrder == null ? void 0 : siteOrder.payload, { qr: response }),
+    payload: mergeVtbPaymentPayload(siteOrder == null ? void 0 : siteOrder.payload, {
+      provider,
+      ...response.qrId ? { qr: response } : { card: response }
+    }),
     updated_at: /* @__PURE__ */ new Date()
   }).where("id", "=", siteOrderId).execute();
 }
-async function markSiteOrderPaymentPending(database, { siteOrderId, orderNumber, amount }) {
+async function markSiteOrderPaymentPending(database, { siteOrderId, orderNumber, amount, provider = DEFAULT_PAYMENT_PROVIDER }) {
   await database.updateTable("site_orders").set({
     order_number: orderNumber,
-    payment_provider: PAYMENT_PROVIDER,
+    payment_provider: provider,
     payment_status: "pending",
     amount,
     currency: "RUB",
     updated_at: /* @__PURE__ */ new Date()
   }).where("id", "=", siteOrderId).execute();
   return Number(siteOrderId);
+}
+
+const PAID_QR_STATUSES = /* @__PURE__ */ new Set(["ACCEPTED", "ACWP", "OK", "RECONCILED", "PAID", "CONFIRMED"]);
+const FAILED_QR_STATUSES = /* @__PURE__ */ new Set(["REJECTED", "RJCT", "REJECTED_BY_USER", "CANCELED", "CANCELLED", "DECLINED"]);
+function getPaymentStatusFromVtbQr(qrStatus, transactionState) {
+  const normalizedQrStatus = String(qrStatus || "").toUpperCase();
+  const normalizedTransactionState = String(transactionState || "").toUpperCase();
+  if (PAID_QR_STATUSES.has(normalizedQrStatus) || PAID_QR_STATUSES.has(normalizedTransactionState) || normalizedTransactionState === "DEPOSITED") {
+    return "paid";
+  }
+  if (FAILED_QR_STATUSES.has(normalizedQrStatus) || FAILED_QR_STATUSES.has(normalizedTransactionState)) {
+    return "failed";
+  }
+  return "pending";
+}
+
+const DEFAULT_SBP_BASE_URL = "https://test3.api.vtb.ru:8443/openapi/smb/efcp/sbp-gateway/v1/";
+const DEFAULT_ECOMMERCE_BASE_URL = "https://test3.api.vtb.ru:8443/openapi/smb/efcp/e-commerce/v1/";
+const DEFAULT_TOKEN_URL = "https://epa-ift-sbp.vtb.ru:443/passport/oauth2/token";
+const DEFAULT_QR_TTL_SECONDS = 1200;
+const readEnv$1 = (name) => {
+  var _a, _b;
+  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
+};
+function readConfigValue$1(config, key, envName) {
+  var _a;
+  return readEnv$1(envName) || ((_a = config.vtbPayment) == null ? void 0 : _a[key]) || "";
+}
+function normalizeBaseUrl(value) {
+  return value.endsWith("/") ? value : `${value}/`;
+}
+function getVtbHeaderClientId(clientId) {
+  return String(clientId || "").trim().toLowerCase().replace(/@ext\.vtb\.ru$/i, "");
+}
+function isVtbPaymentMockEnabled() {
+  const mode = readEnv$1("VTB_PAYMENT_MODE").toLowerCase();
+  const mock = readEnv$1("VTB_PAYMENT_MOCK").toLowerCase();
+  return mode === "mock" || ["1", "true", "yes", "on"].includes(mock);
+}
+function getMockPaymentStatus() {
+  const status = readEnv$1("VTB_PAYMENT_MOCK_STATUS").toLowerCase();
+  return ["pending", "paid", "failed"].includes(status) ? status : "pending";
+}
+function getVtbPaymentConfig() {
+  const config = useRuntimeConfig();
+  const sbpBaseUrl = readConfigValue$1(config, "sbpBaseUrl", "VTB_PAYMENT_SBP_BASE_URL") || DEFAULT_SBP_BASE_URL;
+  const ecommerceBaseUrl = readConfigValue$1(config, "ecommerceBaseUrl", "VTB_PAYMENT_ECOMMERCE_BASE_URL") || DEFAULT_ECOMMERCE_BASE_URL;
+  const tokenUrl = readConfigValue$1(config, "tokenUrl", "VTB_PAYMENT_TOKEN_URL") || DEFAULT_TOKEN_URL;
+  const clientId = readConfigValue$1(config, "clientId", "VTB_PAYMENT_CLIENT_ID");
+  const headerClientId = readConfigValue$1(config, "headerClientId", "VTB_PAYMENT_HEADER_CLIENT_ID") || getVtbHeaderClientId(clientId);
+  const qrTtlSeconds = Number(readConfigValue$1(config, "qrTtlSeconds", "VTB_PAYMENT_QR_TTL_SECONDS"));
+  return {
+    sbpBaseUrl: normalizeBaseUrl(sbpBaseUrl),
+    ecommerceBaseUrl: normalizeBaseUrl(ecommerceBaseUrl),
+    tokenUrl,
+    clientId,
+    clientSecret: readConfigValue$1(config, "clientSecret", "VTB_PAYMENT_CLIENT_SECRET"),
+    headerClientId,
+    merchantAuthorization: readConfigValue$1(config, "merchantAuthorization", "VTB_PAYMENT_MERCHANT_AUTHORIZATION"),
+    returnUrl: readConfigValue$1(config, "returnUrl", "VTB_PAYMENT_RETURN_URL"),
+    qrTtlSeconds: Number.isFinite(qrTtlSeconds) && qrTtlSeconds > 0 ? qrTtlSeconds : DEFAULT_QR_TTL_SECONDS
+  };
+}
+
+let cachedAccessToken = null;
+let cachedAccessTokenExpiresAt = 0;
+function assertVtbCredentials(config) {
+  if (config.clientId && config.clientSecret && config.headerClientId) return;
+  throw createError$1({
+    statusCode: 500,
+    statusMessage: "VTB payment is not configured",
+    message: "\u041D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u044B OAuth-\u0440\u0435\u043A\u0432\u0438\u0437\u0438\u0442\u044B \u0412\u0422\u0411 \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B"
+  });
+}
+async function parseFetchResponse(response) {
+  const text = await response.text();
+  try {
+    return text ? JSON.parse(text) : {};
+  } catch {
+    return { raw: text };
+  }
+}
+function getVtbTlsOptions() {
+  const caPath = process.env.VTB_PAYMENT_CA_CERTS_PATH || process.env.NODE_EXTRA_CA_CERTS;
+  const allowPartialTrustChain = ["1", "true", "yes"].includes(String(process.env.VTB_PAYMENT_TLS_ALLOW_PARTIAL_CHAIN || "").toLowerCase());
+  if (!caPath && !allowPartialTrustChain) return null;
+  return {
+    ...caPath ? { ca: readFileSync(caPath) } : {},
+    ...allowPartialTrustChain ? { allowPartialTrustChain: true } : {}
+  };
+}
+function requestVtbWithHttps(url, options, tlsOptions) {
+  return new Promise((resolve, reject) => {
+    const body = (options == null ? void 0 : options.body) == null ? null : String(options.body);
+    const headers = { ...(options == null ? void 0 : options.headers) || {} };
+    if (body && !headers["Content-Length"]) {
+      headers["Content-Length"] = Buffer.byteLength(body);
+    }
+    const request$1 = request(url, {
+      method: (options == null ? void 0 : options.method) || "GET",
+      headers,
+      ...tlsOptions
+    }, (response) => {
+      const chunks = [];
+      response.on("data", (chunk) => chunks.push(chunk));
+      response.on("end", () => {
+        const responseHeaders = new Headers();
+        for (const [key, value] of Object.entries(response.headers)) {
+          if (Array.isArray(value)) {
+            for (const item of value) responseHeaders.append(key, item);
+          } else if (value != null) {
+            responseHeaders.set(key, String(value));
+          }
+        }
+        resolve(new Response(Buffer.concat(chunks), {
+          status: response.statusCode || 0,
+          statusText: response.statusMessage || "",
+          headers: responseHeaders
+        }));
+      });
+    });
+    request$1.on("error", reject);
+    request$1.end(body);
+  });
+}
+async function fetchVtb(url, options, fallbackMessage) {
+  var _a, _b;
+  try {
+    const tlsOptions = getVtbTlsOptions();
+    return tlsOptions ? await requestVtbWithHttps(url, options, tlsOptions) : await fetch(url, options);
+  } catch (error) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB network request failed",
+      message: `${fallbackMessage}: ${((_a = error == null ? void 0 : error.cause) == null ? void 0 : _a.message) || (error == null ? void 0 : error.message) || "network error"}`,
+      data: {
+        url,
+        code: ((_b = error == null ? void 0 : error.cause) == null ? void 0 : _b.code) || (error == null ? void 0 : error.code) || null
+      }
+    });
+  }
+}
+async function getVtbAccessToken(config) {
+  assertVtbCredentials(config);
+  if (cachedAccessToken && cachedAccessTokenExpiresAt > Date.now() + 1e4) {
+    return cachedAccessToken;
+  }
+  const body = new URLSearchParams();
+  body.append("grant_type", "client_credentials");
+  body.append("client_id", config.clientId);
+  body.append("client_secret", config.clientSecret);
+  const response = await fetchVtb(config.tokenUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  }, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C\u0441\u044F \u043A OAuth \u0412\u0422\u0411");
+  const data = await parseFetchResponse(response);
+  if (!response.ok || !(data == null ? void 0 : data.access_token)) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB token request failed",
+      message: (data == null ? void 0 : data.error_description) || (data == null ? void 0 : data.error) || `\u0412\u0422\u0411 \u043D\u0435 \u0432\u044B\u0434\u0430\u043B access_token (HTTP ${response.status})`,
+      data
+    });
+  }
+  const expiresIn = Number(data.expires_in) || 170;
+  cachedAccessToken = data.access_token;
+  cachedAccessTokenExpiresAt = Date.now() + Math.max(30, expiresIn - 15) * 1e3;
+  return cachedAccessToken;
+}
+function buildVtbHeaders(config, accessToken) {
+  const headers = {
+    "X-IBM-Client-Id": config.headerClientId,
+    "Authorization": `Bearer ${accessToken}`,
+    "Content-Type": "application/json"
+  };
+  if (config.merchantAuthorization) {
+    headers["Merchant-Authorization"] = config.merchantAuthorization;
+  }
+  return headers;
+}
+async function requestVtbApi(baseUrl, path, options = {}) {
+  var _a;
+  const config = getVtbPaymentConfig();
+  const accessToken = await getVtbAccessToken(config);
+  const method = options.method || "POST";
+  const body = options.body === void 0 ? void 0 : JSON.stringify(options.body);
+  const url = `${baseUrl}${path.replace(/^\/+/, "")}`;
+  const response = await fetchVtb(url, {
+    method,
+    headers: buildVtbHeaders(config, accessToken),
+    ...body === void 0 ? {} : { body }
+  }, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C\u0441\u044F \u043A API \u0412\u0422\u0411");
+  const data = await parseFetchResponse(response);
+  if (!response.ok) {
+    if (response.status === 401) {
+      cachedAccessToken = null;
+      cachedAccessTokenExpiresAt = 0;
+    }
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB request failed",
+      message: (data == null ? void 0 : data.message) || (data == null ? void 0 : data.errorMessage) || ((_a = data == null ? void 0 : data.error) == null ? void 0 : _a.description) || (data == null ? void 0 : data.error) || `\u0412\u0422\u0411 \u0432\u0435\u0440\u043D\u0443\u043B HTTP ${response.status}`,
+      data
+    });
+  }
+  return data;
+}
+async function requestVtbEcommerce(path, options = {}) {
+  const config = getVtbPaymentConfig();
+  return requestVtbApi(config.ecommerceBaseUrl, path, options);
+}
+
+function createVtbPaymentExpiresAt(config) {
+  return new Date(Date.now() + config.qrTtlSeconds * 1e3);
+}
+function getVtbOrderObject(data) {
+  return (data == null ? void 0 : data.object) && typeof data.object === "object" ? data.object : data || {};
+}
+function getVtbPayments(order) {
+  var _a;
+  return Array.isArray((_a = order == null ? void 0 : order.transactions) == null ? void 0 : _a.payments) ? order.transactions.payments : [];
+}
+function getVtbPaymentObject(payment) {
+  return (payment == null ? void 0 : payment.object) && typeof payment.object === "object" ? payment.object : payment || {};
+}
+function getVtbRefunds(order) {
+  var _a;
+  const refunds = (_a = order == null ? void 0 : order.transactions) == null ? void 0 : _a.refunds;
+  return Array.isArray(refunds) ? refunds : [];
+}
+function getVtbPaymentDetails(data) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m;
+  const order = getVtbOrderObject(data);
+  const payment = getVtbPaymentObject(getVtbPayments(order)[0]);
+  return {
+    order,
+    paymentId: String((payment == null ? void 0 : payment.paymentId) || "").trim(),
+    paymentStatus: ((_a = payment == null ? void 0 : payment.status) == null ? void 0 : _a.value) || (payment == null ? void 0 : payment.status) || "",
+    orderStatus: ((_b = order == null ? void 0 : order.status) == null ? void 0 : _b.value) || (order == null ? void 0 : order.status) || "",
+    amount: Number((_i = (_h = (_f = (_c = payment == null ? void 0 : payment.amount) == null ? void 0 : _c.value) != null ? _f : (_e = (_d = payment == null ? void 0 : payment.paymentData) == null ? void 0 : _d.amount) == null ? void 0 : _e.value) != null ? _h : (_g = order == null ? void 0 : order.amount) == null ? void 0 : _g.value) != null ? _i : 0) || 0,
+    currency: String(((_j = payment == null ? void 0 : payment.amount) == null ? void 0 : _j.code) || ((_l = (_k = payment == null ? void 0 : payment.paymentData) == null ? void 0 : _k.amount) == null ? void 0 : _l.code) || ((_m = order == null ? void 0 : order.amount) == null ? void 0 : _m.code) || "RUB")
+  };
+}
+function getVtbRefundDetails(data, refundId = "") {
+  const order = getVtbOrderObject(data);
+  const normalizedRefundId = String(refundId || "").trim();
+  const refund = getVtbRefunds(order).map(getVtbPaymentObject).find((item) => !normalizedRefundId || String((item == null ? void 0 : item.refundId) || (item == null ? void 0 : item.id) || "") === normalizedRefundId);
+  return refund || null;
+}
+function getTestAmountOverride(config, amount) {
+  const overrideAmount = Number(process.env.VTB_PAYMENT_TEST_AMOUNT_OVERRIDE);
+  if (!Number.isFinite(overrideAmount) || overrideAmount <= 0) return null;
+  if (!config.ecommerceBaseUrl.includes("test3.api.vtb.ru")) return null;
+  return {
+    originalAmount: Number(amount || 0),
+    sentAmount: Math.round(overrideAmount * 100) / 100
+  };
+}
+function getVtbPaymentExpiresAt() {
+  const config = getVtbPaymentConfig();
+  return createVtbPaymentExpiresAt(config);
+}
+const getVtbQrExpiresAt = getVtbPaymentExpiresAt;
+async function getVtbDynamicQr(requestId, options = {}) {
+  var _a, _b, _c, _d;
+  if (isVtbPaymentMockEnabled()) {
+    return {
+      qrId: `MOCK-QR-${Date.now()}`,
+      payload: `https://example.local/mock-payment/${encodeURIComponent(requestId)}`,
+      renderedQr: null,
+      qrStatus: "PENDING",
+      mock: true
+    };
+  }
+  const config = getVtbPaymentConfig();
+  const amount = Number(options.amount || 0);
+  const testAmountOverride = getTestAmountOverride(config, amount);
+  const paymentAmount = (_a = testAmountOverride == null ? void 0 : testAmountOverride.sentAmount) != null ? _a : amount;
+  const description = String(options.description || `\u0417\u0430\u043A\u0430\u0437 Indigo #${requestId}`);
+  const orderName = testAmountOverride ? `${description} TEST amount override: original ${testAmountOverride.originalAmount}` : description;
+  const data = await requestVtbEcommerce("orders", {
+    method: "POST",
+    body: {
+      orderId: requestId,
+      orderName: orderName.slice(0, 255),
+      expire: createVtbPaymentExpiresAt(config).toISOString(),
+      amount: {
+        value: paymentAmount,
+        code: "RUB"
+      },
+      returnPaymentData: "sbp",
+      returnUrl: config.returnUrl || void 0
+    }
+  });
+  const order = (data == null ? void 0 : data.object) || {};
+  const sbpPayment = Array.isArray(order.preparedPayments) ? order.preparedPayments.find((payment) => String((payment == null ? void 0 : payment.type) || "").toLowerCase() === "sbp") : null;
+  const paymentUrl = ((_b = sbpPayment == null ? void 0 : sbpPayment.object) == null ? void 0 : _b.url) || (sbpPayment == null ? void 0 : sbpPayment.url);
+  if (!order.orderId || !paymentUrl) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB SBP payment url is missing",
+      message: "\u0412\u0422\u0411 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B \u0441\u0441\u044B\u043B\u043A\u0443 \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B \u0421\u0411\u041F",
+      data
+    });
+  }
+  const renderedQr = await QRCode.toString(paymentUrl, {
+    type: "svg",
+    errorCorrectionLevel: "M",
+    margin: 1,
+    width: 512
+  });
+  return {
+    qrId: ((_c = sbpPayment == null ? void 0 : sbpPayment.object) == null ? void 0 : _c.qrcId) || order.orderCode || order.orderId,
+    payload: paymentUrl,
+    renderedQr,
+    qrStatus: ((_d = order.status) == null ? void 0 : _d.value) || "CREATED",
+    ...testAmountOverride ? { testAmountOverride } : {},
+    raw: data
+  };
+}
+async function createVtbCardPayment(requestId, options = {}) {
+  var _a, _b, _c;
+  if (isVtbPaymentMockEnabled()) {
+    return {
+      orderId: requestId,
+      payUrl: `https://example.local/mock-card-payment/${encodeURIComponent(requestId)}`,
+      status: "CREATED",
+      mock: true
+    };
+  }
+  const config = getVtbPaymentConfig();
+  const amount = Number(options.amount || 0);
+  const testAmountOverride = getTestAmountOverride(config, amount);
+  const paymentAmount = (_a = testAmountOverride == null ? void 0 : testAmountOverride.sentAmount) != null ? _a : amount;
+  const description = String(options.description || `\u0417\u0430\u043A\u0430\u0437 Indigo #${requestId}`);
+  const data = await requestVtbEcommerce("orders", {
+    method: "POST",
+    body: {
+      orderId: requestId,
+      orderName: description.slice(0, 255),
+      expire: createVtbPaymentExpiresAt(config).toISOString(),
+      amount: {
+        value: paymentAmount,
+        code: "RUB"
+      },
+      returnUrl: config.returnUrl || void 0
+    }
+  });
+  const order = getVtbOrderObject(data);
+  const payUrl = order.payUrl || order.paymentUrl || ((_b = order.paymentData) == null ? void 0 : _b.payUrl) || (data == null ? void 0 : data.payUrl);
+  if (!order.orderId || !payUrl) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "VTB card payment url is missing",
+      message: "\u0412\u0422\u0411 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B \u0441\u0441\u044B\u043B\u043A\u0443 \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B \u043A\u0430\u0440\u0442\u043E\u0439",
+      data
+    });
+  }
+  return {
+    orderId: order.orderId,
+    payUrl,
+    status: ((_c = order.status) == null ? void 0 : _c.value) || "CREATED",
+    ...testAmountOverride ? { testAmountOverride } : {},
+    raw: data
+  };
+}
+async function getVtbOrder(requestId) {
+  if (isVtbPaymentMockEnabled()) {
+    return {
+      object: {
+        orderId: requestId,
+        status: { value: getMockPaymentStatus() === "paid" ? "CONFIRMED" : "CREATED" },
+        transactions: { payments: [] }
+      },
+      mock: true
+    };
+  }
+  return requestVtbEcommerce(`orders/${encodeURIComponent(requestId)}`, {
+    method: "GET"
+  });
+}
+async function createVtbRefund({ refundId, paymentId, amount, currency = "RUB" }) {
+  if (isVtbPaymentMockEnabled()) {
+    return {
+      object: {
+        refundId,
+        paymentId,
+        amount: { value: amount, code: currency },
+        status: { value: "CONFIRMED" }
+      },
+      mock: true
+    };
+  }
+  return requestVtbEcommerce("refunds", {
+    method: "POST",
+    body: {
+      refundId,
+      paymentId,
+      amount: {
+        value: amount,
+        code: currency
+      }
+    }
+  });
+}
+async function getVtbDynamicQrStatus({ requestId, qrId }) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i;
+  if (isVtbPaymentMockEnabled()) {
+    const status = getMockPaymentStatus();
+    return {
+      requestId,
+      qrId,
+      qrStatus: status === "paid" ? "ACCEPTED" : status === "failed" ? "REJECTED" : "PENDING",
+      transactionState: status === "paid" ? "DEPOSITED" : null,
+      mock: true
+    };
+  }
+  const data = await getVtbOrder(requestId);
+  const order = getVtbOrderObject(data);
+  const payments = getVtbPayments(order);
+  const payment = getVtbPaymentObject(
+    payments.find((item) => {
+      var _a2, _b2;
+      return String(((_b2 = (_a2 = getVtbPaymentObject(item)) == null ? void 0 : _a2.paymentData) == null ? void 0 : _b2.type) || "").toLowerCase() === "sbp";
+    }) || payments[0]
+  );
+  return {
+    requestId,
+    qrId,
+    qrStatus: (_a = order.status) == null ? void 0 : _a.value,
+    transactionState: ((_b = payment == null ? void 0 : payment.status) == null ? void 0 : _b.value) || (payment == null ? void 0 : payment.status),
+    paymentId: String((payment == null ? void 0 : payment.paymentId) || "").trim() || null,
+    amount: Number((_i = (_h = (_f = (_c = payment == null ? void 0 : payment.amount) == null ? void 0 : _c.value) != null ? _f : (_e = (_d = payment == null ? void 0 : payment.paymentData) == null ? void 0 : _d.amount) == null ? void 0 : _e.value) != null ? _h : (_g = order.amount) == null ? void 0 : _g.value) != null ? _i : 0) || null,
+    raw: data
+  };
+}
+
+const ACTIVE_ATTEMPT_STATUSES = ["creating", "pending"];
+const TERMINAL_ATTEMPT_STATUSES = /* @__PURE__ */ new Set(["paid", "failed", "expired", "cancelled"]);
+function parseJson$2(value, fallback = {}) {
+  if (!value) return fallback;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+function createBankOrderId(siteOrderId) {
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase();
+  return `SBP-${siteOrderId}-${timestamp}-${random}`.slice(0, 36);
+}
+function getStartPayload(attempt) {
+  return parseJson$2(attempt == null ? void 0 : attempt.provider_payload).start || {};
+}
+function getChargedAmount(response, requestedAmount) {
+  var _a, _b;
+  const amount = Number((_b = (_a = response == null ? void 0 : response.testAmountOverride) == null ? void 0 : _a.sentAmount) != null ? _b : requestedAmount);
+  return Number.isFinite(amount) && amount > 0 ? Math.round(amount * 100) / 100 : null;
+}
+function getCallbackSummary(callback) {
+  var _a, _b, _c;
+  const source = (callback == null ? void 0 : callback.object) && typeof callback.object === "object" ? callback.object : callback || {};
+  return {
+    orderId: String(source.orderId || ((_a = source.sbpParams) == null ? void 0 : _a.requestId) || "").trim() || null,
+    qrId: String(((_b = source.sbpParams) == null ? void 0 : _b.qrcId) || source.qrcId || "").trim() || null,
+    paymentId: String(source.paymentId || "").trim() || null,
+    status: ((_c = source.status) == null ? void 0 : _c.value) || source.status || null,
+    receivedAt: (/* @__PURE__ */ new Date()).toISOString()
+  };
+}
+function serializePaymentAttempt(attempt) {
+  var _a, _b, _c;
+  const start = getStartPayload(attempt);
+  return {
+    id: Number(attempt.id),
+    orderId: Number(attempt.site_order_id),
+    method: attempt.method,
+    status: attempt.status === "creating" ? "pending" : attempt.status,
+    amount: Number(attempt.requested_amount),
+    currency: attempt.currency,
+    expiresAt: attempt.expires_at || null,
+    paidAt: attempt.paid_at || null,
+    qrId: attempt.qr_id || null,
+    qrPayload: (_a = start.payload) != null ? _a : null,
+    qrImage: (_b = start.renderedQr) != null ? _b : null,
+    testAmountOverride: (_c = start.testAmountOverride) != null ? _c : null
+  };
+}
+async function getPaymentAttempt(database, attemptId) {
+  return database.selectFrom("site_order_payment_attempts").selectAll().where("id", "=", Number(attemptId)).executeTakeFirst();
+}
+async function startSbpPaymentAttempt(database, siteOrderId) {
+  var _a, _b, _c;
+  const orderId = Number(siteOrderId);
+  const reservation = await database.transaction().execute(async (trx) => {
+    const order = await trx.selectFrom("site_orders").selectAll().where("id", "=", orderId).forUpdate().executeTakeFirst();
+    if (!order) {
+      throw createError$1({ statusCode: 404, statusMessage: "Order not found", message: "\u0417\u0430\u043A\u0430\u0437 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D" });
+    }
+    if (order.payment_status === "paid") {
+      throw createError$1({ statusCode: 409, statusMessage: "Order is already paid", message: "\u0417\u0430\u043A\u0430\u0437 \u0443\u0436\u0435 \u043E\u043F\u043B\u0430\u0447\u0435\u043D" });
+    }
+    if (["cancelled", "refunded"].includes(order.payment_status)) {
+      throw createError$1({ statusCode: 409, statusMessage: "Order cannot be paid", message: "\u042D\u0442\u043E\u0442 \u0437\u0430\u043A\u0430\u0437 \u043D\u0435\u043B\u044C\u0437\u044F \u043E\u043F\u043B\u0430\u0442\u0438\u0442\u044C" });
+    }
+    const activeAttempt = await trx.selectFrom("site_order_payment_attempts").selectAll().where("site_order_id", "=", orderId).where("method", "=", "sbp").where("status", "in", ACTIVE_ATTEMPT_STATUSES).orderBy("id", "desc").executeTakeFirst();
+    if (activeAttempt) {
+      const expiresAt = activeAttempt.expires_at ? new Date(activeAttempt.expires_at).getTime() : null;
+      const createdAt = new Date(activeAttempt.created_at).getTime();
+      const creatingIsFresh = activeAttempt.status === "creating" && createdAt > Date.now() - 2 * 60 * 1e3;
+      const pendingIsActive = activeAttempt.status === "pending" && (!expiresAt || expiresAt > Date.now());
+      if (creatingIsFresh || pendingIsActive) {
+        return { attempt: activeAttempt, created: false, order };
+      }
+      await trx.updateTable("site_order_payment_attempts").set({ status: activeAttempt.status === "creating" ? "failed" : "expired", failed_at: /* @__PURE__ */ new Date(), updated_at: /* @__PURE__ */ new Date() }).where("id", "=", activeAttempt.id).execute();
+    }
+    const amount = Math.round(Number(order.amount) * 100) / 100;
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw createError$1({ statusCode: 409, statusMessage: "Invalid order amount", message: "\u0423 \u0437\u0430\u043A\u0430\u0437\u0430 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0441\u0443\u043C\u043C\u0430 \u043A \u043E\u043F\u043B\u0430\u0442\u0435" });
+    }
+    const now = /* @__PURE__ */ new Date();
+    const inserted = await trx.insertInto("site_order_payment_attempts").values({
+      site_order_id: orderId,
+      provider: "vtb",
+      method: "sbp",
+      bank_order_id: createBankOrderId(orderId),
+      requested_amount: amount,
+      currency: order.currency || "RUB",
+      status: "creating",
+      created_at: now,
+      updated_at: now
+    }).executeTakeFirst();
+    const attempt2 = await trx.selectFrom("site_order_payment_attempts").selectAll().where("id", "=", Number(inserted.insertId)).executeTakeFirstOrThrow();
+    await trx.updateTable("site_orders").set({
+      payment_provider: "vtb_sbp",
+      payment_status: "pending",
+      expires_at: null,
+      updated_at: now
+    }).where("id", "=", orderId).execute();
+    return { attempt: attempt2, created: true, order };
+  });
+  if (!reservation.created) return reservation.attempt;
+  const { attempt } = reservation;
+  try {
+    const response = await getVtbDynamicQr(attempt.bank_order_id, {
+      amount: Number(attempt.requested_amount),
+      description: `\u0417\u0430\u043A\u0430\u0437 Indigo #${orderId}`
+    });
+    const expiresAt = getVtbQrExpiresAt();
+    const providerStatus = ((_a = response.status) == null ? void 0 : _a.value) || response.status || "CREATED";
+    await database.transaction().execute(async (trx) => {
+      await trx.updateTable("site_order_payment_attempts").set({
+        payment_id: response.paymentId || null,
+        qr_id: response.qrId || null,
+        charged_amount: getChargedAmount(response, attempt.requested_amount),
+        status: "pending",
+        provider_status: String(providerStatus),
+        provider_payload: JSON.stringify({ start: response }),
+        expires_at: expiresAt,
+        updated_at: /* @__PURE__ */ new Date()
+      }).where("id", "=", attempt.id).where("status", "=", "creating").execute();
+      await trx.updateTable("site_orders").set({
+        vtb_qr_id: response.qrId || null,
+        vtb_payment_id: response.paymentId || null,
+        expires_at: expiresAt,
+        updated_at: /* @__PURE__ */ new Date()
+      }).where("id", "=", orderId).execute();
+    });
+    return getPaymentAttempt(database, attempt.id);
+  } catch (error) {
+    await database.updateTable("site_order_payment_attempts").set({
+      status: "failed",
+      failed_at: /* @__PURE__ */ new Date(),
+      provider_payload: JSON.stringify({
+        error: {
+          code: ((_b = error == null ? void 0 : error.data) == null ? void 0 : _b.errorCode) ? String(error.data.errorCode) : null,
+          message: ((_c = error == null ? void 0 : error.data) == null ? void 0 : _c.errorMessage) || (error == null ? void 0 : error.message) || "VTB payment failed"
+        }
+      }),
+      updated_at: /* @__PURE__ */ new Date()
+    }).where("id", "=", attempt.id).execute();
+    await updateOrderAggregate(database, orderId, attempt.id, "failed");
+    throw error;
+  }
+}
+async function updateOrderAggregate(database, siteOrderId, attemptId, status, patch = {}) {
+  const latestAttempt = await database.selectFrom("site_order_payment_attempts").select(["id"]).where("site_order_id", "=", Number(siteOrderId)).orderBy("id", "desc").executeTakeFirst();
+  if (status !== "paid" && Number(latestAttempt == null ? void 0 : latestAttempt.id) !== Number(attemptId)) return;
+  const now = /* @__PURE__ */ new Date();
+  await database.updateTable("site_orders").set({
+    ...patch,
+    payment_provider: "vtb_sbp",
+    payment_status: status,
+    ...status === "paid" ? { paid_at: now } : {},
+    updated_at: now
+  }).where("id", "=", Number(siteOrderId)).where("payment_status", "!=", "paid").execute();
+}
+async function refreshSbpPaymentAttempt(database, attempt, options = {}) {
+  if (!attempt || TERMINAL_ATTEMPT_STATUSES.has(attempt.status)) return attempt;
+  const response = await getVtbDynamicQrStatus({
+    requestId: attempt.bank_order_id,
+    qrId: attempt.qr_id
+  });
+  let status = getPaymentStatusFromVtbQr(response.qrStatus, response.transactionState);
+  if (status === "pending" && attempt.expires_at && new Date(attempt.expires_at).getTime() <= Date.now()) {
+    status = "expired";
+  }
+  const existingPayload = parseJson$2(attempt.provider_payload);
+  const callbacks = options.callback ? [...Array.isArray(existingPayload.callbacks) ? existingPayload.callbacks : [], getCallbackSummary(options.callback)].slice(-20) : existingPayload.callbacks;
+  const now = /* @__PURE__ */ new Date();
+  await database.updateTable("site_order_payment_attempts").set({
+    payment_id: response.paymentId || attempt.payment_id || null,
+    charged_amount: response.amount || attempt.charged_amount || null,
+    status,
+    provider_status: String(response.transactionState || response.qrStatus || ""),
+    provider_payload: JSON.stringify({
+      ...existingPayload,
+      lastStatus: response.raw || response,
+      checkedAt: now.toISOString(),
+      ...callbacks ? { callbacks } : {}
+    }),
+    ...status === "paid" ? { paid_at: attempt.paid_at || now } : {},
+    ...["failed", "expired"].includes(status) ? { failed_at: attempt.failed_at || now } : {},
+    updated_at: now
+  }).where("id", "=", attempt.id).execute();
+  await updateOrderAggregate(database, attempt.site_order_id, attempt.id, status, {
+    vtb_qr_id: attempt.qr_id || null,
+    vtb_payment_id: response.paymentId || attempt.payment_id || null,
+    expires_at: attempt.expires_at || null
+  });
+  if (status === "paid" && attempt.status !== "paid") {
+    await enqueueSaleFiscalReceipt(database, attempt.site_order_id, attempt.id);
+  }
+  return getPaymentAttempt(database, attempt.id);
+}
+async function findPaymentAttemptByVtbCallback(database, { bankOrderId, qrId, paymentId }) {
+  const conditions = [];
+  if (bankOrderId) conditions.push(["bank_order_id", bankOrderId]);
+  if (qrId) conditions.push(["qr_id", qrId]);
+  if (paymentId) conditions.push(["payment_id", paymentId]);
+  if (!conditions.length) return null;
+  return database.selectFrom("site_order_payment_attempts").selectAll().where((eb) => eb.or(conditions.map(([column, value]) => eb(column, "=", value)))).orderBy("id", "desc").executeTakeFirst();
 }
 
 const ACTIVE_STATUS = "active";
@@ -7978,7 +8454,7 @@ async function getProducts(database, category) {
     assertProductsTableExists(error);
   }
 }
-async function getProductBySlug(database, slug) {
+async function getProduct(database, column, value) {
   var _a;
   try {
     const product = await database.selectFrom("products").select([
@@ -8001,7 +8477,7 @@ async function getProductBySlug(database, slug) {
       "photo_url",
       "seo_title",
       "seo_description"
-    ]).where("slug", "=", slug).where("status", "=", ACTIVE_STATUS).executeTakeFirst();
+    ]).where(column, "=", value).where("status", "=", ACTIVE_STATUS).executeTakeFirst();
     if (!product) {
       return null;
     }
@@ -8013,6 +8489,12 @@ async function getProductBySlug(database, slug) {
   } catch (error) {
     assertProductsTableExists(error);
   }
+}
+function getProductBySlug(database, slug) {
+  return getProduct(database, "slug", slug);
+}
+function getProductById(database, productId) {
+  return getProduct(database, "id", Number(productId));
 }
 function matchesQuantity(rule, quantity) {
   const min = rule.min_quantity == null ? null : Number(rule.min_quantity);
@@ -8141,9 +8623,10 @@ function assertKnownOptions(selectedOptionRules, optionKeys) {
   }
 }
 function calculateProductPrice(product, payload) {
+  var _a;
   const quantity = Number(payload == null ? void 0 : payload.quantity);
   const size = (payload == null ? void 0 : payload.size) == null ? null : String(payload.size);
-  const optionKeys = Array.isArray(payload == null ? void 0 : payload.options) ? payload.options.map((option) => String(option)) : [];
+  const optionKeys = Array.isArray(payload == null ? void 0 : payload.options) ? payload.options.map((option) => String(option)) : Object.entries((_a = payload == null ? void 0 : payload.options) != null ? _a : {}).filter(([, value]) => value === true).map(([key]) => key);
   const optionValues = getPayloadOptionValues(payload, size);
   if (!Number.isInteger(quantity) || quantity < 1) {
     throw createError$1({
@@ -8246,6 +8729,249 @@ function calculateProductPrice(product, payload) {
   };
 }
 
+const FISCAL_RECEIPT_STATUS = {
+  SENDING: "sending",
+  FAILED: "failed",
+  QUEUED: "queued",
+  COMPLETED: "completed"
+};
+const RARUS_COMPLETED_STATUSES = /* @__PURE__ */ new Set(["done", "success", "succeeded", "completed", "fiscalized"]);
+const RARUS_FAILED_STATUSES = /* @__PURE__ */ new Set(["error", "failed", "rejected"]);
+const DEFAULT_BASE_URL = "https://kkm.rarus-cloud.ru";
+const DEFAULT_API_VERSION = "v1";
+const DEFAULT_INN = "6234117358";
+const DEFAULT_TAX_SYSTEM = "OSN";
+const DEFAULT_TAX = "none";
+const DEFAULT_SIGN_METHOD_CALCULATION = "full_prepayment";
+const DEFAULT_SIGN_CALCULATION_OBJECT = "commodity";
+const DEFAULT_TAG_1011 = 2;
+const readEnv = (name) => {
+  var _a, _b;
+  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
+};
+function readConfigValue(config, key, envName) {
+  var _a;
+  return readEnv(envName) || ((_a = config.rarusKkt) == null ? void 0 : _a[key]) || "";
+}
+function getRarusKktConfig() {
+  const config = useRuntimeConfig();
+  const baseUrl = readConfigValue(config, "baseUrl", "RARUS_KKT_BASE_URL") || DEFAULT_BASE_URL;
+  const apiVersion = readConfigValue(config, "apiVersion", "RARUS_KKT_API_VERSION") || DEFAULT_API_VERSION;
+  return {
+    baseUrl: baseUrl.replace(/\/+$/, ""),
+    apiVersion,
+    apiKey: readConfigValue(config, "apiKey", "RARUS_KKT_API_KEY"),
+    inn: readConfigValue(config, "inn", "RARUS_KKT_INN") || DEFAULT_INN,
+    taxSystem: readConfigValue(config, "taxSystem", "RARUS_KKT_TAX_SYSTEM") || DEFAULT_TAX_SYSTEM,
+    tax: readConfigValue(config, "tax", "RARUS_KKT_TAX") || DEFAULT_TAX,
+    paymentAddress: readConfigValue(config, "paymentAddress", "RARUS_KKT_PAYMENT_ADDRESS"),
+    paymentPlace: readConfigValue(config, "paymentPlace", "RARUS_KKT_PAYMENT_PLACE"),
+    senderEmail: readConfigValue(config, "senderEmail", "RARUS_KKT_SENDER_EMAIL"),
+    signMethodCalculation: readConfigValue(config, "signMethodCalculation", "RARUS_KKT_SIGN_METHOD_CALCULATION") || DEFAULT_SIGN_METHOD_CALCULATION,
+    signCalculationObject: readConfigValue(config, "signCalculationObject", "RARUS_KKT_SIGN_CALCULATION_OBJECT") || DEFAULT_SIGN_CALCULATION_OBJECT,
+    tag1011: Number(readConfigValue(config, "tag1011", "RARUS_KKT_TAG_1011")) || DEFAULT_TAG_1011,
+    enabled: !["0", "false", "no", "off"].includes(readEnv("RARUS_KKT_ENABLED").toLowerCase())
+  };
+}
+function parseJson$1(value) {
+  if (!value) return null;
+  if (typeof value === "object") return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+}
+function normalizePhone(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("8")) return `+7${digits.slice(1)}`;
+  if (digits.length === 11 && digits.startsWith("7")) return `+${digits}`;
+  if (digits.length === 10) return `+7${digits}`;
+  if (raw.startsWith("+") && digits.length >= 10) return `+${digits}`;
+  return "";
+}
+function getReceiptContact(order) {
+  var _a, _b, _c;
+  const payload = parseJson$1(order.payload) || {};
+  const checkout = payload.checkout || {};
+  const email = String(((_a = checkout.customer) == null ? void 0 : _a.email) || "").trim();
+  if (email) {
+    return { email };
+  }
+  const phone = normalizePhone(((_b = checkout.customer) == null ? void 0 : _b.phone) || ((_c = checkout.recipient) == null ? void 0 : _c.phone));
+  return phone ? { phone } : {};
+}
+function createReceiptId(order) {
+  return `INDIGO-ORDER-${String(order.id).padStart(20, "0")}`.slice(0, 40);
+}
+function toMoney(value) {
+  const amount = Number(value);
+  return Number.isFinite(amount) && amount > 0 ? Math.round(amount * 100) / 100 : 0;
+}
+async function getReceiptItems(database, orderId, config) {
+  const items = await database.selectFrom("site_order_items").select(["name", "quantity", "unit_price", "design_price", "total"]).where("site_order_id", "=", orderId).execute();
+  if (!items.length) {
+    return [];
+  }
+  return items.flatMap((item) => {
+    const quantity = Math.max(1, Number(item.quantity) || 1);
+    const unitPrice = toMoney(item.unit_price);
+    const designPrice = toMoney(item.design_price);
+    const rows = [];
+    if (unitPrice) {
+      rows.push({
+        name: String(item.name || "\u0422\u043E\u0432\u0430\u0440").slice(0, 128),
+        price: unitPrice,
+        quantity,
+        sum: toMoney(unitPrice * quantity),
+        tax: config.tax,
+        sign_method_calculation: config.signMethodCalculation,
+        sign_calculation_object: config.signCalculationObject
+      });
+    }
+    if (designPrice) {
+      rows.push({
+        name: `\u0414\u0438\u0437\u0430\u0439\u043D: ${String(item.name || "\u043F\u043E\u0437\u0438\u0446\u0438\u044F").slice(0, 120)}`,
+        price: designPrice,
+        quantity: 1,
+        sum: designPrice,
+        tax: config.tax,
+        sign_method_calculation: config.signMethodCalculation,
+        sign_calculation_object: "service"
+      });
+    }
+    return rows;
+  });
+}
+async function requestRarusKkt(config, path, options = {}) {
+  const response = await fetch(`${config.baseUrl}/${config.apiVersion}/${path.replace(/^\/+/, "")}`, {
+    method: options.method || "GET",
+    headers: {
+      "API-KEY": config.apiKey,
+      "Content-Type": "application/json"
+    },
+    ...options.body === void 0 ? {} : { body: JSON.stringify(options.body) }
+  });
+  const text = await response.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    data = { raw: text };
+  }
+  if (!response.ok) {
+    throw createError$1({
+      statusCode: 502,
+      statusMessage: "Rarus KKT request failed",
+      message: `Rarus KKT \u0432\u0435\u0440\u043D\u0443\u043B HTTP ${response.status}`,
+      data
+    });
+  }
+  return data;
+}
+async function claimFiscalReceipt(database, orderId) {
+  var _a;
+  const result = await database.updateTable("site_orders").set({
+    fiscal_receipt_status: FISCAL_RECEIPT_STATUS.SENDING,
+    fiscal_receipt_error: null,
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", orderId).where("fiscal_receipt_operation_id", "is", null).where((eb) => eb.or([
+    eb("fiscal_receipt_status", "is", null),
+    eb("fiscal_receipt_status", "=", ""),
+    eb("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.FAILED)
+  ])).executeTakeFirst();
+  return Number((_a = result.numUpdatedRows) != null ? _a : 0) > 0;
+}
+async function saveFiscalReceiptFailure(database, orderId, error) {
+  await database.updateTable("site_orders").set({
+    fiscal_receipt_status: FISCAL_RECEIPT_STATUS.FAILED,
+    fiscal_receipt_error: (error == null ? void 0 : error.data) ? JSON.stringify(error.data) : (error == null ? void 0 : error.message) || "Fiscal receipt failed",
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", orderId).where("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.SENDING).execute();
+}
+function normalizeFiscalReceiptStatus(data) {
+  var _a, _b;
+  const rawStatus = String(((_a = data == null ? void 0 : data.operation) == null ? void 0 : _a.status) || "").toLowerCase();
+  if (((_b = data == null ? void 0 : data.fiscalization) == null ? void 0 : _b.fiscal_number) || RARUS_COMPLETED_STATUSES.has(rawStatus)) {
+    return FISCAL_RECEIPT_STATUS.COMPLETED;
+  }
+  if (RARUS_FAILED_STATUSES.has(rawStatus)) {
+    return FISCAL_RECEIPT_STATUS.FAILED;
+  }
+  return rawStatus || FISCAL_RECEIPT_STATUS.QUEUED;
+}
+async function refreshFiscalReceiptStatus(database, order) {
+  var _a;
+  if (!(order == null ? void 0 : order.fiscal_receipt_operation_id)) return null;
+  const config = getRarusKktConfig();
+  if (!config.enabled || !config.apiKey) return null;
+  const data = await requestRarusKkt(
+    config,
+    `document/${encodeURIComponent(order.fiscal_receipt_operation_id)}`
+  );
+  const status = normalizeFiscalReceiptStatus(data);
+  await database.updateTable("site_orders").set({
+    fiscal_receipt_status: status,
+    fiscal_receipt_error: status === FISCAL_RECEIPT_STATUS.FAILED ? String(((_a = data == null ? void 0 : data.operation) == null ? void 0 : _a.message) || "Fiscal receipt failed") : null,
+    fiscal_receipt_payload: JSON.stringify(data),
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", Number(order.id)).where("fiscal_receipt_operation_id", "=", order.fiscal_receipt_operation_id).execute();
+  return { status, data };
+}
+async function sendFiscalReceiptForPaidOrder(database, order) {
+  if (!order || order.payment_status !== "paid") return null;
+  if (order.fiscal_receipt_operation_id) return null;
+  if (order.fiscal_receipt_status && order.fiscal_receipt_status !== FISCAL_RECEIPT_STATUS.FAILED) return null;
+  const config = getRarusKktConfig();
+  if (!config.enabled || !config.apiKey) return null;
+  const orderId = Number(order.id);
+  if (!await claimFiscalReceipt(database, orderId)) return null;
+  try {
+    const contact = getReceiptContact(order);
+    if (!contact.email && !contact.phone) {
+      throw new Error("Missing customer email or phone for fiscal receipt");
+    }
+    const items = await getReceiptItems(database, orderId, config);
+    const total = toMoney(order.amount);
+    if (!items.length || !total) {
+      throw new Error("Missing fiscal receipt items or amount");
+    }
+    const timestamp = Math.floor(Date.now() / 1e3);
+    const receipt = {
+      id: createReceiptId(order),
+      doc_type: "sale",
+      timestamp_utc: timestamp,
+      timestamp_local: timestamp,
+      ...contact,
+      tax_system: config.taxSystem,
+      inn: config.inn,
+      payment_address: config.paymentAddress || void 0,
+      payment_place: config.paymentPlace || void 0,
+      senderEmail: config.senderEmail || void 0,
+      tag_1125: 1,
+      tag_1011: config.tag1011,
+      items,
+      total
+    };
+    const data = await requestRarusKkt(config, "document", { method: "POST", body: receipt });
+    const operation = (data == null ? void 0 : data.operation) || {};
+    await database.updateTable("site_orders").set({
+      fiscal_receipt_status: operation.status || FISCAL_RECEIPT_STATUS.QUEUED,
+      fiscal_receipt_operation_id: operation.operation_id || null,
+      fiscal_receipt_sent_at: /* @__PURE__ */ new Date(),
+      fiscal_receipt_error: null,
+      fiscal_receipt_payload: JSON.stringify(data),
+      updated_at: /* @__PURE__ */ new Date()
+    }).where("id", "=", orderId).where("fiscal_receipt_status", "=", FISCAL_RECEIPT_STATUS.SENDING).execute();
+    return data;
+  } catch (error) {
+    await saveFiscalReceiptFailure(database, orderId, error);
+    return null;
+  }
+}
+
 const attempts = /* @__PURE__ */ new Map();
 const CLEANUP_INTERVAL_MS = 5 * 60 * 1e3;
 let lastCleanup = Date.now();
@@ -8342,6 +9068,124 @@ async function ensureSiteClient(database, user) {
     const client = await findClient(database, user);
     return (client == null ? void 0 : client.id) ? Number(client.id) : null;
   }
+}
+
+const DEFAULT_BATCH_SIZE = 10;
+const LOCK_TIMEOUT_MS = 5 * 60 * 1e3;
+const MAX_RETRY_DELAY_SECONDS = 15 * 60;
+function getRetryDelaySeconds(attempts) {
+  return Math.min(15 * 2 ** Math.max(0, attempts - 1), MAX_RETRY_DELAY_SECONDS);
+}
+async function claimNextJob(database, workerId) {
+  return database.transaction().execute(async (trx) => {
+    const staleBefore = new Date(Date.now() - LOCK_TIMEOUT_MS);
+    const job = await trx.selectFrom("site_order_jobs").selectAll().where((eb) => eb.or([
+      eb.and([
+        eb("status", "in", ["pending", "retry"]),
+        eb("next_attempt_at", "<=", /* @__PURE__ */ new Date())
+      ]),
+      eb.and([
+        eb("status", "=", "processing"),
+        eb("locked_at", "<=", staleBefore)
+      ])
+    ])).whereRef("attempts", "<", "max_attempts").orderBy("next_attempt_at").orderBy("id").forUpdate().skipLocked().executeTakeFirst();
+    if (!job) return null;
+    await trx.updateTable("site_order_jobs").set({
+      status: "processing",
+      attempts: Number(job.attempts) + 1,
+      locked_at: /* @__PURE__ */ new Date(),
+      locked_by: workerId,
+      updated_at: /* @__PURE__ */ new Date()
+    }).where("id", "=", job.id).execute();
+    return { ...job, attempts: Number(job.attempts) + 1 };
+  });
+}
+async function mirrorLegacyFiscalState(database, receiptId, order) {
+  if (!order) return null;
+  const status = String(order.fiscal_receipt_status || "queued");
+  await database.updateTable("site_order_fiscal_receipts").set({
+    operation_id: order.fiscal_receipt_operation_id || null,
+    status,
+    response_payload: order.fiscal_receipt_payload || null,
+    error: order.fiscal_receipt_error || null,
+    sent_at: order.fiscal_receipt_sent_at || null,
+    ...status === "completed" ? { completed_at: /* @__PURE__ */ new Date() } : {},
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", Number(receiptId)).execute();
+  return status;
+}
+async function processFiscalReceiptJob(database, job) {
+  const receipt = await database.selectFrom("site_order_fiscal_receipts").selectAll().where("id", "=", Number(job.fiscal_receipt_id)).executeTakeFirst();
+  let order = await database.selectFrom("site_orders").selectAll().where("id", "=", Number(job.site_order_id)).executeTakeFirst();
+  if (!receipt || !order) return { completed: true };
+  if (receipt.status === "completed") return { completed: true };
+  if (receipt.receipt_type !== "sale") {
+    throw new Error(`Unsupported fiscal receipt type: ${receipt.receipt_type}`);
+  }
+  if (order.fiscal_receipt_operation_id) {
+    await refreshFiscalReceiptStatus(database, order);
+  } else {
+    await sendFiscalReceiptForPaidOrder(database, order);
+  }
+  order = await database.selectFrom("site_orders").selectAll().where("id", "=", Number(job.site_order_id)).executeTakeFirst();
+  const status = await mirrorLegacyFiscalState(database, receipt.id, order);
+  if (status === "completed") return { completed: true };
+  if (status === "failed") throw new Error((order == null ? void 0 : order.fiscal_receipt_error) || "Fiscal receipt failed");
+  return { completed: false, delaySeconds: (order == null ? void 0 : order.fiscal_receipt_operation_id) ? 15 : 60 };
+}
+async function executeJob(database, job) {
+  if (job.job_type === "send_fiscal_receipt") {
+    return processFiscalReceiptJob(database, job);
+  }
+  throw new Error(`Unsupported site order job type: ${job.job_type}`);
+}
+async function completeJob(database, jobId) {
+  await database.updateTable("site_order_jobs").set({
+    status: "completed",
+    locked_at: null,
+    locked_by: null,
+    last_error: null,
+    completed_at: /* @__PURE__ */ new Date(),
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", Number(jobId)).execute();
+}
+async function rescheduleJob(database, job, error = null, delaySeconds = null) {
+  const exhausted = Number(job.attempts) >= Number(job.max_attempts);
+  const delay = delaySeconds != null ? delaySeconds : getRetryDelaySeconds(Number(job.attempts));
+  await database.updateTable("site_order_jobs").set({
+    status: exhausted ? "failed" : "retry",
+    next_attempt_at: new Date(Date.now() + delay * 1e3),
+    locked_at: null,
+    locked_by: null,
+    last_error: error ? String((error == null ? void 0 : error.message) || error).slice(0, 65535) : null,
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", Number(job.id)).execute();
+}
+async function processPendingSiteOrderJobs(database, options = {}) {
+  const requestedLimit = Number(options.limit || DEFAULT_BATCH_SIZE);
+  const limit = Math.min(Math.max(1, requestedLimit), 50);
+  const workerId = String(options.workerId || `shop-${process.pid}-${crypto.randomUUID()}`).slice(0, 128);
+  const result = { processed: 0, completed: 0, retried: 0, failed: 0 };
+  while (result.processed < limit) {
+    const job = await claimNextJob(database, workerId);
+    if (!job) break;
+    result.processed += 1;
+    try {
+      const outcome = await executeJob(database, job);
+      if (outcome.completed) {
+        await completeJob(database, job.id);
+        result.completed += 1;
+      } else {
+        await rescheduleJob(database, job, null, outcome.delaySeconds);
+        result.retried += 1;
+      }
+    } catch (error) {
+      await rescheduleJob(database, job, error);
+      if (Number(job.attempts) >= Number(job.max_attempts)) result.failed += 1;
+      else result.retried += 1;
+    }
+  }
+  return result;
 }
 
 const MAX_ITEMS = 100;
@@ -8561,359 +9405,185 @@ async function getOwnedSiteOrder(database, event, orderId, accessToken = "") {
   return order;
 }
 
-const DEFAULT_SBP_BASE_URL = "https://test3.api.vtb.ru:8443/openapi/smb/efcp/sbp-gateway/v1/";
-const DEFAULT_ECOMMERCE_BASE_URL = "https://test3.api.vtb.ru:8443/openapi/smb/efcp/e-commerce/v1/";
-const DEFAULT_TOKEN_URL = "https://epa-ift-sbp.vtb.ru:443/passport/oauth2/token";
-const DEFAULT_QR_TTL_SECONDS = 1200;
-const readEnv = (name) => {
-  var _a, _b;
-  return (_b = (_a = process.env[name]) == null ? void 0 : _a.trim()) != null ? _b : "";
-};
-function readConfigValue(config, key, envName) {
-  var _a;
-  return readEnv(envName) || ((_a = config.vtbPayment) == null ? void 0 : _a[key]) || "";
+const COMPLETED_REFUND_STATUSES = /* @__PURE__ */ new Set(["COMPLETED", "CONFIRMED", "RECONCILED", "REFUNDED", "SUCCESS", "SUCCEEDED"]);
+const FAILED_REFUND_STATUSES = /* @__PURE__ */ new Set(["FAILED", "DECLINED", "REJECTED", "CANCELLED", "CANCELED"]);
+const RESERVED_REFUND_STATUSES = ["sending", "pending", "completed"];
+function roundMoney(value) {
+  return Math.round(Number(value) * 100) / 100;
 }
-function normalizeBaseUrl(value) {
-  return value.endsWith("/") ? value : `${value}/`;
-}
-function getVtbHeaderClientId(clientId) {
-  return String(clientId || "").trim().toLowerCase().replace(/@ext\.vtb\.ru$/i, "");
-}
-function isVtbPaymentMockEnabled() {
-  const mode = readEnv("VTB_PAYMENT_MODE").toLowerCase();
-  const mock = readEnv("VTB_PAYMENT_MOCK").toLowerCase();
-  return mode === "mock" || ["1", "true", "yes", "on"].includes(mock);
-}
-function getMockPaymentStatus() {
-  const status = readEnv("VTB_PAYMENT_MOCK_STATUS").toLowerCase();
-  return ["pending", "paid", "failed"].includes(status) ? status : "pending";
-}
-function getVtbPaymentConfig() {
-  const config = useRuntimeConfig();
-  const sbpBaseUrl = readConfigValue(config, "sbpBaseUrl", "VTB_PAYMENT_SBP_BASE_URL") || DEFAULT_SBP_BASE_URL;
-  const ecommerceBaseUrl = readConfigValue(config, "ecommerceBaseUrl", "VTB_PAYMENT_ECOMMERCE_BASE_URL") || DEFAULT_ECOMMERCE_BASE_URL;
-  const tokenUrl = readConfigValue(config, "tokenUrl", "VTB_PAYMENT_TOKEN_URL") || DEFAULT_TOKEN_URL;
-  const clientId = readConfigValue(config, "clientId", "VTB_PAYMENT_CLIENT_ID");
-  const headerClientId = readConfigValue(config, "headerClientId", "VTB_PAYMENT_HEADER_CLIENT_ID") || getVtbHeaderClientId(clientId);
-  const qrTtlSeconds = Number(readConfigValue(config, "qrTtlSeconds", "VTB_PAYMENT_QR_TTL_SECONDS"));
-  return {
-    sbpBaseUrl: normalizeBaseUrl(sbpBaseUrl),
-    ecommerceBaseUrl: normalizeBaseUrl(ecommerceBaseUrl),
-    tokenUrl,
-    clientId,
-    clientSecret: readConfigValue(config, "clientSecret", "VTB_PAYMENT_CLIENT_SECRET"),
-    headerClientId,
-    merchantAuthorization: readConfigValue(config, "merchantAuthorization", "VTB_PAYMENT_MERCHANT_AUTHORIZATION"),
-    returnUrl: readConfigValue(config, "returnUrl", "VTB_PAYMENT_RETURN_URL"),
-    qrTtlSeconds: Number.isFinite(qrTtlSeconds) && qrTtlSeconds > 0 ? qrTtlSeconds : DEFAULT_QR_TTL_SECONDS
-  };
-}
-
-let cachedAccessToken = null;
-let cachedAccessTokenExpiresAt = 0;
-function assertVtbCredentials(config) {
-  if (config.clientId && config.clientSecret && config.headerClientId) return;
-  throw createError$1({
-    statusCode: 500,
-    statusMessage: "VTB payment is not configured",
-    message: "\u041D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u044B OAuth-\u0440\u0435\u043A\u0432\u0438\u0437\u0438\u0442\u044B \u0412\u0422\u0411 \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B"
-  });
-}
-async function parseFetchResponse(response) {
-  const text = await response.text();
+function parseJson(value) {
+  if (!value) return {};
+  if (typeof value === "object") return value;
   try {
-    return text ? JSON.parse(text) : {};
+    return JSON.parse(value) || {};
   } catch {
-    return { raw: text };
+    return {};
   }
 }
-function getVtbTlsOptions() {
-  const caPath = process.env.VTB_PAYMENT_CA_CERTS_PATH || process.env.NODE_EXTRA_CA_CERTS;
-  const allowPartialTrustChain = ["1", "true", "yes"].includes(String(process.env.VTB_PAYMENT_TLS_ALLOW_PARTIAL_CHAIN || "").toLowerCase());
-  if (!caPath && !allowPartialTrustChain) return null;
-  return {
-    ...caPath ? { ca: readFileSync(caPath) } : {},
-    ...allowPartialTrustChain ? { allowPartialTrustChain: true } : {}
-  };
-}
-function requestVtbWithHttps(url, options, tlsOptions) {
-  return new Promise((resolve, reject) => {
-    const body = (options == null ? void 0 : options.body) == null ? null : String(options.body);
-    const headers = { ...(options == null ? void 0 : options.headers) || {} };
-    if (body && !headers["Content-Length"]) {
-      headers["Content-Length"] = Buffer.byteLength(body);
-    }
-    const request$1 = request(url, {
-      method: (options == null ? void 0 : options.method) || "GET",
-      headers,
-      ...tlsOptions
-    }, (response) => {
-      const chunks = [];
-      response.on("data", (chunk) => chunks.push(chunk));
-      response.on("end", () => {
-        const responseHeaders = new Headers();
-        for (const [key, value] of Object.entries(response.headers)) {
-          if (Array.isArray(value)) {
-            for (const item of value) responseHeaders.append(key, item);
-          } else if (value != null) {
-            responseHeaders.set(key, String(value));
-          }
-        }
-        resolve(new Response(Buffer.concat(chunks), {
-          status: response.statusCode || 0,
-          statusText: response.statusMessage || "",
-          headers: responseHeaders
-        }));
-      });
-    });
-    request$1.on("error", reject);
-    request$1.end(body);
-  });
-}
-async function fetchVtb(url, options, fallbackMessage) {
+function getRefundStatus(refund) {
   var _a, _b;
-  try {
-    const tlsOptions = getVtbTlsOptions();
-    return tlsOptions ? await requestVtbWithHttps(url, options, tlsOptions) : await fetch(url, options);
-  } catch (error) {
-    throw createError$1({
-      statusCode: 502,
-      statusMessage: "VTB network request failed",
-      message: `${fallbackMessage}: ${((_a = error == null ? void 0 : error.cause) == null ? void 0 : _a.message) || (error == null ? void 0 : error.message) || "network error"}`,
-      data: {
-        url,
-        code: ((_b = error == null ? void 0 : error.cause) == null ? void 0 : _b.code) || (error == null ? void 0 : error.code) || null
-      }
-    });
-  }
+  return ((_a = refund == null ? void 0 : refund.status) == null ? void 0 : _a.value) || (refund == null ? void 0 : refund.status) || ((_b = refund == null ? void 0 : refund.state) == null ? void 0 : _b.value) || (refund == null ? void 0 : refund.state) || "";
 }
-async function getVtbAccessToken(config) {
-  assertVtbCredentials(config);
-  if (cachedAccessToken && cachedAccessTokenExpiresAt > Date.now() + 1e4) {
-    return cachedAccessToken;
-  }
-  const body = new URLSearchParams();
-  body.append("grant_type", "client_credentials");
-  body.append("client_id", config.clientId);
-  body.append("client_secret", config.clientSecret);
-  const response = await fetchVtb(config.tokenUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body
-  }, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C\u0441\u044F \u043A OAuth \u0412\u0422\u0411");
-  const data = await parseFetchResponse(response);
-  if (!response.ok || !(data == null ? void 0 : data.access_token)) {
-    throw createError$1({
-      statusCode: 502,
-      statusMessage: "VTB token request failed",
-      message: (data == null ? void 0 : data.error_description) || (data == null ? void 0 : data.error) || `\u0412\u0422\u0411 \u043D\u0435 \u0432\u044B\u0434\u0430\u043B access_token (HTTP ${response.status})`,
-      data
-    });
-  }
-  const expiresIn = Number(data.expires_in) || 170;
-  cachedAccessToken = data.access_token;
-  cachedAccessTokenExpiresAt = Date.now() + Math.max(30, expiresIn - 15) * 1e3;
-  return cachedAccessToken;
-}
-function buildVtbHeaders(config, accessToken) {
-  const headers = {
-    "X-IBM-Client-Id": config.headerClientId,
-    "Authorization": `Bearer ${accessToken}`,
-    "Content-Type": "application/json"
-  };
-  if (config.merchantAuthorization) {
-    headers["Merchant-Authorization"] = config.merchantAuthorization;
-  }
-  return headers;
-}
-async function requestVtbApi(baseUrl, path, options = {}) {
-  var _a;
-  const config = getVtbPaymentConfig();
-  const accessToken = await getVtbAccessToken(config);
-  const method = options.method || "POST";
-  const body = options.body === void 0 ? void 0 : JSON.stringify(options.body);
-  const url = `${baseUrl}${path.replace(/^\/+/, "")}`;
-  const response = await fetchVtb(url, {
-    method,
-    headers: buildVtbHeaders(config, accessToken),
-    ...body === void 0 ? {} : { body }
-  }, "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C\u0441\u044F \u043A API \u0412\u0422\u0411");
-  const data = await parseFetchResponse(response);
-  if (!response.ok) {
-    if (response.status === 401) {
-      cachedAccessToken = null;
-      cachedAccessTokenExpiresAt = 0;
-    }
-    throw createError$1({
-      statusCode: 502,
-      statusMessage: "VTB request failed",
-      message: (data == null ? void 0 : data.message) || (data == null ? void 0 : data.errorMessage) || ((_a = data == null ? void 0 : data.error) == null ? void 0 : _a.description) || (data == null ? void 0 : data.error) || `\u0412\u0422\u0411 \u0432\u0435\u0440\u043D\u0443\u043B HTTP ${response.status}`,
-      data
-    });
-  }
-  return data;
-}
-async function requestVtbEcommerce(path, options = {}) {
-  const config = getVtbPaymentConfig();
-  return requestVtbApi(config.ecommerceBaseUrl, path, options);
-}
-
-const PAID_QR_STATUSES = /* @__PURE__ */ new Set(["ACCEPTED", "ACWP", "OK", "RECONCILED", "PAID", "CONFIRMED"]);
-const FAILED_QR_STATUSES = /* @__PURE__ */ new Set(["REJECTED", "RJCT", "REJECTED_BY_USER", "CANCELED", "CANCELLED", "DECLINED"]);
-function getPaymentStatusFromVtbQr(qrStatus, transactionState) {
-  const normalizedQrStatus = String(qrStatus || "").toUpperCase();
-  const normalizedTransactionState = String(transactionState || "").toUpperCase();
-  if (PAID_QR_STATUSES.has(normalizedQrStatus) || PAID_QR_STATUSES.has(normalizedTransactionState) || normalizedTransactionState === "DEPOSITED") {
-    return "paid";
-  }
-  if (FAILED_QR_STATUSES.has(normalizedQrStatus) || FAILED_QR_STATUSES.has(normalizedTransactionState)) {
-    return "failed";
-  }
+function normalizeVtbRefundStatus(status) {
+  const normalized = String(status || "").toUpperCase();
+  if (COMPLETED_REFUND_STATUSES.has(normalized)) return "completed";
+  if (FAILED_REFUND_STATUSES.has(normalized)) return "failed";
   return "pending";
 }
-
-function createVtbQrExpiresAt(config) {
-  return new Date(Date.now() + config.qrTtlSeconds * 1e3);
+function createRefundId() {
+  return `REF-${crypto.randomUUID()}`;
 }
-function getTestAmountOverride(config, amount) {
-  const overrideAmount = Number(process.env.VTB_PAYMENT_TEST_AMOUNT_OVERRIDE);
-  if (!Number.isFinite(overrideAmount) || overrideAmount <= 0) return null;
-  if (!config.ecommerceBaseUrl.includes("test3.api.vtb.ru")) return null;
-  return {
-    originalAmount: Number(amount || 0),
-    sentAmount: Math.round(overrideAmount * 100) / 100
-  };
-}
-function getVtbQrExpiresAt() {
-  const config = getVtbPaymentConfig();
-  return createVtbQrExpiresAt(config);
-}
-async function getVtbDynamicQr(requestId, options = {}) {
-  var _a, _b, _c, _d;
-  if (isVtbPaymentMockEnabled()) {
-    return {
-      qrId: `MOCK-QR-${Date.now()}`,
-      payload: `https://example.local/mock-payment/${encodeURIComponent(requestId)}`,
-      renderedQr: null,
-      qrStatus: "PENDING",
-      mock: true
-    };
-  }
-  const config = getVtbPaymentConfig();
-  const amount = Number(options.amount || 0);
-  const testAmountOverride = getTestAmountOverride(config, amount);
-  const paymentAmount = (_a = testAmountOverride == null ? void 0 : testAmountOverride.sentAmount) != null ? _a : amount;
-  const description = String(options.description || `\u0417\u0430\u043A\u0430\u0437 Indigo #${requestId}`);
-  const orderName = testAmountOverride ? `${description} TEST amount override: original ${testAmountOverride.originalAmount}` : description;
-  const data = await requestVtbEcommerce("orders", {
-    method: "POST",
-    body: {
-      orderId: requestId,
-      orderName: orderName.slice(0, 255),
-      expire: createVtbQrExpiresAt(config).toISOString(),
-      amount: {
-        value: paymentAmount,
-        code: "RUB"
-      },
-      returnPaymentData: "sbp",
-      returnUrl: config.returnUrl || void 0
+async function reserveRefund(database, order, { attemptId, refundId, paymentId, amount, currency, refundableAmount }) {
+  return database.transaction().execute(async (trx) => {
+    const lockedOrder = await trx.selectFrom("site_orders").select(["id", "payment_status"]).where("id", "=", order.id).forUpdate().executeTakeFirst();
+    if ((lockedOrder == null ? void 0 : lockedOrder.payment_status) !== "paid") {
+      throw createError$1({
+        statusCode: 409,
+        statusMessage: "Order is not paid",
+        message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0447\u0435\u043D\u043D\u043E\u0433\u043E \u0437\u0430\u043A\u0430\u0437\u0430"
+      });
     }
+    const reserved = await trx.selectFrom("site_order_refunds").select(({ fn }) => fn.coalesce(fn.sum("amount"), 0).as("amount")).where("site_order_id", "=", order.id).where("status", "in", RESERVED_REFUND_STATUSES).executeTakeFirst();
+    const reservedAmount = roundMoney((reserved == null ? void 0 : reserved.amount) || 0);
+    if (roundMoney(reservedAmount + amount) > refundableAmount) {
+      throw createError$1({
+        statusCode: 409,
+        statusMessage: "Refund amount exceeds payment",
+        message: `\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u043A \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0443 ${roundMoney(refundableAmount - reservedAmount).toFixed(2)} RUB`
+      });
+    }
+    const result = await trx.insertInto("site_order_refunds").values({
+      site_order_id: order.id,
+      payment_attempt_id: attemptId,
+      refund_id: refundId,
+      vtb_payment_id: paymentId,
+      amount,
+      currency,
+      status: "sending",
+      requested_at: /* @__PURE__ */ new Date(),
+      created_at: /* @__PURE__ */ new Date(),
+      updated_at: /* @__PURE__ */ new Date()
+    }).executeTakeFirst();
+    return Number(result.insertId);
   });
-  const order = (data == null ? void 0 : data.object) || {};
-  const sbpPayment = Array.isArray(order.preparedPayments) ? order.preparedPayments.find((payment) => String((payment == null ? void 0 : payment.type) || "").toLowerCase() === "sbp") : null;
-  const paymentUrl = ((_b = sbpPayment == null ? void 0 : sbpPayment.object) == null ? void 0 : _b.url) || (sbpPayment == null ? void 0 : sbpPayment.url);
-  if (!order.orderId || !paymentUrl) {
+}
+async function requestSiteOrderRefund(database, order, requestedAmount, requestedRefundId = "") {
+  var _a, _b;
+  if ((order == null ? void 0 : order.payment_status) !== "paid") {
     throw createError$1({
-      statusCode: 502,
-      statusMessage: "VTB SBP payment url is missing",
-      message: "\u0412\u0422\u0411 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B \u0441\u0441\u044B\u043B\u043A\u0443 \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0442\u044B \u0421\u0411\u041F",
-      data
+      statusCode: 409,
+      statusMessage: "Order is not paid",
+      message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0442 \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F \u043E\u043F\u043B\u0430\u0447\u0435\u043D\u043D\u043E\u0433\u043E \u0437\u0430\u043A\u0430\u0437\u0430"
     });
   }
-  const renderedQr = await QRCode.toString(paymentUrl, {
-    type: "svg",
-    errorCorrectionLevel: "M",
-    margin: 1,
-    width: 512
+  const paymentAttempt = await database.selectFrom("site_order_payment_attempts").selectAll().where("site_order_id", "=", Number(order.id)).where("status", "=", "paid").orderBy("paid_at", "desc").orderBy("id", "desc").executeTakeFirst();
+  if (!(paymentAttempt == null ? void 0 : paymentAttempt.bank_order_id)) {
+    throw createError$1({
+      statusCode: 409,
+      statusMessage: "VTB payment attempt is missing",
+      message: "\u0423 \u0437\u0430\u043A\u0430\u0437\u0430 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0451\u043D\u043D\u0430\u044F \u043F\u043E\u043F\u044B\u0442\u043A\u0430 \u043E\u043F\u043B\u0430\u0442\u044B \u0412\u0422\u0411"
+    });
+  }
+  const amount = roundMoney(requestedAmount);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    throw createError$1({
+      statusCode: 400,
+      statusMessage: "Invalid refund amount",
+      message: "\u0421\u0443\u043C\u043C\u0430 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0430 \u0434\u043E\u043B\u0436\u043D\u0430 \u0431\u044B\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0443\u043B\u044F"
+    });
+  }
+  const orderData = await getVtbOrder(paymentAttempt.bank_order_id);
+  const payment = getVtbPaymentDetails(orderData);
+  const payload = parseJson(order.payload);
+  const paymentId = payment.paymentId || String(paymentAttempt.payment_id || order.vtb_payment_id || "").trim();
+  const refundableAmount = roundMoney(
+    payment.amount || paymentAttempt.charged_amount || ((_b = (_a = payload == null ? void 0 : payload.payment) == null ? void 0 : _a.vtb) == null ? void 0 : _b.chargedAmount) || 0
+  );
+  const currency = String(payment.currency || order.currency || "RUB").toUpperCase();
+  if (!paymentId || !refundableAmount) {
+    throw createError$1({
+      statusCode: 409,
+      statusMessage: "VTB payment is missing",
+      message: "\u0412\u0422\u0411 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B paymentId \u0438\u043B\u0438 \u0441\u0443\u043C\u043C\u0443 \u043F\u043B\u0430\u0442\u0435\u0436\u0430"
+    });
+  }
+  if (amount > refundableAmount) {
+    throw createError$1({
+      statusCode: 409,
+      statusMessage: "Refund amount exceeds payment",
+      message: `\u0421\u0443\u043C\u043C\u0430 \u0432\u043E\u0437\u0432\u0440\u0430\u0442\u0430 \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u043F\u0440\u0435\u0432\u044B\u0448\u0430\u0442\u044C ${refundableAmount.toFixed(2)} RUB`
+    });
+  }
+  const refundId = String(requestedRefundId || "").trim() || createRefundId();
+  if (!/^[a-zA-Z0-9_-]{1,64}$/.test(refundId)) {
+    throw createError$1({
+      statusCode: 400,
+      statusMessage: "Invalid refund id",
+      message: "refundId \u0434\u043E\u043B\u0436\u0435\u043D \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0441\u043A\u0438\u0435 \u0431\u0443\u043A\u0432\u044B, \u0446\u0438\u0444\u0440\u044B, _ \u0438\u043B\u0438 -"
+    });
+  }
+  const existingRefund = await database.selectFrom("site_order_refunds").selectAll().where("refund_id", "=", refundId).executeTakeFirst();
+  if (existingRefund) {
+    if (Number(existingRefund.site_order_id) === Number(order.id) && roundMoney(existingRefund.amount) === amount) {
+      return existingRefund;
+    }
+    throw createError$1({
+      statusCode: 409,
+      statusMessage: "Refund id already exists",
+      message: "\u0412\u043E\u0437\u0432\u0440\u0430\u0442 \u0441 \u0442\u0430\u043A\u0438\u043C refundId \u0443\u0436\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442"
+    });
+  }
+  const rowId = await reserveRefund(database, order, {
+    attemptId: Number(paymentAttempt.id),
+    refundId,
+    paymentId,
+    amount,
+    currency,
+    refundableAmount
   });
-  return {
-    qrId: ((_c = sbpPayment == null ? void 0 : sbpPayment.object) == null ? void 0 : _c.qrcId) || order.orderCode || order.orderId,
-    payload: paymentUrl,
-    renderedQr,
-    qrStatus: ((_d = order.status) == null ? void 0 : _d.value) || "CREATED",
-    ...testAmountOverride ? { testAmountOverride } : {},
-    raw: data
-  };
+  try {
+    const response = await createVtbRefund({ refundId, paymentId, amount, currency });
+    const refund = (response == null ? void 0 : response.object) && typeof response.object === "object" ? response.object : response;
+    const status = normalizeVtbRefundStatus(getRefundStatus(refund));
+    await database.updateTable("site_order_refunds").set({
+      status,
+      provider_status: String(getRefundStatus(refund) || ""),
+      completed_at: status === "completed" ? /* @__PURE__ */ new Date() : null,
+      payload: JSON.stringify({ request: { refundId, paymentId, amount, currency }, response }),
+      updated_at: /* @__PURE__ */ new Date()
+    }).where("id", "=", rowId).execute();
+    return database.selectFrom("site_order_refunds").selectAll().where("id", "=", rowId).executeTakeFirst();
+  } catch (error) {
+    await database.updateTable("site_order_refunds").set({
+      status: "failed",
+      payload: JSON.stringify({
+        request: { refundId, paymentId, amount, currency },
+        error: (error == null ? void 0 : error.data) || { message: (error == null ? void 0 : error.message) || "VTB refund failed" }
+      }),
+      updated_at: /* @__PURE__ */ new Date()
+    }).where("id", "=", rowId).execute();
+    throw error;
+  }
 }
-async function getVtbDynamicQrStatus({ requestId, qrId }) {
-  var _a, _b, _c, _d, _e;
-  if (isVtbPaymentMockEnabled()) {
-    const status = getMockPaymentStatus();
-    return {
-      requestId,
-      qrId,
-      qrStatus: status === "paid" ? "ACCEPTED" : status === "failed" ? "REJECTED" : "PENDING",
-      transactionState: status === "paid" ? "DEPOSITED" : null,
-      mock: true
-    };
-  }
-  const data = await requestVtbEcommerce(`orders/${encodeURIComponent(requestId)}`, {
-    method: "GET"
-  });
-  const order = (data == null ? void 0 : data.object) || {};
-  const payments = Array.isArray((_a = order.transactions) == null ? void 0 : _a.payments) ? order.transactions.payments : [];
-  const sbpPayment = ((_b = payments.find((payment) => {
-    var _a2, _b2;
-    return String(((_b2 = (_a2 = payment == null ? void 0 : payment.object) == null ? void 0 : _a2.paymentData) == null ? void 0 : _b2.type) || "").toLowerCase() === "sbp";
-  })) == null ? void 0 : _b.object) || ((_c = payments[0]) == null ? void 0 : _c.object);
-  return {
-    requestId,
-    qrId,
-    qrStatus: (_d = order.status) == null ? void 0 : _d.value,
-    transactionState: (_e = sbpPayment == null ? void 0 : sbpPayment.status) == null ? void 0 : _e.value,
-    raw: data
-  };
-}
-
-const FINAL_PAYMENT_STATUSES = /* @__PURE__ */ new Set(["paid", "failed", "expired", "cancelled"]);
-async function refreshVtbPaymentStatus(database, siteOrder, options = {}) {
-  var _a, _b, _c;
-  const currentStatus = (_b = (_a = siteOrder == null ? void 0 : siteOrder.payment_status) != null ? _a : siteOrder == null ? void 0 : siteOrder.status) != null ? _b : "pending";
-  if (!siteOrder || FINAL_PAYMENT_STATUSES.has(currentStatus)) {
-    return {
-      siteOrder: siteOrder ? { ...siteOrder, status: currentStatus } : null,
-      status: currentStatus,
-      statusResponse: null
-    };
-  }
-  if (!siteOrder.order_number || !siteOrder.vtb_qr_id) {
-    return {
-      siteOrder: { ...siteOrder, status: currentStatus },
-      status: currentStatus,
-      statusResponse: null
-    };
-  }
-  const statusResponse = await getVtbDynamicQrStatus({
-    requestId: siteOrder.order_number,
-    qrId: siteOrder.vtb_qr_id
-  });
-  const status = getPaymentStatusFromVtbQr(statusResponse.qrStatus, statusResponse.transactionState);
-  const settledSiteOrder = await settleSiteOrderPayment(database, siteOrder.id, status, {
-    payload: mergeVtbPaymentPayload(siteOrder.payload, {
-      ...options.payloadPatch,
-      lastStatus: statusResponse.raw || statusResponse
-    })
-  });
-  return {
-    siteOrder: {
-      ...settledSiteOrder,
-      status: (_c = settledSiteOrder == null ? void 0 : settledSiteOrder.payment_status) != null ? _c : status
-    },
+async function refreshSiteOrderRefund(database, order, refundRow) {
+  const paymentAttempt = refundRow.payment_attempt_id ? await database.selectFrom("site_order_payment_attempts").selectAll().where("id", "=", Number(refundRow.payment_attempt_id)).where("site_order_id", "=", Number(order.id)).executeTakeFirst() : null;
+  const bankOrderId = (paymentAttempt == null ? void 0 : paymentAttempt.bank_order_id) || order.order_number;
+  const orderData = await getVtbOrder(bankOrderId);
+  const refund = getVtbRefundDetails(orderData, refundRow.refund_id);
+  if (!refund) return refundRow;
+  const status = normalizeVtbRefundStatus(getRefundStatus(refund));
+  await database.updateTable("site_order_refunds").set({
     status,
-    statusResponse
-  };
+    provider_status: String(getRefundStatus(refund) || ""),
+    completed_at: status === "completed" ? refundRow.completed_at || /* @__PURE__ */ new Date() : null,
+    payload: JSON.stringify({
+      ...parseJson(refundRow.payload),
+      lastStatus: refund,
+      checkedAt: (/* @__PURE__ */ new Date()).toISOString()
+    }),
+    updated_at: /* @__PURE__ */ new Date()
+  }).where("id", "=", refundRow.id).execute();
+  return database.selectFrom("site_order_refunds").selectAll().where("id", "=", refundRow.id).executeTakeFirst();
 }
 
 const collections = {
@@ -8978,8 +9648,13 @@ const _lazy_x8S6Z5 = () => import('../routes/api/auth/password-recovery/request-
 const _lazy_iM6PMI = () => import('../routes/api/auth/request-code.post.mjs');
 const _lazy_7yraPe = () => import('../routes/api/auth/verify-code.post.mjs');
 const _lazy_LBdnb_ = () => import('../routes/api/dadata/party-suggest.post.mjs');
+const _lazy_URJq5f = () => import('../routes/api/internal/payment-jobs/process.post.mjs');
+const _lazy__IrUPC = () => import('../routes/api/internal/site-orders/_orderId/fiscal-receipt.get.mjs');
 const _lazy_9YVRlL = () => import('../routes/api/internal/site-orders/_orderId/invoice/download.get.mjs');
 const _lazy_MQkddy = () => import('../routes/api/internal/site-orders/_orderId/index.get.mjs');
+const _lazy_C6M69o = () => import('../routes/api/internal/site-orders/_orderId/refunds/_refundId_.get.mjs');
+const _lazy_bOht7I = () => import('../routes/api/internal/site-orders/_orderId/index.get2.mjs');
+const _lazy_53CczQ = () => import('../routes/api/internal/site-orders/_orderId/index.post.mjs');
 const _lazy_uxGW6z = () => import('../routes/api/invoices/_invoiceId/download.get.mjs');
 const _lazy_i9FG0D = () => import('../routes/api/orders/_orderId/files.post.mjs');
 const _lazy_ZGkFgJ = () => import('../routes/api/index.post.mjs');
@@ -8988,6 +9663,7 @@ const _lazy_hYnqLN = () => import('../routes/api/organizations/_organizationId_.
 const _lazy_u6U_ey = () => import('../routes/api/organizations/_organizationId/active.patch.mjs');
 const _lazy__RsLdI = () => import('../routes/api/payments/_paymentId/status.get.mjs');
 const _lazy_dsJs2f = () => import('../routes/api/payments/invoice/start.post.mjs');
+const _lazy_AMuwLe = () => import('../routes/api/payments/vtb-card/start.post.mjs');
 const _lazy_Qb1qoy = () => import('../routes/api/payments/vtb-sbp/callback.post.mjs');
 const _lazy_LNpv6e = () => import('../routes/api/payments/vtb-sbp/start.post.mjs');
 const _lazy_nUlvZH = () => import('../routes/api/products/_slug_.get.mjs');
@@ -9016,8 +9692,13 @@ const handlers = [
   { route: '/api/auth/request-code', handler: _lazy_iM6PMI, lazy: true, middleware: false, method: "post" },
   { route: '/api/auth/verify-code', handler: _lazy_7yraPe, lazy: true, middleware: false, method: "post" },
   { route: '/api/dadata/party-suggest', handler: _lazy_LBdnb_, lazy: true, middleware: false, method: "post" },
+  { route: '/api/internal/payment-jobs/process', handler: _lazy_URJq5f, lazy: true, middleware: false, method: "post" },
+  { route: '/api/internal/site-orders/:orderId/fiscal-receipt', handler: _lazy__IrUPC, lazy: true, middleware: false, method: "get" },
   { route: '/api/internal/site-orders/:orderId/invoice/download', handler: _lazy_9YVRlL, lazy: true, middleware: false, method: "get" },
   { route: '/api/internal/site-orders/:orderId/invoice', handler: _lazy_MQkddy, lazy: true, middleware: false, method: "get" },
+  { route: '/api/internal/site-orders/:orderId/refunds/:refundId', handler: _lazy_C6M69o, lazy: true, middleware: false, method: "get" },
+  { route: '/api/internal/site-orders/:orderId/refunds', handler: _lazy_bOht7I, lazy: true, middleware: false, method: "get" },
+  { route: '/api/internal/site-orders/:orderId/refunds', handler: _lazy_53CczQ, lazy: true, middleware: false, method: "post" },
   { route: '/api/invoices/:invoiceId/download', handler: _lazy_uxGW6z, lazy: true, middleware: false, method: "get" },
   { route: '/api/orders/:orderId/files', handler: _lazy_i9FG0D, lazy: true, middleware: false, method: "post" },
   { route: '/api/orders', handler: _lazy_ZGkFgJ, lazy: true, middleware: false, method: "post" },
@@ -9026,6 +9707,7 @@ const handlers = [
   { route: '/api/organizations/:organizationId/active', handler: _lazy_u6U_ey, lazy: true, middleware: false, method: "patch" },
   { route: '/api/payments/:paymentId/status', handler: _lazy__RsLdI, lazy: true, middleware: false, method: "get" },
   { route: '/api/payments/invoice/start', handler: _lazy_dsJs2f, lazy: true, middleware: false, method: "post" },
+  { route: '/api/payments/vtb-card/start', handler: _lazy_AMuwLe, lazy: true, middleware: false, method: "post" },
   { route: '/api/payments/vtb-sbp/callback', handler: _lazy_Qb1qoy, lazy: true, middleware: false, method: "post" },
   { route: '/api/payments/vtb-sbp/start', handler: _lazy_LNpv6e, lazy: true, middleware: false, method: "post" },
   { route: '/api/products/:slug', handler: _lazy_nUlvZH, lazy: true, middleware: false, method: "get" },
@@ -9463,5 +10145,5 @@ trapUnhandledNodeErrors();
 setupGracefulShutdown(listener, nitroApp);
 const nodeServer = {};
 
-export { getSiteOrderStatusLabel as $, getQuery as A, readMultipartFormData as B, useRuntimeConfig as C, normalizeSiteOrderItems as D, getSiteOrderItemsAmount as E, createSiteOrder as F, getRequestHeaders as G, getSiteOrderPaymentState as H, updateSiteOrderPaymentStatus as I, refreshVtbPaymentStatus as J, createOrGetInvoice as K, sendInvoiceEmail as L, createSiteOrderNumber as M, markSiteOrderPaymentPending as N, getVtbDynamicQr as O, getVtbQrExpiresAt as P, saveSiteOrderVtbQr as Q, mergeVtbPaymentPayload as R, getProductBySlug as S, calculateProductPrice as T, getProducts as U, getRegistrationEmailError as V, sendRedirect as W, getRequestURL as X, sendNotificoreEmail as Y, parseSiteOrderPayload as Z, getSiteOrderWorkflowStatus as _, auth as a, getSitePaymentStatusLabel as a0, isSiteOrderInWork as a1, updateSiteOrderRecipient as a2, getCurrentSiteUser as a3, getSitePaymentStatusMeta as a4, isAuthPhone as a5, defineCachedFunction as a6, buildAssetsURL as a7, getResponseStatusText as a8, getResponseStatus as a9, withTrailingSlash as aA, withoutTrailingSlash as aB, $fetch$1 as aC, baseURL as aD, hash$1 as aE, executeAsync as aF, isInvoiceEmailPending as aG, nodeServer as aH, defineRenderHandler as aa, publicAssetsURL as ab, destr as ac, getRouteRules as ad, joinURL as ae, useNitroApp as af, serialize$1 as ag, hasProtocol as ah, isScriptProtocol as ai, parseQuery as aj, withQuery as ak, sanitizeStatusCode as al, parseURL as am, encodePath as an, decodePath as ao, klona as ap, defu as aq, defuFn as ar, isPhoneLike as as, getIdentifierError as at, getRussianSecondsWord as au, formatCompactPhone as av, getContext as aw, isEqual as ax, formatPhone as ay, unmaskPhoneToEmail as az, normalizePhoneDigits as b, createError$1 as c, defineEventHandler as d, ensureSiteClient as e, formatAuthPhone as f, assertRateLimit as g, sendNotificoreOtp as h, getNotificoreAuthenticationPayload as i, assertSuccessfulNotificoreOtpResponse as j, setResponseStatus as k, getNotificoreAuthenticationId as l, isNotificoreTimeoutError as m, normalizeAuthIdentifier as n, suggestDadataParties as o, assertInternalShopToken as p, getRouterParam as q, readBody as r, sendWebResponse as s, toWebRequest as t, useDatabase as u, verifyNotificoreOtp as v, getInvoiceByOrderId as w, sendInvoicePdf as x, serializeInvoice as y, getOwnedSiteOrder as z };
+export { getProductBySlug as $, serializeInvoice as A, refreshSiteOrderRefund as B, requestSiteOrderRefund as C, getOwnedSiteOrder as D, getQuery as E, readMultipartFormData as F, useRuntimeConfig as G, getProductById as H, calculateProductPrice as I, normalizeSiteOrderItems as J, getSiteOrderItemsAmount as K, createSiteOrder as L, getRequestHeaders as M, getPaymentAttempt as N, getHeader as O, refreshSbpPaymentAttempt as P, serializePaymentAttempt as Q, createOrGetInvoice as R, sendInvoiceEmail as S, createSiteOrderNumber as T, markSiteOrderPaymentPending as U, createVtbCardPayment as V, getVtbPaymentExpiresAt as W, saveSiteOrderVtbPayment as X, mergeVtbPaymentPayload as Y, findPaymentAttemptByVtbCallback as Z, startSbpPaymentAttempt as _, auth as a, getProducts as a0, getRegistrationEmailError as a1, sendRedirect as a2, getRequestURL as a3, sendNotificoreEmail as a4, parseSiteOrderPayload as a5, getSiteOrderWorkflowStatus as a6, getSiteOrderStatusLabel as a7, getSitePaymentStatusLabel as a8, isSiteOrderInWork as a9, isPhoneLike as aA, getIdentifierError as aB, getRussianSecondsWord as aC, formatCompactPhone as aD, getContext as aE, isEqual as aF, formatPhone as aG, unmaskPhoneToEmail as aH, withTrailingSlash as aI, withoutTrailingSlash as aJ, $fetch$1 as aK, baseURL as aL, hash$1 as aM, executeAsync as aN, isInvoiceEmailPending as aO, nodeServer as aP, updateSiteOrderRecipient as aa, getCurrentSiteUser as ab, getSitePaymentStatusMeta as ac, isAuthPhone as ad, defineCachedFunction as ae, buildAssetsURL as af, getResponseStatusText as ag, getResponseStatus as ah, defineRenderHandler as ai, publicAssetsURL as aj, destr as ak, getRouteRules as al, joinURL as am, useNitroApp as an, serialize$1 as ao, hasProtocol as ap, isScriptProtocol as aq, parseQuery as ar, klona as as, defu as at, withQuery as au, sanitizeStatusCode as av, parseURL as aw, encodePath as ax, decodePath as ay, defuFn as az, normalizePhoneDigits as b, createError$1 as c, defineEventHandler as d, ensureSiteClient as e, formatAuthPhone as f, assertRateLimit as g, sendNotificoreOtp as h, getNotificoreAuthenticationPayload as i, assertSuccessfulNotificoreOtpResponse as j, setResponseStatus as k, getNotificoreAuthenticationId as l, isNotificoreTimeoutError as m, normalizeAuthIdentifier as n, suggestDadataParties as o, assertInternalShopToken as p, processPendingSiteOrderJobs as q, readBody as r, sendWebResponse as s, toWebRequest as t, useDatabase as u, verifyNotificoreOtp as v, getRouterParam as w, enqueueSaleFiscalReceipt as x, getInvoiceByOrderId as y, sendInvoicePdf as z };
 //# sourceMappingURL=nitro.mjs.map

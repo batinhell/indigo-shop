@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a6 as defineCachedFunction } from '../../nitro/nitro.mjs';
+import { d as defineEventHandler, ae as defineCachedFunction } from '../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';

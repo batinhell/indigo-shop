@@ -1,5 +1,5 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, useAttrs, mergeModels, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
-import { ag as serialize, ah as hasProtocol, ai as isScriptProtocol, ae as joinURL, aj as parseQuery$1, ak as withQuery, al as sanitizeStatusCode, am as parseURL$1, an as encodePath$1, ao as decodePath, ap as klona, aq as defu, ar as defuFn, as as isPhoneLike, at as getIdentifierError, V as getRegistrationEmailError, b as normalizePhoneDigits, au as getRussianSecondsWord, av as formatCompactPhone, aw as getContext, ax as isEqual, G as getRequestHeaders, f as formatAuthPhone, ay as formatPhone, az as unmaskPhoneToEmail, aA as withTrailingSlash, aB as withoutTrailingSlash, c as createError$1, aC as $fetch$1, aD as baseURL, aE as hash, aF as executeAsync } from '../nitro/nitro.mjs';
+import { ao as serialize, ap as hasProtocol, aq as isScriptProtocol, am as joinURL, ar as parseQuery$1, as as klona, at as defu, au as withQuery, av as sanitizeStatusCode, aw as parseURL$1, ax as encodePath$1, ay as decodePath, az as defuFn, aA as isPhoneLike, aB as getIdentifierError, a1 as getRegistrationEmailError, b as normalizePhoneDigits, aC as getRussianSecondsWord, aD as formatCompactPhone, aE as getContext, aF as isEqual, M as getRequestHeaders, f as formatAuthPhone, aG as formatPhone, aH as unmaskPhoneToEmail, aI as withTrailingSlash, aJ as withoutTrailingSlash, c as createError$1, aK as $fetch$1, aL as baseURL, aM as hash, aN as executeAsync } from '../nitro/nitro.mjs';
 import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
 import { debounce } from 'perfect-debounce';
 import { isPlainObject } from '@vue/shared';
@@ -2116,17 +2116,17 @@ const _routes = [
     name: "profile-orders-orderId",
     path: "/profile/orders/:orderId()",
     meta: { "middleware": ["auth"] },
-    component: () => import('./_orderId_-Dp7auTni.mjs')
+    component: () => import('./_orderId_-CkdQkOy_.mjs')
   },
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-BFjgftv2.mjs')
+    component: () => import('./cart-DWzlFHdo.mjs')
   },
   {
     name: "catalog",
     path: "/catalog",
-    component: () => import('./catalog-ldo9vjjE.mjs')
+    component: () => import('./catalog-CRKklanN.mjs')
   },
   {
     name: "cookie-policy",
@@ -2157,7 +2157,7 @@ const _routes = [
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-BvXUfcpb.mjs')
+    component: () => import('./index-_y1YG-5i.mjs')
   },
   {
     name: "return-cancellation",
@@ -2172,7 +2172,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-B7IwgYdF.mjs')
+    component: () => import('./index-DsJrKjZB.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
@@ -2298,7 +2298,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./auth-DDIvSea_.mjs')
+  auth: () => import('./auth-BdnBSGcZ.mjs')
 };
 const plugin$1 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -8400,13 +8400,13 @@ const _sfc_main$i = {
     const successDescription = flow.successDescription;
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppIcon = __nuxt_component_1$1;
-      _push(`<!--[--><button type="button" class="auth-entry__success-close" aria-label="Закрыть окно регистрации" data-v-4777aa4f>`);
+      _push(`<!--[--><button type="button" class="auth-entry__success-close" aria-label="Закрыть окно регистрации" data-v-3635a651>`);
       _push(ssrRenderComponent(_component_AppIcon, {
         name: "close",
         size: 16,
         class: "auth-entry__success-close-icon"
       }, null, _parent));
-      _push(`</button><div class="auth-entry__success-content" data-v-4777aa4f><div class="auth-entry__success-main" data-v-4777aa4f><div class="auth-entry__success-header" data-v-4777aa4f><span class="auth-entry__success-mark" data-v-4777aa4f></span><h2 class="auth-entry__success-title" data-v-4777aa4f>${ssrInterpolate(unref(successTitle))}</h2></div><p class="auth-entry__success-description" data-v-4777aa4f>${ssrInterpolate(unref(successDescription))}</p></div><button type="button" class="auth-entry__success-button" data-v-4777aa4f> К покупкам </button></div><!--]-->`);
+      _push(`</button><div class="auth-entry__success-content" data-v-3635a651><div class="auth-entry__success-main" data-v-3635a651><div class="auth-entry__success-header" data-v-3635a651><span class="auth-entry__success-mark" data-v-3635a651></span><h2 class="auth-entry__success-title" data-v-3635a651>${ssrInterpolate(unref(successTitle))}</h2></div><p class="auth-entry__success-description" data-v-3635a651>${ssrInterpolate(unref(successDescription))}</p></div><button type="button" class="auth-entry__success-button" data-v-3635a651> К покупкам </button></div><!--]-->`);
     };
   }
 };
@@ -8416,7 +8416,7 @@ _sfc_main$i.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthSuccessView.vue");
   return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
-const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-4777aa4f"]]);
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["__scopeId", "data-v-3635a651"]]);
 const _sfc_main$h = /* @__PURE__ */ Object.assign({
   inheritAttrs: false
 }, {
@@ -8486,10 +8486,10 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign({
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["app-input-wrapper", unref(wrapperAttributes).class],
         style: unref(wrapperAttributes).style
-      }, _attrs))} data-v-8406adb8><div class="${ssrRenderClass([
+      }, _attrs))} data-v-53a33938><div class="${ssrRenderClass([
         "app-input",
         { "app-input--disabled": __props.disabled }
-      ])}" data-v-8406adb8>`);
+      ])}" data-v-53a33938>`);
       if (__props.icon) {
         _push(ssrRenderComponent(_component_UIcon, {
           name: __props.icon,
@@ -8507,16 +8507,16 @@ const _sfc_main$h = /* @__PURE__ */ Object.assign({
         min: __props.min,
         max: __props.max,
         class: "app-input__field"
-      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-8406adb8>`);
+      }, unref(inputAttributes)), mergeProps(_temp0, ssrGetDynamicModelProps(_temp0, model.value))))} data-v-53a33938>`);
       ssrRenderSlot(_ctx.$slots, "suffix", {}, null, _push, _parent);
       if (__props.suffix) {
-        _push(`<span class="app-input__suffix" data-v-8406adb8>${ssrInterpolate(__props.suffix)}</span>`);
+        _push(`<span class="app-input__suffix" data-v-53a33938>${ssrInterpolate(__props.suffix)}</span>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div>`);
       if (__props.description) {
-        _push(`<p class="app-input-description" data-v-8406adb8>${ssrInterpolate(__props.description)}</p>`);
+        _push(`<p class="app-input-description" data-v-53a33938>${ssrInterpolate(__props.description)}</p>`);
       } else {
         _push(`<!---->`);
       }
@@ -8530,7 +8530,7 @@ _sfc_main$h.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppInput.vue");
   return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
 };
-const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["__scopeId", "data-v-8406adb8"]]);
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["__scopeId", "data-v-53a33938"]]);
 const _sfc_main$g = {
   __name: "AuthEntryForm",
   __ssrInlineRender: true,
@@ -8547,7 +8547,7 @@ const _sfc_main$g = {
       const _component_AppIcon = __nuxt_component_1$1;
       _push(`<div${ssrRenderAttrs(mergeProps({
         class: ["auth-entry__field", { "auth-entry__field--invalid": unref(visibleError) }]
-      }, _attrs))} data-v-42c52b56><label class="auth-entry__label" for="auth-entry-identifier" data-v-42c52b56> Почта или телефон </label><span class="auth-entry__input-row" data-v-42c52b56><span class="auth-entry__input-box" data-v-42c52b56>`);
+      }, _attrs))} data-v-49bd360c><label class="auth-entry__label" for="auth-entry-identifier" data-v-49bd360c> Почта или телефон </label><span class="auth-entry__input-row" data-v-49bd360c><span class="auth-entry__input-box" data-v-49bd360c>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-identifier",
         modelValue: unref(identifier),
@@ -8565,7 +8565,7 @@ const _sfc_main$g = {
         suffix: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
             if (unref(visibleError)) {
-              _push2(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-42c52b56${_scopeId}>`);
+              _push2(`<button type="button" class="auth-entry__reset" aria-label="Сбросить поле" data-v-49bd360c${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: "reset",
                 size: 16,
@@ -8599,7 +8599,7 @@ const _sfc_main$g = {
       }, _parent));
       _push(`</span>`);
       if (unref(hasIdentifier)) {
-        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Получить код")} data-v-42c52b56>`);
+        _push(`<button type="submit" class="auth-entry__submit"${ssrIncludeBooleanAttr(unref(isEntryRequestPending)) ? " disabled" : ""}${ssrRenderAttr("aria-label", unref(isEntryRequestPending) ? "Проверяем" : "Получить код")} data-v-49bd360c>`);
         _push(ssrRenderComponent(_component_AppIcon, {
           name: "arrow-right-line",
           size: 24,
@@ -8611,7 +8611,7 @@ const _sfc_main$g = {
       }
       _push(`</span>`);
       if (unref(visibleError) || unref(entryRequestError)) {
-        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-42c52b56>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
+        _push(`<p id="auth-entry-error" class="auth-entry__error" data-v-49bd360c>${ssrInterpolate(unref(visibleError) || unref(entryRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
@@ -8625,7 +8625,7 @@ _sfc_main$g.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthEntryForm.vue");
   return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
-const __nuxt_component_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-42c52b56"]]);
+const __nuxt_component_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["__scopeId", "data-v-49bd360c"]]);
 const _sfc_main$f = {
   __name: "AuthLoginForm",
   __ssrInlineRender: true,
@@ -8643,7 +8643,7 @@ const _sfc_main$f = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppInput = __nuxt_component_0$1;
       const _component_AppIcon = __nuxt_component_1$1;
-      _push(`<!--[--><div class="auth-entry__login-fields" data-v-022a0cae><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-022a0cae> Email или телефон </label>`);
+      _push(`<!--[--><div class="auth-entry__login-fields" data-v-cf07df4f><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleError) }, "auth-entry__field auth-entry__field--compact auth-entry__login-identifier-field"])}" data-v-cf07df4f><label class="auth-entry__label" for="auth-entry-login-identifier" data-v-cf07df4f> Email или телефон </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-login-identifier",
         modelValue: unref(identifier),
@@ -8659,11 +8659,11 @@ const _sfc_main$f = {
         onBlur: unref(flow).onIdentifierBlur
       }, null, _parent));
       if (unref(visibleError)) {
-        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-022a0cae>${ssrInterpolate(unref(visibleError))}</p>`);
+        _push(`<p id="auth-entry-login-error" class="auth-entry__error" data-v-cf07df4f>${ssrInterpolate(unref(visibleError))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-022a0cae><label class="auth-entry__label" for="auth-entry-login-password" data-v-022a0cae> Пароль </label>`);
+      _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleLoginPasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-cf07df4f><label class="auth-entry__label" for="auth-entry-login-password" data-v-cf07df4f> Пароль </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-login-password",
         modelValue: unref(password),
@@ -8678,7 +8678,7 @@ const _sfc_main$f = {
       }, {
         suffix: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-022a0cae${_scopeId}>`);
+            _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-cf07df4f${_scopeId}>`);
             _push2(ssrRenderComponent(_component_AppIcon, {
               name: unref(isPasswordVisible) ? "password-hide" : "password-show",
               size: 16,
@@ -8705,11 +8705,11 @@ const _sfc_main$f = {
         _: 1
       }, _parent));
       if (unref(visibleLoginPasswordError) || unref(loginRequestError)) {
-        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-022a0cae>${ssrInterpolate(unref(visibleLoginPasswordError) || unref(loginRequestError))}</p>`);
+        _push(`<p id="auth-entry-login-password-error" class="auth-entry__error" data-v-cf07df4f>${ssrInterpolate(unref(visibleLoginPasswordError) || unref(loginRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<button type="button" class="auth-entry__forgot-password" data-v-022a0cae> Забыли пароль? </button></div></div><div class="auth-entry__login-actions" data-v-022a0cae><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-022a0cae>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
+      _push(`<button type="button" class="auth-entry__forgot-password" data-v-cf07df4f> Забыли пароль? </button></div></div><div class="auth-entry__login-actions" data-v-cf07df4f><button type="submit" class="auth-entry__login-button"${ssrIncludeBooleanAttr(unref(isLoginRequestPending)) ? " disabled" : ""} data-v-cf07df4f>${ssrInterpolate(unref(isLoginRequestPending) ? "Входим" : "Войти")}</button></div><!--]-->`);
     };
   }
 };
@@ -8719,7 +8719,7 @@ _sfc_main$f.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLoginForm.vue");
   return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-022a0cae"]]);
+const __nuxt_component_4$1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["__scopeId", "data-v-cf07df4f"]]);
 const _sfc_main$e = {
   __name: "AuthPasswordRecoveryForm",
   __ssrInlineRender: true,
@@ -8731,19 +8731,19 @@ const _sfc_main$e = {
     const passwordRecoveryRequestMessage = flow.passwordRecoveryRequestMessage;
     const isPasswordRecoveryRequestPending = flow.isPasswordRecoveryRequestPending;
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-0e9fe146><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-0e9fe146><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-0e9fe146> Почта или телефон </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="text" placeholder="Почта или телефон" autocomplete="username" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-0e9fe146>`);
+      _push(`<!--[--><div class="auth-entry__recovery-fields" data-v-6616138e><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordRecoveryEmailError) }, "auth-entry__field"])}" data-v-6616138e><label class="auth-entry__label" for="auth-entry-password-recovery-email" data-v-6616138e> Почта или телефон </label><input id="auth-entry-password-recovery-email"${ssrRenderAttr("value", unref(passwordRecoveryEmail))} class="auth-entry__input" type="text" placeholder="Почта или телефон" autocomplete="username" inputmode="email"${ssrRenderAttr("aria-invalid", Boolean(unref(visiblePasswordRecoveryEmailError)))}${ssrRenderAttr("aria-describedby", unref(visiblePasswordRecoveryEmailError) ? "auth-entry-password-recovery-email-error" : void 0)} data-v-6616138e>`);
       if (unref(visiblePasswordRecoveryEmailError)) {
-        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-0e9fe146>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
+        _push(`<p id="auth-entry-password-recovery-email-error" class="auth-entry__error" data-v-6616138e>${ssrInterpolate(unref(visiblePasswordRecoveryEmailError))}</p>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div></div>`);
       if (unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage)) {
-        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-0e9fe146>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
+        _push(`<p class="${ssrRenderClass([{ "auth-entry__request-status--error": unref(passwordRecoveryRequestError) }, "auth-entry__request-status"])}" data-v-6616138e>${ssrInterpolate(unref(passwordRecoveryRequestError) || unref(passwordRecoveryRequestMessage))}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`<div class="auth-entry__recovery-actions" data-v-0e9fe146><button type="button" class="auth-entry__secondary-button" data-v-0e9fe146> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-0e9fe146>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Продолжить")}</button></div><!--]-->`);
+      _push(`<div class="auth-entry__recovery-actions" data-v-6616138e><button type="button" class="auth-entry__secondary-button" data-v-6616138e> Назад </button><button type="submit" class="auth-entry__primary-button"${ssrIncludeBooleanAttr(unref(isPasswordRecoveryRequestPending)) ? " disabled" : ""} data-v-6616138e>${ssrInterpolate(unref(isPasswordRecoveryRequestPending) ? "Отправляем" : "Продолжить")}</button></div><!--]-->`);
     };
   }
 };
@@ -8753,7 +8753,7 @@ _sfc_main$e.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoveryForm.vue");
   return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const __nuxt_component_5$2 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-0e9fe146"]]);
+const __nuxt_component_5$2 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-6616138e"]]);
 const _sfc_main$d = {
   __name: "AuthPasswordRecoverySentView",
   __ssrInlineRender: true,
@@ -8773,7 +8773,7 @@ const _sfc_main$d = {
     return (_ctx, _push, _parent, _attrs) => {
       const _component_AppInput = __nuxt_component_0$1;
       if (unref(isPasswordRecoveryPhone)) {
-        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__phone-recovery" }, _attrs))} data-v-e42088da><div class="auth-entry__phone-recovery-fields" data-v-e42088da><div class="auth-entry__field auth-entry__phone-field" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-phone" data-v-e42088da> Номер телефона </label>`);
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__phone-recovery" }, _attrs))} data-v-81780096><div class="auth-entry__phone-recovery-fields" data-v-81780096><div class="auth-entry__field auth-entry__phone-field" data-v-81780096><label class="auth-entry__label" for="auth-entry-password-recovery-phone" data-v-81780096> Номер телефона </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-password-recovery-phone",
           "model-value": unref(passwordRecoveryPhone),
@@ -8781,7 +8781,7 @@ const _sfc_main$d = {
           type: "tel",
           readonly: ""
         }, null, _parent));
-        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(passwordRecoveryCodeError) }, "auth-entry__field auth-entry__sms-code-field"])}" data-v-e42088da><label class="auth-entry__label" for="auth-entry-password-recovery-sms-code" data-v-e42088da> Код из СМС </label>`);
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(passwordRecoveryCodeError) }, "auth-entry__field auth-entry__sms-code-field"])}" data-v-81780096><label class="auth-entry__label" for="auth-entry-password-recovery-sms-code" data-v-81780096> Код из СМС </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-password-recovery-sms-code",
           "model-value": unref(smsCode),
@@ -8798,18 +8798,18 @@ const _sfc_main$d = {
         }, null, _parent));
         _push(`</div></div>`);
         if (unref(passwordRecoveryCodeError)) {
-          _push(`<p id="auth-entry-password-recovery-code-error" class="auth-entry__error" data-v-e42088da>${ssrInterpolate(unref(passwordRecoveryCodeError))}</p>`);
+          _push(`<p id="auth-entry-password-recovery-code-error" class="auth-entry__error" data-v-81780096>${ssrInterpolate(unref(passwordRecoveryCodeError))}</p>`);
         } else {
           _push(`<!---->`);
         }
         if (unref(passwordRecoveryRequestError)) {
-          _push(`<p class="auth-entry__error" data-v-e42088da>${ssrInterpolate(unref(passwordRecoveryRequestError))}</p>`);
+          _push(`<p class="auth-entry__error" data-v-81780096>${ssrInterpolate(unref(passwordRecoveryRequestError))}</p>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`<button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-e42088da>${ssrInterpolate(unref(resendButtonText))}</button></div>`);
+        _push(`<button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-81780096>${ssrInterpolate(unref(resendButtonText))}</button></div>`);
       } else {
-        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__sent-actions" }, _attrs))} data-v-e42088da><button type="button" class="auth-entry__sent-button" data-v-e42088da> Хорошо </button></div>`);
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__sent-actions" }, _attrs))} data-v-81780096><button type="button" class="auth-entry__sent-button" data-v-81780096> Хорошо </button></div>`);
       }
     };
   }
@@ -8820,7 +8820,7 @@ _sfc_main$d.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthPasswordRecoverySentView.vue");
   return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
-const __nuxt_component_6$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-e42088da"]]);
+const __nuxt_component_6$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-81780096"]]);
 const _sfc_main$c = {
   __name: "AppCheckbox",
   __ssrInlineRender: true,
@@ -8846,17 +8846,17 @@ const _sfc_main$c = {
           "app-checkbox",
           { "app-checkbox--checked": model.value, "app-checkbox--disabled": __props.disabled }
         ]
-      }, _attrs))} data-v-5c83338d><input${ssrIncludeBooleanAttr(Array.isArray(model.value) ? ssrLooseContain(model.value, null) : model.value) ? " checked" : ""} type="checkbox" class="app-checkbox__input"${ssrIncludeBooleanAttr(__props.disabled) ? " disabled" : ""} data-v-5c83338d><span class="app-checkbox__box" data-v-5c83338d>`);
+      }, _attrs))} data-v-19ebc176><input${ssrIncludeBooleanAttr(Array.isArray(model.value) ? ssrLooseContain(model.value, null) : model.value) ? " checked" : ""} type="checkbox" class="app-checkbox__input"${ssrIncludeBooleanAttr(__props.disabled) ? " disabled" : ""} data-v-19ebc176><span class="app-checkbox__box" data-v-19ebc176>`);
       if (model.value) {
-        _push(`<svg class="app-checkbox__icon" viewBox="0 0 16 16" fill="none" data-v-5c83338d><path d="M3.5 8.5L6.5 11.5L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-v-5c83338d></path></svg>`);
+        _push(`<svg class="app-checkbox__icon" viewBox="0 0 16 16" fill="none" data-v-19ebc176><path d="M3.5 8.5L6.5 11.5L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-v-19ebc176></path></svg>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</span>`);
       if (__props.label) {
-        _push(`<span class="app-checkbox__label" data-v-5c83338d>${ssrInterpolate(__props.label)}</span>`);
+        _push(`<span class="app-checkbox__label" data-v-19ebc176>${ssrInterpolate(__props.label)}</span>`);
       } else {
-        _push(`<span class="app-checkbox__label" data-v-5c83338d>`);
+        _push(`<span class="app-checkbox__label" data-v-19ebc176>`);
         ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
         _push(`</span>`);
       }
@@ -8870,7 +8870,7 @@ _sfc_main$c.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppCheckbox.vue");
   return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
-const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-5c83338d"]]);
+const __nuxt_component_3 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-19ebc176"]]);
 const _sfc_main$b = {
   __name: "AuthRegisterStartForm",
   __ssrInlineRender: true,
@@ -8890,7 +8890,7 @@ const _sfc_main$b = {
       const _component_AppInput = __nuxt_component_0$1;
       const _component_AppCheckbox = __nuxt_component_3;
       const _component_NuxtLink = __nuxt_component_0$4;
-      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-name" data-v-e0a4769e> Имя и фамилия </label>`);
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-82c2fc3f><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-82c2fc3f><label class="auth-entry__label" for="auth-entry-name" data-v-82c2fc3f> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-name",
         modelValue: unref(fullName),
@@ -8901,7 +8901,7 @@ const _sfc_main$b = {
         autocomplete: "name",
         onInput: unref(flow).onFullNameInput
       }, null, _parent));
-      _push(`</div><div class="auth-entry__registration-phone" data-v-e0a4769e><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-e0a4769e><label class="auth-entry__label" for="auth-entry-phone" data-v-e0a4769e> Номер телефона </label>`);
+      _push(`</div><div class="auth-entry__registration-phone" data-v-82c2fc3f><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-82c2fc3f><label class="auth-entry__label" for="auth-entry-phone" data-v-82c2fc3f> Номер телефона </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-phone",
         modelValue: unref(registrationPhone),
@@ -8913,15 +8913,15 @@ const _sfc_main$b = {
         inputmode: "tel",
         onInput: unref(flow).onRegistrationPhoneInput
       }, null, _parent));
-      _push(`</div><button type="button" class="auth-entry__code-button"${ssrIncludeBooleanAttr(!unref(canRequestCode) || unref(isCodeRequestPending)) ? " disabled" : ""} data-v-e0a4769e>${ssrInterpolate(unref(codeButtonText))}</button></div><p class="auth-entry__hint" data-v-e0a4769e> Отправим вам смс с кодом подтверждения, после того как ознакомитесь с Политиками </p>`);
+      _push(`</div><button type="button" class="auth-entry__code-button"${ssrIncludeBooleanAttr(!unref(canRequestCode) || unref(isCodeRequestPending)) ? " disabled" : ""} data-v-82c2fc3f>${ssrInterpolate(unref(codeButtonText))}</button></div><p class="auth-entry__hint" data-v-82c2fc3f> Отправим вам смс с кодом подтверждения, после того как ознакомитесь с Политиками </p>`);
       if (unref(codeRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-e0a4769e>${ssrInterpolate(unref(codeRequestError))}</p>`);
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-82c2fc3f>${ssrInterpolate(unref(codeRequestError))}</p>`);
       } else if (unref(isCodeRequestSent)) {
-        _push(`<p class="auth-entry__request-status" data-v-e0a4769e> Код отправлен </p>`);
+        _push(`<p class="auth-entry__request-status" data-v-82c2fc3f> Код отправлен </p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="auth-entry__checkboxes" data-v-e0a4769e>`);
+      _push(`</div><div class="auth-entry__checkboxes" data-v-82c2fc3f>`);
       _push(ssrRenderComponent(_component_AppCheckbox, {
         modelValue: unref(isLegalRepresentative),
         "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
@@ -8929,7 +8929,7 @@ const _sfc_main$b = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я представитель юрлица или ИП </span>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-82c2fc3f${_scopeId}> Я представитель юрлица или ИП </span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
@@ -8945,7 +8945,7 @@ const _sfc_main$b = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-e0a4769e${_scopeId}>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-82c2fc3f${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-82c2fc3f${_scopeId}>`);
             _push2(ssrRenderComponent(_component_NuxtLink, {
               to: "/privacy-policy",
               target: "_blank",
@@ -8998,7 +8998,7 @@ const _sfc_main$b = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-e0a4769e${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-e0a4769e${_scopeId}>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-82c2fc3f${_scopeId}> Я ознакомлен и согласен <span class="auth-entry__checkbox-link-line" data-v-82c2fc3f${_scopeId}>`);
             _push2(ssrRenderComponent(_component_NuxtLink, {
               to: "/user-agreement",
               target: "_blank",
@@ -9054,7 +9054,7 @@ _sfc_main$b.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterStartForm.vue");
   return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
 };
-const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-e0a4769e"]]);
+const __nuxt_component_7 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["__scopeId", "data-v-82c2fc3f"]]);
 const _sfc_main$a = {
   __name: "AuthRegisterCompleteForm",
   __ssrInlineRender: true,
@@ -9093,7 +9093,7 @@ const _sfc_main$a = {
       const _component_AppInput = __nuxt_component_0$1;
       const _component_AppIcon = __nuxt_component_1$1;
       const _component_AppCheckbox = __nuxt_component_3;
-      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-name" data-v-1ef7f7a6> Имя и фамилия </label>`);
+      _push(`<!--[--><div class="auth-entry__registration-fields" data-v-c820b7d7><div class="auth-entry__field auth-entry__field--compact auth-entry__name-field" data-v-c820b7d7><label class="auth-entry__label" for="auth-entry-code-name" data-v-c820b7d7> Имя и фамилия </label>`);
       _push(ssrRenderComponent(_component_AppInput, {
         id: "auth-entry-code-name",
         modelValue: unref(fullName),
@@ -9104,9 +9104,9 @@ const _sfc_main$a = {
         autocomplete: "name",
         onInput: unref(flow).onFullNameInput
       }, null, _parent));
-      _push(`</div><div class="auth-entry__code-fields" data-v-1ef7f7a6>`);
+      _push(`</div><div class="auth-entry__code-fields" data-v-c820b7d7>`);
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-1ef7f7a6> Номер телефона </label>`);
+        _push(`<div class="auth-entry__registration-phone auth-entry__registration-phone--confirmed" data-v-c820b7d7><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field auth-entry__phone-field--confirmed" data-v-c820b7d7><label class="auth-entry__label" for="auth-entry-confirmed-phone" data-v-c820b7d7> Номер телефона </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-confirmed-phone",
           modelValue: unref(registrationPhone),
@@ -9116,9 +9116,9 @@ const _sfc_main$a = {
           autocomplete: "tel",
           readonly: ""
         }, null, _parent));
-        _push(`</div><div class="auth-entry__confirmed-badge" data-v-1ef7f7a6> Подтверждён </div></div>`);
+        _push(`</div><div class="auth-entry__confirmed-badge" data-v-c820b7d7> Подтверждён </div></div>`);
       } else {
-        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-1ef7f7a6><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-code-phone" data-v-1ef7f7a6> Номер телефона </label>`);
+        _push(`<!--[--><div class="auth-entry__registration-phone auth-entry__registration-phone--code" data-v-c820b7d7><div class="auth-entry__field auth-entry__field--compact auth-entry__phone-field" data-v-c820b7d7><label class="auth-entry__label" for="auth-entry-code-phone" data-v-c820b7d7> Номер телефона </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-code-phone",
           modelValue: unref(registrationPhone),
@@ -9130,7 +9130,7 @@ const _sfc_main$a = {
           inputmode: "tel",
           readonly: ""
         }, null, _parent));
-        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-sms-code" data-v-1ef7f7a6> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-1ef7f7a6><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-1ef7f7a6>`);
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__sms-code-field--invalid": unref(isSmsCodeInvalid) }, "auth-entry__field auth-entry__field--compact auth-entry__sms-code-field"])}" data-v-c820b7d7><label class="auth-entry__label" for="auth-entry-sms-code" data-v-c820b7d7> Код из СМС </label><span class="auth-entry__sms-code-box" data-v-c820b7d7><input id="auth-entry-sms-code"${ssrRenderAttr("value", unref(smsCode))} class="auth-entry__input auth-entry__input--compact auth-entry__input--sms-code" type="text"${ssrRenderAttr("placeholder", unref(smsCodePlaceholder))} autocomplete="one-time-code" inputmode="numeric"${ssrRenderAttr("maxlength", unref(SMS_CODE_LENGTH))}${ssrRenderAttr("aria-invalid", unref(isSmsCodeInvalid))} data-v-c820b7d7>`);
         if (unref(isSmsCodeInvalid)) {
           _push(ssrRenderComponent(_component_AppIcon, {
             name: "reset",
@@ -9140,9 +9140,9 @@ const _sfc_main$a = {
         } else {
           _push(`<!---->`);
         }
-        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-1ef7f7a6>${ssrInterpolate(unref(resendButtonText))}</button>`);
+        _push(`</span></div></div><button type="button" class="${ssrRenderClass([{ "auth-entry__resend--active": unref(canResendCode) }, "auth-entry__resend"])}"${ssrIncludeBooleanAttr(!unref(canResendCode)) ? " disabled" : ""} data-v-c820b7d7>${ssrInterpolate(unref(resendButtonText))}</button>`);
         if (unref(codeRequestError) || unref(codeVerifyError)) {
-          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1ef7f7a6>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-c820b7d7>${ssrInterpolate(unref(codeRequestError) || unref(codeVerifyError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -9150,7 +9150,7 @@ const _sfc_main$a = {
       }
       _push(`</div>`);
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<div class="auth-entry__profile-fields" data-v-1ef7f7a6><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-email" data-v-1ef7f7a6> Электронная почта </label>`);
+        _push(`<div class="auth-entry__profile-fields" data-v-c820b7d7><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visibleRegistrationEmailError) }, "auth-entry__field auth-entry__field--compact auth-entry__email-field"])}" data-v-c820b7d7><label class="auth-entry__label" for="auth-entry-email" data-v-c820b7d7> Электронная почта </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-email",
           modelValue: unref(registrationEmail),
@@ -9165,11 +9165,11 @@ const _sfc_main$a = {
           onInput: unref(flow).onRegistrationEmailInput
         }, null, _parent));
         if (unref(visibleRegistrationEmailError)) {
-          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-1ef7f7a6>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
+          _push(`<p id="auth-entry-email-error" class="auth-entry__error" data-v-c820b7d7>${ssrInterpolate(unref(visibleRegistrationEmailError))}</p>`);
         } else {
           _push(`<!---->`);
         }
-        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-1ef7f7a6><label class="auth-entry__label" for="auth-entry-password" data-v-1ef7f7a6> Пароль </label>`);
+        _push(`</div><div class="${ssrRenderClass([{ "auth-entry__field--invalid": unref(visiblePasswordError) }, "auth-entry__field auth-entry__field--compact auth-entry__password-field"])}" data-v-c820b7d7><label class="auth-entry__label" for="auth-entry-password" data-v-c820b7d7> Пароль </label>`);
         _push(ssrRenderComponent(_component_AppInput, {
           id: "auth-entry-password",
           modelValue: unref(password),
@@ -9184,7 +9184,7 @@ const _sfc_main$a = {
         }, {
           suffix: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
-              _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-1ef7f7a6${_scopeId}>`);
+              _push2(`<button type="button" class="auth-entry__password-toggle"${ssrRenderAttr("aria-label", unref(isPasswordVisible) ? "Скрыть пароль" : "Показать пароль")} data-v-c820b7d7${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: unref(isPasswordVisible) ? "password-hide" : "password-show",
                 size: 16,
@@ -9211,7 +9211,7 @@ const _sfc_main$a = {
           _: 1
         }, _parent));
         if (unref(visiblePasswordError)) {
-          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-1ef7f7a6>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
+          _push(`<p id="auth-entry-password-error" class="auth-entry__error" data-v-c820b7d7>${ssrInterpolate(unref(visiblePasswordError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -9219,7 +9219,7 @@ const _sfc_main$a = {
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-1ef7f7a6>`);
+      _push(`</div><div class="auth-entry__checkboxes auth-entry__checkboxes--code" data-v-c820b7d7>`);
       _push(ssrRenderComponent(_component_AppCheckbox, {
         modelValue: unref(isLegalRepresentative),
         "onUpdate:modelValue": ($event) => isRef(isLegalRepresentative) ? isLegalRepresentative.value = $event : null,
@@ -9227,7 +9227,7 @@ const _sfc_main$a = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<span class="auth-entry__checkbox-text" data-v-1ef7f7a6${_scopeId}> Я представитель юрлица или ИП </span>`);
+            _push2(`<span class="auth-entry__checkbox-text" data-v-c820b7d7${_scopeId}> Я представитель юрлица или ИП </span>`);
           } else {
             return [
               createVNode("span", { class: "auth-entry__checkbox-text" }, " Я представитель юрлица или ИП ")
@@ -9238,12 +9238,12 @@ const _sfc_main$a = {
       }, _parent));
       _push(`</div>`);
       if (unref(registrationRequestError)) {
-        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1ef7f7a6>${ssrInterpolate(unref(registrationRequestError))}</p>`);
+        _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-c820b7d7>${ssrInterpolate(unref(registrationRequestError))}</p>`);
       } else {
         _push(`<!---->`);
       }
       if (unref(isSmsCodeConfirmed)) {
-        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-1ef7f7a6>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
+        _push(`<button type="submit" class="auth-entry__register-button"${ssrIncludeBooleanAttr(unref(isRegistrationRequestPending)) ? " disabled" : ""} data-v-c820b7d7>${ssrInterpolate(unref(isRegistrationRequestPending) ? "Регистрируем" : "Зарегистрироваться")}</button>`);
       } else {
         _push(`<!---->`);
       }
@@ -9257,7 +9257,7 @@ _sfc_main$a.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthRegisterCompleteForm.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
-const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$a, [["__scopeId", "data-v-1ef7f7a6"]]), { __name: "AuthRegisterCompleteForm" });
+const __nuxt_component_8 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$a, [["__scopeId", "data-v-c820b7d7"]]), { __name: "AuthRegisterCompleteForm" });
 const _sfc_main$9 = {
   __name: "AuthLegalForm",
   __ssrInlineRender: true,
@@ -9274,24 +9274,24 @@ const _sfc_main$9 = {
     const organizationSaveError = flow.organizationSaveError;
     return (_ctx, _push, _parent, _attrs) => {
       if (unref(step) === "legal-details") {
-        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__field auth-entry__field--legal-inn" }, _attrs))} data-v-0c732cca><label class="auth-entry__label" for="auth-entry-organization-inn" data-v-0c732cca> ИНН </label><input id="auth-entry-organization-inn"${ssrRenderAttr("value", unref(organizationInn))} class="auth-entry__input" type="text" placeholder="Введите ИНН компании" autocomplete="off" inputmode="numeric" maxlength="12" data-v-0c732cca>`);
+        _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-entry__field auth-entry__field--legal-inn" }, _attrs))} data-v-1072507b><label class="auth-entry__label" for="auth-entry-organization-inn" data-v-1072507b> ИНН </label><input id="auth-entry-organization-inn"${ssrRenderAttr("value", unref(organizationInn))} class="auth-entry__input" type="text" placeholder="Введите ИНН компании" autocomplete="off" inputmode="numeric" maxlength="12" data-v-1072507b>`);
         if (unref(shouldShowOrganizationSuggestions)) {
-          _push(`<div class="auth-entry__organization-options" data-v-0c732cca>`);
+          _push(`<div class="auth-entry__organization-options" data-v-1072507b>`);
           if (unref(isOrganizationSuggestPending)) {
-            _push(`<p class="auth-entry__organization-status" data-v-0c732cca> Ищем организацию </p>`);
+            _push(`<p class="auth-entry__organization-status" data-v-1072507b> Ищем организацию </p>`);
           } else if (unref(organizationSuggestError)) {
-            _push(`<p class="auth-entry__organization-status auth-entry__organization-status--error" data-v-0c732cca>${ssrInterpolate(unref(organizationSuggestError))}</p>`);
+            _push(`<p class="auth-entry__organization-status auth-entry__organization-status--error" data-v-1072507b>${ssrInterpolate(unref(organizationSuggestError))}</p>`);
           } else {
             _push(`<!--[-->`);
             ssrRenderList(unref(organizationSuggestions), (suggestion) => {
-              _push(`<button type="button" class="auth-entry__organization-option" data-v-0c732cca><span class="auth-entry__organization-name" data-v-0c732cca>${ssrInterpolate(suggestion.name)}</span>`);
+              _push(`<button type="button" class="auth-entry__organization-option" data-v-1072507b><span class="auth-entry__organization-name" data-v-1072507b>${ssrInterpolate(suggestion.name)}</span>`);
               if (suggestion.inn) {
-                _push(`<span class="auth-entry__organization-inn" data-v-0c732cca><span class="auth-entry__organization-inn-prefix" data-v-0c732cca>ИНН</span> ${ssrInterpolate(suggestion.inn)}</span>`);
+                _push(`<span class="auth-entry__organization-inn" data-v-1072507b><span class="auth-entry__organization-inn-prefix" data-v-1072507b>ИНН</span> ${ssrInterpolate(suggestion.inn)}</span>`);
               } else {
                 _push(`<!---->`);
               }
               if (suggestion.address) {
-                _push(`<span class="auth-entry__organization-address" data-v-0c732cca>${ssrInterpolate(suggestion.address)}</span>`);
+                _push(`<span class="auth-entry__organization-address" data-v-1072507b>${ssrInterpolate(suggestion.address)}</span>`);
               } else {
                 _push(`<!---->`);
               }
@@ -9305,16 +9305,16 @@ const _sfc_main$9 = {
         }
         _push(`</div>`);
       } else if (unref(step) === "legal-confirmation") {
-        _push(`<div${ssrRenderAttrs(_attrs)} data-v-0c732cca>`);
+        _push(`<div${ssrRenderAttrs(_attrs)} data-v-1072507b>`);
         if (unref(selectedOrganization)) {
-          _push(`<div class="auth-entry__organization-confirm-card" data-v-0c732cca><p class="auth-entry__organization-confirm-name" data-v-0c732cca>${ssrInterpolate(unref(selectedOrganization).name)}</p>`);
+          _push(`<div class="auth-entry__organization-confirm-card" data-v-1072507b><p class="auth-entry__organization-confirm-name" data-v-1072507b>${ssrInterpolate(unref(selectedOrganization).name)}</p>`);
           if (unref(selectedOrganization).inn) {
-            _push(`<p class="auth-entry__organization-confirm-meta" data-v-0c732cca> ИНН ${ssrInterpolate(unref(selectedOrganization).inn)}</p>`);
+            _push(`<p class="auth-entry__organization-confirm-meta" data-v-1072507b> ИНН ${ssrInterpolate(unref(selectedOrganization).inn)}</p>`);
           } else {
             _push(`<!---->`);
           }
           if (unref(selectedOrganization).address) {
-            _push(`<p class="auth-entry__organization-confirm-meta" data-v-0c732cca>${ssrInterpolate(unref(selectedOrganization).address)}</p>`);
+            _push(`<p class="auth-entry__organization-confirm-meta" data-v-1072507b>${ssrInterpolate(unref(selectedOrganization).address)}</p>`);
           } else {
             _push(`<!---->`);
           }
@@ -9322,9 +9322,9 @@ const _sfc_main$9 = {
         } else {
           _push(`<!---->`);
         }
-        _push(`<button type="submit" class="auth-entry__organization-confirm-button"${ssrIncludeBooleanAttr(unref(isOrganizationSavePending)) ? " disabled" : ""} data-v-0c732cca>${ssrInterpolate(unref(isOrganizationSavePending) ? "Добавляем" : "Добавить организацию")}</button>`);
+        _push(`<button type="submit" class="auth-entry__organization-confirm-button"${ssrIncludeBooleanAttr(unref(isOrganizationSavePending)) ? " disabled" : ""} data-v-1072507b>${ssrInterpolate(unref(isOrganizationSavePending) ? "Добавляем" : "Добавить организацию")}</button>`);
         if (unref(organizationSaveError)) {
-          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-0c732cca>${ssrInterpolate(unref(organizationSaveError))}</p>`);
+          _push(`<p class="auth-entry__request-status auth-entry__request-status--error" data-v-1072507b>${ssrInterpolate(unref(organizationSaveError))}</p>`);
         } else {
           _push(`<!---->`);
         }
@@ -9341,7 +9341,7 @@ _sfc_main$9.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/auth/AuthLegalForm.vue");
   return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
-const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-0c732cca"]]);
+const __nuxt_component_9 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-1072507b"]]);
 const authClient = createAuthClient({
   basePath: "/api/auth",
   plugins: [
@@ -10395,25 +10395,25 @@ const _sfc_main$8 = {
               "auth-entry--legal-details": unref(step) === "legal-details",
               "auth-entry--legal-confirmation": unref(step) === "legal-confirmation",
               "auth-entry--success": unref(step) === "success"
-            }, "auth-entry"])}" data-v-83aaadc7${_scopeId}>`);
+            }, "auth-entry"])}" data-v-f81b3028${_scopeId}>`);
             if (unref(step) === "success") {
               _push2(ssrRenderComponent(_component_AuthSuccessView, {
                 onClose: ($event) => isOpen.value = false
               }, null, _parent2, _scopeId));
             } else {
-              _push2(`<!--[--><header class="auth-entry__header" data-v-83aaadc7${_scopeId}><div class="auth-entry__title-block" data-v-83aaadc7${_scopeId}><h2 class="auth-entry__title" data-v-83aaadc7${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
+              _push2(`<!--[--><header class="auth-entry__header" data-v-f81b3028${_scopeId}><div class="auth-entry__title-block" data-v-f81b3028${_scopeId}><h2 class="auth-entry__title" data-v-f81b3028${_scopeId}>${ssrInterpolate(unref(modalTitle))}</h2>`);
               if (unref(isLegalRegistrationStep)) {
-                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-f81b3028${_scopeId}> Укажите ИНН организации или ИП, остальные данные заполнятся автоматически </p>`);
               } else if (unref(step) === "password-recovery") {
-                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
+                _push2(`<p class="auth-entry__subtitle" data-v-f81b3028${_scopeId}>${ssrInterpolate(unref(passwordRecoveryDescription))}</p>`);
               } else if (unref(step) === "password-recovery-sent") {
-                _push2(`<p class="auth-entry__subtitle" data-v-83aaadc7${_scopeId}><!--[-->`);
+                _push2(`<p class="auth-entry__subtitle" data-v-f81b3028${_scopeId}><!--[-->`);
                 ssrRenderList(unref(passwordRecoverySentDescription).split("\n"), (line) => {
-                  _push2(`<!--[-->${ssrInterpolate(line)}<br data-v-83aaadc7${_scopeId}><!--]-->`);
+                  _push2(`<!--[-->${ssrInterpolate(line)}<br data-v-f81b3028${_scopeId}><!--]-->`);
                 });
-                _push2(`<!--]--><br data-v-83aaadc7${_scopeId}> ${ssrInterpolate(unref(passwordRecoverySentHint))} `);
+                _push2(`<!--]--><br data-v-f81b3028${_scopeId}> ${ssrInterpolate(unref(passwordRecoverySentHint))} `);
                 if (unref(isPasswordRecoveryPhone)) {
-                  _push2(`<a class="auth-entry__subtitle-link" href="mailto:Info@indigo-mail.ru" target="_blank" rel="noopener noreferrer" data-v-83aaadc7${_scopeId}> на Info@indigo-mail.ru </a>`);
+                  _push2(`<a class="auth-entry__subtitle-link" href="mailto:Info@indigo-mail.ru" target="_blank" rel="noopener noreferrer" data-v-f81b3028${_scopeId}> на Info@indigo-mail.ru </a>`);
                 } else {
                   _push2(`<!---->`);
                 }
@@ -10421,7 +10421,7 @@ const _sfc_main$8 = {
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-83aaadc7${_scopeId}>`);
+              _push2(`</div><button type="button" class="auth-entry__close" aria-label="Закрыть окно входа или регистрации" data-v-f81b3028${_scopeId}>`);
               _push2(ssrRenderComponent(_component_AppIcon, {
                 name: "close",
                 size: 16,
@@ -10531,7 +10531,7 @@ _sfc_main$8.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AuthEntryModal.vue");
   return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
-const __nuxt_component_5$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-83aaadc7"]]), { __name: "AuthEntryModal" });
+const __nuxt_component_5$1 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$8, [["__scopeId", "data-v-f81b3028"]]), { __name: "AuthEntryModal" });
 const headerLogoBg1 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20198.944%20164.444'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Star%208'%20d='M128.092%204.41188L107.741%2071.8826L167.013%2062.8834L114.488%2085.6349L195.165%20109.316L120.666%20107.052L143.892%20129.477L92.0442%20104.609L80.4869%20161.71L72.7352%2099.7577L4.16465%20105.048L67.1903%2079.5712L15.2783%2048.8255L69.9732%2065.7537L58.2152%2027.3217L90.9896%2061.6994L128.092%204.41188Z'%20fill='var(--fill-0,%20%23FE8721)'/%3e%3cg%20id='Container_2'%3e%3cpath%20id='Polygon%205'%20d='M188.261%2029.5872L170.808%20131.316L91.4353%2065.3368L188.261%2029.5872Z'%20fill='var(--fill-0,%20%238100FF)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg2 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20166.538%20144.784'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Vector%20240%20(Stroke)'%20d='M108.732%201.0011C109.372%200.944342%20110.535%200.866795%20111.799%200.935669C113.434%201.02472%20116.552%201.40206%20119.748%203.40051L120.058%203.59876L120.422%203.8468C122.213%205.10197%20123.516%206.59283%20124.271%207.52551C125.313%208.8136%20126.352%2010.355%20127.365%2012.173C129.39%2015.8087%20131.433%2020.7667%20133.209%2027.5109C133.7%2029.3727%20134.22%2031.509%20134.724%2033.7042C136.76%2032.2538%20139.202%2031.319%20141.875%2031.1075C149.738%2030.4857%20156.617%2036.3558%20157.239%2044.2189C157.323%2045.2839%20157.441%2046.7507%20157.488%2047.8556C157.509%2048.3731%20157.57%2049.7368%20157.347%2051.3605C157.101%2053.1553%20156.612%2054.6187%20156.161%2055.7286L155.995%2056.1359L155.806%2056.5333C154.062%2060.1678%20150.747%2064.7247%20145.527%2067.42C144.451%2067.9755%20141.779%2069.4988%20137.487%2070.2111C137.299%2074.5479%20137.069%2078.8881%20136.83%2081.9972C136.437%2087.1295%20135.975%2091.3285%20133.786%2095.1798C132.781%2096.9463%20130.534%20100.367%20126.108%20102.353C120.453%20104.89%20112.934%20104.424%20103.759%20100.996C103.245%20100.804%20102.71%20100.597%20102.154%20100.375C102.062%20101.503%20101.952%20102.59%20101.819%20103.592C101.435%20106.474%20100.88%20110.499%2099.8139%20114.045C99.2723%20115.846%2098.3884%20118.272%2096.8461%20120.633C95.2776%20123.034%2092.4484%20126.229%2087.8119%20127.85C83.9706%20129.193%2078.0153%20130.142%2069.4662%20127.317C68.709%20127.066%2067.8887%20126.789%2067.0131%20126.472C65.2777%20128.649%2063.0612%20130.699%2060.1967%20132.258C58.3178%20133.28%2055.5752%20134.622%2051.1517%20135.223C47.4795%20135.722%2043.0574%20135.658%2037.39%20135.163C33.6284%20134.835%2030.0181%20134.316%2024.9906%20132.682C20.7065%20131.289%2017.1224%20130.161%2014.5805%20129.383C13.3023%20128.992%2012.3316%20128.703%2011.6859%20128.518C11.5076%20128.467%2011.3735%20128.43%2011.2787%20128.403C4.33712%20126.919%20-0.574085%20120.463%200.0540837%20113.208C0.734544%20105.35%207.65664%2099.5306%2015.515%20100.211C16.6138%20100.306%2017.5215%20100.524%2017.5629%20100.533C17.8527%20100.598%2018.1157%20100.665%2018.3041%20100.714C18.6938%20100.815%2019.1275%20100.936%2019.556%20101.059C20.4317%20101.31%2021.5826%20101.653%2022.9398%20102.068C25.6695%20102.904%2029.4132%20104.085%2033.8197%20105.517C36.2637%20106.311%2037.6415%20106.513%2039.8754%20106.708C40.2507%20106.741%2040.609%20106.767%2040.9506%20106.793C40.8436%20106.585%2040.7375%20106.37%2040.6361%20106.148C40.1028%20104.977%2036.4453%2096.1062%2044.1156%2089.2423L44.6215%2088.7999C45.8837%2087.7234%2047.699%2086.37%2049.9584%2085.2872C52.3083%2084.1612%2056.6987%2082.5893%2061.9574%2083.7335L62.4691%2083.8536L62.9105%2083.9601C64.5725%2084.3956%2070.3651%2086.2825%2073.1732%2092.6329L73.3226%2092.9845L73.474%2093.3595C73.616%2093.7231%2073.7563%2094.1158%2073.893%2094.5363C73.9964%2092.0384%2074.0471%2089.2762%2074.0912%2086.7736C74.1115%2085.6203%2074.0952%2084.688%2074.0609%2083.9298C73.053%2083.2074%2072.1467%2082.5476%2071.3842%2081.9738C69.7063%2080.7111%2067.7522%2079.1827%2066.2582%2077.4933C65.4926%2076.6276%2063.8618%2074.6501%2062.9496%2071.6759C61.8018%2067.9335%2062.462%2064.8587%2062.7328%2063.754L62.889%2063.1564C63.1016%2062.398%2063.4961%2061.1941%2064.1859%2059.8898C65.0818%2058.1959%2067.2625%2054.8491%2071.6849%2052.9972L72.1547%2052.8087C74.6489%2051.8518%2080.2919%2050.3476%2086.2504%2053.4581L86.8676%2053.796L87.518%2054.1779C89.1564%2055.1585%2091.5948%2056.7942%2094.0043%2059.4347C95.7281%2061.3238%2097.2553%2063.5231%2098.5355%2066.0655C100.152%2067.1183%20101.771%2068.1405%20103.277%2069.0411C105.393%2070.3071%20107.227%2071.2965%20108.807%2072.0792C108.907%2070.0229%20108.999%2067.8675%20109.078%2065.7833C108.037%2064.9695%20105.762%2063.1243%20103.561%2060.1085C101.132%2056.7811%2099.1429%2052.6137%2097.4056%2047.2345C95.5332%2041.4366%2093.6296%2035.2104%2093.5199%2029.046C93.4642%2025.9152%2093.3915%2022.8886%2093.39%2020.6671C93.3893%2019.5592%2093.4044%2018.3345%2093.4769%2017.215C93.5127%2016.6632%2093.577%2015.8882%2093.7152%2015.0392C93.7988%2014.526%2094.1123%2012.5412%2095.2152%2010.3771C95.6087%209.60505%2096.5707%207.78777%2098.2621%206.0011C100.064%204.09828%20103.386%201.52736%20108.283%201.04504L108.732%201.0011ZM12.5521%20128.615C12.5692%20128.617%2012.5864%20128.62%2012.6039%20128.622C12.5866%20128.62%2012.5694%20128.617%2012.5521%20128.615Z'%20fill='var(--fill-0,%20%23FF00A9)'/%3e%3c/g%3e%3c/svg%3e";
 const headerLogoBg3 = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20115.716%20121.521'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Container'%3e%3cpath%20id='Union'%20d='M77.2559%209.01323C83.8305%2015.4229%2084.0059%2026.9027%2078.9155%2039.367C91.2461%2033.9612%20102.727%2033.846%20109.302%2040.2553C120.284%2050.9618%20113.417%2075.8179%2093.9636%2095.7729C74.51%20115.728%2049.8366%20123.225%2038.8541%20112.518C32.2793%20106.109%2032.104%2094.6276%2037.1952%2082.1626C24.864%2087.5689%2013.3833%2087.6861%206.8083%2081.2765C-4.17416%2070.5699%202.69287%2045.7138%2022.1464%2025.7589C41.6%205.80392%2066.2734%20-1.69328%2077.2559%209.01323Z'%20fill='var(--fill-0,%20%2302D892)'/%3e%3c/g%3e%3c/svg%3e";
@@ -11501,7 +11501,7 @@ const _sfc_main$4 = {
               _push2(`<!---->`);
             }
             if (!__props.iconOnly) {
-              _push2(`<span class="app-button__content" data-v-233c6bfd${_scopeId}>`);
+              _push2(`<span class="app-button__content" data-v-055c32ed${_scopeId}>`);
               ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
               _push2(`</span>`);
             } else {
@@ -11534,7 +11534,7 @@ _sfc_main$4.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppButton.vue");
   return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
 };
-const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-233c6bfd"]]);
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-055c32ed"]]);
 const CONSENT_STORAGE_KEY = "indigo_cookie_consent";
 const _sfc_main$3 = {
   __name: "CookieConsentBanner",
@@ -11790,5 +11790,5 @@ let entry;
 }
 const entry_default = ((ssrContext) => entry(ssrContext));
 
-export { __vite_glob_0_45 as $, __vite_glob_0_68 as A, __vite_glob_0_67 as B, __vite_glob_0_66 as C, __vite_glob_0_65 as D, __vite_glob_0_64 as E, FABRICS as F, __vite_glob_0_63 as G, __vite_glob_0_62 as H, __vite_glob_0_61 as I, __vite_glob_0_60 as J, __vite_glob_0_59 as K, __vite_glob_0_58 as L, MOUNTINGS as M, __vite_glob_0_57 as N, __vite_glob_0_56 as O, __vite_glob_0_55 as P, __vite_glob_0_54 as Q, __vite_glob_0_53 as R, SIZES as S, __vite_glob_0_52 as T, __vite_glob_0_51 as U, __vite_glob_0_50 as V, __vite_glob_0_49 as W, __vite_glob_0_48 as X, __vite_glob_0_47 as Y, __vite_glob_0_46 as Z, _export_sfc as _, __nuxt_component_0$4 as a, __vite_glob_0_44 as a0, __vite_glob_0_43 as a1, __vite_glob_0_42 as a2, __vite_glob_0_41 as a3, __vite_glob_0_40 as a4, __vite_glob_0_39 as a5, __vite_glob_0_38 as a6, __vite_glob_0_36 as a7, __vite_glob_0_35 as a8, __vite_glob_0_34 as a9, __vite_glob_0_7 as aA, __vite_glob_0_6 as aB, __vite_glob_0_5 as aC, __vite_glob_0_4 as aD, __vite_glob_0_3 as aE, __vite_glob_0_2 as aF, __vite_glob_0_1 as aG, __vite_glob_0_0 as aH, MAX_UPLOAD_SIZE as aI, ALLOWED_EXTENSIONS as aJ, RASTER_EXTENSIONS as aK, useFavorites as aL, navigateTo as aM, defineNuxtRouteMiddleware as aN, __vite_glob_0_33 as aa, __vite_glob_0_32 as ab, __vite_glob_0_31 as ac, __vite_glob_0_30 as ad, __vite_glob_0_29 as ae, __vite_glob_0_28 as af, __vite_glob_0_27 as ag, __vite_glob_0_26 as ah, __vite_glob_0_25 as ai, __vite_glob_0_24 as aj, __vite_glob_0_23 as ak, __vite_glob_0_22 as al, __vite_glob_0_21 as am, __vite_glob_0_20 as an, __vite_glob_0_19 as ao, __vite_glob_0_18 as ap, __vite_glob_0_17 as aq, __vite_glob_0_16 as ar, __vite_glob_0_15 as as, __vite_glob_0_14 as at, __vite_glob_0_13 as au, __vite_glob_0_12 as av, __vite_glob_0_11 as aw, __vite_glob_0_10 as ax, __vite_glob_0_9 as ay, __vite_glob_0_8 as az, __nuxt_component_0$1 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$w as h, __vite_glob_0_37 as i, _sfc_main$j as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, __nuxt_component_0 as q, resolveCartItemImage as r, authClient as s, __nuxt_component_5$1 as t, useHead as u, setInterval as v, usePricing as w, FABRIC_IMAGE_MAP as x, MOUNTING_IMAGE_MAP as y, __vite_glob_0_69 as z };
+export { __vite_glob_0_46 as $, __vite_glob_0_69 as A, __vite_glob_0_68 as B, __vite_glob_0_67 as C, __vite_glob_0_66 as D, __vite_glob_0_65 as E, FABRICS as F, __vite_glob_0_64 as G, __vite_glob_0_63 as H, __vite_glob_0_62 as I, __vite_glob_0_61 as J, __vite_glob_0_60 as K, __vite_glob_0_59 as L, MOUNTINGS as M, __vite_glob_0_58 as N, __vite_glob_0_57 as O, __vite_glob_0_56 as P, __vite_glob_0_55 as Q, __vite_glob_0_54 as R, SIZES as S, __vite_glob_0_53 as T, __vite_glob_0_52 as U, __vite_glob_0_51 as V, __vite_glob_0_50 as W, __vite_glob_0_49 as X, __vite_glob_0_48 as Y, __vite_glob_0_47 as Z, _export_sfc as _, __nuxt_component_0$4 as a, __vite_glob_0_45 as a0, __vite_glob_0_44 as a1, __vite_glob_0_43 as a2, __vite_glob_0_42 as a3, __vite_glob_0_41 as a4, __vite_glob_0_40 as a5, __vite_glob_0_39 as a6, __vite_glob_0_38 as a7, __vite_glob_0_36 as a8, __vite_glob_0_35 as a9, __vite_glob_0_8 as aA, __vite_glob_0_7 as aB, __vite_glob_0_6 as aC, __vite_glob_0_5 as aD, __vite_glob_0_4 as aE, __vite_glob_0_3 as aF, __vite_glob_0_2 as aG, __vite_glob_0_1 as aH, __vite_glob_0_0 as aI, MAX_UPLOAD_SIZE as aJ, ALLOWED_EXTENSIONS as aK, RASTER_EXTENSIONS as aL, useFavorites as aM, defineNuxtRouteMiddleware as aN, __vite_glob_0_34 as aa, __vite_glob_0_33 as ab, __vite_glob_0_32 as ac, __vite_glob_0_31 as ad, __vite_glob_0_30 as ae, __vite_glob_0_29 as af, __vite_glob_0_28 as ag, __vite_glob_0_27 as ah, __vite_glob_0_26 as ai, __vite_glob_0_25 as aj, __vite_glob_0_24 as ak, __vite_glob_0_23 as al, __vite_glob_0_22 as am, __vite_glob_0_21 as an, __vite_glob_0_20 as ao, __vite_glob_0_19 as ap, __vite_glob_0_18 as aq, __vite_glob_0_17 as ar, __vite_glob_0_16 as as, __vite_glob_0_15 as at, __vite_glob_0_14 as au, __vite_glob_0_13 as av, __vite_glob_0_12 as aw, __vite_glob_0_11 as ax, __vite_glob_0_10 as ay, __vite_glob_0_9 as az, __nuxt_component_0$1 as b, useRoute as c, useFetch as d, entry_default as default, useCart as e, useSeoMeta as f, __nuxt_component_1$1 as g, _sfc_main$w as h, __vite_glob_0_37 as i, _sfc_main$j as j, getFabricLabel as k, calcUnitPrice as l, calcDesignPrice as m, __nuxt_component_3 as n, formatPriceRaw as o, useProfileStore as p, __nuxt_component_0 as q, resolveCartItemImage as r, authClient as s, __nuxt_component_5$1 as t, useHead as u, navigateTo as v, setInterval as w, usePricing as x, FABRIC_IMAGE_MAP as y, MOUNTING_IMAGE_MAP as z };
 //# sourceMappingURL=server.mjs.map

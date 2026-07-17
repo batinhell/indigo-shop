@@ -1,4 +1,4 @@
-import { d as defineEventHandler, p as assertInternalShopToken, q as getRouterParam, c as createError, u as useDatabase, w as getInvoiceByOrderId, y as serializeInvoice } from '../../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, p as assertInternalShopToken, w as getRouterParam, c as createError, u as useDatabase, y as getInvoiceByOrderId, A as serializeInvoice } from '../../../../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';

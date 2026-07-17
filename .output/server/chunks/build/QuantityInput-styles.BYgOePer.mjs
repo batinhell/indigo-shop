@@ -1,0 +1,8 @@
+const QuantityInput_vue_vue_type_style_index_0_scoped_6af9d374_lang = '.qty-input[data-v-6af9d374]{align-items:center;background:#f4f5f6;border:2px solid transparent;border-radius:.75rem;display:flex;height:2.5rem;justify-content:space-between;overflow:hidden;padding:.125rem;transition:border-color .15s,background-color .15s;width:9.6875rem}.qty-input[data-v-6af9d374]:focus-within{background:#fff;border-color:#de7aff}.qty-input__btn[data-v-6af9d374]{align-items:center;border-radius:.625rem;color:#04121b;cursor:pointer;display:flex;flex-shrink:0;height:2.25rem;justify-content:center;transition:background-color .15s;width:2.25rem}.qty-input__btn[data-v-6af9d374]:hover{background:#04121b0f}.qty-input__btn[data-v-6af9d374]:active{background:#04121b1a}.qty-input__btn--disabled[data-v-6af9d374]{color:#04121b3d;pointer-events:none}.qty-input__value[data-v-6af9d374]{cursor:text;white-space:nowrap}.qty-input__input[data-v-6af9d374],.qty-input__value[data-v-6af9d374]{color:#04121b;font-feature-settings:"lnum" 1,"pnum" 1;font-size:1rem;font-weight:600}.qty-input__input[data-v-6af9d374]{background:transparent;border:none;outline:none;text-align:center;width:100%}';
+
+const QuantityInputStyles_BYgOePer = [
+  QuantityInput_vue_vue_type_style_index_0_scoped_6af9d374_lang
+];
+
+export { QuantityInputStyles_BYgOePer as default };
+//# sourceMappingURL=QuantityInput-styles.BYgOePer.mjs.map

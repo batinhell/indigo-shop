@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, G as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, g as assertRateLimit, h as sendNotificoreOtp, i as getNotificoreAuthenticationPayload, j as assertSuccessfulNotificoreOtpResponse, k as setResponseStatus, l as getNotificoreAuthenticationId, m as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, a as auth, M as getRequestHeaders, c as createError, r as readBody, b as normalizePhoneDigits, g as assertRateLimit, h as sendNotificoreOtp, i as getNotificoreAuthenticationPayload, j as assertSuccessfulNotificoreOtpResponse, k as setResponseStatus, l as getNotificoreAuthenticationId, m as isNotificoreTimeoutError } from '../../../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';

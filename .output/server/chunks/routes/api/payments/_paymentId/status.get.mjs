@@ -1,4 +1,4 @@
-import { d as defineEventHandler, q as getRouterParam, c as createError, u as useDatabase, H as getSiteOrderPaymentState, I as updateSiteOrderPaymentStatus, J as refreshVtbPaymentStatus } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, w as getRouterParam, c as createError, u as useDatabase, N as getPaymentAttempt, O as getHeader, E as getQuery, D as getOwnedSiteOrder, P as refreshSbpPaymentAttempt, Q as serializePaymentAttempt } from '../../../../nitro/nitro.mjs';
 import 'node:fs/promises';
 import 'kysely';
 import 'node:child_process';
@@ -18,40 +18,29 @@ import '@iconify/utils';
 import 'consola';
 
 const status_get = defineEventHandler(async (event) => {
-  var _a;
-  const siteOrderId = Number(getRouterParam(event, "paymentId"));
-  if (!Number.isInteger(siteOrderId) || siteOrderId <= 0) {
+  const attemptId = Number(getRouterParam(event, "paymentId"));
+  if (!Number.isInteger(attemptId) || attemptId <= 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Invalid order id",
-      message: "\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440 \u0437\u0430\u043A\u0430\u0437\u0430"
+      statusMessage: "Invalid payment id",
+      message: "\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440 \u043F\u043B\u0430\u0442\u0435\u0436\u0430"
     });
   }
   const database = useDatabase();
-  const siteOrder = await getSiteOrderPaymentState(database, siteOrderId);
-  if (!siteOrder) {
+  const attempt = await getPaymentAttempt(database, attemptId);
+  if (!attempt) {
     throw createError({
       statusCode: 404,
-      statusMessage: "Order not found",
-      message: "\u0417\u0430\u043A\u0430\u0437 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D"
+      statusMessage: "Payment not found",
+      message: "\u041F\u043B\u0430\u0442\u0451\u0436 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D"
     });
   }
-  const paymentStatus = (_a = siteOrder.payment_status) != null ? _a : siteOrder.status;
-  if (["paid", "failed", "expired", "cancelled"].includes(paymentStatus)) {
-    return { payment: { ...siteOrder, status: paymentStatus } };
-  }
-  if (siteOrder.expires_at && new Date(siteOrder.expires_at).getTime() < Date.now()) {
-    await updateSiteOrderPaymentStatus(database, siteOrderId, "expired");
-    return {
-      payment: {
-        ...siteOrder,
-        payment_status: "expired",
-        status: "expired"
-      }
-    };
-  }
-  const { siteOrder: refreshedSiteOrder } = await refreshVtbPaymentStatus(database, siteOrder);
-  return { payment: refreshedSiteOrder };
+  const accessToken = String(
+    getHeader(event, "x-order-access-token") || getQuery(event).accessToken || ""
+  ).trim();
+  await getOwnedSiteOrder(database, event, Number(attempt.site_order_id), accessToken);
+  const refreshedAttempt = await refreshSbpPaymentAttempt(database, attempt);
+  return { payment: serializePaymentAttempt(refreshedAttempt) };
 });
 
 export { status_get as default };
