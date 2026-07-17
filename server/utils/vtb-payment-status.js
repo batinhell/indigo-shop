@@ -18,7 +18,7 @@ export async function refreshVtbPaymentStatus(database, siteOrder, options = {})
     }
   }
 
-  if (!siteOrder.order_number || !siteOrder.vtb_qr_id) {
+  if (!siteOrder.order_number) {
     return {
       siteOrder: { ...siteOrder, status: currentStatus },
       status: currentStatus,
@@ -32,9 +32,11 @@ export async function refreshVtbPaymentStatus(database, siteOrder, options = {})
   })
   const status = getPaymentStatusFromVtbQr(statusResponse.qrStatus, statusResponse.transactionState)
   const settledSiteOrder = await settleSiteOrderPayment(database, siteOrder.id, status, {
+    ...(statusResponse.paymentId ? { vtb_payment_id: statusResponse.paymentId } : {}),
     payload: mergeVtbPaymentPayload(siteOrder.payload, {
       ...options.payloadPatch,
-      lastStatus: statusResponse.raw || statusResponse
+      lastStatus: statusResponse.raw || statusResponse,
+      ...(statusResponse.amount ? { chargedAmount: statusResponse.amount } : {})
     })
   })
 

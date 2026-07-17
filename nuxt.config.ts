@@ -80,7 +80,7 @@ export default defineNuxtConfig({
     },
     rarusKkt: {
       baseUrl: 'https://kkm.rarus-cloud.ru',
-      apiVersion: '1.1.7',
+      apiVersion: 'v1',
       apiKey: '',
       inn: '6234117358',
       taxSystem: 'OSN',

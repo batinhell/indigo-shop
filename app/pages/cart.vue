@@ -19,7 +19,9 @@ const paymentError = ref('')
 const checkoutData = ref({})
 const isPayPending = ref(false)
 const isInvoiceSuccessOpen = ref(false)
+const isOrderSuccessOpen = ref(false)
 const invoice = ref(null)
+const checkoutOrder = ref(null)
 let paymentStatusTimer = null
 
 const allSelected = computed({
@@ -120,6 +122,7 @@ async function startInvoicePayment(order) {
   invoice.value = result.invoice
   isInvoiceSuccessOpen.value = true
   paymentStatus.value = 'pending'
+  clearCart()
 }
 
 function stopPaymentStatusPolling() {
@@ -134,7 +137,11 @@ async function refreshSbpPaymentStatus() {
     return
   }
 
-  const result = await $fetch(`/api/payments/${payment.value.id}/status`)
+  const result = await $fetch(`/api/payments/${payment.value.id}/status`, {
+    headers: payment.value.accessToken
+      ? { 'x-order-access-token': payment.value.accessToken }
+      : undefined
+  })
   payment.value = {
     ...payment.value,
     ...result.payment
@@ -157,6 +164,8 @@ function startPaymentStatusPolling() {
 
 async function startSbpPayment(order) {
   isPaymentQrOpen.value = true
+  paymentStatus.value = 'loading'
+  paymentError.value = ''
 
   const result = await $fetch('/api/payments/vtb-sbp/start', {
     method: 'POST',
@@ -167,7 +176,10 @@ async function startSbpPayment(order) {
     }
   })
 
-  payment.value = result.payment
+  payment.value = {
+    ...result.payment,
+    accessToken: order.accessToken
+  }
   paymentStatus.value = result.payment?.status ?? 'pending'
 
   if (paymentStatus.value === 'pending') {
@@ -193,8 +205,22 @@ async function onPay() {
 
   try {
     const order = await createCheckoutOrder()
+    checkoutOrder.value = order
     await startPayment(order)
-    clearCart()
+  } catch (error) {
+    paymentStatus.value = 'failed'
+    paymentError.value = error?.data?.message || error?.message || 'Не удалось создать оплату'
+  } finally {
+    isPayPending.value = false
+  }
+}
+
+async function retrySbpPayment() {
+  if (!checkoutOrder.value || isPayPending.value) return
+
+  isPayPending.value = true
+  try {
+    await startSbpPayment(checkoutOrder.value)
   } catch (error) {
     paymentStatus.value = 'failed'
     paymentError.value = error?.data?.message || error?.message || 'Не удалось создать оплату'
@@ -208,12 +234,25 @@ function downloadInvoice() {
   window.open(invoice.value.downloadUrl, '_blank', 'noopener')
 }
 
+function orderMore() {
+  navigateTo('/catalog')
+}
+
 async function refreshSession() {
   await session.value?.refetch?.()
 }
 
 watch(isPaymentQrOpen, (isOpen) => {
   if (!isOpen) stopPaymentStatusPolling()
+})
+
+watch(paymentStatus, (status) => {
+  if (status !== 'paid') return
+
+  stopPaymentStatusPolling()
+  isPaymentQrOpen.value = false
+  isOrderSuccessOpen.value = true
+  clearCart()
 })
 
 onBeforeUnmount(() => {
@@ -392,6 +431,15 @@ useSeoMeta({
       :qr-payload="payment?.qrPayload ?? ''"
       :status="paymentStatus"
       :error="paymentError"
+      :expires-at="payment?.expiresAt ?? null"
+      @retry="retrySbpPayment"
+    />
+
+    <OrderSuccessModal
+      v-if="checkoutOrder?.orderNumber"
+      v-model="isOrderSuccessOpen"
+      :order-number="checkoutOrder.orderNumber"
+      @order-more="orderMore"
     />
 
     <InvoiceSuccessModal

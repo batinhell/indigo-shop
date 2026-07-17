@@ -1,52 +1,40 @@
 import { useDatabase } from '../../../utils/database.js'
 import {
-  getSiteOrderPaymentState,
-  updateSiteOrderPaymentStatus
-} from '../../../utils/order-payment.js'
-import { refreshVtbPaymentStatus } from '../../../utils/vtb-payment-status.js'
+  getPaymentAttempt,
+  refreshSbpPaymentAttempt,
+  serializePaymentAttempt
+} from '../../../utils/payment-attempts.js'
+import { getOwnedSiteOrder } from '../../../utils/site-orders.js'
 
 export default defineEventHandler(async (event) => {
-  // Public route remains /payments/:paymentId for backwards compatibility;
-  // internally the id is site_orders.id because payment state is stored on the order.
-  const siteOrderId = Number(getRouterParam(event, 'paymentId'))
+  const attemptId = Number(getRouterParam(event, 'paymentId'))
 
-  if (!Number.isInteger(siteOrderId) || siteOrderId <= 0) {
+  if (!Number.isInteger(attemptId) || attemptId <= 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid order id',
-      message: 'Некорректный идентификатор заказа'
+      statusMessage: 'Invalid payment id',
+      message: 'Некорректный идентификатор платежа'
     })
   }
 
   const database = useDatabase()
-  const siteOrder = await getSiteOrderPaymentState(database, siteOrderId)
+  const attempt = await getPaymentAttempt(database, attemptId)
 
-  if (!siteOrder) {
+  if (!attempt) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Order not found',
-      message: 'Заказ не найден'
+      statusMessage: 'Payment not found',
+      message: 'Платёж не найден'
     })
   }
 
-  const paymentStatus = siteOrder.payment_status ?? siteOrder.status
+  const accessToken = String(
+    getHeader(event, 'x-order-access-token')
+    || getQuery(event).accessToken
+    || ''
+  ).trim()
+  await getOwnedSiteOrder(database, event, Number(attempt.site_order_id), accessToken)
+  const refreshedAttempt = await refreshSbpPaymentAttempt(database, attempt)
 
-  if (['paid', 'failed', 'expired', 'cancelled'].includes(paymentStatus)) {
-    return { payment: { ...siteOrder, status: paymentStatus } }
-  }
-
-  if (siteOrder.expires_at && new Date(siteOrder.expires_at).getTime() < Date.now()) {
-    await updateSiteOrderPaymentStatus(database, siteOrderId, 'expired')
-    return {
-      payment: {
-        ...siteOrder,
-        payment_status: 'expired',
-        status: 'expired'
-      }
-    }
-  }
-
-  const { siteOrder: refreshedSiteOrder } = await refreshVtbPaymentStatus(database, siteOrder)
-
-  return { payment: refreshedSiteOrder }
+  return { payment: serializePaymentAttempt(refreshedAttempt) }
 })

@@ -14,6 +14,10 @@ const props = defineProps({
     type: String,
     default: '14:32'
   },
+  expiresAt: {
+    type: [String, Date],
+    default: null
+  },
   qrImage: {
     type: String,
     default: ''
@@ -32,10 +36,22 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['retry'])
+const now = ref(Date.now())
+let countdownTimer
+
 const formattedAmount = computed(() => `${new Intl.NumberFormat('ru-RU').format(props.amount)} ₽`)
 const isLoading = computed(() => props.status === 'loading')
 const isPaid = computed(() => props.status === 'paid')
-const isFailed = computed(() => ['failed', 'expired'].includes(props.status))
+const isFailed = computed(() => ['failed', 'expired', 'cancelled'].includes(props.status))
+const countdown = computed(() => {
+  if (!props.expiresAt) return props.expiresIn
+
+  const remaining = Math.max(0, new Date(props.expiresAt).getTime() - now.value)
+  const minutes = Math.floor(remaining / 60000)
+  const seconds = Math.floor((remaining % 60000) / 1000)
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
+})
 const qrSource = computed(() => {
   const value = props.qrImage.trim()
 
@@ -50,7 +66,18 @@ const statusText = computed(() => {
   if (isPaid.value) return 'Оплата получена'
   if (props.status === 'expired') return 'Срок оплаты истёк'
   if (props.status === 'failed') return 'Оплата не прошла'
+  if (props.status === 'cancelled') return 'Оплата отменена'
   return 'Наведите камеру телефона на QR-код'
+})
+
+onMounted(() => {
+  countdownTimer = window.setInterval(() => {
+    now.value = Date.now()
+  }, 1000)
+})
+
+onBeforeUnmount(() => {
+  if (countdownTimer) window.clearInterval(countdownTimer)
 })
 </script>
 
@@ -72,7 +99,7 @@ const statusText = computed(() => {
           </p>
         </div>
         <p class="payment-qr-card__timer">
-          Осталось {{ expiresIn }}
+          Осталось {{ countdown }}
         </p>
       </div>
 
@@ -85,6 +112,13 @@ const statusText = computed(() => {
             v-if="isLoading"
             class="payment-qr-card__loader"
           />
+          <div
+            v-else-if="isFailed"
+            class="payment-qr-card__failed-mark"
+            aria-hidden="true"
+          >
+            !
+          </div>
           <img
             v-else
             :src="qrSource"
@@ -107,6 +141,13 @@ const statusText = computed(() => {
         >
           {{ error }}
         </p>
+        <AppButton
+          v-if="isFailed"
+          size="m"
+          @click="emit('retry')"
+        >
+          Попробовать снова
+        </AppButton>
       </div>
 
       <div class="payment-qr-card__footer">
@@ -207,6 +248,18 @@ const statusText = computed(() => {
     width: 13.75rem;
     height: 13.75rem;
     object-fit: contain;
+  }
+
+  &__failed-mark {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.25rem;
+    background: #fff0f1;
+    color: #e12e3c;
+    font-size: 2rem;
+    font-weight: 800;
   }
 
   &__loader {

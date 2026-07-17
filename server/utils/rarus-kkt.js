@@ -1,11 +1,15 @@
 const FISCAL_RECEIPT_STATUS = {
   SENDING: 'sending',
   FAILED: 'failed',
-  QUEUED: 'queued'
+  QUEUED: 'queued',
+  COMPLETED: 'completed'
 }
 
+const RARUS_COMPLETED_STATUSES = new Set(['done', 'success', 'succeeded', 'completed', 'fiscalized'])
+const RARUS_FAILED_STATUSES = new Set(['error', 'failed', 'rejected'])
+
 const DEFAULT_BASE_URL = 'https://kkm.rarus-cloud.ru'
-const DEFAULT_API_VERSION = '1.1.7'
+const DEFAULT_API_VERSION = 'v1'
 const DEFAULT_INN = '6234117358'
 const DEFAULT_TAX_SYSTEM = 'OSN'
 const DEFAULT_TAX = 'none'
@@ -132,14 +136,14 @@ async function getReceiptItems(database, orderId, config) {
   })
 }
 
-async function requestRarusKkt(config, receipt) {
-  const response = await fetch(`${config.baseUrl}/${config.apiVersion}/document`, {
-    method: 'POST',
+async function requestRarusKkt(config, path, options = {}) {
+  const response = await fetch(`${config.baseUrl}/${config.apiVersion}/${path.replace(/^\/+/, '')}`, {
+    method: options.method || 'GET',
     headers: {
       'API-KEY': config.apiKey,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(receipt)
+    ...(options.body === undefined ? {} : { body: JSON.stringify(options.body) })
   })
 
   const text = await response.text()
@@ -196,6 +200,49 @@ async function saveFiscalReceiptFailure(database, orderId, error) {
     .execute()
 }
 
+function normalizeFiscalReceiptStatus(data) {
+  const rawStatus = String(data?.operation?.status || '').toLowerCase()
+
+  if (data?.fiscalization?.fiscal_number || RARUS_COMPLETED_STATUSES.has(rawStatus)) {
+    return FISCAL_RECEIPT_STATUS.COMPLETED
+  }
+
+  if (RARUS_FAILED_STATUSES.has(rawStatus)) {
+    return FISCAL_RECEIPT_STATUS.FAILED
+  }
+
+  return rawStatus || FISCAL_RECEIPT_STATUS.QUEUED
+}
+
+export async function refreshFiscalReceiptStatus(database, order) {
+  if (!order?.fiscal_receipt_operation_id) return null
+
+  const config = getRarusKktConfig()
+  if (!config.enabled || !config.apiKey) return null
+
+  const data = await requestRarusKkt(
+    config,
+    `document/${encodeURIComponent(order.fiscal_receipt_operation_id)}`
+  )
+  const status = normalizeFiscalReceiptStatus(data)
+
+  await database
+    .updateTable('site_orders')
+    .set({
+      fiscal_receipt_status: status,
+      fiscal_receipt_error: status === FISCAL_RECEIPT_STATUS.FAILED
+        ? String(data?.operation?.message || 'Fiscal receipt failed')
+        : null,
+      fiscal_receipt_payload: JSON.stringify(data),
+      updated_at: new Date()
+    })
+    .where('id', '=', Number(order.id))
+    .where('fiscal_receipt_operation_id', '=', order.fiscal_receipt_operation_id)
+    .execute()
+
+  return { status, data }
+}
+
 export async function sendFiscalReceiptForPaidOrder(database, order) {
   if (!order || order.payment_status !== 'paid') return null
   if (order.fiscal_receipt_operation_id) return null
@@ -238,7 +285,7 @@ export async function sendFiscalReceiptForPaidOrder(database, order) {
       total
     }
 
-    const data = await requestRarusKkt(config, receipt)
+    const data = await requestRarusKkt(config, 'document', { method: 'POST', body: receipt })
     const operation = data?.operation || {}
 
     await database
@@ -248,6 +295,7 @@ export async function sendFiscalReceiptForPaidOrder(database, order) {
         fiscal_receipt_operation_id: operation.operation_id || null,
         fiscal_receipt_sent_at: new Date(),
         fiscal_receipt_error: null,
+        fiscal_receipt_payload: JSON.stringify(data),
         updated_at: new Date()
       })
       .where('id', '=', orderId)

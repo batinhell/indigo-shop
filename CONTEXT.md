@@ -40,10 +40,33 @@ _Avoid_: Unit price that does not multiply to line total, single aggregated orde
 Налоговая пометка счёта: «Без НДС» для счёта и каждой строки.
 _Avoid_: VAT 20% unless seller details change
 
+**Payment Attempt**:
+Одна отдельная попытка оплатить **Site Order** через СБП с собственным идентификатором заказа ВТБ, статусом и сроком действия QR.
+_Avoid_: Site Order как идентификатор платежа, перезапись предыдущей попытки
+
+**Refund**:
+Инициированный менеджером возврат подтверждённой **Payment Attempt**, сумма которого рассчитывается на сервере по выбранным позициям и количеству.
+_Avoid_: публичный browser refund, доверенная сумма из CRM или браузера
+
+**Fiscal Receipt**:
+Отдельный чек продажи или возврата со снимком позиций и собственным идентификатором документа Rarus.
+_Avoid_: один набор fiscal-полей на Site Order для всех операций
+
+**Payment Job**:
+Сохраняемая в БД идемпотентная задача синхронизации платежа, возврата или **Fiscal Receipt**, которую можно продолжить после рестарта процесса.
+_Avoid_: setTimeout как единственный механизм доставки
+
 ## Relationships
 
 - A **Site Order** receives its public order number in the existing `SITE-{orderId}-{suffix}` format when it is created, before a payment method starts.
 - A **Site Order** may be paid through **Invoice Payment** when the payer is a legal entity.
+- A **Site Order** may have multiple **Payment Attempts**, but at most one active СБП attempt is reused until it becomes terminal or expires.
+- A **Payment Attempt** belongs to exactly one **Site Order** and has its own bank order id; the public Site Order number is never reused as a new bank attempt id.
+- Public payment status access requires ownership of the related **Site Order** through the user session or order access token and returns an explicit safe DTO.
+- A confirmed **Payment Attempt** updates the aggregate payment status on its **Site Order** and enqueues one sale **Fiscal Receipt**.
+- A **Refund** belongs to the confirmed **Payment Attempt** being returned, not merely to the aggregate Site Order.
+- A **Fiscal Receipt** belongs to a **Site Order** and optionally to one **Refund**; sale and return receipts are separate records.
+- A **Payment Job** is claimed with a database lock, retried with backoff, and identified by a unique idempotency key.
 - An **Invoice Payment** belongs to exactly one **Site Order**.
 - An **Invoice Payment** has exactly one **Invoice Number**.
 - A **Site Order** has at most one active **Invoice Payment**; repeated invoice start requests return the existing invoice instead of issuing a new number or resending email.

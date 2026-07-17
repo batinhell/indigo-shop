@@ -202,7 +202,7 @@ export async function getProducts(database, category) {
   }
 }
 
-export async function getProductBySlug(database, slug) {
+async function getProduct(database, column, value) {
   try {
     const product = await database
       .selectFrom('products')
@@ -227,7 +227,7 @@ export async function getProductBySlug(database, slug) {
         'seo_title',
         'seo_description'
       ])
-      .where('slug', '=', slug)
+      .where(column, '=', value)
       .where('status', '=', ACTIVE_STATUS)
       .executeTakeFirst()
 
@@ -243,6 +243,14 @@ export async function getProductBySlug(database, slug) {
   } catch (error) {
     assertProductsTableExists(error)
   }
+}
+
+export function getProductBySlug(database, slug) {
+  return getProduct(database, 'slug', slug)
+}
+
+export function getProductById(database, productId) {
+  return getProduct(database, 'id', Number(productId))
 }
 
 function matchesQuantity(rule, quantity) {
@@ -417,7 +425,9 @@ export function calculateProductPrice(product, payload) {
   const size = payload?.size == null ? null : String(payload.size)
   const optionKeys = Array.isArray(payload?.options)
     ? payload.options.map(option => String(option))
-    : []
+    : Object.entries(payload?.options ?? {})
+        .filter(([, value]) => value === true)
+        .map(([key]) => key)
   const optionValues = getPayloadOptionValues(payload, size)
 
   if (!Number.isInteger(quantity) || quantity < 1) {

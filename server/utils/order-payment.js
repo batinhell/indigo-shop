@@ -1,6 +1,6 @@
-import { sendFiscalReceiptForPaidOrder } from './rarus-kkt.js'
+import { enqueueSaleFiscalReceipt } from './fiscal-receipts.js'
 
-const PAYMENT_PROVIDER = 'vtb_sbp'
+const DEFAULT_PAYMENT_PROVIDER = 'vtb_sbp'
 
 function parseSiteOrderPayload(value) {
   if (!value) return {}
@@ -21,7 +21,7 @@ export function mergeVtbPaymentPayload(payload, patch = {}) {
   const base = parseSiteOrderPayload(payload)
   const payment = asObject(base.payment)
   const vtb = asObject(payment.vtb)
-  const { callback, ...vtbPatch } = patch
+  const { callback, provider = payment.provider || DEFAULT_PAYMENT_PROVIDER, ...vtbPatch } = patch
   const callbacks = callback
     ? [...(Array.isArray(vtb.callbacks) ? vtb.callbacks : []), callback].slice(-20)
     : vtb.callbacks
@@ -30,7 +30,7 @@ export function mergeVtbPaymentPayload(payload, patch = {}) {
     ...base,
     payment: {
       ...payment,
-      provider: PAYMENT_PROVIDER,
+      provider,
       vtb: {
         ...vtb,
         ...vtbPatch,
@@ -78,35 +78,36 @@ export async function settleSiteOrderPayment(database, siteOrderId, status, patc
 
   const siteOrder = await getSiteOrderPaymentState(database, siteOrderId)
   if (siteOrder?.payment_status === 'paid') {
-    sendFiscalReceiptForPaidOrder(database, siteOrder).catch((error) => {
-      console.error('[rarus-kkt] Async fiscal receipt failed:', error)
-    })
+    await enqueueSaleFiscalReceipt(database, siteOrder.id)
   }
 
   return siteOrder
 }
 
-export async function saveSiteOrderVtbQr(database, siteOrderId, response, expiresAt) {
+export async function saveSiteOrderVtbPayment(database, siteOrderId, response, expiresAt, provider = DEFAULT_PAYMENT_PROVIDER) {
   const siteOrder = await getSiteOrderPaymentState(database, siteOrderId)
 
   await database
     .updateTable('site_orders')
     .set({
-      vtb_qr_id: response.qrId,
+      vtb_qr_id: response.qrId || null,
       expires_at: expiresAt,
-      payload: mergeVtbPaymentPayload(siteOrder?.payload, { qr: response }),
+      payload: mergeVtbPaymentPayload(siteOrder?.payload, {
+        provider,
+        ...(response.qrId ? { qr: response } : { card: response })
+      }),
       updated_at: new Date()
     })
     .where('id', '=', siteOrderId)
     .execute()
 }
 
-export async function markSiteOrderPaymentPending(database, { siteOrderId, orderNumber, amount }) {
+export async function markSiteOrderPaymentPending(database, { siteOrderId, orderNumber, amount, provider = DEFAULT_PAYMENT_PROVIDER }) {
   await database
     .updateTable('site_orders')
     .set({
       order_number: orderNumber,
-      payment_provider: PAYMENT_PROVIDER,
+      payment_provider: provider,
       payment_status: 'pending',
       amount,
       currency: 'RUB',

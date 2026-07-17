@@ -1,11 +1,11 @@
 <script setup>
-const isOpen = defineModel({ required: true })
+const isOpen = defineModel({ type: Boolean, required: true })
 
 const props = defineProps({
   orderNumber: {
     type: [String, Number],
-    required: true,
-  },
+    required: true
+  }
 })
 
 const emit = defineEmits(['order-more'])
@@ -20,16 +20,19 @@ const days = [
   { label: 'Чт', active: true },
   { label: 'Пт', active: true },
   { label: 'Сб', active: false },
-  { label: 'Вс', active: false },
+  { label: 'Вс', active: false }
 ]
 
 async function copyOrderNumber() {
   try {
     await navigator.clipboard.writeText(String(props.orderNumber))
     copied.value = true
-    setTimeout(() => { copied.value = false }, 2000)
+    setTimeout(() => {
+      copied.value = false
+    }, 2000)
+  } catch {
+    copied.value = false
   }
-  catch {}
 }
 
 function onOrderMore() {
@@ -39,100 +42,136 @@ function onOrderMore() {
 </script>
 
 <template>
-  <BaseModal v-model="isOpen" :show-header="false" max-width="25.5rem">
+  <BaseModal
+    v-model="isOpen"
+    :show-header="false"
+    max-width="22.125rem"
+  >
     <div class="modal-card">
       <!-- Close -->
-      <button class="close-btn" @click="isOpen = false">
-        <UIcon name="i-lucide-x" class="close-btn__icon" />
+      <button
+        class="close-btn"
+        @click="isOpen = false"
+      >
+        <UIcon
+          name="i-lucide-x"
+          class="close-btn__icon"
+        />
       </button>
 
-          <!-- Header -->
-          <div class="modal-section">
-            <div class="modal-icon">
-              <UIcon name="i-lucide-check" class="modal-icon__svg" />
-            </div>
+      <!-- Header -->
+      <div class="modal-section">
+        <div class="modal-icon">
+          <UIcon
+            name="i-lucide-check"
+            class="modal-icon__svg"
+          />
+        </div>
 
-            <h2 class="modal-title">
-              Заказ
-              <button class="order-number" :title="copied ? 'Скопировано!' : 'Скопировать номер'" @click="copyOrderNumber">
-                №{{ orderNumber }}
-              </button>
-              оплачен
-            </h2>
-          </div>
+        <h2 class="modal-title">
+          Заказ
+          <button
+            class="order-number"
+            :title="copied ? 'Скопировано!' : 'Скопировать номер'"
+            @click="copyOrderNumber"
+          >
+            №{{ orderNumber }}
+          </button>
+          оплачен
+        </h2>
+      </div>
 
-          <!-- Рабочее время, до конца дня ≥ 2 часа -->
-          <div v-if="status === 'working'" class="modal-section">
-            <p class="modal-text modal-text--bold">
-              Менеджер свяжется с вами в течении 2-х часов, уточнит детали и отправит заказ в работу.
-            </p>
-          </div>
+      <!-- Рабочее время, до конца дня ≥ 2 часа -->
+      <div
+        v-if="status === 'working'"
+        class="modal-section"
+      >
+        <p class="modal-text modal-text--bold">
+          Менеджер свяжется с вами в течении 2-х часов, уточнит детали и отправит заказ в работу.
+        </p>
+      </div>
 
-          <!-- Рабочее время, до конца дня < 2 часа -->
-          <div v-else-if="status === 'closing-soon'" class="modal-section">
-            <p class="modal-text modal-text--bold">
-              Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу.
-            </p>
-          </div>
+      <!-- Рабочее время, до конца дня < 2 часа -->
+      <div
+        v-else-if="status === 'closing-soon'"
+        class="modal-section"
+      >
+        <p class="modal-text modal-text--bold">
+          Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу.
+        </p>
+      </div>
 
-          <!-- После рабочего дня (будний, но после 18:00 или до 9:00) -->
-          <div v-else-if="status === 'after-hours'" class="modal-section">
-            <p class="modal-text modal-text--bold">
-              <template v-if="isTomorrowWorking">
-                Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу.
-              </template>
-              <template v-else>
-                Менеджер свяжется с вами в ближайший рабочий день, до 12:00, уточнит детали и отправит заказ в работу.
-              </template>
-            </p>
-          </div>
+      <!-- После рабочего дня (будний, но после 18:00 или до 9:00) -->
+      <div
+        v-else-if="status === 'after-hours'"
+        class="modal-section"
+      >
+        <p class="modal-text modal-text--bold">
+          <template v-if="isTomorrowWorking">
+            Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу.
+          </template>
+          <template v-else>
+            Менеджер свяжется с вами в ближайший рабочий день, до 12:00, уточнит детали и отправит заказ в работу.
+          </template>
+        </p>
+      </div>
 
-          <!-- Выходной / праздник -->
-          <div v-else class="modal-section">
-            <p class="modal-text modal-text--bold">
-              Сегодня у вас выходной.
-              <br>
-              Менеджер свяжется с вами в ближайший рабочий день, до 12:00, уточнит детали и отправит заказ в работу.
-            </p>
-          </div>
+      <!-- Выходной / праздник -->
+      <div
+        v-else
+        class="modal-section"
+      >
+        <p class="modal-text modal-text--bold">
+          Сегодня у вас выходной.
+          <br>
+          Менеджер свяжется с вами в ближайший рабочий день, до 12:00, уточнит детали и отправит заказ в работу.
+        </p>
+      </div>
 
-          <!-- Pickup address -->
-          <div class="modal-section">
-            <p class="modal-text modal-text--secondary">
-              Заказ можно будет забрать по адресу:
-              <br>
-              <a
-                href="https://yandex.ru/maps/-/CHEbFD2T"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="modal-link"
-              >Донецк, ул.Постышева, дом 60</a>
-            </p>
-          </div>
+      <!-- Pickup address -->
+      <div class="modal-section">
+        <p class="modal-text modal-text--secondary">
+          Заказ можно будет забрать по адресу:
+          <br>
+          <a
+            href="https://yandex.ru/maps/-/CHEbFD2T"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="modal-link"
+          >Донецк, ул.Постышева, дом 60</a>
+        </p>
+      </div>
 
-          <!-- Working hours info (only on weekends) -->
-          <div v-if="status === 'weekend'" class="modal-section">
-            <p class="modal-text modal-text--secondary">
-              Мы работаем с 9 до 18:00,
-              <br>
-              с понедельника по пятницу:
-            </p>
+      <!-- Working hours info (only on weekends) -->
+      <div
+        v-if="status === 'weekend'"
+        class="modal-section"
+      >
+        <p class="modal-text modal-text--secondary">
+          Мы работаем с 9 до 18:00,
+          <br>
+          с понедельника по пятницу:
+        </p>
 
-            <div class="days-row">
-              <span
-                v-for="day in days"
-                :key="day.label"
-                :class="['day-badge', { 'day-badge--inactive': !day.active }]"
-              >
-                {{ day.label }}
-              </span>
-            </div>
-          </div>
+        <div class="days-row">
+          <span
+            v-for="day in days"
+            :key="day.label"
+            :class="['day-badge', { 'day-badge--inactive': !day.active }]"
+          >
+            {{ day.label }}
+          </span>
+        </div>
+      </div>
 
-          <!-- Action -->
-          <AppButton class="order-more-btn" size="md" @click="onOrderMore">
-            Заказать еще
-          </AppButton>
+      <!-- Action -->
+      <AppButton
+        class="order-more-btn"
+        size="md"
+        @click="onOrderMore"
+      >
+        Заказать еще
+      </AppButton>
     </div>
   </BaseModal>
 </template>
@@ -145,6 +184,8 @@ $radius-card: 1.75rem;
 
 .modal-card {
   position: relative;
+  width: 22.125rem;
+  max-width: calc(100dvw - 2rem);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
