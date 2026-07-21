@@ -184,8 +184,8 @@ $radius-card: 1.75rem;
 
 .modal-card {
   position: relative;
-  width: 22.125rem;
-  max-width: calc(100dvw - 2rem);
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
