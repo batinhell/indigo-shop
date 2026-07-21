@@ -13,6 +13,11 @@ function getRetryDelaySeconds(attempts) {
   return Math.min(15 * (2 ** Math.max(0, attempts - 1)), MAX_RETRY_DELAY_SECONDS)
 }
 
+export function serializeJsonValue(value) {
+  if (value == null) return null
+  return typeof value === 'string' ? value : JSON.stringify(value)
+}
+
 async function claimNextJob(database, workerId) {
   return database.transaction().execute(async (trx) => {
     const staleBefore = new Date(Date.now() - LOCK_TIMEOUT_MS)
@@ -63,7 +68,7 @@ async function mirrorLegacyFiscalState(database, receiptId, order) {
     .set({
       operation_id: order.fiscal_receipt_operation_id || null,
       status,
-      response_payload: order.fiscal_receipt_payload || null,
+      response_payload: serializeJsonValue(order.fiscal_receipt_payload),
       error: order.fiscal_receipt_error || null,
       sent_at: order.fiscal_receipt_sent_at || null,
       ...(status === 'completed' ? { completed_at: new Date() } : {}),
