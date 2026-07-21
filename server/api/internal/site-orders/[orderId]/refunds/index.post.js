@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const refund = await requestSiteOrderRefund(database, order, body?.amount, body?.refundId)
+  const refund = await requestSiteOrderRefund(database, order, body)
 
   return { refund }
 })

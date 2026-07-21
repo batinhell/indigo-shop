@@ -41,12 +41,12 @@ _Avoid_: Unit price that does not multiply to line total, single aggregated orde
 _Avoid_: VAT 20% unless seller details change
 
 **Payment Attempt**:
-Одна отдельная попытка оплатить **Site Order** через СБП с собственным идентификатором заказа ВТБ, статусом и сроком действия QR.
+Одна отдельная попытка оплатить **Site Order** через СБП или банковскую карту с собственным идентификатором заказа ВТБ и статусом. СБП-попытка содержит QR и срок его действия; карточная попытка перенаправляет покупателя на `payUrl` платёжной формы ВТБ.
 _Avoid_: Site Order как идентификатор платежа, перезапись предыдущей попытки
 
 **Refund**:
-Инициированный менеджером возврат подтверждённой **Payment Attempt**, сумма которого рассчитывается на сервере по выбранным позициям и количеству.
-_Avoid_: публичный browser refund, доверенная сумма из CRM или браузера
+Инициированный только менеджером возврат подтверждённой **Payment Attempt** после рассмотрения заявления покупателя по email. Полный возврат включает весь состав заказа; частичный задаётся выбранными позициями и количеством, а сумму рассчитывает сервер.
+_Avoid_: публичный browser refund, автоматический возврат при отмене, произвольная сумма возврата, доверенная сумма из CRM или браузера
 
 **Fiscal Receipt**:
 Отдельный чек продажи или возврата со снимком позиций и собственным идентификатором документа Rarus.
@@ -60,11 +60,16 @@ _Avoid_: setTimeout как единственный механизм доста�
 
 - A **Site Order** receives its public order number in the existing `SITE-{orderId}-{suffix}` format when it is created, before a payment method starts.
 - A **Site Order** may be paid through **Invoice Payment** when the payer is a legal entity.
-- A **Site Order** may have multiple **Payment Attempts**, but at most one active СБП attempt is reused until it becomes terminal or expires.
+- A **Site Order** may have multiple **Payment Attempts** for СБП and card payments, but at most one active attempt for the selected method is reused until it becomes terminal or expires.
+- A card **Payment Attempt** creates a VTB order without `returnPaymentData` and redirects the customer to the returned `payUrl`.
 - A **Payment Attempt** belongs to exactly one **Site Order** and has its own bank order id; the public Site Order number is never reused as a new bank attempt id.
 - Public payment status access requires ownership of the related **Site Order** through the user session or order access token and returns an explicit safe DTO.
 - A confirmed **Payment Attempt** updates the aggregate payment status on its **Site Order** and enqueues one sale **Fiscal Receipt**.
 - A **Refund** belongs to the confirmed **Payment Attempt** being returned, not merely to the aggregate Site Order.
+- Only a CRM manager may initiate a **Refund**; cancelling a Site Order does not automatically refund it.
+- A partial **Refund** contains selected order lines and quantities rather than an arbitrary amount; the server calculates its amount and accounts for prior refunds.
+- A completed full **Refund** moves the Site Order to «Возврат»; a completed partial **Refund** moves it to «Частичный возврат» and triggers customer email notification.
+- A return **Fiscal Receipt** sends the refunded item snapshot and quantities to Rarus/OFD.
 - A **Fiscal Receipt** belongs to a **Site Order** and optionally to one **Refund**; sale and return receipts are separate records.
 - A **Payment Job** is claimed with a database lock, retried with backoff, and identified by a unique idempotency key.
 - An **Invoice Payment** belongs to exactly one **Site Order**.

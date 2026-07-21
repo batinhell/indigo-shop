@@ -1,6 +1,8 @@
 import {
   refreshFiscalReceiptStatus,
-  sendFiscalReceiptForPaidOrder
+  refreshReturnFiscalReceiptStatus,
+  sendFiscalReceiptForPaidOrder,
+  sendReturnFiscalReceipt
 } from './rarus-kkt.js'
 
 const DEFAULT_BATCH_SIZE = 10
@@ -87,6 +89,17 @@ async function processFiscalReceiptJob(database, job) {
 
   if (!receipt || !order) return { completed: true }
   if (receipt.status === 'completed') return { completed: true }
+
+  if (receipt.receipt_type === 'return') {
+    const result = receipt.operation_id
+      ? await refreshReturnFiscalReceiptStatus(database, receipt)
+      : await sendReturnFiscalReceipt(database, receipt, order)
+
+    if (result?.status === 'completed') return { completed: true }
+    if (result?.status === 'failed') throw new Error('Return fiscal receipt failed')
+    return { completed: false, delaySeconds: receipt.operation_id ? 15 : 60 }
+  }
+
   if (receipt.receipt_type !== 'sale') {
     throw new Error(`Unsupported fiscal receipt type: ${receipt.receipt_type}`)
   }

@@ -1,8 +1,10 @@
 import { enqueueSaleFiscalReceipt } from './fiscal-receipts.js'
 import { getPaymentStatusFromVtbQr } from './vtb-payment-status-mapper.js'
 import {
+  createVtbCardPayment,
   getVtbDynamicQr,
   getVtbDynamicQrStatus,
+  getVtbPaymentExpiresAt,
   getVtbQrExpiresAt
 } from './vtb-sbp-api.js'
 
@@ -20,10 +22,10 @@ function parseJson(value, fallback = {}) {
   }
 }
 
-function createBankOrderId(siteOrderId) {
+function createBankOrderId(siteOrderId, method = 'sbp') {
   const timestamp = Date.now().toString(36).toUpperCase()
   const random = crypto.randomUUID().replaceAll('-', '').slice(0, 8).toUpperCase()
-  return `SBP-${siteOrderId}-${timestamp}-${random}`.slice(0, 36)
+  return `${method.toUpperCase()}-${siteOrderId}-${timestamp}-${random}`.slice(0, 36)
 }
 
 function getStartPayload(attempt) {
@@ -62,6 +64,7 @@ export function serializePaymentAttempt(attempt) {
     qrId: attempt.qr_id || null,
     qrPayload: start.payload ?? null,
     qrImage: start.renderedQr ?? null,
+    payUrl: start.payUrl ?? null,
     testAmountOverride: start.testAmountOverride ?? null
   }
 }
@@ -226,7 +229,119 @@ export async function startSbpPaymentAttempt(database, siteOrderId) {
   }
 }
 
-async function updateOrderAggregate(database, siteOrderId, attemptId, status, patch = {}) {
+export async function startCardPaymentAttempt(database, siteOrderId) {
+  const orderId = Number(siteOrderId)
+  const reservation = await database.transaction().execute(async (trx) => {
+    const order = await trx.selectFrom('site_orders').selectAll().where('id', '=', orderId).forUpdate().executeTakeFirst()
+
+    if (!order) throw createError({ statusCode: 404, statusMessage: 'Order not found', message: 'Заказ не найден' })
+    if (order.payment_status === 'paid') {
+      throw createError({ statusCode: 409, statusMessage: 'Order is already paid', message: 'Заказ уже оплачен' })
+    }
+
+    const activeAttempt = await trx
+      .selectFrom('site_order_payment_attempts')
+      .selectAll()
+      .where('site_order_id', '=', orderId)
+      .where('method', '=', 'card')
+      .where('status', 'in', ACTIVE_ATTEMPT_STATUSES)
+      .orderBy('id', 'desc')
+      .executeTakeFirst()
+
+    if (activeAttempt) {
+      const expiresAt = activeAttempt.expires_at ? new Date(activeAttempt.expires_at).getTime() : null
+      const createdAt = new Date(activeAttempt.created_at).getTime()
+      if (
+        (activeAttempt.status === 'creating' && createdAt > Date.now() - 2 * 60 * 1000)
+        || (activeAttempt.status === 'pending' && (!expiresAt || expiresAt > Date.now()))
+      ) return { attempt: activeAttempt, created: false }
+
+      await trx
+        .updateTable('site_order_payment_attempts')
+        .set({ status: activeAttempt.status === 'creating' ? 'failed' : 'expired', failed_at: new Date(), updated_at: new Date() })
+        .where('id', '=', activeAttempt.id)
+        .execute()
+    }
+
+    const amount = Math.round(Number(order.amount) * 100) / 100
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw createError({ statusCode: 409, statusMessage: 'Invalid order amount', message: 'У заказа отсутствует сумма к оплате' })
+    }
+
+    const now = new Date()
+    const inserted = await trx
+      .insertInto('site_order_payment_attempts')
+      .values({
+        site_order_id: orderId,
+        provider: 'vtb',
+        method: 'card',
+        bank_order_id: createBankOrderId(orderId, 'card'),
+        requested_amount: amount,
+        currency: order.currency || 'RUB',
+        status: 'creating',
+        created_at: now,
+        updated_at: now
+      })
+      .executeTakeFirst()
+    const attempt = await trx
+      .selectFrom('site_order_payment_attempts')
+      .selectAll()
+      .where('id', '=', Number(inserted.insertId))
+      .executeTakeFirstOrThrow()
+
+    await trx
+      .updateTable('site_orders')
+      .set({ payment_provider: 'vtb_card', payment_status: 'pending', expires_at: null, updated_at: now })
+      .where('id', '=', orderId)
+      .execute()
+
+    return { attempt, created: true }
+  })
+
+  if (!reservation.created) return reservation.attempt
+
+  const { attempt } = reservation
+  try {
+    const response = await createVtbCardPayment(attempt.bank_order_id, {
+      amount: Number(attempt.requested_amount),
+      description: `Заказ Indigo #${orderId}`
+    })
+    const expiresAt = getVtbPaymentExpiresAt()
+
+    await database
+      .updateTable('site_order_payment_attempts')
+      .set({
+        charged_amount: getChargedAmount(response, attempt.requested_amount),
+        status: 'pending',
+        provider_status: String(response.status || 'CREATED'),
+        provider_payload: JSON.stringify({ start: response }),
+        expires_at: expiresAt,
+        updated_at: new Date()
+      })
+      .where('id', '=', attempt.id)
+      .where('status', '=', 'creating')
+      .execute()
+
+    await database.updateTable('site_orders').set({ expires_at: expiresAt, updated_at: new Date() }).where('id', '=', orderId).execute()
+    return getPaymentAttempt(database, attempt.id)
+  } catch (error) {
+    await database
+      .updateTable('site_order_payment_attempts')
+      .set({
+        status: 'failed',
+        failed_at: new Date(),
+        provider_payload: JSON.stringify({ error: { message: error?.message || 'VTB card payment failed' } }),
+        updated_at: new Date()
+      })
+      .where('id', '=', attempt.id)
+      .execute()
+
+    await updateOrderAggregate(database, orderId, attempt.id, 'failed', {}, 'card')
+    throw error
+  }
+}
+
+async function updateOrderAggregate(database, siteOrderId, attemptId, status, patch = {}, method = 'sbp') {
   const latestAttempt = await database
     .selectFrom('site_order_payment_attempts')
     .select(['id'])
@@ -241,7 +356,7 @@ async function updateOrderAggregate(database, siteOrderId, attemptId, status, pa
     .updateTable('site_orders')
     .set({
       ...patch,
-      payment_provider: 'vtb_sbp',
+      payment_provider: method === 'card' ? 'vtb_card' : 'vtb_sbp',
       payment_status: status,
       ...(status === 'paid' ? { paid_at: now } : {}),
       updated_at: now
@@ -294,7 +409,7 @@ export async function refreshSbpPaymentAttempt(database, attempt, options = {}) 
     vtb_qr_id: attempt.qr_id || null,
     vtb_payment_id: response.paymentId || attempt.payment_id || null,
     expires_at: attempt.expires_at || null
-  })
+  }, attempt.method)
 
   if (status === 'paid' && attempt.status !== 'paid') {
     await enqueueSaleFiscalReceipt(database, attempt.site_order_id, attempt.id)

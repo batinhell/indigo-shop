@@ -15,6 +15,7 @@ const DEFAULT_TAX_SYSTEM = 'OSN'
 const DEFAULT_TAX = 'none'
 const DEFAULT_SIGN_METHOD_CALCULATION = 'full_prepayment'
 const DEFAULT_SIGN_CALCULATION_OBJECT = 'commodity'
+const DEFAULT_RETURN_DOC_TYPE = 'sale_refund'
 const DEFAULT_TAG_1011 = 2
 
 const readEnv = name => process.env[name]?.trim() ?? ''
@@ -41,6 +42,7 @@ function getRarusKktConfig() {
     signMethodCalculation: readConfigValue(config, 'signMethodCalculation', 'RARUS_KKT_SIGN_METHOD_CALCULATION') || DEFAULT_SIGN_METHOD_CALCULATION,
     signCalculationObject: readConfigValue(config, 'signCalculationObject', 'RARUS_KKT_SIGN_CALCULATION_OBJECT') || DEFAULT_SIGN_CALCULATION_OBJECT,
     tag1011: Number(readConfigValue(config, 'tag1011', 'RARUS_KKT_TAG_1011')) || DEFAULT_TAG_1011,
+    returnDocType: readConfigValue(config, 'returnDocType', 'RARUS_KKT_RETURN_DOC_TYPE') || DEFAULT_RETURN_DOC_TYPE,
     enabled: !['0', 'false', 'no', 'off'].includes(readEnv('RARUS_KKT_ENABLED').toLowerCase())
   }
 }
@@ -200,6 +202,52 @@ async function saveFiscalReceiptFailure(database, orderId, error) {
     .execute()
 }
 
+function getSnapshotReceiptItems(receipt, config) {
+  const snapshot = parseJson(receipt.items_snapshot)
+  const items = Array.isArray(snapshot) ? snapshot : []
+
+  return items.map(item => ({
+    name: String(item.name || 'Товар').slice(0, 128),
+    price: toMoney(item.unitPrice ?? item.unit_price),
+    quantity: Math.max(1, Number(item.quantity) || 1),
+    sum: toMoney(item.total),
+    tax: config.tax,
+    sign_method_calculation: config.signMethodCalculation,
+    sign_calculation_object: item.calculationObject === 'service' ? 'service' : config.signCalculationObject
+  })).filter(item => item.price && item.sum)
+}
+
+function createReturnReceiptPayload(receipt, order, config) {
+  const contact = getReceiptContact(order)
+  if (!contact.email && !contact.phone) {
+    throw new Error('Missing customer email or phone for fiscal receipt')
+  }
+
+  const items = getSnapshotReceiptItems(receipt, config)
+  const total = toMoney(receipt.amount)
+  if (!items.length || !total) {
+    throw new Error('Missing return fiscal receipt items or amount')
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000)
+  return {
+    id: receipt.document_id,
+    doc_type: config.returnDocType,
+    timestamp_utc: timestamp,
+    timestamp_local: timestamp,
+    ...contact,
+    tax_system: config.taxSystem,
+    inn: config.inn,
+    payment_address: config.paymentAddress || undefined,
+    payment_place: config.paymentPlace || undefined,
+    senderEmail: config.senderEmail || undefined,
+    tag_1125: 1,
+    tag_1011: config.tag1011,
+    items,
+    total
+  }
+}
+
 function normalizeFiscalReceiptStatus(data) {
   const rawStatus = String(data?.operation?.status || '').toLowerCase()
 
@@ -238,6 +286,66 @@ export async function refreshFiscalReceiptStatus(database, order) {
     })
     .where('id', '=', Number(order.id))
     .where('fiscal_receipt_operation_id', '=', order.fiscal_receipt_operation_id)
+    .execute()
+
+  return { status, data }
+}
+
+export async function refreshReturnFiscalReceiptStatus(database, receipt) {
+  if (!receipt?.operation_id) return null
+
+  const config = getRarusKktConfig()
+  if (!config.enabled || !config.apiKey) {
+    throw new Error('Rarus KKT is not configured')
+  }
+
+  const data = await requestRarusKkt(config, `document/${encodeURIComponent(receipt.operation_id)}`)
+  const status = normalizeFiscalReceiptStatus(data)
+
+  await database
+    .updateTable('site_order_fiscal_receipts')
+    .set({
+      status,
+      response_payload: JSON.stringify(data),
+      error: status === FISCAL_RECEIPT_STATUS.FAILED
+        ? String(data?.operation?.message || 'Return fiscal receipt failed')
+        : null,
+      ...(status === FISCAL_RECEIPT_STATUS.COMPLETED ? { completed_at: new Date() } : {}),
+      updated_at: new Date()
+    })
+    .where('id', '=', Number(receipt.id))
+    .where('operation_id', '=', receipt.operation_id)
+    .execute()
+
+  return { status, data }
+}
+
+export async function sendReturnFiscalReceipt(database, receipt, order) {
+  const config = getRarusKktConfig()
+  if (!config.enabled || !config.apiKey) {
+    throw new Error('Rarus KKT is not configured')
+  }
+
+  const payload = createReturnReceiptPayload(receipt, order, config)
+  const data = await requestRarusKkt(config, 'document', { method: 'POST', body: payload })
+  const operation = data?.operation || {}
+  const status = normalizeFiscalReceiptStatus(data)
+
+  await database
+    .updateTable('site_order_fiscal_receipts')
+    .set({
+      operation_id: operation.operation_id || null,
+      status,
+      request_payload: JSON.stringify(payload),
+      response_payload: JSON.stringify(data),
+      error: status === FISCAL_RECEIPT_STATUS.FAILED
+        ? String(operation.message || 'Return fiscal receipt failed')
+        : null,
+      sent_at: new Date(),
+      ...(status === FISCAL_RECEIPT_STATUS.COMPLETED ? { completed_at: new Date() } : {}),
+      updated_at: new Date()
+    })
+    .where('id', '=', Number(receipt.id))
     .execute()
 
   return { status, data }
