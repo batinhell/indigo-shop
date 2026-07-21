@@ -4,7 +4,7 @@ import { computed, ref, watch, mergeProps, unref, isRef, useModel, withCtx, crea
 import { ssrRenderAttrs, ssrRenderClass, ssrRenderComponent, ssrInterpolate, ssrRenderList, ssrRenderAttr, ssrIncludeBooleanAttr, ssrLooseEqual } from 'vue/server-renderer';
 import { _ as __nuxt_component_0 } from './AppSwitch-Bzlh0bNE.mjs';
 import { storeToRefs } from 'pinia';
-import { a1 as getRegistrationEmailError, aO as isInvoiceEmailPending } from '../nitro/nitro.mjs';
+import { Y as getRegistrationEmailError, aJ as isInvoiceEmailPending } from '../nitro/nitro.mjs';
 import { _ as __nuxt_component_0$2 } from './BaseModal-C-A_Et6t.mjs';
 import 'perfect-debounce';
 import '@vue/shared';
@@ -866,23 +866,23 @@ const _sfc_main$2 = {
       }, _attrs), {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="modal-card" data-v-28418e53${_scopeId}><button class="close-btn" data-v-28418e53${_scopeId}>`);
+            _push2(`<div class="modal-card" data-v-287c15e3${_scopeId}><button class="close-btn" data-v-287c15e3${_scopeId}>`);
             _push2(ssrRenderComponent(_component_UIcon, {
               name: "i-lucide-x",
               class: "close-btn__icon"
             }, null, _parent2, _scopeId));
-            _push2(`</button><div class="modal-section" data-v-28418e53${_scopeId}><div class="modal-icon" data-v-28418e53${_scopeId}>`);
+            _push2(`</button><div class="modal-section" data-v-287c15e3${_scopeId}><div class="modal-icon" data-v-287c15e3${_scopeId}>`);
             _push2(ssrRenderComponent(_component_UIcon, {
               name: "i-lucide-check",
               class: "modal-icon__svg"
             }, null, _parent2, _scopeId));
-            _push2(`</div><h2 class="modal-title" data-v-28418e53${_scopeId}> Заказ <button class="order-number"${ssrRenderAttr("title", unref(copied) ? "Скопировано!" : "Скопировать номер")} data-v-28418e53${_scopeId}> №${ssrInterpolate(__props.orderNumber)}</button> оплачен </h2></div>`);
+            _push2(`</div><h2 class="modal-title" data-v-287c15e3${_scopeId}> Заказ <button class="order-number"${ssrRenderAttr("title", unref(copied) ? "Скопировано!" : "Скопировать номер")} data-v-287c15e3${_scopeId}> №${ssrInterpolate(__props.orderNumber)}</button> оплачен </h2></div>`);
             if (unref(status) === "working") {
-              _push2(`<div class="modal-section" data-v-28418e53${_scopeId}><p class="modal-text modal-text--bold" data-v-28418e53${_scopeId}> Менеджер свяжется с вами в течении 2-х часов, уточнит детали и отправит заказ в работу. </p></div>`);
+              _push2(`<div class="modal-section" data-v-287c15e3${_scopeId}><p class="modal-text modal-text--bold" data-v-287c15e3${_scopeId}> Менеджер свяжется с вами в течении 2-х часов, уточнит детали и отправит заказ в работу. </p></div>`);
             } else if (unref(status) === "closing-soon") {
-              _push2(`<div class="modal-section" data-v-28418e53${_scopeId}><p class="modal-text modal-text--bold" data-v-28418e53${_scopeId}> Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу. </p></div>`);
+              _push2(`<div class="modal-section" data-v-287c15e3${_scopeId}><p class="modal-text modal-text--bold" data-v-287c15e3${_scopeId}> Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу. </p></div>`);
             } else if (unref(status) === "after-hours") {
-              _push2(`<div class="modal-section" data-v-28418e53${_scopeId}><p class="modal-text modal-text--bold" data-v-28418e53${_scopeId}>`);
+              _push2(`<div class="modal-section" data-v-287c15e3${_scopeId}><p class="modal-text modal-text--bold" data-v-287c15e3${_scopeId}>`);
               if (unref(isTomorrowWorking)) {
                 _push2(`<!--[--> Менеджер свяжется с вами завтра, до 12:00, уточнит детали и отправит заказ в работу. <!--]-->`);
               } else {
@@ -890,13 +890,13 @@ const _sfc_main$2 = {
               }
               _push2(`</p></div>`);
             } else {
-              _push2(`<div class="modal-section" data-v-28418e53${_scopeId}><p class="modal-text modal-text--bold" data-v-28418e53${_scopeId}> Сегодня у вас выходной. <br data-v-28418e53${_scopeId}> Менеджер свяжется с вами в ближайший рабочий день, до 12:00, уточнит детали и отправит заказ в работу. </p></div>`);
+              _push2(`<div class="modal-section" data-v-287c15e3${_scopeId}><p class="modal-text modal-text--bold" data-v-287c15e3${_scopeId}> Сегодня у вас выходной. <br data-v-287c15e3${_scopeId}> Менеджер свяжется с вами в ближайший рабочий день, до 12:00, уточнит детали и отправит заказ в работу. </p></div>`);
             }
-            _push2(`<div class="modal-section" data-v-28418e53${_scopeId}><p class="modal-text modal-text--secondary" data-v-28418e53${_scopeId}> Заказ можно будет забрать по адресу: <br data-v-28418e53${_scopeId}><a href="https://yandex.ru/maps/-/CHEbFD2T" target="_blank" rel="noopener noreferrer" class="modal-link" data-v-28418e53${_scopeId}>Донецк, ул.Постышева, дом 60</a></p></div>`);
+            _push2(`<div class="modal-section" data-v-287c15e3${_scopeId}><p class="modal-text modal-text--secondary" data-v-287c15e3${_scopeId}> Заказ можно будет забрать по адресу: <br data-v-287c15e3${_scopeId}><a href="https://yandex.ru/maps/-/CHEbFD2T" target="_blank" rel="noopener noreferrer" class="modal-link" data-v-287c15e3${_scopeId}>Донецк, ул.Постышева, дом 60</a></p></div>`);
             if (unref(status) === "weekend") {
-              _push2(`<div class="modal-section" data-v-28418e53${_scopeId}><p class="modal-text modal-text--secondary" data-v-28418e53${_scopeId}> Мы работаем с 9 до 18:00, <br data-v-28418e53${_scopeId}> с понедельника по пятницу: </p><div class="days-row" data-v-28418e53${_scopeId}><!--[-->`);
+              _push2(`<div class="modal-section" data-v-287c15e3${_scopeId}><p class="modal-text modal-text--secondary" data-v-287c15e3${_scopeId}> Мы работаем с 9 до 18:00, <br data-v-287c15e3${_scopeId}> с понедельника по пятницу: </p><div class="days-row" data-v-287c15e3${_scopeId}><!--[-->`);
               ssrRenderList(days, (day) => {
-                _push2(`<span class="${ssrRenderClass(["day-badge", { "day-badge--inactive": !day.active }])}" data-v-28418e53${_scopeId}>${ssrInterpolate(day.label)}</span>`);
+                _push2(`<span class="${ssrRenderClass(["day-badge", { "day-badge--inactive": !day.active }])}" data-v-287c15e3${_scopeId}>${ssrInterpolate(day.label)}</span>`);
               });
               _push2(`<!--]--></div></div>`);
             } else {
@@ -1034,7 +1034,7 @@ _sfc_main$2.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/OrderSuccessModal.vue");
   return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
 };
-const __nuxt_component_7 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$2, [["__scopeId", "data-v-28418e53"]]), { __name: "OrderSuccessModal" });
+const __nuxt_component_7 = /* @__PURE__ */ Object.assign(_export_sfc(_sfc_main$2, [["__scopeId", "data-v-287c15e3"]]), { __name: "OrderSuccessModal" });
 const _sfc_main$1 = {
   __name: "InvoiceSuccessModal",
   __ssrInlineRender: true,
@@ -1508,4 +1508,4 @@ _sfc_main.setup = (props, ctx) => {
 const cart = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-abd2de72"]]);
 
 export { cart as default };
-//# sourceMappingURL=cart-DWzlFHdo.mjs.map
+//# sourceMappingURL=cart-NBpA0qhT.mjs.map

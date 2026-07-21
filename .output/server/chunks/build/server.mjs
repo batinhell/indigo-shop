@@ -1,5 +1,5 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { computed, hasInjectionContext, inject, watch, mergeProps, unref, createVNode, resolveDynamicComponent, useSlots, toRef, withCtx, toHandlers, renderSlot, createTextVNode, toDisplayString, openBlock, createBlock, createCommentVNode, Fragment, ref, defineComponent, shallowRef, h, resolveComponent, isRef, useModel, useAttrs, mergeModels, provide, nextTick, withModifiers, renderList, getCurrentInstance, onServerPrefetch, toValue, createElementBlock, cloneVNode, reactive, defineAsyncComponent, useSSRContext, Suspense, createApp, useId, shallowReactive, onErrorCaptured, effectScope, useTemplateRef, getCurrentScope, markRaw, isReadonly, toRaw, isShallow, isReactive } from 'vue';
-import { ao as serialize, ap as hasProtocol, aq as isScriptProtocol, am as joinURL, ar as parseQuery$1, as as klona, at as defu, au as withQuery, av as sanitizeStatusCode, aw as parseURL$1, ax as encodePath$1, ay as decodePath, az as defuFn, aA as isPhoneLike, aB as getIdentifierError, a1 as getRegistrationEmailError, b as normalizePhoneDigits, aC as getRussianSecondsWord, aD as formatCompactPhone, aE as getContext, aF as isEqual, M as getRequestHeaders, f as formatAuthPhone, aG as formatPhone, aH as unmaskPhoneToEmail, aI as withTrailingSlash, aJ as withoutTrailingSlash, c as createError$1, aK as $fetch$1, aL as baseURL, aM as hash, aN as executeAsync } from '../nitro/nitro.mjs';
+import { aj as serialize, ak as hasProtocol, al as isScriptProtocol, ah as joinURL, am as parseQuery$1, an as klona, ao as defu, ap as withQuery, aq as sanitizeStatusCode, ar as parseURL$1, as as encodePath$1, at as decodePath, au as defuFn, av as isPhoneLike, aw as getIdentifierError, Y as getRegistrationEmailError, b as normalizePhoneDigits, ax as getRussianSecondsWord, ay as formatCompactPhone, az as getContext, aA as isEqual, M as getRequestHeaders, f as formatAuthPhone, aB as formatPhone, aC as unmaskPhoneToEmail, aD as withTrailingSlash, aE as withoutTrailingSlash, c as createError$1, aF as $fetch$1, aG as baseURL, aH as hash, aI as executeAsync } from '../nitro/nitro.mjs';
 import { defineStore, storeToRefs, setActivePinia, createPinia, shouldHydrate } from 'pinia';
 import { debounce } from 'perfect-debounce';
 import { isPlainObject } from '@vue/shared';
@@ -2121,7 +2121,7 @@ const _routes = [
   {
     name: "cart",
     path: "/cart",
-    component: () => import('./cart-DWzlFHdo.mjs')
+    component: () => import('./cart-NBpA0qhT.mjs')
   },
   {
     name: "catalog",

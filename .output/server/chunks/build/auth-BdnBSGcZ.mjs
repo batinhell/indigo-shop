@@ -1,4 +1,4 @@
-import { aN as executeAsync } from '../nitro/nitro.mjs';
+import { aI as executeAsync } from '../nitro/nitro.mjs';
 import { aN as defineNuxtRouteMiddleware, s as authClient, d as useFetch, v as navigateTo } from './server.mjs';
 import 'node:fs/promises';
 import 'kysely';

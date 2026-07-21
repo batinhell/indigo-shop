@@ -37,7 +37,7 @@ const index_post = defineEventHandler(async (event) => {
       message: "\u0417\u0430\u043A\u0430\u0437 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D"
     });
   }
-  const refund = await requestSiteOrderRefund(database, order, body == null ? void 0 : body.amount, body == null ? void 0 : body.refundId);
+  const refund = await requestSiteOrderRefund(database, order, body);
   return { refund };
 });
 
