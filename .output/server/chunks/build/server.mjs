@@ -2157,7 +2157,7 @@ const _routes = [
     name: "profile",
     path: "/profile",
     meta: { "middleware": ["auth"] },
-    component: () => import('./index-_y1YG-5i.mjs')
+    component: () => import('./index-D0FB10GC.mjs')
   },
   {
     name: "return-cancellation",

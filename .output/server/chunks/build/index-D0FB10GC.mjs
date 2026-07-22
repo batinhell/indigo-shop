@@ -2545,6 +2545,14 @@ const _sfc_main$4 = {
       cancelled: {
         label: "Отменен",
         tone: "secondary"
+      },
+      partially_refunded: {
+        label: "Частичный возврат",
+        tone: "secondary"
+      },
+      refunded: {
+        label: "Возврат",
+        tone: "secondary"
       }
     };
     const itemsScroller = ref(null);
@@ -2565,11 +2573,11 @@ const _sfc_main$4 = {
       }, _attrs), {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="profile-order-item__top" data-v-aaca1d47${_scopeId}><div class="profile-order-item__details" data-v-aaca1d47${_scopeId}><div class="profile-order-item__title-row" data-v-aaca1d47${_scopeId}><span class="${ssrRenderClass([`profile-order-item__status--${unref(statusToneName)}`, "profile-order-item__status"])}" data-v-aaca1d47${_scopeId}>${ssrInterpolate(unref(statusLabelText))}</span><span class="profile-order-item__number" data-v-aaca1d47${_scopeId}>${ssrInterpolate(__props.number)}</span></div><div class="profile-order-item__meta" data-v-aaca1d47${_scopeId}><span data-v-aaca1d47${_scopeId}>${ssrInterpolate(__props.date)}</span><span aria-hidden="true" data-v-aaca1d47${_scopeId}>·</span><span data-v-aaca1d47${_scopeId}>${ssrInterpolate(__props.delivery)}</span></div></div><div class="profile-order-item__actions" data-v-aaca1d47${_scopeId}><button type="button" class="profile-order-item__button profile-order-item__button--secondary" data-v-aaca1d47${_scopeId}> Повторить </button><span class="profile-order-item__button profile-order-item__button--primary" data-v-aaca1d47${_scopeId}> Подробнее </span></div></div><div class="profile-order-item__bottom" data-v-aaca1d47${_scopeId}><div class="profile-order-item__items-wrap" data-v-aaca1d47${_scopeId}><div class="profile-order-item__items" data-v-aaca1d47${_scopeId}><!--[-->`);
+            _push2(`<div class="profile-order-item__top" data-v-16237aaf${_scopeId}><div class="profile-order-item__details" data-v-16237aaf${_scopeId}><div class="profile-order-item__title-row" data-v-16237aaf${_scopeId}><span class="${ssrRenderClass([`profile-order-item__status--${unref(statusToneName)}`, "profile-order-item__status"])}" data-v-16237aaf${_scopeId}>${ssrInterpolate(unref(statusLabelText))}</span><span class="profile-order-item__number" data-v-16237aaf${_scopeId}>${ssrInterpolate(__props.number)}</span></div><div class="profile-order-item__meta" data-v-16237aaf${_scopeId}><span data-v-16237aaf${_scopeId}>${ssrInterpolate(__props.date)}</span><span aria-hidden="true" data-v-16237aaf${_scopeId}>·</span><span data-v-16237aaf${_scopeId}>${ssrInterpolate(__props.delivery)}</span></div></div><div class="profile-order-item__actions" data-v-16237aaf${_scopeId}><button type="button" class="profile-order-item__button profile-order-item__button--secondary" data-v-16237aaf${_scopeId}> Повторить </button><span class="profile-order-item__button profile-order-item__button--primary" data-v-16237aaf${_scopeId}> Подробнее </span></div></div><div class="profile-order-item__bottom" data-v-16237aaf${_scopeId}><div class="profile-order-item__items-wrap" data-v-16237aaf${_scopeId}><div class="profile-order-item__items" data-v-16237aaf${_scopeId}><!--[-->`);
             ssrRenderList(__props.items, (item, index2) => {
-              _push2(`<div class="profile-order-product" data-v-aaca1d47${_scopeId}><div class="profile-order-product__name" data-v-aaca1d47${_scopeId}>${ssrInterpolate(item.name)}</div><div class="profile-order-product__options" data-v-aaca1d47${_scopeId}><span data-v-aaca1d47${_scopeId}>${ssrInterpolate(item.size || item.sizeLabel || "—")}</span><span aria-hidden="true" data-v-aaca1d47${_scopeId}>·</span><span data-v-aaca1d47${_scopeId}>${ssrInterpolate(item.quantity || item.quantityLabel)}</span></div></div>`);
+              _push2(`<div class="profile-order-product" data-v-16237aaf${_scopeId}><div class="profile-order-product__name" data-v-16237aaf${_scopeId}>${ssrInterpolate(item.name)}</div><div class="profile-order-product__options" data-v-16237aaf${_scopeId}><span data-v-16237aaf${_scopeId}>${ssrInterpolate(item.size || item.sizeLabel || "—")}</span><span aria-hidden="true" data-v-16237aaf${_scopeId}>·</span><span data-v-16237aaf${_scopeId}>${ssrInterpolate(item.quantity || item.quantityLabel)}</span></div></div>`);
             });
-            _push2(`<!--]--></div></div><div class="profile-order-item__fade" data-v-aaca1d47${_scopeId}></div><div class="profile-order-item__price" data-v-aaca1d47${_scopeId}><span class="profile-order-item__price-value" data-v-aaca1d47${_scopeId}>${ssrInterpolate(__props.price)}</span><span class="profile-order-item__price-caption" data-v-aaca1d47${_scopeId}>${ssrInterpolate(__props.positions)}</span></div></div>`);
+            _push2(`<!--]--></div></div><div class="profile-order-item__fade" data-v-16237aaf${_scopeId}></div><div class="profile-order-item__price" data-v-16237aaf${_scopeId}><span class="profile-order-item__price-value" data-v-16237aaf${_scopeId}>${ssrInterpolate(__props.price)}</span><span class="profile-order-item__price-caption" data-v-16237aaf${_scopeId}>${ssrInterpolate(__props.positions)}</span></div></div>`);
           } else {
             return [
               createVNode("div", { class: "profile-order-item__top" }, [
@@ -2644,7 +2652,7 @@ _sfc_main$4.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/profile/ProfileOrderItem.vue");
   return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
 };
-const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-aaca1d47"]]);
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-16237aaf"]]);
 const _sfc_main$3 = {
   __name: "ProfileOrders",
   __ssrInlineRender: true,
@@ -3071,4 +3079,4 @@ _sfc_main.setup = (props, ctx) => {
 const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-23251e77"]]);
 
 export { index as default };
-//# sourceMappingURL=index-_y1YG-5i.mjs.map
+//# sourceMappingURL=index-D0FB10GC.mjs.map
