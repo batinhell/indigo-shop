@@ -4,6 +4,7 @@ import {
   sendFiscalReceiptForPaidOrder,
   sendReturnFiscalReceipt
 } from './rarus-kkt.js'
+import { enqueueReturnFiscalReceipt } from './fiscal-receipts.js'
 import { refreshSiteOrderRefund } from './vtb-refunds.js'
 
 const DEFAULT_BATCH_SIZE = 10
@@ -135,7 +136,11 @@ async function processRefundStatusJob(database, job) {
     database.selectFrom('site_order_refunds').selectAll().where('id', '=', Number(job.refund_id)).executeTakeFirst()
   ])
 
-  if (!order || !refund || ['completed', 'failed'].includes(refund.status)) return { completed: true }
+  if (!order || !refund || refund.status === 'failed') return { completed: true }
+  if (refund.status === 'completed') {
+    await enqueueReturnFiscalReceipt(database, refund.id)
+    return { completed: true }
+  }
 
   const refreshed = await refreshSiteOrderRefund(database, order, refund)
   if (['completed', 'failed'].includes(refreshed.status)) return { completed: true }

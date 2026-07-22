@@ -20,6 +20,11 @@ function parseJson(value, fallback = null) {
   }
 }
 
+export function serializeJsonValue(value) {
+  if (value == null) return null
+  return typeof value === 'string' ? value : JSON.stringify(value)
+}
+
 async function enqueueFiscalReceiptJob(trx, receipt, options = {}) {
   const idempotencyKey = `fiscal:${receipt.id}:send`
   const existingJob = await trx
@@ -142,7 +147,7 @@ export async function enqueueReturnFiscalReceipt(database, refundId) {
           status: 'queued',
           amount: refund.amount,
           currency: refund.currency || 'RUB',
-          items_snapshot: refund.items_snapshot,
+          items_snapshot: serializeJsonValue(refund.items_snapshot),
           created_at: now,
           updated_at: now
         })
