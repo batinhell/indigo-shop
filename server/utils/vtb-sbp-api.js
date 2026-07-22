@@ -202,6 +202,21 @@ export async function getVtbOrder(requestId) {
   })
 }
 
+export function scaleTestRefundAmount(amount, originalPaymentAmount, testPaymentAmount) {
+  return Math.max(
+    0.01,
+    Math.round((Number(amount) / Number(originalPaymentAmount)) * Number(testPaymentAmount) * 100) / 100
+  )
+}
+
+export function getVtbRefundAmount(amount, originalPaymentAmount) {
+  const config = getVtbPaymentConfig()
+  const testAmountOverride = getTestAmountOverride(config, originalPaymentAmount)
+  if (!testAmountOverride) return Number(amount)
+
+  return scaleTestRefundAmount(amount, originalPaymentAmount, testAmountOverride.sentAmount)
+}
+
 export async function createVtbRefund({ refundId, paymentId, amount, currency = 'RUB' }) {
   if (isVtbPaymentMockEnabled()) {
     return {

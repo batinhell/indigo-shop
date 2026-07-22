@@ -2,6 +2,7 @@ import { enqueueReturnFiscalReceipt } from './fiscal-receipts.js'
 import {
   createVtbRefund,
   getVtbPaymentDetails,
+  getVtbRefundAmount,
   getVtbRefundDetails,
   getVtbOrder
 } from './vtb-sbp-api.js'
@@ -10,6 +11,7 @@ const COMPLETED_REFUND_STATUSES = new Set(['COMPLETED', 'CONFIRMED', 'RECONCILED
 const FAILED_REFUND_STATUSES = new Set(['FAILED', 'DECLINED', 'REJECTED', 'CANCELLED', 'CANCELED'])
 const RESERVED_REFUND_STATUSES = ['sending', 'pending', 'completed']
 const REFUND_TYPES = new Set(['full', 'partial'])
+const REFUNDABLE_PAYMENT_STATUSES = new Set(['paid', 'partially_refunded'])
 
 function roundMoney(value) {
   return Math.round(Number(value) * 100) / 100
@@ -201,6 +203,41 @@ export function createRefundItemsSnapshot(orderItems, selected, refundedQuantiti
   return snapshot
 }
 
+export async function enqueueRefundStatusJob(database, refund) {
+  if (!refund || !['sending', 'pending'].includes(refund.status)) return
+
+  await database
+    .insertInto('site_order_jobs')
+    .values({
+      job_type: 'poll_refund',
+      idempotency_key: `refund:${refund.id}:poll`,
+      site_order_id: Number(refund.site_order_id),
+      payment_attempt_id: refund.payment_attempt_id ? Number(refund.payment_attempt_id) : null,
+      refund_id: Number(refund.id),
+      fiscal_receipt_id: null,
+      status: 'pending',
+      attempts: 0,
+      max_attempts: 40,
+      next_attempt_at: new Date(),
+      created_at: new Date(),
+      updated_at: new Date()
+    })
+    .onDuplicateKeyUpdate({ updated_at: new Date() })
+    .execute()
+}
+
+async function updateOrderRefundStatus(database, orderId) {
+  const [order, completedRefunds] = await Promise.all([
+    database.selectFrom('site_orders').select(['id', 'amount']).where('id', '=', Number(orderId)).executeTakeFirst(),
+    database.selectFrom('site_order_refunds').select(['amount']).where('site_order_id', '=', Number(orderId)).where('status', '=', 'completed').execute()
+  ])
+  if (!order) return
+
+  const refundedAmount = roundMoney(completedRefunds.reduce((sum, refund) => sum + Number(refund.amount || 0), 0))
+  const paymentStatus = refundedAmount >= roundMoney(order.amount) ? 'refunded' : 'partially_refunded'
+  await database.updateTable('site_orders').set({ payment_status: paymentStatus, updated_at: new Date() }).where('id', '=', Number(orderId)).execute()
+}
+
 async function reserveRefund(database, order, request, payment) {
   return database.transaction().execute(async (trx) => {
     const lockedOrder = await trx
@@ -210,7 +247,7 @@ async function reserveRefund(database, order, request, payment) {
       .forUpdate()
       .executeTakeFirst()
 
-    if (lockedOrder?.payment_status !== 'paid') {
+    if (!REFUNDABLE_PAYMENT_STATUSES.has(lockedOrder?.payment_status)) {
       throw createError({
         statusCode: 409,
         statusMessage: 'Order is not paid',
@@ -310,7 +347,7 @@ async function reserveRefund(database, order, request, payment) {
 }
 
 export async function requestSiteOrderRefund(database, order, input = {}) {
-  if (order?.payment_status !== 'paid') {
+  if (!REFUNDABLE_PAYMENT_STATUSES.has(order?.payment_status)) {
     throw createError({
       statusCode: 409,
       statusMessage: 'Order is not paid',
@@ -341,8 +378,9 @@ export async function requestSiteOrderRefund(database, order, input = {}) {
   const payload = parseJson(order.payload)
   const paymentId = paymentDetails.paymentId || String(paymentAttempt.payment_id || order.vtb_payment_id || '').trim()
   const refundableAmount = roundMoney(
-    paymentDetails.amount
-    || paymentAttempt.charged_amount
+    paymentAttempt.requested_amount
+    || order.amount
+    || paymentDetails.amount
     || payload?.payment?.vtb?.chargedAmount
     || 0
   )
@@ -363,12 +401,16 @@ export async function requestSiteOrderRefund(database, order, input = {}) {
     currency
   })
 
-  if (reservation.existing) return reservation.existing
+  if (reservation.existing) {
+    await enqueueRefundStatusJob(database, reservation.existing)
+    return reservation.existing
+  }
 
   const { rowId, amount, itemsSnapshot } = reservation
+  const providerAmount = getVtbRefundAmount(amount, Number(order.amount))
 
   try {
-    const response = await createVtbRefund({ refundId: request.refundId, paymentId, amount, currency })
+    const response = await createVtbRefund({ refundId: request.refundId, paymentId, amount: providerAmount, currency })
     const providerRefund = response?.object && typeof response.object === 'object' ? response.object : response
     const status = normalizeVtbRefundStatus(getRefundStatus(providerRefund))
 
@@ -379,7 +421,7 @@ export async function requestSiteOrderRefund(database, order, input = {}) {
         provider_status: String(getRefundStatus(providerRefund) || ''),
         completed_at: status === 'completed' ? new Date() : null,
         payload: JSON.stringify({
-          request: { refundId: request.refundId, paymentId, amount, currency, items: itemsSnapshot },
+          request: { refundId: request.refundId, paymentId, amount, providerAmount, currency, items: itemsSnapshot },
           response
         }),
         updated_at: new Date()
@@ -387,18 +429,22 @@ export async function requestSiteOrderRefund(database, order, input = {}) {
       .where('id', '=', rowId)
       .execute()
 
+    const refund = await database.selectFrom('site_order_refunds').selectAll().where('id', '=', rowId).executeTakeFirst()
     if (status === 'completed') {
+      await updateOrderRefundStatus(database, order.id)
       await enqueueReturnFiscalReceipt(database, rowId)
+    } else if (status === 'pending') {
+      await enqueueRefundStatusJob(database, refund)
     }
 
-    return database.selectFrom('site_order_refunds').selectAll().where('id', '=', rowId).executeTakeFirst()
+    return refund
   } catch (error) {
     await database
       .updateTable('site_order_refunds')
       .set({
         status: 'failed',
         payload: JSON.stringify({
-          request: { refundId: request.refundId, paymentId, amount, currency, items: itemsSnapshot },
+          request: { refundId: request.refundId, paymentId, amount, providerAmount, currency, items: itemsSnapshot },
           error: error?.data || { message: error?.message || 'VTB refund failed' }
         }),
         updated_at: new Date()
@@ -443,6 +489,7 @@ export async function refreshSiteOrderRefund(database, order, refundRow) {
     .execute()
 
   if (status === 'completed') {
+    await updateOrderRefundStatus(database, order.id)
     await enqueueReturnFiscalReceipt(database, refundRow.id)
   }
 

@@ -4,6 +4,7 @@ import {
   sendFiscalReceiptForPaidOrder,
   sendReturnFiscalReceipt
 } from './rarus-kkt.js'
+import { refreshSiteOrderRefund } from './vtb-refunds.js'
 
 const DEFAULT_BATCH_SIZE = 10
 const LOCK_TIMEOUT_MS = 5 * 60 * 1000
@@ -128,9 +129,25 @@ async function processFiscalReceiptJob(database, job) {
   return { completed: false, delaySeconds: order?.fiscal_receipt_operation_id ? 15 : 60 }
 }
 
+async function processRefundStatusJob(database, job) {
+  const [order, refund] = await Promise.all([
+    database.selectFrom('site_orders').selectAll().where('id', '=', Number(job.site_order_id)).executeTakeFirst(),
+    database.selectFrom('site_order_refunds').selectAll().where('id', '=', Number(job.refund_id)).executeTakeFirst()
+  ])
+
+  if (!order || !refund || ['completed', 'failed'].includes(refund.status)) return { completed: true }
+
+  const refreshed = await refreshSiteOrderRefund(database, order, refund)
+  if (['completed', 'failed'].includes(refreshed.status)) return { completed: true }
+  return { completed: false, delaySeconds: 15 }
+}
+
 async function executeJob(database, job) {
   if (job.job_type === 'send_fiscal_receipt') {
     return processFiscalReceiptJob(database, job)
+  }
+  if (job.job_type === 'poll_refund') {
+    return processRefundStatusJob(database, job)
   }
 
   throw new Error(`Unsupported site order job type: ${job.job_type}`)
