@@ -3,7 +3,9 @@ export const SITE_PAYMENT_STATUS_META = {
   paid: { label: 'Оплачен', tone: 'purple', group: 'review' },
   failed: { label: 'Оплата не прошла', tone: 'danger', group: 'review' },
   expired: { label: 'Оплата истекла', tone: 'danger', group: 'review' },
-  cancelled: { label: 'Отменен', tone: 'secondary', group: 'finished' }
+  cancelled: { label: 'Отменен', tone: 'secondary', group: 'finished' },
+  partially_refunded: { label: 'Частичный возврат', tone: 'secondary', group: 'finished' },
+  refunded: { label: 'Возврат', tone: 'secondary', group: 'finished' }
 }
 
 const DEFAULT_SITE_PAYMENT_STATUS_META = SITE_PAYMENT_STATUS_META.pending

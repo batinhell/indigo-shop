@@ -80,6 +80,14 @@ const statusMap = {
   cancelled: {
     label: 'Отменен',
     tone: 'secondary'
+  },
+  partially_refunded: {
+    label: 'Частичный возврат',
+    tone: 'secondary'
+  },
+  refunded: {
+    label: 'Возврат',
+    tone: 'secondary'
   }
 }
 

@@ -95,7 +95,7 @@ export async function startSbpPaymentAttempt(database, siteOrderId) {
       throw createError({ statusCode: 409, statusMessage: 'Order is already paid', message: 'Заказ уже оплачен' })
     }
 
-    if (['cancelled', 'refunded'].includes(order.payment_status)) {
+    if (['cancelled', 'partially_refunded', 'refunded'].includes(order.payment_status)) {
       throw createError({ statusCode: 409, statusMessage: 'Order cannot be paid', message: 'Этот заказ нельзя оплатить' })
     }
 
@@ -238,6 +238,9 @@ export async function startCardPaymentAttempt(database, siteOrderId) {
     if (order.payment_status === 'paid') {
       throw createError({ statusCode: 409, statusMessage: 'Order is already paid', message: 'Заказ уже оплачен' })
     }
+    if (['cancelled', 'partially_refunded', 'refunded'].includes(order.payment_status)) {
+      throw createError({ statusCode: 409, statusMessage: 'Order cannot be paid', message: 'Заказ отменён или по нему оформлен возврат' })
+    }
 
     const activeAttempt = await trx
       .selectFrom('site_order_payment_attempts')
@@ -362,7 +365,7 @@ async function updateOrderAggregate(database, siteOrderId, attemptId, status, pa
       updated_at: now
     })
     .where('id', '=', Number(siteOrderId))
-    .where('payment_status', '!=', 'paid')
+    .where('payment_status', 'not in', ['paid', 'partially_refunded', 'refunded'])
     .execute()
 }
 
