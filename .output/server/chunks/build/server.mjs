@@ -2172,7 +2172,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-DsJrKjZB.mjs')
+    component: () => import('./index-CefLhfuD.mjs')
   }
 ];
 const ROUTE_KEY_PARENTHESES_RE = /(:\w+)\([^)]+\)/g;
