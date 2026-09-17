@@ -1,4 +1,17 @@
 const ACTIVE_STATUS = 'active'
+// База для картинок, загруженных в админку (диск public отдаётся с домена CRM).
+const PRODUCT_IMAGE_BASE_URL = (process.env.PRODUCT_IMAGE_BASE_URL || 'https://admin.ra-indigo.com/storage').replace(/\/+$/, '')
+
+function buildImageUrl(imagePath, photoUrl) {
+  if (imagePath) {
+    if (/^https?:\/\//i.test(imagePath)) {
+      return imagePath
+    }
+    return `${PRODUCT_IMAGE_BASE_URL}/${String(imagePath).replace(/^\/+/, '')}`
+  }
+
+  return toNullableString(photoUrl)
+}
 const SUPPORTED_RULE_TYPES = new Set([
   'base_price',
   'tier_price',
@@ -103,6 +116,8 @@ function mapProduct(product, priceRules) {
     additional_options: toNullableString(product.additional_options),
     short_description: toNullableString(product.short_description),
     photo_url: toNullableString(product.photo_url),
+    image_path: toNullableString(product.image_path),
+    image: buildImageUrl(product.image_path, product.photo_url),
     seo: {
       title: toNullableString(product.seo_title),
       description: toNullableString(product.seo_description)
@@ -176,6 +191,7 @@ export async function getProducts(database, category) {
         'additional_options',
         'short_description',
         'photo_url',
+        'image_path',
         'seo_title',
         'seo_description'
       ])
@@ -224,6 +240,7 @@ export async function getProductBySlug(database, slug) {
         'additional_options',
         'short_description',
         'photo_url',
+        'image_path',
         'seo_title',
         'seo_description'
       ])
