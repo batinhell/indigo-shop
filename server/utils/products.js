@@ -559,3 +559,39 @@ export async function getProductsCategories(database) {
     assertProductsTableExists(error)
   }
 }
+
+const CATEGORY_ACTIVE_STATUS = 'active'
+
+function mapCategory(row) {
+  return {
+    id: Number(row.id),
+    slug: row.slug,
+    name: row.name,
+    description: toNullableString(row.description),
+    sort: Number(row.sort ?? 0)
+  }
+}
+
+// Справочник категорий из админки (таблица product_categories).
+// Если таблицы ещё нет — молча отдаём пустой список, чтобы каталог не падал.
+export async function getCategories(database) {
+  try {
+    const rows = await database
+      .selectFrom('product_categories')
+      .select(['id', 'slug', 'name', 'description', 'sort'])
+      .where('status', '=', CATEGORY_ACTIVE_STATUS)
+      .orderBy('sort', 'asc')
+      .orderBy('name', 'asc')
+      .execute()
+
+    return rows.map(mapCategory)
+  } catch (error) {
+    const tableMissingCodes = new Set(['ER_NO_SUCH_TABLE', 'ER_BAD_TABLE_ERROR'])
+
+    if (tableMissingCodes.has(error?.code)) {
+      return []
+    }
+
+    throw error
+  }
+}
