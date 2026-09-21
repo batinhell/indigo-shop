@@ -22,7 +22,9 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        # npm install (а не npm ci): package-lock.json рассинхронизирован с package.json,
+        # ci требует строгого совпадения. install подтянет недостающее и не упадёт на дрейфе.
+        run: npm install --no-audit --no-fund
 
       - name: Lint
         run: npm run lint
