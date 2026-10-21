@@ -62,10 +62,8 @@ const LABEL_SPACE = 22 // место под подпись габарита
 const ARROW = { len: 6, half: 3 }
 
 function outset(geo: Geometry): Record<Side, number> {
-  const o = { top: 0, right: 0, bottom: 0, left: 0 }
-  for (const f of geo.features) if (f.type === 'fringe') o[f.side] = Math.max(o[f.side], f.length)
-  for (const s of Object.keys(o) as Side[]) o[s] = Math.max(o[s], geo.bleed)
-  return o
+  // Бахрому на развёртке не показываем, поэтому отступ со всех сторон = вылет.
+  return { top: geo.bleed, right: geo.bleed, bottom: geo.bleed, left: geo.bleed }
 }
 
 // Ширина = fixed.x + mm.x * scale. Нужна, чтобы вписать чертёж в контейнер.
@@ -109,29 +107,7 @@ export function layoutDieline(geo: Geometry, opts: LayoutOptions): Drawing {
   // Полотно и макет
   items.push({ t: 'rect', layer: 'paper', ...bleedPx, fill: C.paper })
 
-  // Обработка края — под линиями реза
-  if (show.features) {
-    for (const f of geo.features) {
-      if (f.type === 'fringe') {
-        const step = 4
-        const len = f.length * s
-        const horiz = f.from.y === f.to.y
-        const start = horiz ? X(f.from.x) : Y(f.from.y)
-        const end = horiz ? X(f.to.x) : Y(f.to.y)
-        for (let p = start + 2; p < end; p += step) {
-          if (horiz) {
-            const y = Y(f.from.y)
-            const y2 = f.side === 'top' ? y - len : y + len
-            items.push({ t: 'line', layer: 'features', x1: p, y1: y, x2: p, y2, stroke: C.fringe, width: 1, opacity: 0.7 })
-          } else {
-            const x = X(f.from.x)
-            const x2 = f.side === 'left' ? x - len : x + len
-            items.push({ t: 'line', layer: 'features', x1: x, y1: p, x2, y2: p, stroke: C.fringe, width: 1, opacity: 0.7 })
-          }
-        }
-      }
-    }
-  }
+  // Бахрому на развёртке не рисуем (это обработка края, не линия реза/печати).
 
   if (show.bleed) items.push({ t: 'rect', layer: 'bleed', ...bleedPx, stroke: C.bleed, width: 1.5 })
   items.push({ t: 'rect', layer: 'trim', ...trimPx, stroke: C.trim, width: 1.5 })
@@ -222,12 +198,9 @@ export function layoutDieline(geo: Geometry, opts: LayoutOptions): Drawing {
     for (const f of geo.folds) if (f.label) {
       items.push({ t: 'text', layer: 'labels', x: X(f.a.x) - 10, y: (Y(f.a.y) + Y(f.b.y)) / 2, text: f.label, color: C.caption, size: fs - 1, weight: 500, anchor: 'middle', rotate: -90 })
     }
-    for (const f of geo.features) if (f.label) {
-      if (f.type === 'fringe') {
-        items.push({ t: 'text', layer: 'labels', x: X(f.to.x), y: Y(f.from.y) - f.length * s - 8, text: f.label, color: C.fringe, size: fs - 1, weight: 600, anchor: 'middle' })
-      } else {
-        items.push({ t: 'text', layer: 'labels', x: X(f.center.x) + 12, y: Y(f.center.y), text: f.label, color: C.caption, size: fs - 1, weight: 500, anchor: 'start' })
-      }
+    // Бахрому на развёртке не показываем — подписи только для крепежа (люверсы).
+    for (const f of geo.features) if (f.label && f.type === 'grommet') {
+      items.push({ t: 'text', layer: 'labels', x: X(f.center.x) + 12, y: Y(f.center.y), text: f.label, color: C.caption, size: fs - 1, weight: 500, anchor: 'start' })
     }
   }
 

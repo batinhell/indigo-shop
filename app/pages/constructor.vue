@@ -386,13 +386,12 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
 
 <style lang="scss" scoped>
 .constructor {
-  min-height: 100vh;
   background: #faf5ff;
-  padding: 1rem;
+  padding: 1.5rem;
 
   &__container {
-    max-width: 108rem;
-    margin: 0 auto;
+    // Контейнер заполняет ширину экрана (за вычетом полей), не узкий по центру.
+    width: 100%;
     background: white;
     border-radius: $radius-main;
     padding: 2rem;

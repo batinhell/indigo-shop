@@ -11,9 +11,6 @@ const { isLoaded: isProfileLoaded } = storeToRefs(profileStore)
 
 const sessionUser = computed(() => session.value?.data?.user ?? null)
 
-// Конструктор v2 — полноэкранный standalone-экран без общей шапки/футера сайта.
-const isStandalonePage = computed(() => route.path === '/constructor')
-
 const isGridEnabled = computed(() => {
   if (!import.meta.dev) {
     return false
@@ -53,13 +50,13 @@ watch(
   <UApp>
     <DevGridOverlay v-if="isGridEnabled" />
 
-    <AppHeader v-if="!isStandalonePage" />
+    <AppHeader />
 
     <UMain>
       <NuxtPage />
     </UMain>
 
-    <AppFooter v-if="!isStandalonePage" />
+    <AppFooter />
 
     <CookieConsentBanner />
   </UApp>
