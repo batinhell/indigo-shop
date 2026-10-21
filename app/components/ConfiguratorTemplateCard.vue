@@ -1,6 +1,5 @@
 <script setup>
 // Правая колонка конструктора v2: шаблон для макета + блок цены и кнопки.
-// Экспорт шаблона (PDF/AI/DXF) — Этап 4, пока кнопки выключены.
 defineProps({
   fabricGenitive: { type: String, default: '' },
   quantity: { type: Number, default: 0 },
@@ -16,7 +15,22 @@ defineProps({
 
 defineEmits(['pay', 'add-to-cart'])
 
-const templateFormats = ['PDF', 'AI', 'DXF']
+// Экспорт шаблона развёртки. AI = Illustrator-совместимый PDF (тот же файл).
+const { exportPdf, exportDxf } = useTemplateExport()
+const busy = ref(false)
+
+async function onExport(kind) {
+  if (busy.value) return
+  busy.value = true
+  try {
+    if (kind === 'dxf') await exportDxf()
+    else await exportPdf()
+  } catch (e) {
+    console.error('Ошибка экспорта шаблона:', e)
+  } finally {
+    busy.value = false
+  }
+}
 </script>
 
 <template>
@@ -30,14 +44,29 @@ const templateFormats = ['PDF', 'AI', 'DXF']
       </p>
       <div class="template-card__formats">
         <button
-          v-for="format in templateFormats"
-          :key="format"
           type="button"
           class="template-card__format"
-          disabled
-          title="Скоро"
+          :disabled="busy"
+          @click="onExport('pdf')"
         >
-          {{ format }}
+          PDF
+        </button>
+        <button
+          type="button"
+          class="template-card__format"
+          :disabled="busy"
+          title="Откроется в Illustrator"
+          @click="onExport('ai')"
+        >
+          AI
+        </button>
+        <button
+          type="button"
+          class="template-card__format"
+          :disabled="busy"
+          @click="onExport('dxf')"
+        >
+          DXF
         </button>
       </div>
     </div>
@@ -162,8 +191,17 @@ const templateFormats = ['PDF', 'AI', 'DXF']
     font-family: 'Manrope', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
-    cursor: not-allowed;
-    opacity: 0.6;
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    &:hover:not(:disabled) {
+      background: #f6e0ff;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: progress;
+    }
   }
 
   &__prices {

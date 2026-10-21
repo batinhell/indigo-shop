@@ -20,6 +20,7 @@ const {
 const route = useRoute()
 const router = useRouter()
 const { addItem } = useCart()
+const { exportSvg } = useTemplateExport()
 
 // --- URL-query ↔ параметры -------------------------------------------------
 
@@ -237,8 +238,9 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
             <button
               type="button"
               class="preview__download"
-              disabled
-              title="Скоро"
+              :disabled="mode !== 'dieline'"
+              :title="mode === 'dieline' ? 'Скачать SVG-развёртку' : 'Скоро'"
+              @click="mode === 'dieline' && exportSvg()"
             >
               {{ mode === 'dieline' ? 'Скачать развёртку' : 'Скачать картинку' }}
             </button>
@@ -475,8 +477,17 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     background: $color-primary-bg;
     border-radius: $radius-control;
     padding: 0.5rem 1rem;
-    opacity: 0.6;
-    cursor: not-allowed;
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    &:hover:not(:disabled) {
+      background: #f6e0ff;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
   }
 
   &__link {
