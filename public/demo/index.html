@@ -1,0 +1,1959 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0; font: 14px system-ui, sans-serif; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Каталог и примеры работ</title>
+<style>
+  /* Layout: демо-обвязка с индикатором брейкпоинта, под ней три блока лендинга —
+     hero со списком-каталогом, секция товаров с фильтрами и галерея примеров. */
+
+  :root {
+    /* Обвязка демо-страницы */
+    --page-bg: #faf5ff;
+    --page-fg: #04121b;
+    --page-muted: rgba(4, 18, 27, 0.56);
+    --page-rule: rgba(4, 18, 27, 0.1);
+    --page-chip: rgba(201, 37, 255, 0.1);
+    --accent: #c925ff;
+
+    /* Токены макета — Figma «💜 Индиго. Сайт» + app/assets/scss/_variables.scss.
+       Компоненты сайта живут в одном оформлении, поэтому в тёмной теме не меняются. */
+    --ink: #04121b;
+    --ink-secondary: rgba(4, 18, 27, 0.64);
+    --ink-muted: rgba(4, 18, 27, 0.52);
+    --surface: #ffffff;
+    --input-bg: #f4f5f6;
+    --purple: #de7aff;
+    --purple-hover: #e38fff;
+    --primary: #c925ff;
+    --indigo-bg: #efeaff;
+    --indigo-ink: #6636ff;
+    --warning-bg: #fff2e0;
+    --warning-ink: #d27714;
+    --positive-ink: #dbffde;
+    --icon-plate: #e9e9e9;
+    --tag-hover: #f0f0f0;
+    --tag-pressed: #c3c6c8;
+    --placeholder: #f1f1f1;
+
+    --font-base: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --roll-duration: 0.45s;
+    --content: min(100% - 32px, 1106px);
+  }
+
+  @media (min-width: 1760px) {
+    :root {
+      --content: min(100% - 32px, 1670px);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page-bg: #130b1a;
+      --page-fg: #f4ecf8;
+      --page-muted: rgba(244, 236, 248, 0.6);
+      --page-rule: rgba(244, 236, 248, 0.14);
+      --page-chip: rgba(227, 143, 255, 0.14);
+      --accent: #e38fff;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --page-bg: #130b1a;
+    --page-fg: #f4ecf8;
+    --page-muted: rgba(244, 236, 248, 0.6);
+    --page-rule: rgba(244, 236, 248, 0.14);
+    --page-chip: rgba(227, 143, 255, 0.14);
+    --accent: #e38fff;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--page-bg);
+    color: var(--page-fg);
+    font-family: var(--font-base);
+    padding-block: 2.5rem 3.5rem;
+  }
+
+  .demo-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .demo-head,
+  .demo-foot,
+  .section__inner {
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    width: var(--content);
+  }
+
+  .demo-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .demo-eyebrow {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+    font-weight: 600;
+    gap: 0.5rem;
+    letter-spacing: 0.06em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .demo-eyebrow span {
+    background: var(--page-chip);
+    border-radius: 0.25rem;
+    color: var(--accent);
+    padding: 0.1875rem 0.4375rem;
+  }
+
+  .demo-breakpoint {
+    color: var(--page-muted);
+    font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .demo-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.875rem;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .demo-lead {
+    color: var(--page-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    margin: 0;
+    max-width: 44rem;
+  }
+
+  .demo-foot {
+    border-top: 1px solid var(--page-rule);
+    color: var(--page-muted);
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    gap: 0.5rem;
+    line-height: 1.25rem;
+    padding-top: 1.25rem;
+  }
+
+  .demo-foot p {
+    margin: 0;
+    max-width: 48rem;
+  }
+
+  .demo-foot b {
+    color: var(--page-fg);
+    font-weight: 700;
+  }
+
+  .section__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .section__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.75rem;
+    margin: 0;
+  }
+
+  /* ───────── hero: LandingHero.vue из ветки feature/landing-hero ───────── */
+
+  .landing-hero {
+    --landing-hero-height: 42.5rem;
+
+    border-radius: 4rem;
+    height: var(--landing-hero-height);
+    margin: 0 auto;
+    max-width: 1106px;
+    overflow: hidden;
+    position: relative;
+    width: calc(100% - 32px);
+  }
+
+  @media (min-width: 1760px) {
+    .landing-hero {
+      max-width: 1670px;
+    }
+  }
+
+  .landing-hero__slides {
+    inset: 0;
+    position: absolute;
+  }
+
+  .landing-hero__slide {
+    height: 100%;
+    inset: 0;
+    max-width: none;
+    object-fit: cover;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 0.8s var(--ease);
+    width: 100%;
+  }
+
+  .landing-hero__slide_active {
+    opacity: 1;
+  }
+
+  .landing-hero__caption {
+    bottom: 2.5rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    font-weight: 600;
+    gap: 0.25rem;
+    left: 4rem;
+    line-height: 1.25rem;
+    position: absolute;
+    text-shadow: -0.5px 1px 5.4px rgba(0, 0, 0, 0.32);
+    width: min(27.875rem, calc(100% - 8rem));
+    z-index: 1;
+  }
+
+  .landing-hero__caption p {
+    margin: 0;
+  }
+
+  .landing-hero__bullets {
+    bottom: 2.75rem;
+    display: flex;
+    gap: 0.25rem;
+    position: absolute;
+    right: 4rem;
+    z-index: 1;
+  }
+
+  .landing-hero__bullet {
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: block;
+    height: 1.25rem;
+    opacity: 0.4;
+    padding: 0;
+    transition: opacity 0.3s var(--ease);
+    width: 1.25rem;
+  }
+
+  .landing-hero__bullet svg {
+    display: block;
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  .landing-hero__bullet:hover {
+    opacity: 0.7;
+  }
+
+  .landing-hero__bullet:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 1px;
+  }
+
+  .landing-hero__bullet_active,
+  .landing-hero__bullet_active:hover {
+    opacity: 1;
+  }
+
+  .landing-hero__overlay {
+    backdrop-filter: blur(4px);
+    background: rgba(217, 217, 217, 0.01);
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 0.3s var(--ease);
+    z-index: 2;
+  }
+
+  .landing-hero__overlay_visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .landing-hero__controls {
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    position: absolute;
+    top: calc(50% - 2.5rem);
+    transform: translateX(-50%);
+    transition: top 0.4s var(--ease);
+    z-index: 3;
+  }
+
+  .landing-hero_open .landing-hero__controls {
+    top: calc(100% - 4.25rem);
+  }
+
+  .landing-hero__panel {
+    align-items: center;
+    background: var(--surface);
+    border-radius: 2rem;
+    bottom: calc(100% - 1.25rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: flex-end;
+    left: 50%;
+    max-height: calc(var(--landing-hero-height) - 4.25rem);
+    max-width: calc(100vw - 32px);
+    overflow-y: auto;
+    padding: 2rem 1.5rem 2.5rem;
+    position: absolute;
+    transform: translateX(-50%);
+  }
+
+  .landing-hero__panel_audience {
+    width: 55rem;
+  }
+
+  .landing-hero__panel_catalog {
+    padding: 2.25rem 1.75rem 2.5rem;
+    width: min(calc(100vw - 32px), 1614px);
+  }
+
+  .landing-hero__tags {
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .landing-hero__tag {
+    background: var(--input-bg);
+    border: 0;
+    border-radius: 0.25rem;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.375rem;
+    padding: 0.25rem 0.5rem;
+    transition: background-color 0.15s var(--ease);
+    white-space: nowrap;
+  }
+
+  .landing-hero__tag:hover {
+    background: var(--tag-hover);
+  }
+
+  .landing-hero__tag:active {
+    background: var(--tag-pressed);
+  }
+
+  .landing-hero__tag:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  .landing-hero__selector {
+    align-items: center;
+    background: var(--input-bg);
+    border-radius: 0.75rem;
+    color: var(--ink);
+    display: flex;
+    font-size: 1.25rem;
+    font-weight: 700;
+    gap: 0.4375rem;
+    line-height: 1.5rem;
+    padding: 0.75rem 0.875rem;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .landing-hero__word {
+    transition: color 0.2s var(--ease);
+  }
+
+  .landing-hero__selector_highlighted .landing-hero__word {
+    color: var(--ink-muted);
+  }
+
+  .landing-hero__dropdown {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: 0.25rem;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    gap: 0.125rem;
+    padding: 0;
+    transition: color 0.2s var(--ease);
+  }
+
+  .landing-hero__dropdown:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .landing-hero__dropdown_hovered {
+    color: var(--purple-hover);
+  }
+
+  .landing-hero__dropdown_active {
+    color: var(--primary);
+  }
+
+  .landing-hero__dropdown_muted {
+    color: var(--ink-muted);
+  }
+
+  .landing-hero__roll {
+    display: inline-grid;
+    height: 1.5rem;
+    overflow: hidden;
+    position: relative;
+    transition: width var(--roll-duration) var(--ease);
+  }
+
+  .landing-hero__roll-text {
+    grid-area: 1 / 1;
+    justify-self: start;
+  }
+
+  .landing-hero__roll-measure {
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+  }
+
+  .landing-hero__chevron {
+    display: flex;
+    padding-top: 0.25rem;
+  }
+
+  .landing-hero__chevron svg {
+    display: block;
+    height: 1rem;
+    transition: transform 0.2s var(--ease);
+    width: 1rem;
+  }
+
+  .landing-hero__dropdown_active .landing-hero__chevron svg {
+    transform: scaleY(-1);
+  }
+
+  .landing-hero-roll-enter-active,
+  .landing-hero-roll-leave-active {
+    transition: transform var(--roll-duration) var(--ease), opacity var(--roll-duration) var(--ease);
+  }
+
+  .landing-hero-roll-enter-from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  .landing-hero-roll-leave-to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  .landing-hero-panel-enter-active,
+  .landing-hero-panel-leave-active {
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .landing-hero-panel-enter-from,
+  .landing-hero-panel-leave-to {
+    opacity: 0;
+    transform: translate(-50%, 0.5rem);
+  }
+
+  /* ───────── CatalogList — Figma node 4791:73747 «list Desktop L» ───────── */
+
+  .catalog-popup {
+    display: grid;
+    gap: 2rem 1.5rem;
+    grid-template-columns: repeat(auto-fit, 235px);
+    justify-content: center;
+    width: 100%;
+  }
+
+  .catalog-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    width: 235px;
+  }
+
+  .catalog-col__head {
+    align-items: flex-start;
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .catalog-col__plate {
+    background: var(--icon-plate);
+    border-radius: 0.5rem;
+    flex: 0 0 auto;
+    height: 36px;
+    width: 36px;
+  }
+
+  .catalog-col__title {
+    background: none;
+    border: 0;
+    color: var(--ink);
+    cursor: pointer;
+    flex: 1 0 0;
+    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.75rem;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+    transition: color 0.15s var(--ease);
+  }
+
+  .catalog-col__title:hover {
+    color: var(--primary);
+  }
+
+  .catalog-col__title:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .catalog-col__items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+  }
+
+  .catalog-item {
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    padding: 0 0 0 10px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .catalog-item__icon {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    height: 26px;
+    justify-content: center;
+    width: 26px;
+  }
+
+  .catalog-item__icon img {
+    display: block;
+    height: 16px;
+    width: 16px;
+  }
+
+  .catalog-item__label {
+    background: var(--surface);
+    border-radius: 0.25rem;
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.125rem;
+    padding: 0.25rem 0.5rem;
+    transition: background-color 0.15s var(--ease);
+  }
+
+  .catalog-item:hover .catalog-item__label {
+    background: var(--tag-hover);
+  }
+
+  .catalog-item:active .catalog-item__label {
+    background: var(--tag-pressed);
+  }
+
+  .catalog-item:focus-visible {
+    border-radius: 0.25rem;
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  .badge {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 20px;
+    justify-content: center;
+    margin-left: 0.25rem;
+    padding: 0 5px;
+    position: relative;
+  }
+
+  .badge img {
+    inset: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .badge span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+    position: relative;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .badge_green span {
+    color: #e1ffed;
+  }
+
+  .badge_red span {
+    color: #ffeded;
+  }
+
+  /* ───────── Filter Bar — Figma node 4771:110074 ───────── */
+
+  .filterbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    justify-content: space-between;
+  }
+
+  .filterbar__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .filterbar__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .filterbar__extra {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem;
+  }
+
+  .select {
+    align-items: center;
+    background: var(--input-bg);
+    border: 0;
+    border-radius: 0.75rem;
+    color: var(--ink-secondary);
+    display: flex;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    gap: 0.5rem;
+    height: 40px;
+    justify-content: space-between;
+    line-height: 1.5rem;
+    max-width: 100%;
+    padding: 0 14px;
+    text-align: left;
+    width: 260px;
+  }
+
+  .select_filled {
+    color: var(--ink);
+  }
+
+  .select__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .select__icons {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+
+  .select img {
+    display: block;
+    height: 16px;
+    width: 16px;
+  }
+
+  .field {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .field__label {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    white-space: nowrap;
+  }
+
+  .field__box {
+    align-items: center;
+    background: var(--surface);
+    border-radius: 0.75rem;
+    display: flex;
+    gap: 1rem;
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  .field__hint {
+    color: #81888d;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+  }
+
+  .field__value {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.5rem;
+  }
+
+  .link-reset {
+    background: none;
+    border: 0;
+    color: var(--purple);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    height: 40px;
+    line-height: 1.125rem;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  .link-reset:hover {
+    color: var(--primary);
+  }
+
+  .link-reset:focus-visible {
+    border-radius: 0.25rem;
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .results {
+    color: var(--ink-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.125rem;
+    margin: 0;
+  }
+
+  /* ───────── ProductCard — Figma node 3875:11301 ───────── */
+
+  .products {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  }
+
+  .product {
+    background: var(--surface);
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .product__media {
+    height: 260px;
+    position: relative;
+    width: 100%;
+  }
+
+  .product__media img {
+    border-radius: 1.5rem;
+    height: 100%;
+    inset: 0;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+  }
+
+  .product__overlay {
+    display: flex;
+    flex-direction: column;
+    inset: 0;
+    justify-content: space-between;
+    padding: 24px 24px 16px 16px;
+    position: absolute;
+  }
+
+  .product__fav {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .product__fav img {
+    display: block;
+    height: 24px;
+    width: 24px;
+  }
+
+  .product__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .product__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+
+  .chip {
+    align-items: center;
+    border-radius: 0.375rem;
+    display: flex;
+    font-size: 0.625rem;
+    font-weight: 600;
+    gap: 4px;
+    line-height: 0.75rem;
+    padding: 4px 6px;
+    white-space: nowrap;
+  }
+
+  .chip img {
+    display: block;
+    height: 12px;
+    width: 12px;
+  }
+
+  .chip_term {
+    background: var(--warning-bg);
+    color: var(--warning-ink);
+  }
+
+  .chip_online {
+    background: var(--indigo-bg);
+    color: var(--indigo-ink);
+  }
+
+  .product__name {
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    margin: 0;
+  }
+
+  .product__note {
+    color: var(--ink-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+    margin: 0;
+  }
+
+  .product__price {
+    color: var(--purple);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+    margin: 0;
+  }
+
+  .empty {
+    background: var(--surface);
+    border-radius: 2rem;
+    color: var(--ink-secondary);
+    font-size: 1rem;
+    font-weight: 600;
+    grid-column: 1 / -1;
+    line-height: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+  }
+
+  /* ───────── gallery_card — Figma node 4791:66060 ───────── */
+
+  .gallery {
+    display: grid;
+    gap: 1.375rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 354px));
+    justify-content: center;
+  }
+
+  .gcard {
+    aspect-ratio: 354 / 756;
+    background: var(--purple);
+    border-radius: 2rem;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gcard__inner {
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateY(0);
+    transition: transform 0.45s var(--ease);
+  }
+
+  .gcard__pic {
+    aspect-ratio: 354 / 756;
+    background: var(--placeholder);
+    border-radius: 2rem;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .gcard__text {
+    align-items: center;
+    box-sizing: border-box;
+    color: #fff;
+    display: flex;
+    font-size: 1.25rem;
+    font-weight: 700;
+    height: 80px;
+    line-height: 1.5rem;
+    padding: 24px 32px 32px;
+  }
+
+  .gcard:hover .gcard__inner,
+  .gcard:focus-visible .gcard__inner {
+    transform: translateY(-80px);
+  }
+
+  .gcard:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 1023px) {
+    .landing-hero {
+      --landing-hero-height: 38rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .landing-hero {
+      --landing-hero-height: 34rem;
+
+      border-radius: 2rem;
+      width: calc(100% - 24px);
+    }
+
+    .landing-hero__caption {
+      bottom: 3.5rem;
+      font-size: 0.875rem;
+      left: 1.25rem;
+      line-height: 1.125rem;
+      width: calc(100% - 2.5rem);
+    }
+
+    .landing-hero__bullets {
+      bottom: 1.25rem;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+
+    .landing-hero__selector {
+      flex-wrap: wrap;
+      font-size: 1rem;
+      justify-content: center;
+      line-height: 1.25rem;
+      max-width: calc(100vw - 48px);
+      padding: 0.625rem 0.75rem;
+      row-gap: 0.25rem;
+    }
+
+    .landing-hero__roll {
+      height: 1.25rem;
+    }
+
+    .landing-hero_open .landing-hero__controls {
+      bottom: 1.25rem;
+      top: auto;
+    }
+
+    .landing-hero__panel {
+      gap: 1.25rem;
+      padding: 1.25rem 1rem 2rem;
+    }
+
+    .landing-hero__panel_audience,
+    .landing-hero__panel_catalog {
+      width: calc(100vw - 48px);
+    }
+
+    .landing-hero__tag {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+
+    .catalog-popup {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .catalog-col {
+      width: 100%;
+    }
+
+    .catalog-item__label {
+      white-space: normal;
+    }
+
+    .select {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing-hero__slide,
+    .landing-hero__controls,
+    .landing-hero__roll,
+    .landing-hero-roll-enter-active,
+    .landing-hero-roll-leave-active,
+    .landing-hero-panel-enter-active,
+    .landing-hero-panel-leave-active,
+    .gcard__inner {
+      transition: none;
+    }
+  }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+</head>
+<body>
+<div class="demo-shell">
+  <header class="demo-head">
+    <p class="demo-eyebrow">
+      <span>Демо макетов</span>
+      <span class="demo-breakpoint" id="breakpoint">—</span>
+    </p>
+    <h1 class="demo-title">Каталог и примеры работ</h1>
+    <p class="demo-lead">
+      Нажмите на плашку «Мы … для …» в хиро-блоке — откроется список-каталог.
+      Клик по пункту каталога прокручивает страницу к товарам и подставляет фильтры
+      «Для любых направлений» и «Любого типа». В примерах работ при наведении картинка
+      уезжает вверх, снизу появляется подпись.
+    </p>
+  </header>
+
+  <main>
+    <section
+      class="landing-hero"
+      aria-roledescription="carousel"
+      aria-label="Что мы делаем"
+    >
+      <div class="landing-hero__slides" id="hero-slides"></div>
+
+      <div class="landing-hero__caption">
+        <p id="hero-caption-title"></p>
+        <p id="hero-caption-text"></p>
+      </div>
+
+      <div class="landing-hero__bullets" id="hero-bullets"></div>
+
+      <div class="landing-hero__overlay" id="hero-overlay" aria-hidden="true"></div>
+
+      <div class="landing-hero__controls" id="hero-controls">
+        <div class="landing-hero__selector" id="hero-selector">
+          <span class="landing-hero__word">Мы</span>
+
+          <button
+            type="button"
+            class="landing-hero__dropdown"
+            id="hero-dropdown-direction"
+            aria-expanded="false"
+            aria-controls="landing-hero-panel-direction"
+          >
+            <span class="landing-hero__roll" data-roll="direction">
+              <span class="landing-hero__roll-measure" data-roll-key="direction" aria-hidden="true"></span>
+            </span>
+            <span class="landing-hero__chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.29291 11.4142L2.29291 6.41421L3.70712 5L8.00001 9.29289L12.2929 5L13.7071 6.41421L8.70712 11.4142C8.3166 11.8047 7.68343 11.8047 7.29291 11.4142Z" fill="currentColor"/></svg>
+            </span>
+          </button>
+
+          <span class="landing-hero__word">для</span>
+
+          <button
+            type="button"
+            class="landing-hero__dropdown"
+            id="hero-dropdown-audience"
+            aria-expanded="false"
+            aria-controls="landing-hero-panel-audience"
+          >
+            <span class="landing-hero__roll" data-roll="audience">
+              <span class="landing-hero__roll-measure" data-roll-key="audience" aria-hidden="true"></span>
+            </span>
+            <span class="landing-hero__chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.29291 11.4142L2.29291 6.41421L3.70712 5L8.00001 9.29289L12.2929 5L13.7071 6.41421L8.70712 11.4142C8.3166 11.8047 7.68343 11.8047 7.29291 11.4142Z" fill="currentColor"/></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="catalog" aria-labelledby="catalog-title" style="margin-top: 3rem">
+      <div class="section__inner">
+        <h2 class="section__title" id="catalog-title">Каталог</h2>
+
+        <div class="filterbar">
+          <div class="filterbar__main">
+            <div class="filterbar__controls">
+              <button type="button" class="select" id="filter-direction">
+                <span class="select__text" id="filter-direction-text">Для любых направлений</span>
+                <span class="select__icons">
+                  <img src="assets/icon-dropdown.svg" alt="" aria-hidden="true">
+                </span>
+              </button>
+
+              <button type="button" class="select" id="filter-type">
+                <span class="select__text" id="filter-type-text">Любого типа</span>
+                <span class="select__icons">
+                  <img src="assets/icon-dropdown.svg" alt="" aria-hidden="true">
+                </span>
+              </button>
+            </div>
+
+            <div class="filterbar__extra">
+              <div class="field">
+                <span class="field__label">Цена, ₽</span>
+                <div class="field__box">
+                  <span class="field__hint">От</span>
+                  <span class="field__value">35</span>
+                  <span class="field__hint">до</span>
+                  <span class="field__value">900</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field__label">Срок изготовления</span>
+                <div class="field__box">
+                  <span class="field__hint">До</span>
+                  <span class="field__value">14</span>
+                  <span class="field__hint">дней</span>
+                </div>
+              </div>
+
+              <button type="button" class="link-reset" id="filter-reset">Очистить фильтры</button>
+            </div>
+          </div>
+
+          <button type="button" class="select" id="filter-sort">
+            <span class="select__icons">
+              <img src="assets/icon-sort.svg" alt="" aria-hidden="true">
+            </span>
+            <span class="select__text">По популярности</span>
+            <span class="select__icons">
+              <img src="assets/icon-dropdown.svg" alt="" aria-hidden="true">
+            </span>
+          </button>
+        </div>
+
+        <p class="results" id="results" aria-live="polite"></p>
+
+        <div class="products" id="products"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="works-title" style="margin-top: 3rem">
+      <div class="section__inner">
+        <h2 class="section__title" id="works-title">Примеры работ</h2>
+        <div class="gallery" id="gallery"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="demo-foot">
+    <p>
+      Макеты: <b>list Desktop L / XL / XXL</b>, <b>Filter Bar</b>, <b>ProductCard</b> и
+      <b>gallery_card</b> из файла «💜 Индиго. Сайт». Брейкпоинты из макета —
+      Mobile S 320, Mobile 375, Tablet portrait M 744, Desktop L 1024, Desktop XL 1280,
+      Desktop XXL 2048; колонки каталога (235px) перестраиваются сами, как в трёх вариантах списка.
+    </p>
+    <p>
+      Что здесь подставлено вместо макета: в <b>gallery_card</b> и карточках товаров картинки —
+      фотографии из хиро-карусели проекта, потому что в макете на их месте серые плейсхолдеры;
+      цены, сроки и скидки в карточках — условные. Названия товаров и все пункты каталога — настоящие, из Figma.
+      Плашка «для кого» пока открывает прежний список аудиторий: нового макета для неё в задаче не было.
+    </p>
+  </footer>
+</div>
+
+<script>
+  const AUTOPLAY_DELAY = 4000
+
+  const slideCaption = {
+    title: 'Название проекта/изделия',
+    description: 'Описание проекта/изделия: для кого и для чего сделан, в рамках какого мероприятия <...>'
+  }
+
+  const IMAGES = {
+    tshirts: 'images/landing-hero-tshirts.jpg',
+    flags: 'images/landing-hero-flags.jpg',
+    puzzles: 'images/landing-hero-puzzles.jpg',
+    sketchbooks: 'images/landing-hero-sketchbooks.jpg',
+    albums: 'images/landing-hero-albums.jpg',
+    photozones: 'images/landing-hero-photozones.jpg',
+    stickers: 'images/landing-hero-stickers.jpg'
+  }
+
+  const slides = [
+    { id: 'tshirts', image: IMAGES.tshirts, imagePosition: '50% 0', direction: 'печатаем на футболках', audience: 'всех', ...slideCaption },
+    { id: 'flags', image: IMAGES.flags, direction: 'изготавливаем флаги', audience: 'фестивалей', ...slideCaption },
+    { id: 'puzzles', image: IMAGES.puzzles, direction: 'печатаем фотопазлы', audience: 'подарков близким', ...slideCaption },
+    { id: 'sketchbooks', image: IMAGES.sketchbooks, direction: 'создаём скетчбуки', audience: 'творчества', ...slideCaption },
+    { id: 'albums', image: IMAGES.albums, direction: 'печатаем альбомы', audience: 'мероприятий', ...slideCaption },
+    { id: 'photozones', image: IMAGES.photozones, direction: 'создаём фотозоны', audience: 'рекламных кампаний', ...slideCaption },
+    { id: 'stickers', image: IMAGES.stickers, direction: 'печатаем стикерпаки', audience: 'корпоративного мерча', ...slideCaption }
+  ]
+
+  const audienceTags = [
+    'Искусство и культура', 'Гражданская и общественная деятельность', 'Потребительские бренды',
+    'Образование', 'Развлечение', 'Мода и красота', 'Дети и семья', 'Еда и напитки', 'Финансы',
+    'Здоровье', 'Спорт и фитнес', 'Некоммерческие организации', 'Мероприятия', 'Транспорт',
+    'Туризм и отели', 'Недвижимость', 'Производство и промышленность'
+  ]
+
+  // Колонки списка-каталога в порядке макета «list Desktop L» (4791:73747)
+  const catalog = [
+    {
+      title: 'Художникам',
+      items: [
+        { label: 'Скетчбуки A4' }, { label: 'Блокноты с логотипом' }, { label: 'Прозрачные стикеры' },
+        { label: 'Постеры' }, { label: 'Принты на бумаге', badge: 'green' }, { label: 'Скетчбуки A5' },
+        { label: 'Портфолио' }, { label: 'Артбуки' }, { label: 'Рамы', icon: 'icon-frames.svg' },
+        { label: 'Голографические стикеры' }, { label: 'Стикерпаки' }, { label: 'Стикеры с высечкой' },
+        { label: 'Паспарту' }, { label: 'Наклейки на заказ' }, { label: 'Печать на холсте' }
+      ]
+    },
+    {
+      title: 'Свадебное',
+      items: [
+        { label: 'Пригласительные' }, { label: 'Конверты', badge: 'red' }, { label: 'Save the date' },
+        { label: 'План рассадки' }, { label: 'Карточки рассадки', badge: 'green' },
+        { label: 'Номерки на столы' }, { label: 'Топперы' }, { label: 'Баннеры' }, { label: 'Фотозона' },
+        { label: 'Книга пожеланий' }, { label: 'Папка\nдля свидетельства', badge: 'red' },
+        { label: 'На память гостям' }, { label: 'Меню' }
+      ]
+    },
+    {
+      title: 'Корпоративное',
+      items: [
+        { label: 'Визитки' }, { label: 'Конверты', badge: 'green' }, { label: 'Адресные папки' },
+        { label: 'Сертификаты', badge: 'red' }, { label: 'Ежедневники' }, { label: 'Блоки для записей' },
+        { label: 'Открытки' }, { label: 'Печать на пакетах' },
+        { label: 'Пластиковые карты', badge: 'green' }, { label: 'Бейджи на магните' },
+        { label: 'Печать календарей', icon: 'icon-calendar.svg' }
+      ]
+    },
+    {
+      title: 'Текстиль',
+      items: [
+        { label: 'Печать на футболках' }, { label: 'Кепки и бейсболки' }, { label: 'Униформа' },
+        { label: 'Шопперы' }, { label: 'Мешочки с логотипом' },
+        { label: 'Шевроны и нашивки', icon: 'icon-chevrons.svg', badge: 'green' },
+        { label: 'Печать на подушках' }, { label: 'Тканевые бирки' }, { label: 'Изготовление флагов' },
+        { label: 'Вымпелы' }, { label: 'Настольные флаги' }
+      ]
+    },
+    {
+      title: 'Оформление\nмагазинов',
+      items: [
+        { label: 'Баннеры' }, { label: 'Вывески' }, { label: 'Печать на плёнке', badge: 'green' },
+        { label: 'Стенды' }, { label: 'Ценники' }, { label: 'Таблички' },
+        { label: 'Акриловые подставки' }, { label: 'Печать каталогов' },
+        { label: 'Инстаграм-визитки' }, { label: 'Листовки' }
+      ]
+    },
+    {
+      title: 'Фотоальбомы',
+      items: [
+        { label: 'Softbook', badge: 'green' }, { label: 'Minibook' }, { label: 'Collage book' },
+        { label: 'Baby book', icon: 'icon-binky.svg' }, { label: 'Выпускные альбомы' },
+        { label: 'Школьные альбомы' }, { label: 'Альбомы для детского сада', badge: 'green' },
+        { label: 'Свадебные альбомы' }, { label: 'Премиум альбомы' }, { label: 'Фотокниги' }
+      ]
+    },
+    {
+      title: 'Подарки',
+      items: [
+        { label: 'Фото полароид' }, { label: 'Магниты полароид', badge: 'green' },
+        { label: 'Печать на холсте' }, { label: 'Фотопазлы', icon: 'icon-puzzle.svg' },
+        { label: 'Печать на кружках' }, { label: 'Календари на подставке' },
+        { label: 'Браслеты с гравировкой' }, { label: 'Подарочная упаковка' }
+      ]
+    },
+    {
+      title: 'К мероприятию',
+      items: [
+        { label: 'Бейджи на шнурке' }, { label: 'Бейджи на ленте', badge: 'green' },
+        { label: 'Силиконовые браслеты' }, { label: 'Блокноты' }, { label: 'Буклеты', badge: 'green' },
+        { label: 'Папки' }, { label: 'Программки' }, { label: 'Ручки с логотипом' },
+        { label: 'Фотозоны' }, { label: 'Баннеры', badge: 'green' }
+      ]
+    }
+  ]
+
+  // Карточки товаров: названия и направления — из каталога Figma, цены и сроки условные
+  const products = [
+    { direction: 'Художникам', type: 'Скетчбуки A4', note: 'Твёрдая обложка, 80 листов', price: 'от 890 ₽', term: 'от 3 дней', online: true, image: IMAGES.sketchbooks },
+    { direction: 'Художникам', type: 'Стикерпаки', note: 'Виниловая плёнка, глянец или мат', price: 'от 150 ₽', term: 'от 2 дней', online: true, discount: '−16% от 100 шт', image: IMAGES.stickers },
+    { direction: 'Художникам', type: 'Постеры', note: 'Четыре формата и три вида бумаги', price: 'от 320 ₽', term: 'от 3 дней', online: true, image: IMAGES.albums },
+    { direction: 'Свадебное', type: 'Пригласительные', note: 'Дизайнерский картон, тиснение', price: 'от 190 ₽', term: 'от 5 дней', online: true, image: IMAGES.albums },
+    { direction: 'Свадебное', type: 'Книга пожеланий', note: 'Переплёт на выбор, печать имён', price: 'от 2 400 ₽', term: 'от 7 дней', image: IMAGES.albums },
+    { direction: 'Свадебное', type: 'Фотозона', note: 'Каркас и баннер под ваш размер', price: 'от 6 900 ₽', term: 'от 7 дней', image: IMAGES.photozones },
+    { direction: 'Корпоративное', type: 'Визитки', note: 'Плотность 300 г, ламинация', price: 'от 35 ₽', term: 'от 2 дней', online: true, discount: '−16% от 100 шт', image: IMAGES.albums },
+    { direction: 'Корпоративное', type: 'Ежедневники', note: 'Тиснение логотипа на обложке', price: 'от 1 200 ₽', term: 'от 5 дней', image: IMAGES.sketchbooks },
+    { direction: 'Корпоративное', type: 'Печать календарей', note: 'Настенные, карманные, домики', price: 'от 260 ₽', term: 'от 5 дней', online: true, image: IMAGES.albums },
+    { direction: 'Текстиль', type: 'Печать на футболках', note: 'DTF и шелкография, от 1 штуки', price: 'от 790 ₽', term: 'от 3 дней', online: true, image: IMAGES.tshirts },
+    { direction: 'Текстиль', type: 'Изготовление флагов', note: 'Пять материалов и два размера на выбор', price: 'от 590 ₽', term: 'от 5 дней', online: true, discount: '−16% от 100 шт', image: IMAGES.flags },
+    { direction: 'Текстиль', type: 'Шопперы', note: 'Хлопок и саржа, печать с двух сторон', price: 'от 540 ₽', term: 'от 4 дней', online: true, image: IMAGES.tshirts },
+    { direction: 'Оформление\nмагазинов', type: 'Баннеры', note: 'Люверсы и проклейка в подарок', price: 'от 450 ₽', term: 'от 2 дней', online: true, image: IMAGES.photozones },
+    { direction: 'Оформление\nмагазинов', type: 'Вывески', note: 'Композит, акрил, световые короба', price: 'от 4 500 ₽', term: 'от 10 дней', image: IMAGES.photozones },
+    { direction: 'Оформление\nмагазинов', type: 'Печать каталогов', note: 'Скрепка или пружина, от 20 полос', price: 'от 180 ₽', term: 'от 5 дней', online: true, image: IMAGES.albums },
+    { direction: 'Фотоальбомы', type: 'Softbook', note: 'Мягкая обложка, 20 разворотов', price: 'от 1 900 ₽', term: 'от 7 дней', online: true, image: IMAGES.albums },
+    { direction: 'Фотоальбомы', type: 'Baby book', note: 'Шаблоны первого года жизни', price: 'от 2 600 ₽', term: 'от 7 дней', online: true, image: IMAGES.albums },
+    { direction: 'Фотоальбомы', type: 'Фотокниги', note: 'Фотопечать, разворот без разрыва', price: 'от 3 200 ₽', term: 'от 7 дней', image: IMAGES.albums },
+    { direction: 'Подарки', type: 'Фотопазлы', note: '63, 120 и 253 элемента', price: 'от 690 ₽', term: 'от 3 дней', online: true, image: IMAGES.puzzles },
+    { direction: 'Подарки', type: 'Печать на кружках', note: 'Белые, хамелеоны, с цветной ручкой', price: 'от 450 ₽', term: 'от 2 дней', online: true, image: IMAGES.puzzles },
+    { direction: 'Подарки', type: 'Магниты полароид', note: 'Набор от 9 штук, матовая плёнка', price: 'от 90 ₽', term: 'от 2 дней', online: true, discount: '−16% от 100 шт', image: IMAGES.stickers },
+    { direction: 'К мероприятию', type: 'Бейджи на шнурке', note: 'Карман, шнурок и печать имён', price: 'от 120 ₽', term: 'от 3 дней', online: true, image: IMAGES.stickers },
+    { direction: 'К мероприятию', type: 'Буклеты', note: 'Два и три фальца, тираж от 50', price: 'от 95 ₽', term: 'от 4 дней', online: true, image: IMAGES.albums },
+    { direction: 'К мероприятию', type: 'Фотозоны', note: 'Пресс-волл, арка, баннерная стенка', price: 'от 6 900 ₽', term: 'от 7 дней', image: IMAGES.photozones }
+  ]
+
+  const galleryCards = [
+    IMAGES.tshirts, IMAGES.flags, IMAGES.puzzles,
+    IMAGES.sketchbooks, IMAGES.albums, IMAGES.photozones
+  ]
+
+  const BREAKPOINTS = [
+    { from: 2048, name: 'Desktop XXL 2048' },
+    { from: 1280, name: 'Desktop XL 1280' },
+    { from: 1024, name: 'Desktop L 1024' },
+    { from: 744, name: 'Tablet portrait M 744' },
+    { from: 375, name: 'Mobile 375' },
+    { from: 0, name: 'Mobile S 320' }
+  ]
+
+  const BULLET_SVG = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9" fill="white"/></svg>'
+  const KEYS = ['direction', 'audience']
+
+  const heroEl = document.querySelector('.landing-hero')
+  const slidesEl = document.getElementById('hero-slides')
+  const bulletsEl = document.getElementById('hero-bullets')
+  const overlayEl = document.getElementById('hero-overlay')
+  const controlsEl = document.getElementById('hero-controls')
+  const selectorEl = document.getElementById('hero-selector')
+  const captionTitleEl = document.getElementById('hero-caption-title')
+  const captionTextEl = document.getElementById('hero-caption-text')
+  const productsEl = document.getElementById('products')
+  const resultsEl = document.getElementById('results')
+  const galleryEl = document.getElementById('gallery')
+  const breakpointEl = document.getElementById('breakpoint')
+  const directionTextEl = document.getElementById('filter-direction-text')
+  const typeTextEl = document.getElementById('filter-type-text')
+  const directionSelectEl = document.getElementById('filter-direction')
+  const typeSelectEl = document.getElementById('filter-type')
+  const catalogSectionEl = document.getElementById('catalog')
+
+  let activeIndex = 0
+  let openKey = null
+  let hoveredKey = null
+  let autoplayTimer = null
+  let panelRendered = null
+  let panelAnimating = false
+
+  let filterDirection = null
+  let filterType = null
+
+  const rollEls = {}
+  const measureEls = {}
+  const slideEls = []
+  const bulletEls = []
+
+  const oneLine = text => text.replace(/\n/g, ' ')
+  const isHighlighted = () => Boolean(openKey || hoveredKey)
+  const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  function getElementState(key) {
+    if (openKey === key) {
+      return 'active'
+    }
+
+    if (hoveredKey === key) {
+      return 'hovered'
+    }
+
+    return isHighlighted() ? 'muted' : 'default'
+  }
+
+  function stopAutoplay() {
+    clearTimeout(autoplayTimer)
+    autoplayTimer = null
+  }
+
+  function scheduleAutoplay() {
+    stopAutoplay()
+
+    if (openKey || slides.length < 2) {
+      return
+    }
+
+    autoplayTimer = setTimeout(() => {
+      goToSlide((activeIndex + 1) % slides.length)
+    }, AUTOPLAY_DELAY)
+  }
+
+  function raf2(fn) {
+    requestAnimationFrame(() => requestAnimationFrame(fn))
+  }
+
+  // Ширина текста дропдауна замеряется по скрытой копии, чтобы плашка анимировала размер вместе с прокруткой текста
+  function rollSwap(key, text, animate) {
+    const roll = rollEls[key]
+    const measure = measureEls[key]
+    const current = roll.querySelector('.landing-hero__roll-text')
+
+    if (current && current.textContent === text) {
+      return
+    }
+
+    measure.textContent = text
+
+    const next = document.createElement('span')
+    next.className = 'landing-hero__roll-text'
+    next.textContent = text
+
+    if (!animate || !current) {
+      if (current) {
+        current.remove()
+      }
+
+      roll.insertBefore(next, measure)
+      return
+    }
+
+    next.classList.add('landing-hero-roll-enter-active', 'landing-hero-roll-enter-from')
+    roll.insertBefore(next, measure)
+    raf2(() => next.classList.remove('landing-hero-roll-enter-from'))
+    setTimeout(() => next.classList.remove('landing-hero-roll-enter-active'), 500)
+
+    current.classList.add('landing-hero-roll-leave-active')
+    raf2(() => current.classList.add('landing-hero-roll-leave-to'))
+    setTimeout(() => current.remove(), 500)
+  }
+
+  function buildBadge(kind) {
+    const badge = document.createElement('span')
+    badge.className = `badge badge_${kind}`
+
+    const img = document.createElement('img')
+    img.src = kind === 'red' ? 'assets/badge-mask-red.svg' : 'assets/badge-mask-green.svg'
+    img.alt = ''
+    img.setAttribute('aria-hidden', 'true')
+
+    const text = document.createElement('span')
+    text.textContent = kind === 'red' ? 'New!' : '%%%'
+
+    badge.append(img, text)
+    return badge
+  }
+
+  function buildCatalogPanel() {
+    const panel = document.createElement('div')
+    panel.className = 'landing-hero__panel landing-hero__panel_catalog'
+    panel.id = 'landing-hero-panel-direction'
+
+    const grid = document.createElement('div')
+    grid.className = 'catalog-popup'
+
+    catalog.forEach((column) => {
+      const col = document.createElement('div')
+      col.className = 'catalog-col'
+
+      const head = document.createElement('div')
+      head.className = 'catalog-col__head'
+
+      const plate = document.createElement('div')
+      plate.className = 'catalog-col__plate'
+      plate.setAttribute('aria-hidden', 'true')
+
+      const title = document.createElement('button')
+      title.type = 'button'
+      title.className = 'catalog-col__title'
+      title.textContent = oneLine(column.title)
+      title.addEventListener('click', () => applyFilter(column.title, null))
+
+      head.append(plate, title)
+
+      const list = document.createElement('div')
+      list.className = 'catalog-col__items'
+
+      column.items.forEach((item) => {
+        const row = document.createElement('button')
+        row.type = 'button'
+        row.className = 'catalog-item'
+
+        const icon = document.createElement('span')
+        icon.className = 'catalog-item__icon'
+
+        if (item.icon) {
+          const img = document.createElement('img')
+          img.src = `assets/${item.icon}`
+          img.alt = ''
+          img.setAttribute('aria-hidden', 'true')
+          icon.append(img)
+        }
+
+        const label = document.createElement('span')
+        label.className = 'catalog-item__label'
+        label.textContent = oneLine(item.label)
+
+        row.append(icon, label)
+
+        if (item.badge) {
+          row.append(buildBadge(item.badge))
+        }
+
+        row.addEventListener('click', () => applyFilter(column.title, item.label))
+        list.append(row)
+      })
+
+      col.append(head, list)
+      grid.append(col)
+    })
+
+    panel.append(grid)
+    return panel
+  }
+
+  function buildAudiencePanel() {
+    const panel = document.createElement('div')
+    panel.className = 'landing-hero__panel landing-hero__panel_audience'
+    panel.id = 'landing-hero-panel-audience'
+
+    const nav = document.createElement('nav')
+    nav.className = 'landing-hero__tags'
+    nav.setAttribute('aria-label', 'Выберите, для кого')
+
+    audienceTags.forEach((tag) => {
+      const button = document.createElement('button')
+      button.type = 'button'
+      button.className = 'landing-hero__tag'
+      button.textContent = tag
+      button.addEventListener('click', closeDropdown)
+      nav.append(button)
+    })
+
+    panel.append(nav)
+    return panel
+  }
+
+  function syncPanel() {
+    if (panelAnimating || panelRendered === openKey) {
+      return
+    }
+
+    if (panelRendered !== null) {
+      const leaving = controlsEl.querySelector('.landing-hero__panel')
+      panelAnimating = true
+      panelRendered = null
+      leaving.classList.add('landing-hero-panel-leave-active')
+      raf2(() => leaving.classList.add('landing-hero-panel-leave-to'))
+
+      setTimeout(() => {
+        leaving.remove()
+        panelAnimating = false
+        syncPanel()
+      }, 260)
+
+      return
+    }
+
+    const panel = openKey === 'direction' ? buildCatalogPanel() : buildAudiencePanel()
+    panel.classList.add('landing-hero-panel-enter-active', 'landing-hero-panel-enter-from')
+    controlsEl.insertBefore(panel, selectorEl)
+    panelRendered = openKey
+    raf2(() => panel.classList.remove('landing-hero-panel-enter-from'))
+    setTimeout(() => panel.classList.remove('landing-hero-panel-enter-active'), 300)
+  }
+
+  function renderSelector() {
+    selectorEl.classList.toggle('landing-hero__selector_highlighted', isHighlighted())
+
+    KEYS.forEach((key) => {
+      const button = document.getElementById(`hero-dropdown-${key}`)
+      const state = getElementState(key)
+
+      button.classList.remove(
+        'landing-hero__dropdown_default',
+        'landing-hero__dropdown_hovered',
+        'landing-hero__dropdown_active',
+        'landing-hero__dropdown_muted'
+      )
+      button.classList.add(`landing-hero__dropdown_${state}`)
+      button.setAttribute('aria-expanded', String(openKey === key))
+    })
+  }
+
+  function renderSlide(animate) {
+    const slide = slides[activeIndex]
+
+    slideEls.forEach((el, index) => {
+      const active = index === activeIndex
+      el.classList.toggle('landing-hero__slide_active', active)
+      el.setAttribute('aria-hidden', String(!active))
+    })
+
+    bulletEls.forEach((el, index) => {
+      const active = index === activeIndex
+      el.classList.toggle('landing-hero__bullet_active', active)
+      el.setAttribute('aria-current', String(active))
+    })
+
+    captionTitleEl.textContent = slide.title
+    captionTextEl.textContent = slide.description
+
+    KEYS.forEach(key => rollSwap(key, slide[key], animate))
+    renderSelector()
+  }
+
+  function goToSlide(index) {
+    activeIndex = index
+    renderSlide(true)
+    scheduleAutoplay()
+  }
+
+  function toggleDropdown(key) {
+    openKey = openKey === key ? null : key
+    heroEl.classList.toggle('landing-hero_open', Boolean(openKey))
+    overlayEl.classList.toggle('landing-hero__overlay_visible', Boolean(openKey))
+    syncPanel()
+    renderSelector()
+    scheduleAutoplay()
+  }
+
+  function closeDropdown() {
+    if (openKey) {
+      toggleDropdown(openKey)
+    }
+  }
+
+  function renderFilters() {
+    directionTextEl.textContent = filterDirection ? oneLine(filterDirection) : 'Для любых направлений'
+    typeTextEl.textContent = filterType ? oneLine(filterType) : 'Любого типа'
+    directionSelectEl.classList.toggle('select_filled', Boolean(filterDirection))
+    typeSelectEl.classList.toggle('select_filled', Boolean(filterType))
+  }
+
+  function buildProduct(product) {
+    const card = document.createElement('article')
+    card.className = 'product'
+
+    const media = document.createElement('div')
+    media.className = 'product__media'
+
+    const img = document.createElement('img')
+    img.src = product.image
+    img.alt = oneLine(product.type)
+    img.loading = 'lazy'
+    img.decoding = 'async'
+
+    const overlay = document.createElement('div')
+    overlay.className = 'product__overlay'
+
+    const fav = document.createElement('div')
+    fav.className = 'product__fav'
+    const favIcon = document.createElement('img')
+    favIcon.src = 'assets/icon-favorite.svg'
+    favIcon.alt = ''
+    favIcon.setAttribute('aria-hidden', 'true')
+    fav.append(favIcon)
+
+    const badges = document.createElement('div')
+
+    if (product.discount) {
+      const badge = document.createElement('span')
+      badge.className = 'badge'
+      badge.style.marginLeft = '0'
+
+      const mask = document.createElement('img')
+      mask.src = 'assets/badge-mask-discount.svg'
+      mask.alt = ''
+      mask.setAttribute('aria-hidden', 'true')
+
+      const text = document.createElement('span')
+      text.textContent = product.discount
+      text.style.color = 'var(--positive-ink)'
+
+      badge.append(mask, text)
+      badges.append(badge)
+    }
+
+    overlay.append(fav, badges)
+    media.append(img, overlay)
+
+    const content = document.createElement('div')
+    content.className = 'product__content'
+
+    const meta = document.createElement('div')
+    meta.className = 'product__meta'
+
+    const term = document.createElement('span')
+    term.className = 'chip chip_term'
+    const termIcon = document.createElement('img')
+    termIcon.src = 'assets/icon-term.svg'
+    termIcon.alt = ''
+    termIcon.setAttribute('aria-hidden', 'true')
+    const termText = document.createElement('span')
+    termText.textContent = product.term
+    term.append(termIcon, termText)
+    meta.append(term)
+
+    if (product.online) {
+      const online = document.createElement('span')
+      online.className = 'chip chip_online'
+      const onlineIcon = document.createElement('img')
+      onlineIcon.src = 'assets/icon-online.svg'
+      onlineIcon.alt = ''
+      onlineIcon.setAttribute('aria-hidden', 'true')
+      const onlineText = document.createElement('span')
+      onlineText.textContent = 'Онлайн-заказ'
+      online.append(onlineIcon, onlineText)
+      meta.append(online)
+    }
+
+    const name = document.createElement('p')
+    name.className = 'product__name'
+    name.textContent = oneLine(product.type)
+
+    const note = document.createElement('p')
+    note.className = 'product__note'
+    note.textContent = product.note
+
+    const price = document.createElement('p')
+    price.className = 'product__price'
+    price.textContent = product.price
+
+    content.append(meta, name, note, price)
+    card.append(media, content)
+    return card
+  }
+
+  function renderProducts() {
+    const matched = products.filter((product) => {
+      if (filterDirection && product.direction !== filterDirection) {
+        return false
+      }
+
+      if (filterType && product.type !== filterType) {
+        return false
+      }
+
+      return true
+    })
+
+    productsEl.replaceChildren()
+
+    if (!matched.length) {
+      const empty = document.createElement('p')
+      empty.className = 'empty'
+      empty.textContent = 'По этим фильтрам товаров пока нет'
+      productsEl.append(empty)
+    } else {
+      matched.forEach(product => productsEl.append(buildProduct(product)))
+    }
+
+    const hasFilter = Boolean(filterDirection || filterType)
+    resultsEl.textContent = hasFilter
+      ? `Найдено: ${matched.length} из ${products.length}`
+      : `Все товары: ${products.length}`
+  }
+
+  function applyFilter(direction, type) {
+    filterDirection = direction
+    filterType = type
+    renderFilters()
+    renderProducts()
+    closeDropdown()
+
+    catalogSectionEl.scrollIntoView({
+      behavior: reduceMotion() ? 'auto' : 'smooth',
+      block: 'start'
+    })
+  }
+
+  function resetFilters() {
+    filterDirection = null
+    filterType = null
+    renderFilters()
+    renderProducts()
+  }
+
+  function renderGallery() {
+    galleryCards.forEach((image, index) => {
+      const card = document.createElement('div')
+      card.className = 'gcard'
+      card.tabIndex = 0
+
+      const inner = document.createElement('div')
+      inner.className = 'gcard__inner'
+
+      const img = document.createElement('img')
+      img.className = 'gcard__pic'
+      img.src = image
+      img.alt = `Пример работы ${index + 1}`
+      img.loading = 'lazy'
+      img.decoding = 'async'
+
+      const text = document.createElement('div')
+      text.className = 'gcard__text'
+      text.textContent = 'Описание проекта'
+
+      inner.append(img, text)
+      card.append(inner)
+      galleryEl.append(card)
+    })
+  }
+
+  function renderBreakpoint() {
+    const width = window.innerWidth
+    const match = BREAKPOINTS.find(point => width >= point.from)
+    breakpointEl.textContent = `${width}px · ${match.name}`
+  }
+
+  slides.forEach((slide, index) => {
+    const img = document.createElement('img')
+    img.className = 'landing-hero__slide'
+    img.src = slide.image
+    img.alt = `Мы ${slide.direction} для ${slide.audience}`
+    img.decoding = 'async'
+    img.loading = index === 0 ? 'eager' : 'lazy'
+    img.setAttribute('fetchpriority', index === 0 ? 'high' : 'auto')
+
+    if (slide.imagePosition) {
+      img.style.objectPosition = slide.imagePosition
+    }
+
+    slidesEl.append(img)
+    slideEls.push(img)
+
+    const bullet = document.createElement('button')
+    bullet.type = 'button'
+    bullet.className = 'landing-hero__bullet'
+    bullet.innerHTML = BULLET_SVG
+    bullet.setAttribute('aria-label', `Слайд ${index + 1} из ${slides.length}`)
+    bullet.addEventListener('click', () => goToSlide(index))
+
+    bulletsEl.append(bullet)
+    bulletEls.push(bullet)
+  })
+
+  KEYS.forEach((key) => {
+    rollEls[key] = document.querySelector(`.landing-hero__roll[data-roll="${key}"]`)
+    measureEls[key] = rollEls[key].querySelector('.landing-hero__roll-measure')
+
+    const button = document.getElementById(`hero-dropdown-${key}`)
+    button.addEventListener('click', () => toggleDropdown(key))
+    button.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') {
+        hoveredKey = key
+        renderSelector()
+      }
+    })
+    button.addEventListener('pointerleave', () => {
+      hoveredKey = null
+      renderSelector()
+    })
+  })
+
+  const rollResizeObserver = new ResizeObserver((entries) => {
+    entries.forEach((entry) => {
+      const key = entry.target.dataset.rollKey
+      rollEls[key].style.width = `${entry.contentRect.width}px`
+    })
+  })
+
+  Object.values(measureEls).forEach(el => rollResizeObserver.observe(el))
+
+  document.addEventListener('click', (event) => {
+    if (openKey && !controlsEl.contains(event.target)) {
+      closeDropdown()
+    }
+  }, true)
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && openKey) {
+      closeDropdown()
+    }
+  })
+
+  document.getElementById('filter-reset').addEventListener('click', resetFilters)
+  window.addEventListener('resize', renderBreakpoint)
+
+  renderSlide(false)
+  scheduleAutoplay()
+  renderFilters()
+  renderProducts()
+  renderGallery()
+  renderBreakpoint()
+</script>
+</body>
+</html>

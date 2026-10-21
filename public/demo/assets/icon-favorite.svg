@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="ButtonFavorite">
+<foreignObject x="0" y="0" width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(6px);height:100%;width:100%"></div></foreignObject><g id="buttonicon" data-figma-bg-blur-radius="12">
+</g>
+<path id="Icon" d="M12 7.82416C13.1202 6.07894 14.5162 6.07894 15.3606 6.07894C17.6291 6.07894 19.468 7.57254 19.468 10.5598C19.468 15.414 12.3734 19.5214 12 19.5214C11.6266 19.5214 4.53198 15.414 4.53198 10.5598C4.53198 7.82416 6.37093 6.07894 8.63939 6.07894C9.48379 6.07894 10.8798 6.07894 12 7.82416Z" fill="#04121B" fill-opacity="0.24"/>
+</g>
+</svg>

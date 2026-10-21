@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="frame-16">
+<path id="Subtract" d="M14 4C15.1046 4 16 4.89543 16 6V14C16 15.1046 15.1046 16 14 16H2C0.895431 16 8.0495e-08 15.1046 0 14V6C8.05689e-08 4.89543 0.895431 4 2 4H14ZM3 6C2.44772 6 2 6.44772 2 7V13C2 13.5523 2.44772 14 3 14H13C13.5523 14 14 13.5523 14 13V7C14 6.44772 13.5523 6 13 6H3Z" fill="#DE7AFF"/>
+<rect id="Rectangle 60" x="3" y="13" width="6" height="10" rx="1" transform="rotate(-90 3 13)" fill="#DE7AFF"/>
+<path id="Vector 1224 (Stroke)" d="M6.5 0.75C7.25 -0.25 8.75 -0.25 9.5 0.75L13.2002 5.68262L9.74976 4L8.09961 1.7998C8.04961 1.73328 7.95039 1.73328 7.90039 1.7998L6.25024 4L2.7998 5.68262L6.5 0.75Z" fill="#DE7AFF"/>
+</g>
+</svg>
