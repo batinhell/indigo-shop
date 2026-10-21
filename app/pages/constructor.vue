@@ -102,6 +102,25 @@ const scenes = [
   { value: 'staff', label: 'На древке' }
 ]
 
+// Зум колесом с Ctrl/Cmd и пинчем на тачпаде (пинч браузер шлёт как wheel+ctrlKey).
+function onStageWheel(e) {
+  if (mode.value !== 'dieline' || !(e.ctrlKey || e.metaKey)) return
+  e.preventDefault()
+  const factor = Math.exp(-e.deltaY * 0.0022)
+  zoom.value = Math.min(4, Math.max(0.25, zoom.value * factor))
+}
+
+// Попап «Настройки вида»
+const viewSettingsOpen = ref(false)
+const viewSettingsEl = ref(null)
+function onDocPointerDown(e) {
+  if (viewSettingsOpen.value && viewSettingsEl.value && !viewSettingsEl.value.contains(e.target)) {
+    viewSettingsOpen.value = false
+  }
+}
+onMounted(() => document.addEventListener('pointerdown', onDocPointerDown))
+onBeforeUnmount(() => document.removeEventListener('pointerdown', onDocPointerDown))
+
 // --- Корзина ---------------------------------------------------------------
 
 function buildItem() {
@@ -225,7 +244,10 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
             </button>
           </div>
 
-          <div class="preview__stage">
+          <div
+            class="preview__stage"
+            @wheel="onStageWheel"
+          >
             <ClientOnly>
               <DielineView
                 v-if="mode === 'dieline'"
@@ -286,14 +308,48 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
                 </label>
               </template>
               <template v-else>
-                <button
-                  type="button"
-                  class="preview__link"
-                  disabled
-                  title="Этап 3"
+                <div
+                  ref="viewSettingsEl"
+                  class="view-settings"
                 >
-                  Настройки вида
-                </button>
+                  <button
+                    type="button"
+                    class="preview__link"
+                    :class="{ 'preview__link--active': viewSettingsOpen }"
+                    @click="viewSettingsOpen = !viewSettingsOpen"
+                  >
+                    Настройки вида
+                  </button>
+                  <div
+                    v-if="viewSettingsOpen"
+                    class="view-settings__panel"
+                  >
+                    <AppSwitch
+                      v-model="show.overall"
+                      label="Общие габариты"
+                    />
+                    <AppSwitch
+                      v-model="show.basic"
+                      label="Основные размеры"
+                    />
+                    <AppSwitch
+                      v-model="show.bleed"
+                      label="Линию вылета"
+                    />
+                    <AppSwitch
+                      v-model="show.safe"
+                      label="Безопасную зону"
+                    />
+                    <AppSwitch
+                      v-model="show.features"
+                      label="Крепёж и обработку"
+                    />
+                    <AppSwitch
+                      v-model="show.labels"
+                      label="Подписи"
+                    />
+                  </div>
+                </div>
               </template>
             </div>
 
@@ -540,6 +596,25 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
 
   .preview__toolbar > .preview__link:last-child {
     margin-left: auto;
+  }
+}
+
+.view-settings {
+  position: relative;
+
+  &__panel {
+    position: absolute;
+    bottom: calc(100% + 0.75rem);
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    width: 15rem;
+    padding: 1rem;
+    background: white;
+    border-radius: $radius-card;
+    box-shadow: 0 0.5rem 1.5rem rgba(4, 18, 27, 0.12);
   }
 }
 </style>

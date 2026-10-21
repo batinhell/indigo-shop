@@ -41,6 +41,18 @@ describe('flag geometry', () => {
     expect(g.safeZone!.x).toBeGreaterThanOrEqual(25 + 6)
   })
 
+  it('grommets: width dimension does not cross any grommet', () => {
+    const g = buildFlag({ ...base, mount: 'grommets' })
+    const width = g.dims.find(d => d.id === 'width')!
+    const grommets = g.features.filter(f => f.type === 'grommet') as { center: { x: number, y: number }, diameter: number }[]
+    expect(grommets.length).toBeGreaterThan(0)
+    // Линия ширины горизонтальна на y = width.at; пересечение с люверсом ⟺
+    // |grommet.y − width.at| < радиус. Проверяем, что зазор больше радиуса.
+    for (const gr of grommets) {
+      expect(Math.abs(gr.center.y - width.at)).toBeGreaterThan(gr.diameter / 2)
+    }
+  })
+
   it('no fringe → no fringe features', () => {
     const g = buildFlag({ ...base, fringe: false })
     expect(g.features.some(f => f.type === 'fringe')).toBe(false)

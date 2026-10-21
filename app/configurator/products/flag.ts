@@ -102,8 +102,18 @@ export function buildFlag(p: FlagParams): Geometry {
     h: H + 2 * b
   }
 
+  // Размер ширины по умолчанию идёт у нижней кромки. С люверсами он бы прошёл
+  // по нижнему люверсу — поднимаем линию выше него с запасом (в мм, независимо
+  // от зума), чтобы основной размер не пересекал крепёж.
+  let widthAt = H
+  let widthShift = -26
+  const grommetYs = features.filter(f => f.type === 'grommet').map(f => f.center.y)
+  if (grommetYs.length) {
+    widthAt = Math.max(...grommetYs) - (R.grommet.diameter / 2 + 14)
+    widthShift = 0
+  }
   dims.push(
-    { id: 'width', axis: 'x', a: face.x, b: face.x + W, at: H, shiftPx: -26, label: `${W} мм` },
+    { id: 'width', axis: 'x', a: face.x, b: face.x + W, at: widthAt, shiftPx: widthShift, label: `${W} мм` },
     { id: 'height', axis: 'y', a: 0, b: H, at: face.x + W * 0.64, label: `${H} мм` }
   )
   if (pocket) dims.push({ id: 'pocket', axis: 'x', a: 0, b: pocket, at: 0, shiftPx: 30, label: `${pocket} мм` })

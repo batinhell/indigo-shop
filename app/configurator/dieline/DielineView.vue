@@ -23,6 +23,31 @@ onMounted(() => {
 })
 onBeforeUnmount(() => ro?.disconnect())
 
+// Перетаскивание чертежа при зуме: тянем за холст, двигаем его скролл.
+const dragging = ref(false)
+let dragStart = { x: 0, y: 0, sx: 0, sy: 0 }
+
+function canPan(el: HTMLElement) {
+  return el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1
+}
+function onPointerDown(e: PointerEvent) {
+  const el = stage.value
+  if (!el || !canPan(el)) return
+  dragging.value = true
+  dragStart = { x: e.clientX, y: e.clientY, sx: el.scrollLeft, sy: el.scrollTop }
+  el.setPointerCapture(e.pointerId)
+}
+function onPointerMove(e: PointerEvent) {
+  if (!dragging.value || !stage.value) return
+  stage.value.scrollLeft = dragStart.sx - (e.clientX - dragStart.x)
+  stage.value.scrollTop = dragStart.sy - (e.clientY - dragStart.y)
+}
+function onPointerUp(e: PointerEvent) {
+  if (!dragging.value) return
+  dragging.value = false
+  stage.value?.releasePointerCapture?.(e.pointerId)
+}
+
 const show = computed<ShowFlags>(() => ({ ...DEFAULT_SHOW, ...props.show }))
 
 const drawing = computed(() => {
@@ -87,6 +112,11 @@ const uid = `dl-${Math.random().toString(36).slice(2, 8)}`
     <div
       ref="stage"
       class="dieline__stage"
+      :class="{ 'dieline__stage--pan': (zoom ?? 1) > 1, 'dieline__stage--grabbing': dragging }"
+      @pointerdown="onPointerDown"
+      @pointermove="onPointerMove"
+      @pointerup="onPointerUp"
+      @pointerleave="onPointerUp"
     >
       <svg
         v-if="drawing"
@@ -203,5 +233,8 @@ const uid = `dl-${Math.random().toString(36).slice(2, 8)}`
   place-items: center;
   overflow: auto;
 }
+.dieline__stage--pan { cursor: grab; }
+.dieline__stage--grabbing { cursor: grabbing; }
+.dieline__stage--grabbing .dieline__svg { pointer-events: none; }
 .dieline__svg { display: block; }
 </style>
