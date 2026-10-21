@@ -114,6 +114,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
+  // Серверные sourcemaps не нужны в проде стенда и утяжеляют сборку Nitro
+  // (на сервере без swap она падала по OOM на этом шаге).
+  sourcemap: {
+    server: false
+  },
+
   nitro: {
     preset: 'node-server'
   },
