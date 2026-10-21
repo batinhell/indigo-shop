@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import DielineView from '~/configurator/dieline/DielineView.vue'
 import { FABRICS, MOUNTINGS, getFabricLabel, getFabricGenitive, getSizeLabel } from '~/constants/product'
-import { resolveCartItemImage } from '~/composables/useCart'
 
 // Размер (ключ) ↔ ширина/высота в мм для URL-параметров.
 const SIZE_DIMS = {
@@ -14,7 +13,7 @@ const DEFAULT_SIZE = '90x135'
 const store = useConfiguratorStore()
 const {
   fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles,
-  mode, show, zoom, scene, wind, showBack, geometry
+  mode, show, zoom, wind, showBack, geometry
 } = storeToRefs(store)
 
 const route = useRoute()
@@ -78,14 +77,6 @@ const {
 
 // --- Предпросмотр ----------------------------------------------------------
 
-const previewImage = computed(() => resolveCartItemImage({
-  fabric: fabric.value,
-  mounting: mount.value,
-  size: size.value,
-  doubleSided: doubleSided.value,
-  hasFringe: fringe.value
-}))
-
 const zoomPercent = computed({
   get: () => Math.round(zoom.value * 100),
   set: (v) => { zoom.value = v / 100 }
@@ -96,12 +87,6 @@ const windPercent = computed({
   get: () => Math.round(wind.value * 100),
   set: (v) => { wind.value = v / 100 }
 })
-
-const scenes = [
-  { value: 'studio', label: 'Студия' },
-  { value: 'flagpole', label: 'На флагштоке' },
-  { value: 'staff', label: 'На древке' }
-]
 
 // Зум колесом с Ctrl/Cmd и пинчем на тачпаде (пинч браузер шлёт как wheel+ctrlKey).
 function onStageWheel(e) {
@@ -219,22 +204,6 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
               </button>
             </div>
 
-            <div
-              v-if="mode === 'model'"
-              class="preview__scenes"
-            >
-              <button
-                v-for="s in scenes"
-                :key="s.value"
-                type="button"
-                class="preview__link"
-                :class="{ 'preview__link--active': scene === s.value }"
-                @click="scene = s.value"
-              >
-                {{ s.label }}
-              </button>
-            </div>
-
             <button
               type="button"
               class="preview__download"
@@ -257,20 +226,10 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
                 :show="show"
                 :zoom="zoom"
               />
-              <div
+              <LazyFlagModel
                 v-else
-                class="preview__model"
-              >
-                <img
-                  v-if="previewImage"
-                  :src="previewImage"
-                  alt="Предпросмотр флага"
-                  class="preview__model-img"
-                >
-                <p class="preview__model-note">
-                  3D-модель — Этап 5
-                </p>
-              </div>
+                class="preview__model3d"
+              />
               <template #fallback>
                 <div class="preview__loading">
                   Загрузка предпросмотра…
@@ -462,12 +421,6 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     gap: 0.75rem;
   }
 
-  &__scenes {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
   &__download {
     margin-left: auto;
     font-family: 'Manrope', sans-serif;
@@ -519,27 +472,12 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     flex-direction: column;
   }
 
-  &__model {
+  &__model3d {
     flex: 1;
     min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  &__model-img {
-    max-width: 100%;
-    max-height: 100%;
-    min-height: 0;
-    object-fit: contain;
-  }
-
-  &__model-note {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: $color-base-tertiary;
+    width: 100%;
+    border-radius: $radius-card;
+    overflow: hidden;
   }
 
   &__loading {

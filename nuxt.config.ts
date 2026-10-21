@@ -29,6 +29,14 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  vue: {
+    compilerOptions: {
+      // TresJS: примитивы <Tres*> обрабатывает свой рендерер, Vue их не резолвит.
+      // TresCanvas — обычный компонент, его исключаем.
+      isCustomElement: (tag: string) => tag.startsWith('Tres') && tag !== 'TresCanvas'
+    }
+  },
+
   runtimeConfig: {
     notificore: {
       apiKey: '',
