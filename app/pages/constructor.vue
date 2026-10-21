@@ -14,7 +14,7 @@ const DEFAULT_SIZE = '90x135'
 const store = useConfiguratorStore()
 const {
   fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles,
-  mode, show, zoom, scene, showBack, geometry
+  mode, show, zoom, scene, wind, showBack, geometry
 } = storeToRefs(store)
 
 const route = useRoute()
@@ -88,6 +88,12 @@ const previewImage = computed(() => resolveCartItemImage({
 const zoomPercent = computed({
   get: () => Math.round(zoom.value * 100),
   set: (v) => { zoom.value = v / 100 }
+})
+
+// Ползунок «Штиль — Ветер»: wind в сторе 0..1, слайдер 0..100.
+const windPercent = computed({
+  get: () => Math.round(wind.value * 100),
+  set: (v) => { wind.value = v / 100 }
 })
 
 const scenes = [
@@ -265,6 +271,19 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
                   v-model="showBack"
                   label="Показать оборот"
                 />
+                <label class="preview__wind">
+                  <span class="preview__wind-cap">Штиль</span>
+                  <input
+                    v-model.number="windPercent"
+                    type="range"
+                    min="0"
+                    max="100"
+                    step="1"
+                    class="preview__wind-range"
+                    aria-label="Сила ветра"
+                  >
+                  <span class="preview__wind-cap">Ветер</span>
+                </label>
               </template>
               <template v-else>
                 <button
@@ -395,7 +414,7 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     font-family: 'Manrope', sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    color: $color-primary;
+    color: $color-purple;
     background: $color-primary-bg;
     border-radius: $radius-control;
     padding: 0.5rem 1rem;
@@ -412,11 +431,11 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     transition: color 0.15s;
 
     &:hover:not(:disabled) {
-      color: $color-primary;
+      color: $color-purple;
     }
 
     &--active {
-      color: $color-primary;
+      color: $color-purple;
     }
 
     &:disabled {
@@ -472,6 +491,46 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
 
   &__zoom {
     width: 8rem;
+  }
+
+  &__wind {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  &__wind-cap {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $color-base-secondary;
+    white-space: nowrap;
+  }
+
+  &__wind-range {
+    width: 6.5rem;
+    height: 0.25rem;
+    appearance: none;
+    background: $color-input-bg;
+    border-radius: 999px;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: $color-purple;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 1rem;
+      height: 1rem;
+      border: none;
+      border-radius: 50%;
+      background: $color-purple;
+      cursor: pointer;
+    }
   }
 
   .preview__toolbar > .preview__link:last-child {

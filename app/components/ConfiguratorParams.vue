@@ -354,7 +354,7 @@ function onDrop(e) {
     gap: 0.125rem;
     font-size: 0.75rem;
     font-weight: 600;
-    color: $color-primary;
+    color: $color-purple;
     text-decoration: underline;
   }
 
@@ -392,8 +392,8 @@ function onDrop(e) {
     }
 
     &--drag {
-      border-color: $color-primary;
-      background: rgba($color-primary, 0.04);
+      border-color: $color-purple;
+      background: rgba($color-purple, 0.04);
     }
   }
 
@@ -437,7 +437,7 @@ function onDrop(e) {
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
-    background: $color-primary;
+    background: $color-purple;
     border-radius: 0.5rem;
     color: white;
     font-family: 'Manrope', sans-serif;
@@ -453,7 +453,7 @@ function onDrop(e) {
     }
 
     &:active {
-      background: #c000ff;
+      background: $color-primary;
     }
   }
 
@@ -496,14 +496,14 @@ function onDrop(e) {
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1.34;
-    color: $color-primary;
+    color: $color-purple;
   }
 
   &__file-remove {
     display: flex;
     align-items: center;
     cursor: pointer;
-    color: $color-primary;
+    color: $color-purple;
     opacity: 0.6;
     transition: opacity 0.15s;
 

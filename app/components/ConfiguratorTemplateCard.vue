@@ -158,7 +158,7 @@ const templateFormats = ['PDF', 'AI', 'DXF']
     height: 2.5rem;
     border-radius: $radius-control;
     background: $color-primary-bg;
-    color: $color-primary;
+    color: $color-purple;
     font-family: 'Manrope', sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
@@ -247,7 +247,7 @@ const templateFormats = ['PDF', 'AI', 'DXF']
   justify-content: center;
   height: 3.25rem;
   padding: 0 1.125rem;
-  background: $color-primary;
+  background: $color-purple;
   border-radius: $radius-control;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -267,7 +267,7 @@ const templateFormats = ['PDF', 'AI', 'DXF']
   }
 
   &:active {
-    background: #c000ff;
+    background: $color-primary;
   }
 }
 
