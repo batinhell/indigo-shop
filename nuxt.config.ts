@@ -144,5 +144,13 @@ export default defineNuxtConfig({
     families: [
       { name: 'Manrope', provider: 'none' }
     ]
+  },
+
+  icon: {
+    // simple-icons в коде не используются; не зашиваем их в server-бандл (~4.7 МБ),
+    // иначе сборка Nitro упирается в память на стенде без swap. Нужен только lucide.
+    serverBundle: {
+      collections: ['lucide']
+    }
   }
 })
