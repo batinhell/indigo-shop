@@ -10,13 +10,6 @@ export default defineNuxtConfig({
     enabled: true
   },
 
-  fonts: {
-    provider: 'local',
-    families: [
-      { name: 'Manrope', provider: 'none' }
-    ]
-  },
-
   app: {
     head: {
       htmlAttrs: { lang: 'ru' },
@@ -103,6 +96,12 @@ export default defineNuxtConfig({
     '/': { prerender: true }
   },
 
+  // Серверные sourcemaps не нужны в проде стенда и утяжеляют сборку Nitro
+  // (на сервере без swap она падала по OOM на этом шаге).
+  sourcemap: {
+    server: false
+  },
+
   devServer: {
     host: '0.0.0.0',
     port: 3000
@@ -114,14 +113,11 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-01-15',
 
-  // Серверные sourcemaps не нужны в проде стенда и утяжеляют сборку Nitro
-  // (на сервере без swap она падала по OOM на этом шаге).
-  sourcemap: {
-    server: false
-  },
-
   nitro: {
-    preset: 'node-server'
+    preset: 'node-server',
+    // Минификация серверного бандла — главный пожиратель памяти на сборке Nitro
+    // (сервер стенда 3.8 ГБ без swap, падало по OOM). На сервере не нужна.
+    minify: false
   },
 
   vite: {
@@ -141,5 +137,12 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+
+  fonts: {
+    provider: 'local',
+    families: [
+      { name: 'Manrope', provider: 'none' }
+    ]
   }
 })
