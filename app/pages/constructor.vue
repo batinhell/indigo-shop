@@ -381,7 +381,9 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     display: grid;
     grid-template-columns: 27.5625rem minmax(0, 1fr) 24.5625rem;
     gap: 1.5rem;
-    align-items: start;
+    // Колонки одной высоты: центр-предпросмотр растягивается на всю высоту
+    // левой колонки (правая карточка остаётся вверху через align-self).
+    align-items: stretch;
   }
 }
 
@@ -389,7 +391,7 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-height: 34rem;
+  min-height: 40rem;
 
   &__topbar {
     display: flex;
@@ -448,20 +450,23 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     flex: 1;
     min-height: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
   }
 
   &__model {
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
   }
 
   &__model-img {
     max-width: 100%;
-    max-height: 26rem;
+    max-height: 100%;
+    min-height: 0;
     object-fit: contain;
   }
 
