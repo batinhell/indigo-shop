@@ -45,9 +45,9 @@ const cameraPosition = computed(() => {
   // влезаем и по высоте (с запасом под бахрому), и по ширине — берём большее
   const fitH = (Hm * 1.28 / 2) / Math.tan(vfov / 2)
   const fitW = (Wm * 1.12 / 2) / Math.tan(hfov / 2)
-  const dist = Math.max(fitH, fitW) * 1.06
-  // лёгкий ракурс в три четверти, чтобы читался объём ткани
-  return [dist * 0.16, dist * 0.05, dist * 0.985]
+  const dist = Math.max(fitH, fitW) * 1.04
+  // почти в лоб, лёгкий боковой ракурс для объёма; по вертикали — по центру
+  return [dist * 0.14, 0.0, dist * 0.99]
 })
 
 const group = new Group()
@@ -343,18 +343,19 @@ watch(
 
     <!-- Нейтральный студийный свет: яркая заливка (ткань читается светлой) +
          мягкий ключ сверху-справа + контровой для объёма складок. -->
-    <TresHemisphereLight :args="[0xffffff, 0xd6dadf, 1.35]" />
+    <TresHemisphereLight :args="[0xffffff, 0xdfe3e8, 1.5]" />
+    <!-- Яркий ключ почти со стороны камеры — даёт сатиновый блик по полотну. -->
     <TresDirectionalLight
-      :position="[2.2, 3.4, 3.2]"
-      :intensity="1.7"
+      :position="[1.3, 2.2, 4]"
+      :intensity="2.1"
     />
     <TresDirectionalLight
       :position="[-2.6, 1.2, 1.5]"
-      :intensity="0.55"
+      :intensity="0.5"
     />
     <TresDirectionalLight
       :position="[0, 1, -3]"
-      :intensity="0.5"
+      :intensity="0.45"
     />
 
     <primitive :object="group" />
