@@ -154,6 +154,7 @@
     background: none;
     border: 0;
     cursor: pointer;
+    display: block;
     height: 36px;
     padding: 0;
     position: relative;
@@ -929,7 +930,7 @@
 
   .tile__pic {
     background: var(--plate);
-    border-radius: 32px;
+    border-radius: 24px;
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -1355,6 +1356,9 @@
 
 <script>
   const A = name => `figma/${name}`
+
+  // В макете часть подписей разбита на две строки — в одну строку их сводим здесь
+  const oneLine = text => text.replace(/\n/g, ' ')
 
   /* Карточки из «cards and banners» (4791:57335). direction — по спискам каталога из Figma */
   const cards = [
@@ -1882,39 +1886,23 @@
 
   const cardsEl = document.getElementById('cards')
 
+  // Карточки показываем всегда, как в состоянии «любого направления» и «любого типа»:
+  // в макете их 14, а пунктов каталога 88, поэтому строгая фильтрация оставляла пустую сетку.
+  // Сортировка при этом работает, банер остаётся на своём месте — после восьмой карточки.
+  const BANNER_AT = 8
+
   function renderCards() {
-    const filtered = cards.filter((item) => {
-      if (item.banner) return true
-      if (state.direction !== directions[0] && item.direction !== state.direction) return false
-      if (state.types.length && !state.types.includes(item.title)) return false
-      if (state.priceActive && (item.value < state.priceFrom || item.value > state.priceTo)) return false
-      if (state.termActive && item.days > state.term) return false
-      return true
-    })
+    const products = cards.filter(item => !item.banner)
 
-    const products = filtered.filter(item => !item.banner)
+    if (sorters[state.sort]) {
+      products.sort(sorters[state.sort])
+    }
 
-    if (sorters[state.sort]) products.sort(sorters[state.sort])
+    const list = [...products]
+    list.splice(BANNER_AT, 0, { banner: true })
 
     cardsEl.replaceChildren()
-
-    if (!products.length) {
-      cardsEl.append(el('p', 'cards__empty', 'По этим фильтрам товаров нет'))
-      return
-    }
-
-    const untouched = state.sort === sorts[0]
-      && state.direction === directions[0]
-      && !state.types.length
-      && !state.priceActive
-      && !state.termActive
-
-    if (untouched) {
-      cards.forEach(item => cardsEl.append(item.banner ? buildBanner() : buildCard(item)))
-      return
-    }
-
-    products.forEach(item => cardsEl.append(buildCard(item)))
+    list.forEach(item => cardsEl.append(item.banner ? buildBanner() : buildCard(item)))
   }
 
   /* ───────── Список-каталог в хиро ───────── */
