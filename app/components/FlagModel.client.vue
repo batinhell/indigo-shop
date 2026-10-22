@@ -3,7 +3,7 @@ import {
   Group, Mesh, PlaneGeometry, CylinderGeometry, TorusGeometry,
   MeshPhysicalMaterial, MeshStandardMaterial,
   CanvasTexture, TextureLoader, RepeatWrapping, ClampToEdgeWrapping,
-  NoColorSpace, Vector2, Color, DoubleSide
+  NoColorSpace, SRGBColorSpace, Vector2, Color, DoubleSide
 } from 'three'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
@@ -114,6 +114,34 @@ function fringeTexture() {
   return t
 }
 
+// Процедурный плетёный узор для флажной сетки: светлые нити + притенённые
+// ячейки-просветы. Реальная перфорация (дыры) на белом фоне невидима, поэтому
+// сетку показываем узором альбедо — так ячейки читаются как настоящая сетка.
+let netTexCache = null
+function netTexture() {
+  if (netTexCache) return netTexCache
+  const S = 128
+  const cell = 16 // шаг ячейки
+  const thread = 7 // толщина нити
+  const c = document.createElement('canvas')
+  c.width = S
+  c.height = S
+  const ctx = c.getContext('2d')
+  ctx.fillStyle = '#d9dde1' // просветы — тень в глубине сетки
+  ctx.fillRect(0, 0, S, S)
+  ctx.fillStyle = '#fcfdfe' // нити
+  for (let p = 0; p < S; p += cell) {
+    ctx.fillRect(p, 0, thread, S)
+    ctx.fillRect(0, p, S, thread)
+  }
+  const t = new CanvasTexture(c)
+  t.wrapS = RepeatWrapping
+  t.wrapT = RepeatWrapping
+  t.colorSpace = SRGBColorSpace
+  netTexCache = t
+  return t
+}
+
 function disposeChildren() {
   while (group.children.length) {
     const c = group.children.pop()
@@ -146,13 +174,14 @@ function buildFlag() {
     side: DoubleSide
   })
   if (m.net) {
-    // Флажная сетка — реальная перфорированная ткань (ambientCG Fabric019)
-    faceMat.normalMap = fabricMap('flagnet', 'nor_gl', Wm, Hm, m.tile)
-    faceMat.roughnessMap = fabricMap('flagnet', 'rough', Wm, Hm, m.tile)
-    faceMat.alphaMap = fabricMap('flagnet', 'opacity', Wm, Hm, m.tile, 'png')
-    faceMat.normalScale = new Vector2(m.normalScale, m.normalScale)
-    faceMat.transparent = true
-    faceMat.alphaTest = 0.4
+    // Флажная сетка — процедурный плетёный узор (ячейки) + нормаль для рельефа.
+    const cellM = 0.02 // физический шаг ячейки ~20 мм
+    const net = netTexture()
+    net.repeat.set(Math.max(6, Wm / cellM), Math.max(4, Hm / cellM))
+    faceMat.map = net
+    faceMat.normalMap = fabricMap('flagnet', 'nor_gl', Wm, Hm, cellM)
+    faceMat.normalScale = new Vector2(0.6, 0.6)
+    faceMat.roughness = 0.78
   } else if (m.texture) {
     faceMat.normalMap = fabricMap(m.texture, 'nor_gl', Wm, Hm, m.tile)
     faceMat.roughnessMap = fabricMap(m.texture, 'rough', Wm, Hm, m.tile)
@@ -283,6 +312,8 @@ onBeforeUnmount(() => {
   texCache.clear()
   fringeTexCache?.dispose()
   fringeTexCache = null
+  netTexCache?.dispose()
+  netTexCache = null
 })
 
 watch(
