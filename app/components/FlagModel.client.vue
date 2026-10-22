@@ -1,19 +1,19 @@
 <script setup>
 import {
   Group, Mesh, PlaneGeometry, CylinderGeometry, TorusGeometry,
-  MeshPhysicalMaterial, MeshStandardMaterial, InstancedMesh, Object3D,
-  CanvasTexture, TextureLoader, RepeatWrapping, NoColorSpace, Vector2, Color, DoubleSide
+  MeshPhysicalMaterial, MeshStandardMaterial,
+  CanvasTexture, TextureLoader, RepeatWrapping, ClampToEdgeWrapping,
+  NoColorSpace, Vector2, Color, DoubleSide
 } from 'three'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
 import { fabricMaterial } from '~/configurator/materials'
 
-// 3D-предпросмотр флага. Полотно колышется постоянным ветром (без физ.симуляции):
-// амплитуда растёт от кромки крепления к свободному краю, параметры (жёсткость,
-// провисание, глянец, сетка) — из пресета ткани. Клиент-онли.
+// 3D-предпросмотр флага. Полотно колышется постоянным ветром (без физ.симуляции).
+// Ткани — реальные PBR-карты (Poly Haven / ambientCG). Клиент-онли.
 const store = useConfiguratorStore()
 
-const WIND = 0.55 // ветер всегда включён
+const WIND = 0.55
 
 const dims = computed(() => ({
   w: store.params.width / 1000,
@@ -27,19 +27,18 @@ const cameraPosition = computed(() => {
 const group = new Group()
 let faceGeo = null
 let base = null
-let fringeInst = null
-let fringeData = []
+let fringeStrips = []
 let raf = 0
 const startT = performance.now()
 
-// Кэш PBR-карт тканей (нормали/шероховатость). Один флаг на экране, repeat выставляем на лету.
+// Кэш PBR-карт тканей. Один флаг на экране, repeat выставляем на лету.
 const loader = new TextureLoader()
 const texCache = new Map()
-function fabricMap(slug, map, Wm, Hm, tile) {
+function fabricMap(slug, map, Wm, Hm, tile, ext = 'jpg') {
   const key = `${slug}_${map}`
   let tex = texCache.get(key)
   if (!tex) {
-    tex = loader.load(`/textures/fabrics/${slug}_${map}.jpg`)
+    tex = loader.load(`/textures/fabrics/${slug}_${map}.${ext}`)
     tex.wrapS = RepeatWrapping
     tex.wrapT = RepeatWrapping
     tex.colorSpace = NoColorSpace
@@ -49,21 +48,30 @@ function fabricMap(slug, map, Wm, Hm, tile) {
   return tex
 }
 
-function netTexture(Wm, Hm) {
-  // Флажная сетка: тонкие нити, крупные сквозные ячейки (явный просвет).
+// Альфа-текстура бахромы: вертикальные нити, прозрачность растёт к кончику.
+let fringeTexCache = null
+function fringeTexture() {
+  if (fringeTexCache) return fringeTexCache
   const c = document.createElement('canvas')
-  c.width = 12
-  c.height = 12
+  c.width = 64
+  c.height = 128
   const ctx = c.getContext('2d')
   ctx.fillStyle = '#000'
-  ctx.fillRect(0, 0, 12, 12)
-  ctx.fillStyle = '#fff'
-  ctx.fillRect(0, 0, 12, 2)
-  ctx.fillRect(0, 0, 2, 12)
+  ctx.fillRect(0, 0, 64, 128)
+  for (let x = 1; x < 64; x += 3) {
+    const len = 96 + Math.random() * 30
+    const w = 1.3 + Math.random() * 0.8
+    const g = ctx.createLinearGradient(0, 0, 0, len)
+    g.addColorStop(0, '#ffffff')
+    g.addColorStop(0.75, '#cccccc')
+    g.addColorStop(1, '#000000')
+    ctx.fillStyle = g
+    ctx.fillRect(x, 0, w, len)
+  }
   const t = new CanvasTexture(c)
   t.wrapS = RepeatWrapping
-  t.wrapT = RepeatWrapping
-  t.repeat.set(Math.round(Wm * 200), Math.round(Hm * 200))
+  t.wrapT = ClampToEdgeWrapping
+  fringeTexCache = t
   return t
 }
 
@@ -78,8 +86,7 @@ function disposeChildren() {
 
 function buildFlag() {
   disposeChildren()
-  fringeInst = null
-  fringeData = []
+  fringeStrips = []
   const Wm = store.params.width / 1000
   const Hm = store.params.height / 1000
   const m = fabricMaterial(store.fabric)
@@ -99,14 +106,18 @@ function buildFlag() {
     clearcoatRoughness: 0.15,
     side: DoubleSide
   })
-  if (m.texture) {
+  if (m.net) {
+    // Флажная сетка — реальная перфорированная ткань (ambientCG Fabric019)
+    faceMat.normalMap = fabricMap('flagnet', 'nor_gl', Wm, Hm, m.tile)
+    faceMat.roughnessMap = fabricMap('flagnet', 'rough', Wm, Hm, m.tile)
+    faceMat.alphaMap = fabricMap('flagnet', 'opacity', Wm, Hm, m.tile, 'png')
+    faceMat.normalScale = new Vector2(m.normalScale, m.normalScale)
+    faceMat.transparent = true
+    faceMat.alphaTest = 0.4
+  } else if (m.texture) {
     faceMat.normalMap = fabricMap(m.texture, 'nor_gl', Wm, Hm, m.tile)
     faceMat.roughnessMap = fabricMap(m.texture, 'rough', Wm, Hm, m.tile)
     faceMat.normalScale = new Vector2(m.normalScale, m.normalScale)
-  }
-  if (m.net) {
-    faceMat.alphaMap = netTexture(Wm, Hm)
-    faceMat.alphaTest = 0.5
   }
   group.add(new Mesh(faceGeo, faceMat))
 
@@ -135,26 +146,39 @@ function buildFlag() {
     }
   }
 
-  // Бахрома — пряди (инстансы) по трём кромкам; данные для анимации вместе с полотном
+  // Бахрома — текстурные полосы (альфа нитей) по трём кромкам, следуют за волной
   if (store.fringe) {
-    const L = 0.04
-    const step = 0.006
-    const fmat = new MeshStandardMaterial({ color: 0xd9a83a, roughness: 0.7, side: DoubleSide })
-    const threadGeo = new PlaneGeometry(0.0022, L)
-    const nTop = Math.max(2, Math.floor(Wm / step))
-    const nRight = Math.max(2, Math.floor(Hm / step))
-    for (let k = 0; k < nTop; k++) {
-      const x = -Wm / 2 + (k + 0.5) * (Wm / nTop)
-      fringeData.push({ x, y: Hm / 2 + L / 2, rotZ: 0, phase: Math.random() * Math.PI * 2 })
-      fringeData.push({ x, y: -Hm / 2 - L / 2, rotZ: 0, phase: Math.random() * Math.PI * 2 })
+    const L = 0.045
+    const fmat = new MeshStandardMaterial({
+      color: 0xd8a63a, roughness: 0.6, side: DoubleSide,
+      transparent: true, alphaMap: fringeTexture(), alphaTest: 0.25, depthWrite: false
+    })
+    // sx — мировой x вершины (для амплитуды волны), edgeY — y кромки
+    const addStrip = (geoW, segs, pos, rotZ, edgeY, worldXFn) => {
+      const g = new PlaneGeometry(geoW, L, segs, 1)
+      const uv = g.attributes.uv
+      const n = Math.max(2, Math.round(geoW / 0.02)) // плотность нитей
+      for (let i = 0; i < uv.count; i++) uv.setX(i, uv.getX(i) * n)
+      const mesh = new Mesh(g, fmat)
+      mesh.position.set(pos[0], pos[1], pos[2])
+      mesh.rotation.z = rotZ
+      group.add(mesh)
+      const bp = Float32Array.from(g.attributes.position.array)
+      const wx = new Float32Array(bp.length / 3)
+      for (let i = 0; i < wx.length; i++) wx[i] = worldXFn(bp[i * 3], bp[i * 3 + 1])
+      fringeStrips.push({ geo: g, base: bp, wx, edgeY })
     }
-    for (let k = 0; k < nRight; k++) {
-      const y = -Hm / 2 + (k + 0.5) * (Hm / nRight)
-      fringeData.push({ x: Wm / 2 + L / 2, y, rotZ: Math.PI / 2, phase: Math.random() * Math.PI * 2 })
-    }
-    fringeInst = new InstancedMesh(threadGeo, fmat, fringeData.length)
-    group.add(fringeInst)
+    addStrip(Wm, segW, [0, Hm / 2 + L / 2, 0], 0, Hm / 2, lx => lx)
+    addStrip(Wm, segW, [0, -Hm / 2 - L / 2, 0], Math.PI, -Hm / 2, lx => -lx)
+    addStrip(Hm, segH, [Wm / 2 + L / 2, 0, 0], -Math.PI / 2, 0, () => Wm / 2)
   }
+}
+
+function waveAt(x, y, amp, freq, t, Wm) {
+  const edge = Math.min(1, Math.max(0, (x + Wm / 2) / Wm))
+  let z = Math.sin(x * freq + t * 3.0) * amp * edge
+  z += Math.sin(y * freq * 0.6 + t * 2.2) * amp * 0.4 * edge
+  return { z, edge }
 }
 
 function animate() {
@@ -164,19 +188,13 @@ function animate() {
   const amp = (0.012 + WIND * 0.1) * (1 - m.stiffness * 0.7)
   const freq = 4 + WIND * 5
   const drape = m.drape * 0.05
-  const waveAt = (x, y) => {
-    const edge = Math.min(1, Math.max(0, (x + Wm / 2) / Wm))
-    let z = Math.sin(x * freq + t * 3.0) * amp * edge
-    z += Math.sin(y * freq * 0.6 + t * 2.2) * amp * 0.4 * edge
-    return { z, edge }
-  }
 
   if (faceGeo && base) {
     const pos = faceGeo.attributes.position.array
     for (let k = 0; k < pos.length; k += 3) {
       const x = base[k]
       const y = base[k + 1]
-      const { z, edge } = waveAt(x, y)
+      const { z, edge } = waveAt(x, y, amp, freq, t, Wm)
       pos[k] = x
       pos[k + 1] = y - drape * edge * edge
       pos[k + 2] = z
@@ -185,19 +203,17 @@ function animate() {
     faceGeo.computeVertexNormals()
   }
 
-  if (fringeInst) {
-    const d = new Object3D()
-    for (let i = 0; i < fringeData.length; i++) {
-      const s = fringeData[i]
-      const { z, edge } = waveAt(s.x, s.y)
-      // трепет нитей: качаются от ветра (и у кромки чуть-чуть, чтобы не «висели в воздухе»)
-      const flutter = Math.sin(t * 7 + s.phase) * (0.12 + 0.4 * edge)
-      d.position.set(s.x, s.y - drape * edge * edge, z)
-      d.rotation.set(flutter * 0.6, 0, s.rotZ + flutter)
-      d.updateMatrix()
-      fringeInst.setMatrixAt(i, d.matrix)
+  for (const s of fringeStrips) {
+    const pos = s.geo.attributes.position.array
+    for (let k = 0; k < pos.length; k += 3) {
+      const worldX = s.wx[k / 3]
+      const { z, edge } = waveAt(worldX, s.edgeY, amp, freq, t, Wm)
+      // кончик нити (локальный y у края L) трепещет сильнее
+      const tip = (pos[k + 1] + 0.0225) / 0.045
+      const sway = Math.sin(t * 7 + worldX * 25) * 0.012 * (0.3 + edge) * tip
+      pos[k + 2] = s.base[k + 2] + z + sway
     }
-    fringeInst.instanceMatrix.needsUpdate = true
+    s.geo.attributes.position.needsUpdate = true
   }
 
   raf = requestAnimationFrame(animate)
@@ -212,6 +228,8 @@ onBeforeUnmount(() => {
   disposeChildren()
   texCache.forEach(t => t.dispose())
   texCache.clear()
+  fringeTexCache?.dispose()
+  fringeTexCache = null
 })
 
 watch(
