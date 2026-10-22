@@ -2,6 +2,11 @@
 const title = 'Типография Индиго'
 const description = 'Печать флагов, текстиля, фотоальбомов и корпоративной продукции.'
 
+// Метка сборки в адресе кадра: без неё браузер показывает страницу из кэша,
+// потому что сам кадр при обычном обновлении не перезагружается
+const config = useRuntimeConfig()
+const landingSrc = computed(() => `/landing/index.html?v=${config.app?.buildId ?? 'dev'}`)
+
 useSeoMeta({
   title,
   description,
@@ -16,7 +21,7 @@ useSeoMeta({
        намеренно изолированы от остального сайта -->
   <iframe
     class="landing-frame"
-    src="/landing/index.html"
+    :src="landingSrc"
     title="Главная страница типографии Индиго"
   />
 </template>
