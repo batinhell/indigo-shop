@@ -159,7 +159,25 @@
     width: 36px;
   }
 
-  .icon-button img { height: 36px; width: 36px; }
+  /* Иконки шапки: вектор лежит внутри кнопки 36×36 со своими смещениями
+     (navigation-button-cart 4814:77394, -profile 4814:77388 и 4814:77391) */
+  .hicon { position: absolute; }
+
+  .hicon img {
+    height: auto;
+    max-width: none;
+    position: absolute;
+    width: auto;
+  }
+
+  .hicon_cart { height: 26px; left: 3.23px; top: 5.29px; width: 27px; }
+  .hicon_cart img { bottom: -4.62%; left: -4.44%; right: -4.44%; top: -4.63%; }
+
+  .hicon_fav { height: 23.99px; left: 5px; top: 6px; width: 26.896px; }
+  .hicon_fav img { bottom: -5%; left: -4.46%; right: -4.46%; top: -5.01%; }
+
+  .hicon_profile { height: 24px; left: 7px; top: 5.78px; width: 22px; }
+  .hicon_profile img { bottom: -5%; left: -4.74%; right: -4.72%; top: -5%; }
 
   .profile { position: relative; }
 
@@ -551,27 +569,34 @@
 
   .chips { display: flex; flex-direction: column; gap: 2px; width: 228px; }
 
-  .chip-option {
+  .chip-row {
+    align-items: center;
     align-self: flex-start;
-    background: var(--white);
+    background: none;
     border: 0;
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    max-width: 100%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .chip-option {
+    background: var(--white);
     border-radius: 4px;
     color: var(--ink);
-    cursor: pointer;
-    font-family: inherit;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
-    max-width: 100%;
     padding: 4px 8px;
-    text-align: left;
     transition: background-color 0.15s ease, color 0.15s ease;
   }
 
-  .chip-option:hover { background: rgba(201, 37, 255, 0.1); }
+  .chip-row:hover .chip-option { background: rgba(201, 37, 255, 0.1); }
 
-  .chip-option_on,
-  .chip-option_on:hover { background: var(--purple); color: var(--white); }
+  .chip-row_on .chip-option,
+  .chip-row_on:hover .chip-option { background: var(--purple); color: var(--white); }
 
   .options__done {
     align-items: center;
@@ -1155,11 +1180,15 @@
         </nav>
       </div>
       <div class="header__actions">
-        <button type="button" class="icon-button" aria-label="Корзина"><img src="figma/header-cart.svg" alt=""></button>
-        <button type="button" class="icon-button" aria-label="Избранное"><img src="figma/header-favorite.svg" alt=""></button>
+        <button type="button" class="icon-button" data-icon="cart" aria-label="Корзина">
+          <span class="hicon hicon_cart"><img src="figma/ic-cart.svg" alt=""></span>
+        </button>
+        <button type="button" class="icon-button" data-icon="fav" aria-label="Избранное">
+          <span class="hicon hicon_fav"><img src="figma/ic-fav.svg" alt=""></span>
+        </button>
         <div class="profile">
-          <button type="button" class="icon-button" id="profile-button" aria-expanded="false" aria-label="Профиль">
-            <img src="figma/header-profile-default.svg" alt="" id="profile-icon">
+          <button type="button" class="icon-button" data-icon="profile" id="profile-button" aria-expanded="false" aria-label="Профиль">
+            <span class="hicon hicon_profile"><img src="figma/ic-profile.svg" alt="" id="profile-icon"></span>
           </button>
           <div class="profile__popup" id="profile-popup" hidden>
             <div class="profile__head">
@@ -1365,7 +1394,23 @@
     'Для оформления магазинов', 'Текстиль', 'Подарки', 'К мероприятию', 'Корпоративная'
   ]
 
-  const typeOptions = Array.from(new Set(cards.filter(c => !c.banner).map(c => c.title)))
+  // Список в drop_type (4747:40503) — это пункты каталога выбранного направления
+  const typeItemsFor = (direction) => {
+    const columns = direction === directions[0]
+      ? catalog
+      : catalog.filter(column => column.filter === direction)
+    const seen = new Set()
+    const items = []
+
+    columns.forEach(column => column.items.forEach((item) => {
+      const label = oneLine(item.label)
+      if (seen.has(label)) return
+      seen.add(label)
+      items.push({ label, badge: item.badge })
+    }))
+
+    return items
+  }
 
   /* Варианты drop_organising (4827:51060) */
   const sorts = [
@@ -1563,20 +1608,7 @@
 
     if (config.mode === 'multi') {
       const list = el('div', 'chips')
-
-      config.options.forEach((option) => {
-        const chip = el('button', 'chip-option', option)
-        chip.type = 'button'
-        chip.setAttribute('aria-pressed', 'false')
-        chip.addEventListener('click', (event) => {
-          event.stopPropagation()
-          state.types = state.types.includes(option)
-            ? state.types.filter(item => item !== option)
-            : [...state.types, option]
-          update()
-        })
-        list.append(chip)
-      })
+      config.list = list
 
       const done = el('button', 'options__done', 'Готово')
       done.type = 'button'
@@ -1638,11 +1670,45 @@
     togglePopup(panel, open)
 
     if (config.mode === 'multi') {
-      panel.querySelectorAll('.chip-option').forEach((chip, index) => {
-        const on = state.types.includes(config.options[index])
-        chip.classList.toggle('chip-option_on', on)
-        chip.setAttribute('aria-pressed', String(on))
+      const items = typeItemsFor(state.direction)
+      const signature = items.map(item => item.label).join('|')
+
+      // При смене направления список типов пересобирается, а выбор чистится от лишнего
+      if (config.signature !== signature) {
+        config.signature = signature
+        config.list.replaceChildren()
+
+        items.forEach((item) => {
+          const row = el('button', 'chip-row')
+          row.type = 'button'
+          row.dataset.label = item.label
+          row.append(el('span', 'chip-option', item.label))
+
+          if (item.badge) {
+            row.append(buildBadge(item.badge))
+          }
+
+          row.addEventListener('click', (event) => {
+            event.stopPropagation()
+            state.types = state.types.includes(item.label)
+              ? state.types.filter(value => value !== item.label)
+              : [...state.types, item.label]
+            update()
+          })
+
+          config.list.append(row)
+        })
+
+        const available = new Set(items.map(item => item.label))
+        state.types = state.types.filter(value => available.has(value))
+      }
+
+      config.list.querySelectorAll('.chip-row').forEach((row) => {
+        const on = state.types.includes(row.dataset.label)
+        row.classList.toggle('chip-row_on', on)
+        row.setAttribute('aria-pressed', String(on))
       })
+
       return
     }
 
@@ -1922,7 +1988,10 @@
 
   function applyFromCatalog(direction, itemLabel) {
     state.direction = direction
-    state.types = itemLabel && typeOptions.includes(itemLabel) ? [itemLabel] : []
+
+    const label = itemLabel ? oneLine(itemLabel) : null
+    const available = typeItemsFor(direction).map(item => item.label)
+    state.types = label && available.includes(label) ? [label] : []
     closeAll()
     update()
 
@@ -2043,10 +2112,40 @@
 
   const profileOpen = () => !profilePopup.hidden && !profilePopup.classList.contains('popup_out')
 
+  // Состояния иконок шапки: Default / hovered / pressed из компонентов navigation-button-*
+  const headerIcons = {
+    cart: ['ic-cart.svg', 'ic-cart-hover.svg', 'ic-cart-pressed.svg'],
+    fav: ['ic-fav.svg', 'ic-fav-hover.svg', 'ic-fav-pressed.svg'],
+    profile: ['ic-profile.svg', 'ic-profile-hover.svg', 'ic-profile-pressed.svg']
+  }
+
+  // У профиля состояние покоя зависит от попапа: пока он открыт, иконка остаётся нажатой
+  const restingIcon = (kind) => {
+    const [base, , pressed] = headerIcons[kind]
+    return kind === 'profile' && profileOpen() ? pressed : base
+  }
+
+  document.querySelectorAll('[data-icon]').forEach((button) => {
+    const kind = button.dataset.icon
+    const [, hover, pressed] = headerIcons[kind]
+    const img = button.querySelector('img')
+
+    button.addEventListener('pointerenter', (event) => {
+      if (event.pointerType === 'mouse') img.src = A(hover)
+    })
+
+    button.addEventListener('pointerleave', (event) => {
+      if (event.pointerType === 'mouse') img.src = A(restingIcon(kind))
+    })
+
+    button.addEventListener('pointerdown', () => { img.src = A(pressed) })
+    button.addEventListener('pointerup', () => { img.src = A(hover) })
+  })
+
   function setProfile(open) {
     togglePopup(profilePopup, open)
     profileButton.setAttribute('aria-expanded', String(open))
-    profileIcon.src = A(open ? 'header-profile.svg' : 'header-profile-default.svg')
+    profileIcon.src = A(headerIcons.profile[open ? 2 : 0])
   }
 
   // Поп-ап профиля раскрывается наведением; клик оставлен для тача и клавиатуры
@@ -2088,7 +2187,7 @@
   /* ───────── Сборка ───────── */
 
   createDropdown('dd-direction', { mode: 'radio', key: 'direction', options: directions, clearable: true })
-  createDropdown('dd-type', { mode: 'multi', key: 'types', options: typeOptions })
+  createDropdown('dd-type', { mode: 'multi', key: 'types' })
   createDropdown('dd-sort', { mode: 'radio', key: 'sort', options: sorts, icon: 'sort.svg', strongBorder: true })
 
   function syncAll() {
