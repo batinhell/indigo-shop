@@ -1886,22 +1886,33 @@
 
   const cardsEl = document.getElementById('cards')
 
-  // Карточки показываем всегда, как в состоянии «любого направления» и «любого типа»:
-  // в макете их 14, а пунктов каталога 88, поэтому строгая фильтрация оставляла пустую сетку.
-  // Сортировка при этом работает, банер остаётся на своём месте — после восьмой карточки.
+  // Направление и тип карточки не фильтруют: в макете их 14, а пунктов каталога 88,
+  // и под большинство из них товаров просто нет. Цена и срок фильтруют.
+  // Банер стоит на своём месте — после восьмой карточки.
   const BANNER_AT = 8
 
   function renderCards() {
-    const products = cards.filter(item => !item.banner)
+    const products = cards.filter((item) => {
+      if (item.banner) return false
+      if (state.priceActive && (item.value < state.priceFrom || item.value > state.priceTo)) return false
+      if (state.termActive && item.days > state.term) return false
+      return true
+    })
 
     if (sorters[state.sort]) {
       products.sort(sorters[state.sort])
     }
 
-    const list = [...products]
-    list.splice(BANNER_AT, 0, { banner: true })
-
     cardsEl.replaceChildren()
+
+    if (!products.length) {
+      cardsEl.append(el('p', 'cards__empty', 'По этим фильтрам товаров нет'))
+      return
+    }
+
+    const list = [...products]
+    list.splice(Math.min(BANNER_AT, list.length), 0, { banner: true })
+
     list.forEach(item => cardsEl.append(item.banner ? buildBanner() : buildCard(item)))
   }
 
