@@ -101,7 +101,10 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true }
+    // Пререндер главной лезет в БД на этапе сборки. В CI (GitHub Actions) БД
+    // недоступна и .env нет, поэтому там пререндер отключаем — главная будет
+    // SSR из БД на лету. Локально/на сервере (есть .env) пререндер работает.
+    '/': { prerender: !process.env.CI }
   },
 
   // Серверные sourcemaps не нужны в проде стенда и утяжеляют сборку Nitro
