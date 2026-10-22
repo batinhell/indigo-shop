@@ -552,10 +552,25 @@
   /* У сортировки рамка в открытом состоянии 2px (4827:51059) */
   .select_strong.select_open { border-width: 2px; }
 
-  /* drop_type (4747:41547): мультивыбор чипами и кнопка «Готово» */
-  .options_multi { gap: 24px; }
+  /* drop_type (4747:41547): мультивыбор чипами и кнопка «Готово».
+     Прокручивается только список, кнопка прибита к низу панели и видна всегда. */
+  .options_multi {
+    gap: 24px;
+    max-height: none;
+    overflow: visible;
+  }
 
-  .chips { display: flex; flex-direction: column; gap: 2px; width: 228px; }
+  .chips {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    width: 228px;
+  }
+
+  .options__done { flex: 0 0 auto; }
 
   .chip-row {
     align-items: center;
