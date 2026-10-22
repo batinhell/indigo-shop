@@ -2,7 +2,7 @@
 import {
   Group, Mesh, PlaneGeometry, CylinderGeometry, TorusGeometry,
   MeshPhysicalMaterial, MeshStandardMaterial, InstancedMesh, Object3D,
-  CanvasTexture, RepeatWrapping, Color, DoubleSide
+  CanvasTexture, TextureLoader, RepeatWrapping, NoColorSpace, Vector2, Color, DoubleSide
 } from 'three'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
@@ -31,6 +31,23 @@ let fringeInst = null
 let fringeData = []
 let raf = 0
 const startT = performance.now()
+
+// Кэш PBR-карт тканей (нормали/шероховатость). Один флаг на экране, repeat выставляем на лету.
+const loader = new TextureLoader()
+const texCache = new Map()
+function fabricMap(slug, map, Wm, Hm, tile) {
+  const key = `${slug}_${map}`
+  let tex = texCache.get(key)
+  if (!tex) {
+    tex = loader.load(`/textures/fabrics/${slug}_${map}.jpg`)
+    tex.wrapS = RepeatWrapping
+    tex.wrapT = RepeatWrapping
+    tex.colorSpace = NoColorSpace
+    texCache.set(key, tex)
+  }
+  tex.repeat.set(Math.max(1, Wm / tile), Math.max(1, Hm / tile))
+  return tex
+}
 
 function netTexture(Wm, Hm) {
   const c = document.createElement('canvas')
@@ -81,12 +98,14 @@ function buildFlag() {
     clearcoatRoughness: 0.15,
     side: DoubleSide
   })
+  if (m.texture) {
+    faceMat.normalMap = fabricMap(m.texture, 'nor_gl', Wm, Hm, m.tile)
+    faceMat.roughnessMap = fabricMap(m.texture, 'rough', Wm, Hm, m.tile)
+    faceMat.normalScale = new Vector2(m.normalScale, m.normalScale)
+  }
   if (m.net) {
     faceMat.alphaMap = netTexture(Wm, Hm)
     faceMat.alphaTest = 0.5
-  } else if (m.opacity < 1) {
-    faceMat.transparent = true
-    faceMat.opacity = m.opacity
   }
   group.add(new Mesh(faceGeo, faceMat))
 
@@ -188,6 +207,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
   cancelAnimationFrame(raf)
   disposeChildren()
+  texCache.forEach(t => t.dispose())
+  texCache.clear()
 })
 
 watch(
