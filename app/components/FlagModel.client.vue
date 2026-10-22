@@ -2,16 +2,18 @@
 import {
   Group, Mesh, PlaneGeometry, CylinderGeometry, TorusGeometry,
   MeshPhysicalMaterial, MeshStandardMaterial, InstancedMesh, Object3D,
-  Color, DoubleSide
+  CanvasTexture, RepeatWrapping, Color, DoubleSide
 } from 'three'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
 import { fabricMaterial } from '~/configurator/materials'
 
-// 3D-предпросмотр флага. Нейтральная сцена. Полотно колышется бегущей волной
-// (без физической симуляции): амплитуда растёт от кромки крепления к свободному
-// краю, параметры (жёсткость/провисание/блеск) — из пресета ткани. Клиент-онли.
+// 3D-предпросмотр флага. Полотно колышется постоянным ветром (без физ.симуляции):
+// амплитуда растёт от кромки крепления к свободному краю, параметры (жёсткость,
+// провисание, глянец, сетка) — из пресета ткани. Клиент-онли.
 const store = useConfiguratorStore()
+
+const WIND = 0.55 // ветер всегда включён
 
 const dims = computed(() => ({
   w: store.params.width / 1000,
@@ -24,10 +26,28 @@ const cameraPosition = computed(() => {
 
 const group = new Group()
 let faceGeo = null
-let faceMat = null
-let base = null // исходные плоские координаты вершин
+let base = null
+let fringeInst = null
+let fringeData = []
 let raf = 0
 const startT = performance.now()
+
+function netTexture(Wm, Hm) {
+  const c = document.createElement('canvas')
+  c.width = 16
+  c.height = 16
+  const ctx = c.getContext('2d')
+  ctx.fillStyle = '#000'
+  ctx.fillRect(0, 0, 16, 16)
+  ctx.fillStyle = '#fff'
+  ctx.fillRect(0, 0, 16, 5)
+  ctx.fillRect(0, 0, 5, 16)
+  const t = new CanvasTexture(c)
+  t.wrapS = RepeatWrapping
+  t.wrapT = RepeatWrapping
+  t.repeat.set(Math.round(Wm * 160), Math.round(Hm * 160))
+  return t
+}
 
 function disposeChildren() {
   while (group.children.length) {
@@ -40,6 +60,8 @@ function disposeChildren() {
 
 function buildFlag() {
   disposeChildren()
+  fringeInst = null
+  fringeData = []
   const Wm = store.params.width / 1000
   const Hm = store.params.height / 1000
   const m = fabricMaterial(store.fabric)
@@ -49,16 +71,23 @@ function buildFlag() {
   // Полотно
   faceGeo = new PlaneGeometry(Wm, Hm, segW, segH)
   base = Float32Array.from(faceGeo.attributes.position.array)
-  faceMat = new MeshPhysicalMaterial({
+  const faceMat = new MeshPhysicalMaterial({
     color: new Color(m.color),
     roughness: m.roughness,
     metalness: m.metalness,
     sheen: m.sheen,
     sheenColor: new Color(m.sheenColor),
-    transparent: m.opacity < 1,
-    opacity: m.opacity,
+    clearcoat: m.clearcoat,
+    clearcoatRoughness: 0.15,
     side: DoubleSide
   })
+  if (m.net) {
+    faceMat.alphaMap = netTexture(Wm, Hm)
+    faceMat.alphaTest = 0.5
+  } else if (m.opacity < 1) {
+    faceMat.transparent = true
+    faceMat.opacity = m.opacity
+  }
   group.add(new Mesh(faceGeo, faceMat))
 
   // Карман под древко
@@ -86,7 +115,7 @@ function buildFlag() {
     }
   }
 
-  // Бахрома — пряди (инстансы тонких планок) по трём свободным кромкам
+  // Бахрома — пряди (инстансы) по трём кромкам; данные для анимации вместе с полотном
   if (store.fringe) {
     const L = 0.04
     const step = 0.006
@@ -94,47 +123,40 @@ function buildFlag() {
     const threadGeo = new PlaneGeometry(0.0022, L)
     const nTop = Math.max(2, Math.floor(Wm / step))
     const nRight = Math.max(2, Math.floor(Hm / step))
-    const total = nTop * 2 + nRight
-    const inst = new InstancedMesh(threadGeo, fmat, total)
-    const d = new Object3D()
-    let i = 0
-    d.rotation.set(0, 0, 0)
     for (let k = 0; k < nTop; k++) {
       const x = -Wm / 2 + (k + 0.5) * (Wm / nTop)
-      d.position.set(x, Hm / 2 + L / 2, 0)
-      d.updateMatrix()
-      inst.setMatrixAt(i++, d.matrix)
-      d.position.set(x, -Hm / 2 - L / 2, 0)
-      d.updateMatrix()
-      inst.setMatrixAt(i++, d.matrix)
+      fringeData.push({ x, y: Hm / 2 + L / 2, rotZ: 0 })
+      fringeData.push({ x, y: -Hm / 2 - L / 2, rotZ: 0 })
     }
-    d.rotation.set(0, 0, Math.PI / 2)
     for (let k = 0; k < nRight; k++) {
       const y = -Hm / 2 + (k + 0.5) * (Hm / nRight)
-      d.position.set(Wm / 2 + L / 2, y, 0)
-      d.updateMatrix()
-      inst.setMatrixAt(i++, d.matrix)
+      fringeData.push({ x: Wm / 2 + L / 2, y, rotZ: Math.PI / 2 })
     }
-    inst.instanceMatrix.needsUpdate = true
-    group.add(inst)
+    fringeInst = new InstancedMesh(threadGeo, fmat, fringeData.length)
+    group.add(fringeInst)
   }
 }
 
 function animate() {
+  const m = fabricMaterial(store.fabric)
+  const Wm = store.params.width / 1000
+  const t = (performance.now() - startT) / 1000
+  const amp = (0.012 + WIND * 0.1) * (1 - m.stiffness * 0.7)
+  const freq = 4 + WIND * 5
+  const drape = m.drape * 0.05
+  const waveAt = (x, y) => {
+    const edge = Math.min(1, Math.max(0, (x + Wm / 2) / Wm))
+    let z = Math.sin(x * freq + t * 3.0) * amp * edge
+    z += Math.sin(y * freq * 0.6 + t * 2.2) * amp * 0.4 * edge
+    return { z, edge }
+  }
+
   if (faceGeo && base) {
     const pos = faceGeo.attributes.position.array
-    const m = fabricMaterial(store.fabric)
-    const Wm = store.params.width / 1000
-    const t = (performance.now() - startT) / 1000
-    const amp = (0.012 + store.wind * 0.1) * (1 - m.stiffness * 0.7)
-    const freq = 4 + store.wind * 5
-    const drape = m.drape * 0.05
     for (let k = 0; k < pos.length; k += 3) {
       const x = base[k]
       const y = base[k + 1]
-      const edge = Math.min(1, Math.max(0, (x + Wm / 2) / Wm))
-      let z = Math.sin(x * freq + t * 3.0) * amp * edge
-      z += Math.sin(y * freq * 0.6 + t * 2.2) * amp * 0.4 * edge
+      const { z, edge } = waveAt(x, y)
       pos[k] = x
       pos[k + 1] = y - drape * edge * edge
       pos[k + 2] = z
@@ -142,6 +164,20 @@ function animate() {
     faceGeo.attributes.position.needsUpdate = true
     faceGeo.computeVertexNormals()
   }
+
+  if (fringeInst) {
+    const d = new Object3D()
+    for (let i = 0; i < fringeData.length; i++) {
+      const s = fringeData[i]
+      const { z, edge } = waveAt(s.x, s.y)
+      d.position.set(s.x, s.y - drape * edge * edge, z)
+      d.rotation.set(0, 0, s.rotZ)
+      d.updateMatrix()
+      fringeInst.setMatrixAt(i, d.matrix)
+    }
+    fringeInst.instanceMatrix.needsUpdate = true
+  }
+
   raf = requestAnimationFrame(animate)
 }
 
@@ -154,7 +190,6 @@ onBeforeUnmount(() => {
   disposeChildren()
 })
 
-// Пересобираем модель при смене размера/крепления/бахромы/ткани (ветер — вживую).
 watch(
   () => [store.params.width, store.params.height, store.mount, store.fringe, store.fabric].join(','),
   () => buildFlag()
@@ -176,13 +211,11 @@ watch(
       :enable-pan="false"
       :min-polar-angle="0.3"
       :max-polar-angle="2.5"
-      :min-distance="dims.w * 0.5"
-      :max-distance="dims.w * 4"
+      :min-distance="dims.w * 0.4"
+      :max-distance="dims.w * 5"
     />
 
-    <TresHemisphereLight
-      :args="[0xffffff, 0x9098a3, 1.1]"
-    />
+    <TresHemisphereLight :args="[0xffffff, 0x9098a3, 1.1]" />
     <TresDirectionalLight
       :position="[2.5, 3, 4]"
       :intensity="2"

@@ -13,7 +13,7 @@ const DEFAULT_SIZE = '90x135'
 const store = useConfiguratorStore()
 const {
   fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles,
-  mode, show, zoom, wind, showBack, geometry
+  mode, show, zoom, geometry
 } = storeToRefs(store)
 
 const route = useRoute()
@@ -82,11 +82,13 @@ const zoomPercent = computed({
   set: (v) => { zoom.value = v / 100 }
 })
 
-// Ползунок «Штиль — Ветер»: wind в сторе 0..1, слайдер 0..100.
-const windPercent = computed({
-  get: () => Math.round(wind.value * 100),
-  set: (v) => { wind.value = v / 100 }
-})
+// «Сбросить вид»: для развёртки — зум 1:1; для модели — пересобрать сцену
+// (OrbitControls возвращается в исходную позицию камеры).
+const modelKey = ref(0)
+function onReset() {
+  if (mode.value === 'dieline') store.resetView()
+  else modelKey.value++
+}
 
 // Зум колесом с Ctrl/Cmd и пинчем на тачпаде (пинч браузер шлёт как wheel+ctrlKey).
 function onStageWheel(e) {
@@ -228,6 +230,7 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
               />
               <LazyFlagModel
                 v-else
+                :key="modelKey"
                 class="preview__model3d"
               />
               <template #fallback>
@@ -239,7 +242,10 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
           </div>
 
           <div class="preview__toolbar">
-            <div class="preview__zoom">
+            <div
+              v-if="mode === 'dieline'"
+              class="preview__zoom"
+            >
               <QuantityInput
                 v-model="zoomPercent"
                 :min="25"
@@ -248,76 +254,58 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
               />
             </div>
 
-            <div class="preview__toolbar-center">
-              <template v-if="mode === 'model'">
-                <AppSwitch
-                  v-model="showBack"
-                  label="Показать оборот"
-                />
-                <label class="preview__wind">
-                  <span class="preview__wind-cap">Штиль</span>
-                  <input
-                    v-model.number="windPercent"
-                    type="range"
-                    min="0"
-                    max="100"
-                    step="1"
-                    class="preview__wind-range"
-                    aria-label="Сила ветра"
-                  >
-                  <span class="preview__wind-cap">Ветер</span>
-                </label>
-              </template>
-              <template v-else>
-                <div
-                  ref="viewSettingsEl"
-                  class="view-settings"
+            <div
+              v-if="mode === 'dieline'"
+              class="preview__toolbar-center"
+            >
+              <div
+                ref="viewSettingsEl"
+                class="view-settings"
+              >
+                <button
+                  type="button"
+                  class="preview__link"
+                  :class="{ 'preview__link--active': viewSettingsOpen }"
+                  @click="viewSettingsOpen = !viewSettingsOpen"
                 >
-                  <button
-                    type="button"
-                    class="preview__link"
-                    :class="{ 'preview__link--active': viewSettingsOpen }"
-                    @click="viewSettingsOpen = !viewSettingsOpen"
-                  >
-                    Настройки вида
-                  </button>
-                  <div
-                    v-if="viewSettingsOpen"
-                    class="view-settings__panel"
-                  >
-                    <AppSwitch
-                      v-model="show.overall"
-                      label="Общие габариты"
-                    />
-                    <AppSwitch
-                      v-model="show.basic"
-                      label="Основные размеры"
-                    />
-                    <AppSwitch
-                      v-model="show.bleed"
-                      label="Линию вылета"
-                    />
-                    <AppSwitch
-                      v-model="show.safe"
-                      label="Безопасную зону"
-                    />
-                    <AppSwitch
-                      v-model="show.features"
-                      label="Крепёж и обработку"
-                    />
-                    <AppSwitch
-                      v-model="show.labels"
-                      label="Подписи"
-                    />
-                  </div>
+                  Настройки вида
+                </button>
+                <div
+                  v-if="viewSettingsOpen"
+                  class="view-settings__panel"
+                >
+                  <AppSwitch
+                    v-model="show.overall"
+                    label="Общие габариты"
+                  />
+                  <AppSwitch
+                    v-model="show.basic"
+                    label="Основные размеры"
+                  />
+                  <AppSwitch
+                    v-model="show.bleed"
+                    label="Линию вылета"
+                  />
+                  <AppSwitch
+                    v-model="show.safe"
+                    label="Безопасную зону"
+                  />
+                  <AppSwitch
+                    v-model="show.features"
+                    label="Крепёж и обработку"
+                  />
+                  <AppSwitch
+                    v-model="show.labels"
+                    label="Подписи"
+                  />
                 </div>
-              </template>
+              </div>
             </div>
 
             <button
               type="button"
               class="preview__link"
-              @click="store.resetView()"
+              @click="onReset"
             >
               Сбросить вид
             </button>
