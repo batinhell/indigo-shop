@@ -31,9 +31,23 @@ const dims = computed(() => ({
   w: store.params.width / 1000,
   h: store.params.height / 1000
 }))
+
+// Аспект канваса (ш/в). Превью обычно «портретное», поэтому ландшафтный флаг
+// упирается в ширину — дистанцию камеры считаем по горизонтальному fov.
+const canvasAspect = ref(0.72)
+const FOV = 36
+
 const cameraPosition = computed(() => {
-  const m = Math.max(dims.value.w, dims.value.h)
-  return [m * 0.3, m * 0.12, m * 1.9]
+  const Wm = dims.value.w
+  const Hm = dims.value.h
+  const vfov = (FOV * Math.PI) / 180
+  const hfov = 2 * Math.atan(Math.tan(vfov / 2) * canvasAspect.value)
+  // влезаем и по высоте (с запасом под бахрому), и по ширине — берём большее
+  const fitH = (Hm * 1.28 / 2) / Math.tan(vfov / 2)
+  const fitW = (Wm * 1.12 / 2) / Math.tan(hfov / 2)
+  const dist = Math.max(fitH, fitW) * 1.06
+  // лёгкий ракурс в три четверти, чтобы читался объём ткани
+  return [dist * 0.16, dist * 0.05, dist * 0.985]
 })
 
 const group = new Group()
@@ -244,12 +258,26 @@ function animate() {
   raf = requestAnimationFrame(animate)
 }
 
+let resizeObs = null
 onMounted(() => {
   buildFlag()
   animate()
+  // Следим за аспектом канваса — камера должна вмещать флаг при любой ширине колонки
+  const canvas = document.querySelector('.preview__stage canvas')
+  if (canvas && 'ResizeObserver' in window) {
+    const update = () => {
+      const w = canvas.clientWidth || 1
+      const h = canvas.clientHeight || 1
+      canvasAspect.value = w / h
+    }
+    update()
+    resizeObs = new ResizeObserver(update)
+    resizeObs.observe(canvas)
+  }
 })
 onBeforeUnmount(() => {
   cancelAnimationFrame(raf)
+  resizeObs?.disconnect()
   disposeChildren()
   texCache.forEach(t => t.dispose())
   texCache.clear()
@@ -271,25 +299,31 @@ watch(
   >
     <TresPerspectiveCamera
       :position="cameraPosition"
-      :fov="40"
+      :fov="FOV"
       :look-at="[0, 0, 0]"
     />
     <OrbitControls
       :enable-pan="false"
-      :min-polar-angle="0.3"
-      :max-polar-angle="2.5"
-      :min-distance="dims.w * 0.4"
-      :max-distance="dims.w * 5"
+      :min-polar-angle="0.35"
+      :max-polar-angle="2.4"
+      :min-distance="Math.max(dims.w, dims.h) * 0.9"
+      :max-distance="Math.max(dims.w, dims.h) * 4.5"
     />
 
-    <TresHemisphereLight :args="[0xffffff, 0x9098a3, 1.1]" />
+    <!-- Нейтральный студийный свет: яркая заливка (ткань читается светлой) +
+         мягкий ключ сверху-справа + контровой для объёма складок. -->
+    <TresHemisphereLight :args="[0xffffff, 0xd6dadf, 1.35]" />
     <TresDirectionalLight
-      :position="[2.5, 3, 4]"
-      :intensity="2"
+      :position="[2.2, 3.4, 3.2]"
+      :intensity="1.7"
     />
     <TresDirectionalLight
-      :position="[-3, 1.5, -2]"
-      :intensity="0.6"
+      :position="[-2.6, 1.2, 1.5]"
+      :intensity="0.55"
+    />
+    <TresDirectionalLight
+      :position="[0, 1, -3]"
+      :intensity="0.5"
     />
 
     <primitive :object="group" />
