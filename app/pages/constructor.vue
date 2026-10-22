@@ -77,11 +77,6 @@ const {
 
 // --- Предпросмотр ----------------------------------------------------------
 
-const zoomPercent = computed({
-  get: () => Math.round(zoom.value * 100),
-  set: (v) => { zoom.value = v / 100 }
-})
-
 // «Сбросить вид»: для развёртки — зум 1:1; для модели — пересобрать сцену
 // (OrbitControls возвращается в исходную позицию камеры).
 const modelKey = ref(0)
@@ -242,18 +237,6 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
           </div>
 
           <div class="preview__toolbar">
-            <div
-              v-if="mode === 'dieline'"
-              class="preview__zoom"
-            >
-              <QuantityInput
-                v-model="zoomPercent"
-                :min="25"
-                :max="400"
-                suffix="%"
-              />
-            </div>
-
             <div
               v-if="mode === 'dieline'"
               class="preview__toolbar-center"

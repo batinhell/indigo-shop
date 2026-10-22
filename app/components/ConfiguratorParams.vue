@@ -66,6 +66,22 @@ function onDrop(e) {
   isDragging.value = false
   addFiles(Array.from(e.dataTransfer?.files || []))
 }
+
+// Экспорт шаблона развёртки (перенесён сюда, под «Макет»). AI = Illustrator-совместимый PDF.
+const { exportPdf, exportDxf } = useTemplateExport()
+const exportBusy = ref(false)
+async function onExport(kind) {
+  if (exportBusy.value) return
+  exportBusy.value = true
+  try {
+    if (kind === 'dxf') await exportDxf()
+    else await exportPdf()
+  } catch (e) {
+    console.error('Ошибка экспорта шаблона:', e)
+  } finally {
+    exportBusy.value = false
+  }
+}
 </script>
 
 <template>
@@ -152,21 +168,39 @@ function onDrop(e) {
               fill="currentColor"
             /></svg>
           </a>
-          <a
-            href="#"
-            class="layout-section__link"
-          >
-            Шаблоны макетов
-            <svg
-              class="layout-section__link-icon"
-              viewBox="0 0 8 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="M2.057 5.698a.807.807 0 0 1-1.17 0 .808.808 0 0 1 .001-.826l3.733-3.737H2.387A.569.569 0 0 1 1.82.564C1.822.252 2.075 0 2.387 0h4.538v4.534a.571.571 0 0 1-1.141.002l.006-2.572-3.733 3.734Z"
-              fill="currentColor"
-            /></svg>
-          </a>
+        </div>
+
+        <div class="template-export">
+          <p class="template-export__title">
+            Шаблон для макета
+          </p>
+          <div class="template-export__formats">
+            <button
+              type="button"
+              class="template-export__btn"
+              :disabled="exportBusy"
+              @click="onExport('pdf')"
+            >
+              PDF
+            </button>
+            <button
+              type="button"
+              class="template-export__btn"
+              :disabled="exportBusy"
+              title="Откроется в Illustrator"
+              @click="onExport('ai')"
+            >
+              AI
+            </button>
+            <button
+              type="button"
+              class="template-export__btn"
+              :disabled="exportBusy"
+              @click="onExport('dxf')"
+            >
+              DXF
+            </button>
+          </div>
         </div>
       </div>
 
@@ -272,9 +306,17 @@ function onDrop(e) {
 
 <style lang="scss" scoped>
 .form-column {
-  background: white;
-  border-radius: $radius-main;
-  padding: 2rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// Плашки параметров/макета (как на референсе)
+.params-section,
+.layout-section {
+  background: #f6f6f8;
+  border-radius: $radius-card;
+  padding: 1.5rem;
 }
 
 .section-title {
@@ -288,7 +330,7 @@ function onDrop(e) {
 .params-section {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .fields-grid {
@@ -327,7 +369,6 @@ function onDrop(e) {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  margin-top: 2rem;
 
   &__header {
     display: flex;
@@ -515,6 +556,45 @@ function onDrop(e) {
   &__file-remove-icon {
     width: 0.75rem;
     height: 1rem;
+  }
+}
+
+.template-export {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $color-base;
+  }
+
+  &__formats {
+    display: flex;
+    gap: 0.375rem;
+  }
+
+  &__btn {
+    flex: 1;
+    height: 2.25rem;
+    border-radius: $radius-control;
+    background: $color-primary-bg;
+    color: $color-purple;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s;
+
+    &:hover:not(:disabled) {
+      background: #f6e0ff;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: progress;
+    }
   }
 }
 </style>

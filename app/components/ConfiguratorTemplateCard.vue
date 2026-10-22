@@ -1,5 +1,5 @@
 <script setup>
-// Правая колонка конструктора v2: шаблон для макета + блок цены и кнопки.
+// Правая колонка конструктора v2: блок цены и кнопки заказа (плашка).
 defineProps({
   fabricGenitive: { type: String, default: '' },
   quantity: { type: Number, default: 0 },
@@ -14,63 +14,10 @@ defineProps({
 })
 
 defineEmits(['pay', 'add-to-cart'])
-
-// Экспорт шаблона развёртки. AI = Illustrator-совместимый PDF (тот же файл).
-const { exportPdf, exportDxf } = useTemplateExport()
-const busy = ref(false)
-
-async function onExport(kind) {
-  if (busy.value) return
-  busy.value = true
-  try {
-    if (kind === 'dxf') await exportDxf()
-    else await exportPdf()
-  } catch (e) {
-    console.error('Ошибка экспорта шаблона:', e)
-  } finally {
-    busy.value = false
-  }
-}
 </script>
 
 <template>
   <div class="template-card">
-    <div class="template-card__template">
-      <p class="template-card__title">
-        Шаблон для макета
-      </p>
-      <p class="template-card__subtitle">
-        Развёртка в точных размерах с вылетами, карманом и безопасной зоной
-      </p>
-      <div class="template-card__formats">
-        <button
-          type="button"
-          class="template-card__format"
-          :disabled="busy"
-          @click="onExport('pdf')"
-        >
-          PDF
-        </button>
-        <button
-          type="button"
-          class="template-card__format"
-          :disabled="busy"
-          title="Откроется в Illustrator"
-          @click="onExport('ai')"
-        >
-          AI
-        </button>
-        <button
-          type="button"
-          class="template-card__format"
-          :disabled="busy"
-          @click="onExport('dxf')"
-        >
-          DXF
-        </button>
-      </div>
-    </div>
-
     <div class="template-card__prices">
       <div class="price-row">
         <span class="price-row__label">Флаг из {{ fabricGenitive }}</span>
@@ -146,8 +93,8 @@ async function onExport(kind) {
 
 <style lang="scss" scoped>
 .template-card {
-  background: white;
-  border-radius: $radius-main;
+  background: #f6f6f8;
+  border-radius: $radius-card;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
