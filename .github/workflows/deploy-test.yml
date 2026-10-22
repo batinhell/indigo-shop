@@ -1,0 +1,53 @@
+name: deploy-test
+
+# Сборка на раннере GitHub (там достаточно RAM) и заливка готового .output на
+# тестовый стенд по SSH. Стенд (3.8 ГБ, без swap) собрать Nitro сам не может —
+# поэтому собираем здесь, а туда кладём только артефакт и рестартим pm2.
+
+on:
+  push:
+    branches: [feature/configurator-v2]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-test
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.STAND_SSH_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' '178.20.42.212 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYr9e1UbSvJYsJHR0hAbKgrE74zjzmDxT1595pRlDVN' >> ~/.ssh/known_hosts
+
+      - name: Upload build to stand
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_deploy" ./.output/ developer@178.20.42.212:/var/www/ra-indigo-test/.output/
+
+      - name: Restart app
+        run: |
+          ssh -i ~/.ssh/id_deploy developer@178.20.42.212 \
+            'cd /var/www/ra-indigo-test \
+             && export PATH="$HOME/.nvm/versions/node/v24.15.0/bin:$HOME/.bun/bin:$PATH" \
+             && set -a && . ./.env && set +a \
+             && HOST=127.0.0.1 PORT=3001 pm2 restart indigo-test --update-env \
+             && pm2 save'
