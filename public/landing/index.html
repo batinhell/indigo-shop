@@ -156,28 +156,25 @@
     cursor: pointer;
     height: 36px;
     padding: 0;
+    position: relative;
     width: 36px;
   }
 
   /* Иконки шапки: вектор лежит внутри кнопки 36×36 со своими смещениями
-     (navigation-button-cart 4814:77394, -profile 4814:77388 и 4814:77391) */
+     (navigation-button-cart 4814:77394, -profile 4814:77388 и 4814:77391).
+     Размеры посчитаны с запасом на обводку, который в макете задан процентами. */
   .hicon { position: absolute; }
 
   .hicon img {
-    height: auto;
+    display: block;
+    height: 100%;
     max-width: none;
-    position: absolute;
-    width: auto;
+    width: 100%;
   }
 
-  .hicon_cart { height: 26px; left: 3.23px; top: 5.29px; width: 27px; }
-  .hicon_cart img { bottom: -4.62%; left: -4.44%; right: -4.44%; top: -4.63%; }
-
-  .hicon_fav { height: 23.99px; left: 5px; top: 6px; width: 26.896px; }
-  .hicon_fav img { bottom: -5%; left: -4.46%; right: -4.46%; top: -5.01%; }
-
-  .hicon_profile { height: 24px; left: 7px; top: 5.78px; width: 22px; }
-  .hicon_profile img { bottom: -5%; left: -4.74%; right: -4.72%; top: -5%; }
+  .hicon_cart { height: 28.41px; left: 2.03px; top: 4.09px; width: 29.4px; }
+  .hicon_fav { height: 26.39px; left: 3.8px; top: 4.8px; width: 29.3px; }
+  .hicon_profile { height: 26.4px; left: 5.96px; top: 4.58px; width: 24.08px; }
 
   .profile { position: relative; }
 
@@ -195,16 +192,6 @@
     top: 48px;
     width: 240px;
     z-index: 5;
-  }
-
-  /* Невидимый мостик между иконкой и попапом, чтобы наведение не срывалось в зазоре */
-  .profile__popup::before {
-    content: '';
-    height: 16px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: -16px;
   }
 
   .profile__head { display: flex; flex-direction: column; gap: 7px; }
@@ -2108,8 +2095,6 @@
   const profilePopup = document.getElementById('profile-popup')
   const profileIcon = document.getElementById('profile-icon')
 
-  const profile = document.querySelector('.profile')
-
   const profileOpen = () => !profilePopup.hidden && !profilePopup.classList.contains('popup_out')
 
   // Состояния иконок шапки: Default / hovered / pressed из компонентов navigation-button-*
@@ -2148,19 +2133,7 @@
     profileIcon.src = A(headerIcons.profile[open ? 2 : 0])
   }
 
-  // Поп-ап профиля раскрывается наведением; клик оставлен для тача и клавиатуры
-  profile.addEventListener('pointerenter', (event) => {
-    if (event.pointerType !== 'mouse') return
-    closeAll()
-    setProfile(true)
-    syncAll()
-  })
-
-  profile.addEventListener('pointerleave', (event) => {
-    if (event.pointerType !== 'mouse') return
-    setProfile(false)
-  })
-
+  // Поп-ап профиля раскрывается по нажатию
   profileButton.addEventListener('click', (event) => {
     event.stopPropagation()
     const open = !profileOpen()
