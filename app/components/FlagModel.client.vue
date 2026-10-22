@@ -3,7 +3,8 @@ import {
   Group, Mesh, PlaneGeometry, CylinderGeometry, TorusGeometry,
   MeshPhysicalMaterial, MeshStandardMaterial,
   CanvasTexture, TextureLoader, RepeatWrapping, ClampToEdgeWrapping,
-  NoColorSpace, SRGBColorSpace, Vector2, Color, DoubleSide
+  NoColorSpace, SRGBColorSpace, EquirectangularReflectionMapping,
+  Vector2, Color, DoubleSide
 } from 'three'
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
@@ -111,6 +112,44 @@ function fringeTexture() {
   t.wrapS = RepeatWrapping
   t.wrapT = ClampToEdgeWrapping
   fringeTexCache = t
+  return t
+}
+
+// Мягкое студийное окружение (IBL): светлый верх + пара софт-боксов. Даёт
+// отражения, по которым очевидна разница глянца: сатин бликует, матовые — нет.
+let envTexCache = null
+function studioEnv() {
+  if (envTexCache) return envTexCache
+  const W = 512
+  const H = 256
+  const c = document.createElement('canvas')
+  c.width = W
+  c.height = H
+  const ctx = c.getContext('2d')
+  const g = ctx.createLinearGradient(0, 0, 0, H)
+  g.addColorStop(0, '#ffffff')
+  g.addColorStop(0.42, '#e4e8ec')
+  g.addColorStop(0.52, '#b9c0c8')
+  g.addColorStop(1, '#9aa2ab')
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, W, H)
+  // Яркие софт-боксы на более тёмном фоне — глянец даёт читаемый блик.
+  const soft = (x, y, r) => {
+    const rg = ctx.createRadialGradient(x, y, 0, x, y, r)
+    rg.addColorStop(0, '#ffffff')
+    rg.addColorStop(0.6, 'rgba(255,255,255,0.85)')
+    rg.addColorStop(1, 'rgba(255,255,255,0)')
+    ctx.fillStyle = rg
+    ctx.beginPath()
+    ctx.arc(x, y, r, 0, Math.PI * 2)
+    ctx.fill()
+  }
+  soft(W * 0.3, H * 0.26, 70)
+  soft(W * 0.72, H * 0.3, 58)
+  const t = new CanvasTexture(c)
+  t.mapping = EquirectangularReflectionMapping
+  t.colorSpace = SRGBColorSpace
+  envTexCache = t
   return t
 }
 
@@ -250,6 +289,10 @@ function waveAt(x, y, amp, freq, t, Wm) {
 }
 
 function animate() {
+  // Окружение вешаем на сцену один раз (group добавлен в сцену через <primitive>).
+  if (group.parent && !group.parent.environment) {
+    group.parent.environment = studioEnv()
+  }
   const m = fabricMaterial(store.fabric)
   const Wm = store.params.width / 1000
   const t = (performance.now() - startT) / 1000
@@ -314,6 +357,8 @@ onBeforeUnmount(() => {
   fringeTexCache = null
   netTexCache?.dispose()
   netTexCache = null
+  envTexCache?.dispose()
+  envTexCache = null
 })
 
 watch(
