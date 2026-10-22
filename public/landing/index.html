@@ -1094,13 +1094,19 @@
 
   .footer__col a:hover { color: var(--purple); }
 
-  .footer__contacts { padding: 10px 0 0; }
+  /* В макете у колонки контактов своя высота 275, и соцсети прижаты к её низу,
+     а не к низу всего ряда — иначе они проваливаются под самую длинную колонку */
+  .footer__contacts {
+    align-self: flex-start;
+    min-height: 275px;
+    padding: 10px 0 0;
+  }
   .footer__col .footer__phone { font-size: 24px; font-weight: 700; line-height: 28px; padding-left: 0; }
   .footer__contacts .small { font-size: 14px; font-weight: 600; line-height: 18px; }
   .footer__mail { color: var(--purple) !important; }
   .footer__group { display: flex; flex-direction: column; gap: 12px; }
   /* Иконки прижаты к низу колонки — в макете Contact Container с justify-between */
-  .footer__social { display: flex; gap: 12px; margin-top: auto; padding-top: 12px; }
+  .footer__social { display: flex; gap: 12px; margin-top: auto; }
 
   .footer__social a {
     align-items: center;
@@ -1153,6 +1159,7 @@
   @media (max-width: 860px) {
     .catalog, .works, .faq, .footer { margin-top: 72px; }
     .grid, .faq__columns, .footer__nav, .footer__info { flex-direction: column; }
+    .footer__contacts { min-height: 0; }
     .header__nav { display: none; }
     .faq__title { white-space: normal; }
     .cards { justify-content: center; }
@@ -1902,34 +1909,44 @@
 
   const cardsEl = document.getElementById('cards')
 
-  // Направление и тип карточки не фильтруют: в макете их 14, а пунктов каталога 88,
-  // и под большинство из них товаров просто нет. Цена и срок фильтруют.
-  // Банер стоит на своём месте — после восьмой карточки.
+  // Банер стоит на своём месте — после восьмой карточки
   const BANNER_AT = 8
 
+  // Карточки создаются один раз: иначе при каждом обновлении пересоздавались бы и фоны,
+  // и вся сетка моргала бы, даже когда набор товаров не менялся
+  const cardEntries = cards
+    .filter(item => !item.banner)
+    .map(data => ({ data, node: buildCard(data) }))
+
+  const bannerNode = buildBanner()
+  const emptyNode = el('p', 'cards__empty', 'По этим фильтрам товаров нет')
+
+  cardsEl.append(...cardEntries.map(entry => entry.node), bannerNode, emptyNode)
+
+  const matches = (item) => {
+    if (state.types.length && !state.types.includes(item.title)) return false
+    if (state.priceActive && (item.value < state.priceFrom || item.value > state.priceTo)) return false
+    if (state.termActive && item.days > state.term) return false
+    return true
+  }
+
   function renderCards() {
-    const products = cards.filter((item) => {
-      if (item.banner) return false
-      if (state.priceActive && (item.value < state.priceFrom || item.value > state.priceTo)) return false
-      if (state.termActive && item.days > state.term) return false
-      return true
-    })
+    const visible = cardEntries.filter(entry => matches(entry.data))
 
     if (sorters[state.sort]) {
-      products.sort(sorters[state.sort])
+      visible.sort((a, b) => sorters[state.sort](a.data, b.data))
     }
 
-    cardsEl.replaceChildren()
+    const shown = new Set(visible)
+    cardEntries.forEach((entry) => { entry.node.hidden = !shown.has(entry) })
 
-    if (!products.length) {
-      cardsEl.append(el('p', 'cards__empty', 'По этим фильтрам товаров нет'))
-      return
-    }
+    // Порядок задаём с шагом, чтобы банер встал в промежуток между карточками
+    visible.forEach((entry, index) => { entry.node.style.order = index * 10 })
 
-    const list = [...products]
-    list.splice(Math.min(BANNER_AT, list.length), 0, { banner: true })
+    bannerNode.hidden = !visible.length
+    bannerNode.style.order = Math.min(BANNER_AT, visible.length) * 10 - 5
 
-    list.forEach(item => cardsEl.append(item.banner ? buildBanner() : buildCard(item)))
+    emptyNode.hidden = Boolean(visible.length)
   }
 
   /* ───────── Список-каталог в хиро ───────── */
