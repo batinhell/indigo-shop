@@ -31,6 +31,17 @@ let fringeStrips = []
 let raf = 0
 const startT = performance.now()
 
+// PBR-карты тканей бандлим через Vite (import.meta.glob): так они гарантированно
+// попадают в сборку как /_nuxt/*-ассеты. Копирование public/ на этом стенде
+// текстуры теряло (Nitro не регистрировал их в манифесте) — отсюда уход в assets.
+const fabricAssets = import.meta.glob('../assets/textures/fabrics/*', {
+  eager: true, query: '?url', import: 'default'
+})
+const fabricUrlByName = {}
+for (const [path, url] of Object.entries(fabricAssets)) {
+  fabricUrlByName[path.split('/').pop()] = url
+}
+
 // Кэш PBR-карт тканей. Один флаг на экране, repeat выставляем на лету.
 const loader = new TextureLoader()
 const texCache = new Map()
@@ -38,7 +49,7 @@ function fabricMap(slug, map, Wm, Hm, tile, ext = 'jpg') {
   const key = `${slug}_${map}`
   let tex = texCache.get(key)
   if (!tex) {
-    tex = loader.load(`/textures/fabrics/${slug}_${map}.${ext}`)
+    tex = loader.load(fabricUrlByName[`${slug}_${map}.${ext}`])
     tex.wrapS = RepeatWrapping
     tex.wrapT = RepeatWrapping
     tex.colorSpace = NoColorSpace

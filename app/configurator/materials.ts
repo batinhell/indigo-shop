@@ -3,7 +3,7 @@
 // Базовый цвет держим светлым (флаг-заготовка), от текстуры берём плетение/рельеф.
 
 export interface FabricMaterial {
-  texture: string | null // базовое имя карт в /textures/fabrics (null — без текстуры)
+  texture: string | null // базовое имя карт в assets/textures/fabrics (null — без текстуры)
   color: string
   roughness: number
   metalness: number
