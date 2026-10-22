@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import DielineView from '~/configurator/dieline/DielineView.vue'
 import { FABRICS, MOUNTINGS, getFabricLabel, getFabricGenitive, getSizeLabel } from '~/constants/product'
-import { resolveCartItemImage } from '~/composables/useCart'
 
 // Размер (ключ) ↔ ширина/высота в мм для URL-параметров.
 const SIZE_DIMS = {
@@ -78,17 +77,11 @@ const {
 
 // --- Предпросмотр ----------------------------------------------------------
 
-// «Модель» — готовый рендер под состояние конфигуратора (как на проде).
-const previewImage = computed(() => resolveCartItemImage({
-  fabric: fabric.value,
-  mounting: mount.value,
-  size: size.value,
-  doubleSided: doubleSided.value,
-  hasFringe: fringe.value
-}))
-
+// «Сбросить вид»: развёртка — зум 1:1; модель — пересобрать сцену (камера в исходную).
+const modelKey = ref(0)
 function onReset() {
   if (mode.value === 'dieline') store.resetView()
+  else modelKey.value++
 }
 
 // Зум колесом с Ctrl/Cmd и пинчем на тачпаде (пинч браузер шлёт как wheel+ctrlKey).
@@ -229,17 +222,11 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
                 :show="show"
                 :zoom="zoom"
               />
-              <div
+              <LazyFlagModel
                 v-else
-                class="preview__model"
-              >
-                <img
-                  v-if="previewImage"
-                  :src="previewImage"
-                  alt="Предпросмотр флага"
-                  class="preview__model-img"
-                >
-              </div>
+                :key="modelKey"
+                class="preview__model3d"
+              />
               <template #fallback>
                 <div class="preview__loading">
                   Загрузка предпросмотра…
@@ -298,7 +285,6 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
             </div>
 
             <button
-              v-if="mode === 'dieline'"
               type="button"
               class="preview__link"
               @click="onReset"
@@ -459,19 +445,12 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     overflow: hidden;
   }
 
-  &__model {
+  &__model3d {
     flex: 1;
     min-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  &__model-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    width: 100%;
+    border-radius: $radius-card;
+    overflow: hidden;
   }
 
   &__loading {
