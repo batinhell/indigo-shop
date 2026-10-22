@@ -31,9 +31,9 @@ export default defineNuxtConfig({
 
   vue: {
     compilerOptions: {
-      // TresJS: примитивы <Tres*> обрабатывает свой рендерер, Vue их не резолвит.
-      // TresCanvas — обычный компонент, его исключаем.
-      isCustomElement: (tag: string) => tag.startsWith('Tres') && tag !== 'TresCanvas'
+      // TresJS: примитивы <Tres*> и <primitive> обрабатывает свой рендерер, Vue их
+      // не резолвит. TresCanvas — обычный компонент, его исключаем.
+      isCustomElement: (tag: string) => (tag.startsWith('Tres') && tag !== 'TresCanvas') || tag === 'primitive'
     }
   },
 
