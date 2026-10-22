@@ -570,8 +570,6 @@
     width: 228px;
   }
 
-  .options__done { flex: 0 0 auto; }
-
   .chip-row {
     align-items: center;
     align-self: flex-start;
@@ -601,6 +599,7 @@
   .chip-row_on .chip-option,
   .chip-row_on:hover .chip-option { background: var(--purple); color: var(--white); }
 
+  /* Buttontext 4814:77464 — ровно 40px; flex не даёт сжать её под высоту панели */
   .options__done {
     align-items: center;
     background: var(--purple);
@@ -609,6 +608,7 @@
     color: var(--white);
     cursor: pointer;
     display: flex;
+    flex: 0 0 auto;
     font-family: inherit;
     font-size: 16px;
     font-weight: 600;
@@ -616,6 +616,7 @@
     height: 40px;
     justify-content: center;
     line-height: 20px;
+    min-height: 40px;
     padding: 0 16px;
     transition: background-color 0.15s ease;
     width: 228px;
