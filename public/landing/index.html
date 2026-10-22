@@ -1,0 +1,2109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Индиго — лендинг</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+  /* Desktop XL из Figma «💜 Индиго. Сайт»: колонка контента 1106px, шаг между секциями 112px.
+     Состояния элементов взяты из компонентов Input, drop_purpose, Price Filter,
+     Production Time Filter, Вопрос FAQ и gallery_card. */
+
+  :root {
+    --ink: #04121b;
+    --ink-2: rgba(4, 18, 27, 0.64);
+    --ink-3: rgba(4, 18, 27, 0.52);
+    --white: #ffffff;
+    --input: #f4f5f6;
+    --input-hover: #f0f0f0;
+    --purple: #de7aff;
+    --purple-strong: #c925ff;
+    --purple-hover: #e38fff;
+    --secondary: rgba(227, 143, 255, 0.1);
+    --indigo-bg: #efeaff;
+    --indigo: #6636ff;
+    --warn-bg: #fff2e0;
+    --warn: #d27714;
+    --pos-bg: #dbffde;
+    --green: #0abd5d;
+    --plate: #f1f1f1;
+    --shadow: 0 0 24px rgba(201, 37, 255, 0.1);
+
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* Фотографии отдаются фоном: у браузера нет объекта «картинка», поэтому не всплывает
+     виджет поиска по изображению и недоступно сохранение и перетаскивание */
+  .photo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  p { margin: 0; }
+
+  /* Мягкое появление и закрытие поп-апов: список-каталог, фильтры, профиль */
+  @keyframes popup-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes popup-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-8px); }
+  }
+
+  .catalog-popup.popup_out,
+  .options.popup_out,
+  .profile__popup.popup_out {
+    animation: popup-out 220ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    pointer-events: none;
+  }
+
+  [hidden] { display: none !important; }
+
+  /* Ширина контента по десктопным фреймам: Desktop L — 824, XL — 1106, XXL — 1670.
+     Внутри шага всё тянется, на границе переключается ширина колонки. */
+  .page {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px 0 40px;
+    width: min(100% - 32px, 824px);
+  }
+
+  @media (min-width: 1280px) {
+    .page { width: min(100% - 174px, 1106px); }
+  }
+
+  @media (min-width: 2048px) {
+    .page { width: min(100% - 378px, 1670px); }
+  }
+
+  .hero-section { margin-top: 20px; }
+  .catalog, .works, .faq, .footer { margin-top: 112px; }
+
+  /* ───────── Hero Section (4791:57303) ───────── */
+
+  .hero-section { position: relative; }
+
+  .header {
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.36);
+    border-radius: 120px;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 24px;
+    position: sticky;
+    top: 12px;
+    z-index: 20;
+  }
+
+  .header__left {
+    align-items: center;
+    display: flex;
+    flex: 1 0 0;
+    gap: 60px;
+    min-width: 0;
+  }
+
+  .header__logo { flex: 0 0 auto; width: 130px; }
+  .header__logo img { height: 48px; width: 125px; }
+
+  .header__nav { display: flex; gap: 32px; flex-wrap: wrap; }
+
+  .header__nav a {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    mix-blend-mode: multiply;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header__nav a:hover { color: var(--purple); }
+
+  .header__actions { align-items: center; display: flex; flex: 0 0 auto; gap: 12px; }
+
+  .icon-button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: 36px;
+    padding: 0;
+    width: 36px;
+  }
+
+  .icon-button img { height: 36px; width: 36px; }
+
+  .profile { position: relative; }
+
+  .profile__popup {
+    animation: popup-in 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white);
+    border-radius: 12px;
+    display: flex;
+    filter: drop-shadow(0 0 12px rgba(201, 37, 255, 0.1));
+    flex-direction: column;
+    gap: 28px;
+    padding: 20px 24px 24px;
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 240px;
+    z-index: 5;
+  }
+
+  /* Невидимый мостик между иконкой и попапом, чтобы наведение не срывалось в зазоре */
+  .profile__popup::before {
+    content: '';
+    height: 16px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -16px;
+  }
+
+  .profile__head { display: flex; flex-direction: column; gap: 7px; }
+  .profile__name { color: var(--purple); font-size: 20px; font-weight: 700; line-height: 24px; }
+  .profile__mail { color: rgba(9, 30, 42, 0.48); font-size: 14px; font-weight: 600; line-height: 18px; }
+  .profile__menu { display: flex; flex-direction: column; gap: 16px; }
+
+  .profile__menu a {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    text-decoration: none;
+  }
+
+  .profile__menu a:hover { color: var(--purple); }
+
+  .hero {
+    align-items: center;
+    aspect-ratio: 1106 / 620;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 48px;
+    position: relative;
+  }
+
+  .hero__pic {
+    border-radius: 24px;
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .hero__center {
+    align-items: center;
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    padding-top: 104px;
+    position: relative;
+    width: 100%;
+  }
+
+  .selector-wrap { position: relative; }
+
+  .selector {
+    align-items: center;
+    background: var(--input);
+    border-radius: 12px;
+    display: flex;
+    overflow: hidden;
+    padding: 4px 14px;
+  }
+
+  .selector__row { align-items: flex-end; display: flex; height: 40px; padding: 9px 0; }
+  .selector__inner { align-items: center; display: flex; gap: 7px; }
+
+  .selector__word,
+  .selector__drop span {
+    color: var(--ink);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    white-space: nowrap;
+  }
+
+  .selector__drop {
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    gap: 2px;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+
+  .selector__drop:hover span { color: var(--purple-hover); }
+  .selector__drop[aria-expanded="true"] span { color: var(--purple-strong); }
+  .selector__drop[aria-expanded="true"] i img { transform: scaleY(-1); }
+
+  .selector__drop i { align-items: center; display: flex; padding-top: 4px; }
+  .selector__drop img { height: 16px; width: 16px; transition: transform 0.2s ease; }
+
+  /* Список-каталог (list Desktop XL, 4791:68412) */
+
+  /* Раскрытый список выравнивается по верхней кромке хиро, во всю его ширину
+     и на свою полную высоту — как во фрейме 4821:50292 (1106×912) */
+  .catalog-popup {
+    animation: popup-in 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 32px 24px;
+    grid-template-columns: repeat(auto-fill, 235px);
+    justify-content: start;
+    left: 0;
+    padding: 36px 28px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6;
+  }
+
+  .catalog-col { display: flex; flex-direction: column; gap: 10px; width: 235px; }
+  .catalog-col__head { align-items: flex-start; display: flex; gap: 8px; width: 100%; }
+
+  .catalog-col__plate {
+    background: #e9e9e9;
+    border-radius: 8px;
+    flex: 0 0 auto;
+    height: 36px;
+    width: 36px;
+  }
+
+  .catalog-col__title {
+    background: none;
+    border: 0;
+    color: var(--ink);
+    cursor: pointer;
+    flex: 1 0 0;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  .catalog-col__title:hover { color: var(--purple-strong); }
+
+  .catalog-col__items { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+
+  .catalog-item {
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    padding: 0 0 0 10px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .catalog-item__icon {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    height: 26px;
+    justify-content: center;
+    width: 26px;
+  }
+
+  .catalog-item__icon img { height: 16px; width: 16px; }
+
+  .catalog-item__label {
+    background: var(--white);
+    border-radius: 4px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    padding: 4px 8px;
+    transition: background-color 0.15s ease;
+  }
+
+  .catalog-item:hover .catalog-item__label { background: var(--input-hover); }
+  .catalog-item:active .catalog-item__label { background: #c3c6c8; }
+
+  .badge-label {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 20px;
+    justify-content: center;
+    margin-left: 4px;
+    padding: 0 5px;
+    position: relative;
+  }
+
+  .badge-label img { inset: 0; position: absolute; height: 100%; width: 100%; z-index: 0; }
+
+  .badge-label span {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    position: relative;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .badge-label_green span { color: #e1ffed; }
+  .badge-label_red span { color: #ffeded; }
+
+  .hero__bottom {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 40px;
+    position: relative;
+    width: 100%;
+  }
+
+  .hero__details {
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-shadow: -0.5px 1px 5.4px rgba(0, 0, 0, 0.32);
+    width: 446px;
+  }
+
+  .hero__details p { font-size: 16px; font-weight: 600; line-height: 20px; }
+
+  .hero__bullets { align-items: center; display: flex; gap: 4px; padding: 4px 0; }
+
+  .hero__bullets button {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: 20px;
+    padding: 0;
+    width: 20px;
+  }
+
+  .hero__bullets img { height: 20px; width: 20px; }
+
+  /* ───────── Фильтры: Input / drop_purpose / Price / Production Time ───────── */
+
+  .catalog { display: flex; flex-direction: column; gap: 24px; }
+  .filters { display: flex; flex-direction: column; gap: 20px; }
+
+  .filters__row {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .filters__controls { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .dropdown { position: relative; }
+
+  .select {
+    align-items: center;
+    background: var(--input);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: var(--ink-2);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    gap: 8px;
+    height: 40px;
+    justify-content: space-between;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 14px;
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    width: 260px;
+  }
+
+  .select:hover { background: var(--input-hover); color: var(--ink); }
+
+  .select_open {
+    background: var(--white);
+    border-color: var(--purple);
+    color: var(--ink);
+  }
+
+  .select_open .select__chevron { transform: scaleY(-1); }
+
+  .select_picked,
+  .select_picked:hover {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: var(--white);
+  }
+
+  .select__body { align-items: center; display: flex; gap: 8px; min-width: 0; }
+  .select span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .select img { flex: 0 0 auto; height: 16px; width: 16px; transition: transform 0.2s ease; }
+
+  .options {
+    animation: popup-in 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    left: 0;
+    margin-top: 8px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 16px;
+    position: absolute;
+    top: 100%;
+    width: 260px;
+    z-index: 6;
+  }
+
+  .option {
+    align-items: center;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    gap: 10px;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .option__radio {
+    border: 2px solid rgba(4, 18, 27, 0.36);
+    border-radius: 12px;
+    flex: 0 0 auto;
+    height: 16px;
+    margin: 5px 0;
+    position: relative;
+    width: 16px;
+  }
+
+  .option_on .option__radio {
+    background-image: url('figma/radio-dot.svg');
+    background-origin: border-box;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    border: 5px solid var(--purple);
+  }
+
+  .option span {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  /* Выбранное значение без пурпурной плашки — так устроен drop_organising picked */
+  .select_value { color: var(--ink); }
+
+  /* У сортировки рамка в открытом состоянии 2px (4827:51059) */
+  .select_strong.select_open { border-width: 2px; }
+
+  /* drop_type (4747:41547): мультивыбор чипами и кнопка «Готово» */
+  .options_multi { gap: 24px; }
+
+  .chips { display: flex; flex-direction: column; gap: 2px; width: 228px; }
+
+  .chip-option {
+    align-self: flex-start;
+    background: var(--white);
+    border: 0;
+    border-radius: 4px;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 4px 8px;
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .chip-option:hover { background: rgba(201, 37, 255, 0.1); }
+
+  .chip-option_on,
+  .chip-option_on:hover { background: var(--purple); color: var(--white); }
+
+  .options__done {
+    align-items: center;
+    background: var(--purple);
+    border: 0;
+    border-radius: 12px;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    gap: 12px;
+    height: 40px;
+    justify-content: center;
+    line-height: 20px;
+    padding: 0 16px;
+    transition: background-color 0.15s ease;
+    width: 228px;
+  }
+
+  .options__done:hover { background: var(--purple-hover); }
+
+  .filters__extra { align-items: center; display: flex; flex-wrap: wrap; gap: 28px; }
+
+  .field { align-items: center; display: flex; gap: 12px; }
+
+  .field__label {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    white-space: nowrap;
+  }
+
+  .field__box {
+    align-items: center;
+    background: var(--input);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    gap: 16px;
+    height: 40px;
+    padding: 0 14px;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .field__box_open {
+    background: var(--white);
+    border-color: var(--purple);
+    cursor: text;
+  }
+
+  .field__box_filled {
+    background: var(--purple);
+    border-color: var(--purple);
+    gap: 22px;
+  }
+
+  .field__hint { color: #81888d; font-size: 14px; font-weight: 500; line-height: 18px; }
+
+  .field__box_filled .field__hint { color: var(--white); }
+
+  .field__value {
+    background: none;
+    border: 0;
+    color: var(--ink);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 24px;
+    padding: 0;
+    text-align: center;
+    width: 3ch;
+  }
+
+  .field__value:focus { outline: none; }
+  .field__box_filled .field__value { color: var(--white); }
+
+  .field__clear {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: none;
+    height: 16px;
+    padding: 0;
+    width: 16px;
+  }
+
+  .field__box_filled .field__clear { display: block; }
+
+  /* Buttontext (4821:47934) — вторичная кнопка, а не текстовая ссылка */
+  .reset {
+    align-items: center;
+    background: var(--secondary);
+    border: 0;
+    border-radius: 12px;
+    color: var(--purple);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    gap: 6px;
+    height: 40px;
+    justify-content: center;
+    line-height: 24px;
+    min-width: 184px;
+    padding: 8px 18px 9px;
+    transition: background-color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .reset:hover { background: rgba(227, 143, 255, 0.24); }
+
+  /* ───────── ProductCard (3875:11301) ───────── */
+
+  .cards { align-content: center; display: flex; flex-wrap: wrap; gap: 22px; }
+
+  .card {
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    height: 416px;
+    overflow: hidden;
+    width: 260px;
+  }
+
+  .card__media { height: 260px; position: relative; width: 100%; z-index: 2; }
+
+  .card__media > .photo {
+    border-radius: 12px;
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .card__overlay {
+    display: flex;
+    flex-direction: column;
+    inset: 0;
+    justify-content: space-between;
+    padding: 24px 24px 16px 16px;
+    position: absolute;
+  }
+
+  .card__fav {
+    align-self: flex-end;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: 24px;
+    padding: 0;
+    transition: transform 0.15s ease;
+    width: 24px;
+  }
+
+  .card__fav:hover { transform: scale(1.12); }
+  .card__fav_on { filter: brightness(0) saturate(100%) invert(54%) sepia(63%) saturate(2000%) hue-rotate(252deg) brightness(102%) contrast(101%); }
+
+  .badge {
+    align-items: center;
+    display: inline-flex;
+    height: 20px;
+    justify-content: center;
+    padding: 0 5px;
+    position: relative;
+  }
+
+  .badge img { height: 100%; inset: 0; position: absolute; width: 100%; z-index: 0; }
+
+  .badge span {
+    color: var(--pos-bg);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    position: relative;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .card__content {
+    background: var(--white);
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 16px 24px 8px;
+    z-index: 1;
+  }
+
+  .card__inner { display: flex; flex-direction: column; gap: 8px; }
+  .card__meta { display: flex; flex-wrap: wrap; gap: 4px 8px; }
+
+  .chip {
+    align-items: center;
+    border-radius: 6px;
+    display: flex;
+    font-size: 10px;
+    font-weight: 600;
+    gap: 4px;
+    line-height: 12px;
+    padding: 4px 6px;
+    white-space: nowrap;
+  }
+
+  .chip img { height: 12px; width: 12px; }
+  .chip_warn { background: var(--warn-bg); color: var(--warn); }
+  .chip_green { background: var(--pos-bg); color: var(--green); }
+  .chip_online { background: var(--indigo-bg); color: var(--indigo); }
+
+  .card__main { display: flex; flex-direction: column; gap: 4px; }
+  .card__title { font-size: 16px; font-weight: 600; line-height: 20px; }
+  .card__note { color: var(--ink-2); font-size: 12px; font-weight: 600; line-height: 16px; }
+  .card__price { color: var(--purple); font-size: 20px; font-weight: 700; line-height: 24px; }
+
+  .cards__empty {
+    color: var(--ink-2);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    padding: 40px 0;
+    width: 100%;
+  }
+
+  /* ───────── Баннер (4814:77568) ───────── */
+
+  .banner { padding-bottom: 20px; width: 100%; }
+
+  .banner__inner {
+    background: var(--plate);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 426px;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 48px 60px 60px;
+    position: relative;
+  }
+
+  .banner__art {
+    border-radius: 24px;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .banner__art .photo { background-size: 100% 100%; position: absolute; }
+  .banner__art .photo:first-child { height: 100%; left: 1.49%; top: 9.06%; width: 100%; }
+  .banner__art .photo:last-child { height: 100.05%; left: -3.27%; top: 17.02%; width: 104.98%; }
+
+  .banner__text { display: flex; flex-direction: column; gap: 32px; position: relative; }
+
+  .banner__title {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -1.04px;
+    line-height: 60px;
+    max-width: 792px;
+  }
+
+  .banner__sub {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.52px;
+    line-height: 32px;
+    max-width: 693px;
+  }
+
+  .button {
+    align-items: center;
+    align-self: flex-start;
+    background: var(--purple);
+    border: 0;
+    border-radius: 12px;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    gap: 12px;
+    height: 52px;
+    justify-content: center;
+    line-height: 24px;
+    padding: 0 18px;
+    position: relative;
+    transition: background-color 0.15s ease;
+  }
+
+  .button:hover { background: var(--purple-hover); }
+  .button:active { background: var(--purple-strong); }
+
+  /* ───────── Примеры итоговых проектов (4791:57352) ───────── */
+
+  .works { display: flex; flex-direction: column; gap: 48px; }
+  .works__head { display: flex; flex-direction: column; gap: 12px; }
+
+  .h2 {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -1.12px;
+    line-height: 60px;
+    margin: 0;
+  }
+
+  .works__sub { color: var(--ink-2); font-size: 18px; font-weight: 600; line-height: 26px; }
+
+  .grid { display: flex; gap: 22px; }
+
+  .grid__col {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    gap: 22px;
+    min-width: 0;
+  }
+
+  /* gallery_card (4791:64793): Default — фото целиком, Variant2 — фото уехало
+     вверх на 80px, снизу открылась пурпурная плашка с описанием */
+  .tile {
+    background: var(--purple);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .tile__inner {
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .tile__pic {
+    background: var(--plate);
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .tile__pic .photo {
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .tile_bottom .tile__pic .photo { background-position: bottom; }
+
+  .tile_shift .tile__pic .photo {
+    left: -37.06%;
+    width: 137.06%;
+  }
+
+  .tile__text {
+    align-items: center;
+    color: var(--white);
+    display: flex;
+    font-size: 20px;
+    font-weight: 700;
+    height: 80px;
+    line-height: 24px;
+    padding: 24px 32px 32px;
+  }
+
+  .tile:hover .tile__inner,
+  .tile:focus-visible .tile__inner { transform: translateY(-80px); }
+
+  /* ───────── Вопрос FAQ (4791:65001): Default / hovered / pressed ───────── */
+
+  .faq { display: flex; flex-direction: column; gap: 48px; }
+  .faq__columns { display: flex; gap: 8px; }
+
+  .faq__col {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .faq__item {
+    background: var(--secondary);
+    border: 0;
+    border-radius: 32px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-family: inherit;
+    gap: 32px;
+    padding: 40px 28px;
+    text-align: left;
+    transition: background-color 0.2s ease;
+    width: 100%;
+  }
+
+  .faq__head {
+    align-items: center;
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .faq__title {
+    color: var(--purple);
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.52px;
+    line-height: 28px;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .faq__arrow {
+    flex: 0 0 auto;
+    height: 36px;
+    transform: rotate(-90deg) scaleY(-1);
+    transition: transform 0.2s ease;
+    width: 36px;
+  }
+
+  .faq__item:hover { background: var(--purple-hover); }
+  .faq__item:hover .faq__title { color: var(--white); }
+
+  .faq__item_open,
+  .faq__item_open:hover { background: var(--purple-strong); }
+  .faq__item_open .faq__title { color: var(--white); }
+  .faq__item_open .faq__arrow { transform: rotate(90deg) scaleY(-1); }
+
+  .faq__answer {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    width: 100%;
+  }
+
+  /* ───────── footer_v2 (4791:65755) ───────── */
+
+  .footer { display: flex; flex-direction: column; gap: 32px; }
+
+  .footer__top {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    filter: drop-shadow(0 0 12px rgba(201, 37, 255, 0.1));
+  }
+
+  .footer__nav { display: flex; gap: 22px; }
+
+  .footer__col {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 13px 0;
+  }
+
+  /* Селекторы с весом выше, чем у общего правила .footer__col p */
+  .footer__col .footer__head {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    padding-bottom: 5px;
+    padding-left: 0;
+  }
+
+  .footer__col a,
+  .footer__col p {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    padding-left: 2px;
+    text-decoration: none;
+  }
+
+
+  .footer__col a:hover { color: var(--purple); }
+
+  .footer__contacts { padding: 10px 0 0; }
+  .footer__col .footer__phone { font-size: 24px; font-weight: 700; line-height: 28px; padding-left: 0; }
+  .footer__contacts .small { font-size: 14px; font-weight: 600; line-height: 18px; }
+  .footer__mail { color: var(--purple) !important; }
+  .footer__group { display: flex; flex-direction: column; gap: 12px; }
+  /* Иконки прижаты к низу колонки — в макете Contact Container с justify-between */
+  .footer__social { display: flex; gap: 12px; margin-top: auto; padding-top: 12px; }
+
+  .footer__social a {
+    align-items: center;
+    background: var(--secondary);
+    border-radius: 8px;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+    width: 40px;
+  }
+
+  .footer__social a:hover { background: rgba(227, 143, 255, 0.24); }
+  .footer__social img { height: 24px; width: 24px; }
+
+  .footer__info { display: flex; gap: 22px; }
+
+  .footer__info > div {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .footer__legal { font-size: 14px; font-weight: 600; line-height: 18px; }
+  .footer__pay { align-items: center; display: flex; gap: 24px; height: 48px; }
+  .footer__pay img { height: 32px; width: 53px; }
+
+  .footer__bottom {
+    display: flex;
+    gap: 22px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .footer__bottom a {
+    color: var(--ink-3);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    padding-left: 2px;
+    text-decoration: none;
+  }
+
+  .footer__bottom a:hover { color: var(--purple); }
+
+  /* Ниже Desktop L макетов нет — дальше идут Tablet portrait M 744 и Mobile 375/320,
+     здесь только аккуратная деградация, чтобы страница не ломалась */
+  @media (max-width: 860px) {
+    .catalog, .works, .faq, .footer { margin-top: 72px; }
+    .grid, .faq__columns, .footer__nav, .footer__info { flex-direction: column; }
+    .header__nav { display: none; }
+    .faq__title { white-space: normal; }
+    .cards { justify-content: center; }
+    .banner__title { font-size: 40px; line-height: 46px; }
+    .banner__sub { font-size: 20px; line-height: 26px; }
+    .h2 { font-size: 40px; line-height: 46px; }
+    .catalog-popup { grid-template-columns: minmax(0, 1fr); }
+    .catalog-col { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile__inner, .faq__item, .faq__arrow, .select, .field__box { transition: none; }
+    .catalog-popup, .options, .profile__popup { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+      <div class="header__left">
+        <a class="header__logo" href="#"><img src="figma/header-logo.svg" alt="Индиго, типография"></a>
+        <nav class="header__nav">
+          <a href="#">Каталог</a>
+          <a href="#">О нас</a>
+          <a href="#catalog">Примеры работ</a>
+          <a href="#">Оплата</a>
+          <a href="#">Доставка</a>
+        </nav>
+      </div>
+      <div class="header__actions">
+        <button type="button" class="icon-button" aria-label="Корзина"><img src="figma/header-cart.svg" alt=""></button>
+        <button type="button" class="icon-button" aria-label="Избранное"><img src="figma/header-favorite.svg" alt=""></button>
+        <div class="profile">
+          <button type="button" class="icon-button" id="profile-button" aria-expanded="false" aria-label="Профиль">
+            <img src="figma/header-profile-default.svg" alt="" id="profile-icon">
+          </button>
+          <div class="profile__popup" id="profile-popup" hidden>
+            <div class="profile__head">
+              <p class="profile__name">Имя Фамилия</p>
+              <p class="profile__mail">mail@mail.ru</p>
+            </div>
+            <nav class="profile__menu">
+              <a href="#">Заказы</a>
+              <a href="#">Избранное</a>
+              <a href="#">Настройки</a>
+              <a href="#">Выйти</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero">
+      <div class="hero__pic photo" style="background-image: url('figma/hero.png')" role="img" aria-label="Флаги Mind the Music на мероприятии"></div>
+
+      <div class="hero__center">
+        <div class="selector-wrap" id="selector-wrap">
+          <div class="selector">
+            <div class="selector__row">
+              <div class="selector__inner">
+                <span class="selector__word">Мы</span>
+                <button type="button" class="selector__drop" data-hero-drop aria-expanded="false">
+                  <span>делаем шевроны</span>
+                  <i><img src="figma/hero-chevron.svg" alt=""></i>
+                </button>
+                <button type="button" class="selector__drop" data-hero-drop aria-expanded="false">
+                  <span>и флаги</span>
+                  <i><img src="figma/hero-chevron.svg" alt=""></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__bottom">
+        <div class="hero__details">
+          <p>Название проекта/изделия</p>
+          <p>Описание проекта/изделия: для кого и для чего сделан, в рамках какого мероприятия &lt;...&gt;</p>
+        </div>
+        <div class="hero__bullets" id="hero-bullets"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="catalog" id="catalog">
+    <div class="filters">
+      <div class="filters__row">
+        <div class="filters__controls">
+          <div class="dropdown" id="dd-direction"></div>
+          <div class="dropdown" id="dd-type"></div>
+        </div>
+        <div class="dropdown" id="dd-sort"></div>
+      </div>
+
+      <div class="filters__extra">
+        <div class="field">
+          <span class="field__label">Цена, ₽</span>
+          <div class="field__box" id="price-box">
+            <span class="field__hint">От</span>
+            <input class="field__value" id="price-from" value="35" inputmode="numeric" aria-label="Цена от">
+            <span class="field__hint">до</span>
+            <input class="field__value" id="price-to" value="900" inputmode="numeric" aria-label="Цена до">
+            <button type="button" class="field__clear" id="price-clear" aria-label="Сбросить цену">
+              <img src="figma/input-close.svg" alt="">
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Срок изготовления</span>
+          <div class="field__box" id="term-box">
+            <span class="field__hint">До</span>
+            <input class="field__value" id="term-to" value="14" inputmode="numeric" aria-label="Срок до">
+            <span class="field__hint">дней</span>
+            <button type="button" class="field__clear" id="term-clear" aria-label="Сбросить срок">
+              <img src="figma/input-close.svg" alt="">
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="reset" id="reset">Очистить фильтры</button>
+      </div>
+    </div>
+
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="works">
+    <div class="works__head">
+      <h2 class="h2">Примеры итоговых проектов</h2>
+      <p class="works__sub">Партии флагов, оформление офисов и мероприятий, нестандартные форматы</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="faq">
+    <h2 class="h2">Частые вопросы</h2>
+    <div class="faq__columns" id="faq"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__nav">
+        <div class="footer__col">
+          <p class="footer__head">Каталог</p>
+          <a href="#">Художникам</a>
+          <a href="#">Свадебное</a>
+          <a href="#">Фотоальбомы</a>
+          <a href="#">Текстиль</a>
+          <a href="#">Оформление магазинов</a>
+          <a href="#">Подарки</a>
+          <a href="#">Корпоративная продукция</a>
+          <a href="#">К мероприятиям</a>
+        </div>
+        <div class="footer__col">
+          <p class="footer__head">Компания</p>
+          <a href="#">О нас</a>
+          <a href="#">Что мы изготавливаем</a>
+          <a href="#">Материалы</a>
+          <a href="#">Примеры работ</a>
+          <a href="#">Оплата</a>
+          <a href="#">Доставка</a>
+          <a href="#">Правовая информация</a>
+        </div>
+        <div class="footer__col footer__contacts">
+          <p class="footer__phone">+7 (949) 131-45-44</p>
+          <div class="footer__group">
+            <p class="small">+7 (949) 131-45-45</p>
+            <p class="small">+7 (949) 499-69-79</p>
+            <a class="small footer__mail" href="#">Info@indigo-mail.ru</a>
+          </div>
+          <div class="footer__group" style="margin-top: 12px">
+            <p class="small">Донецк, ул. Постышева, 60</p>
+            <p class="small">Пн–Пт с 09:00 до 18:00</p>
+          </div>
+          <div class="footer__social">
+            <a href="#" aria-label="Telegram"><img src="figma/social-tg.svg" alt=""></a>
+            <a href="#" aria-label="ВКонтакте"><img src="figma/social-vk.svg" alt=""></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__info">
+        <div>
+          <img src="figma/footer-logo.svg" alt="Индиго" style="height: 45px; width: 117px">
+          <p class="footer__legal">
+            ИП РУЧКО АНАСТАСИЯ ВИКТОРОВНА<br>
+            ИНН 930900107014<br>
+            ОГРНИП 323930100105541 от 25.01.2023г.<br>
+            РФ, ДНР. Донецкий г.о., 283054, г. Донецк, ул. Аристова, д.1.
+          </p>
+        </div>
+        <div>
+          <div class="footer__pay"><img src="figma/payment-sbp.svg" alt="СБП"></div>
+          <p class="footer__legal">Безналичный расчет<br>для юридических лиц и ИП.</p>
+          <p class="footer__legal" style="margin-top: 6px">Информация по приказу Минцифры #511 от 02.06.2025</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <a href="#">© 2026, Типография Индиго</a>
+      <a href="#">Город Верных Сердец</a>
+      <a href="#">Пользовательское соглашение</a>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const A = name => `figma/${name}`
+
+  /* Карточки из «cards and banners» (4791:57335). direction — по спискам каталога из Figma */
+  const cards = [
+    { img: 'product-flags.jpg', badge: '−16% от 100 шт', mask: 'mask-16.svg', term: 'от 5 дней', days: 5, kind: 'warn', online: true, title: 'Изготовление флагов', note: 'Пять материалов и два размера на выбор', price: 'от 590 ₽', value: 590, direction: 'Текстиль' },
+    { img: 'product-flags.jpg', badge: '−40% от 100 шт', mask: 'mask-40.svg', term: 'от 5 дней', days: 5, kind: 'warn', online: true, title: 'Вымпелы', note: 'Полноцветная печать на атласе или матовом оксфорде', price: 'от 200 ₽', value: 200, direction: 'Текстиль' },
+    { img: 'product-chevrons.jpg', badge: '−75% от 300 шт', mask: 'mask-75.svg', term: 'от 5 дней', days: 5, kind: 'warn', online: true, title: 'Вышивка шевронов', note: 'Детальная вышивка на плотной основе', price: 'от 200 ₽', value: 200, direction: 'Текстиль' },
+    { img: 'product-tshirts.jpg', badge: '−10% от 20 шт', mask: 'mask-10.svg', term: 'от 2 дней', days: 2, kind: 'green', title: 'Печать на футболках', note: 'DTF-печать с чёткими, насыщенными цветами и высокой детализацией', price: 'от 150 ₽', value: 150, direction: 'Текстиль' },
+    { img: 'product-pillows.jpg', badge: '−10% от 20 шт', mask: 'mask-10.svg', term: 'от 2 дней', days: 2, kind: 'green', title: 'Печать на подушках', note: 'Сублимационная печать на хлопке, наполнение — синтепух', price: 'от 600 ₽', value: 600, direction: 'Текстиль' },
+    { img: 'product-shoppers.jpg', badge: '−10% от 20 шт', mask: 'mask-10.svg', term: 'от 2 дней', days: 2, kind: 'green', title: 'Шопперы', note: 'Хлопковый шопер плотностью 180 г. область нанесения — 25×25 см', price: 'от 900 ₽', value: 900, direction: 'Текстиль' },
+    { img: 'product-caps.jpg', badge: '−17% от 100 шт', mask: 'mask-17.svg', term: 'от 5 дней', days: 5, kind: 'warn', title: 'Печать на кепках', note: 'Хлопковые кепки плотностью 240 г, область нанесения — 10×10 см', price: 'от 750 ₽', value: 750, direction: 'Текстиль' },
+    { img: 'product-embroidery.jpg', badge: '−75% от 300 шт', mask: 'mask-75.svg', term: 'от 5 дней', days: 5, kind: 'warn', title: 'Вышивка на одежде', note: 'Объёмная машинная вышивка премиального качества', price: 'от 250 ₽', value: 250, direction: 'Текстиль' },
+    { banner: true },
+    { img: 'product-tshirts.jpg', badge: '−10% от 20 шт', mask: 'mask-10.svg', term: 'от 2 дней', days: 2, kind: 'green', title: 'Печать на футболках', note: 'DTF-печать с чёткими, насыщенными цветами и высокой детализацией', price: 'от 150 ₽', value: 150, direction: 'Текстиль' },
+    { img: 'product-pillows.jpg', badge: '−10% от 20 шт', mask: 'mask-10.svg', term: 'от 2 дней', days: 2, kind: 'green', title: 'Печать на подушках', note: 'Сублимационная печать на хлопке, наполнение — синтепух', price: 'от 600 ₽', value: 600, direction: 'Текстиль' },
+    { img: 'product-shoppers.jpg', badge: '−10% от 20 шт', mask: 'mask-10.svg', term: 'от 2 дней', days: 2, kind: 'green', title: 'Шопперы', note: 'Хлопковый шопер плотностью 180 г. область нанесения — 25×25 см', price: 'от 900 ₽', value: 900, direction: 'Текстиль' },
+    { img: 'product-flags.jpg', badge: '−16% от 100 шт', mask: 'mask-16.svg', term: 'от 5 дней', days: 5, kind: 'warn', online: true, title: 'Изготовление флагов', note: 'Пять материалов и два размера на выбор', price: 'от 590 ₽', value: 590, direction: 'Текстиль' },
+    { img: 'product-ribbon.jpg', badge: '−93% от 100 м', mask: 'mask-10.svg', term: 'от 5 дней', days: 5, kind: 'warn', title: 'Печать ленты', note: 'Печать на атласной ленте золотой, серебряной или чёрной краской', price: 'от 35 ₽/м', value: 35, direction: 'К мероприятию' },
+    { img: 'product-flags.jpg', term: 'от 5 дней', days: 5, kind: 'warn', title: 'Ленты для медалей', note: 'Репсовая лента 2,5×5 см с полноцветной печатью', price: 'от 50 ₽', value: 50, direction: 'К мероприятию' }
+  ]
+
+  /* Варианты drop_purpose (4791:51804) */
+  const directions = [
+    'Для любых направлений', 'Художникам', 'Свадебная', 'Фотоальбомы',
+    'Для оформления магазинов', 'Текстиль', 'Подарки', 'К мероприятию', 'Корпоративная'
+  ]
+
+  const typeOptions = Array.from(new Set(cards.filter(c => !c.banner).map(c => c.title)))
+
+  /* Варианты drop_organising (4827:51060) */
+  const sorts = [
+    'По популярности', 'Сначала дешевле', 'Сначала дороже',
+    'По сроку изготовления', 'По новинкам', 'По наличию скидки'
+  ]
+
+  const sorters = {
+    'Сначала дешевле': (a, b) => a.value - b.value,
+    'Сначала дороже': (a, b) => b.value - a.value,
+    'По сроку изготовления': (a, b) => a.days - b.days,
+    'По наличию скидки': (a, b) => Number(Boolean(b.badge)) - Number(Boolean(a.badge))
+  }
+
+  /* Колонки списка-каталога (list Desktop XL, 4791:68412) */
+  const catalog = [
+    { title: 'Художникам', filter: 'Художникам', items: [
+      { label: 'Скетчбуки A4' }, { label: 'Блокноты с логотипом' }, { label: 'Прозрачные стикеры' },
+      { label: 'Постеры' }, { label: 'Принты на бумаге', badge: 'green' }, { label: 'Скетчбуки A5' },
+      { label: 'Портфолио' }, { label: 'Артбуки' }, { label: 'Рамы', icon: 'icon-frames.svg' },
+      { label: 'Голографические стикеры' }, { label: 'Стикерпаки' }, { label: 'Стикеры с высечкой' },
+      { label: 'Паспарту' }, { label: 'Наклейки на заказ' }, { label: 'Печать на холсте' } ] },
+    { title: 'Свадебное', filter: 'Свадебная', items: [
+      { label: 'Пригласительные' }, { label: 'Конверты', badge: 'red' }, { label: 'Save the date' },
+      { label: 'План рассадки' }, { label: 'Карточки рассадки', badge: 'green' },
+      { label: 'Номерки на столы' }, { label: 'Топперы' }, { label: 'Баннеры' }, { label: 'Фотозона' },
+      { label: 'Книга пожеланий' }, { label: 'Папка для свидетельства', badge: 'red' },
+      { label: 'На память гостям' }, { label: 'Меню' } ] },
+    { title: 'Корпоративное', filter: 'Корпоративная', items: [
+      { label: 'Визитки' }, { label: 'Конверты', badge: 'green' }, { label: 'Адресные папки' },
+      { label: 'Сертификаты', badge: 'red' }, { label: 'Ежедневники' }, { label: 'Блоки для записей' },
+      { label: 'Открытки' }, { label: 'Печать на пакетах' },
+      { label: 'Пластиковые карты', badge: 'green' }, { label: 'Бейджи на магните' },
+      { label: 'Печать календарей', icon: 'icon-calendar.svg' } ] },
+    { title: 'Текстиль', filter: 'Текстиль', items: [
+      { label: 'Печать на футболках' }, { label: 'Кепки и бейсболки' }, { label: 'Униформа' },
+      { label: 'Шопперы' }, { label: 'Мешочки с логотипом' },
+      { label: 'Шевроны и нашивки', icon: 'icon-chevrons.svg', badge: 'green' },
+      { label: 'Печать на подушках' }, { label: 'Тканевые бирки' }, { label: 'Изготовление флагов' },
+      { label: 'Вымпелы' }, { label: 'Настольные флаги' } ] },
+    { title: 'Оформление магазинов', filter: 'Для оформления магазинов', items: [
+      { label: 'Баннеры' }, { label: 'Вывески' }, { label: 'Печать на плёнке', badge: 'green' },
+      { label: 'Стенды' }, { label: 'Ценники' }, { label: 'Таблички' },
+      { label: 'Акриловые подставки' }, { label: 'Печать каталогов' },
+      { label: 'Инстаграм-визитки' }, { label: 'Листовки' } ] },
+    { title: 'Фотоальбомы', filter: 'Фотоальбомы', items: [
+      { label: 'Softbook', badge: 'green' }, { label: 'Minibook' }, { label: 'Collage book' },
+      { label: 'Baby book', icon: 'icon-binky.svg' }, { label: 'Выпускные альбомы' },
+      { label: 'Школьные альбомы' }, { label: 'Альбомы для детского сада', badge: 'green' },
+      { label: 'Свадебные альбомы' }, { label: 'Премиум альбомы' }, { label: 'Фотокниги' } ] },
+    { title: 'Подарки', filter: 'Подарки', items: [
+      { label: 'Фото полароид' }, { label: 'Магниты полароид', badge: 'green' },
+      { label: 'Печать на холсте' }, { label: 'Фотопазлы', icon: 'icon-puzzle.svg' },
+      { label: 'Печать на кружках' }, { label: 'Календари на подставке' },
+      { label: 'Браслеты с гравировкой' }, { label: 'Подарочная упаковка' } ] },
+    { title: 'К мероприятию', filter: 'К мероприятию', items: [
+      { label: 'Бейджи на шнурке' }, { label: 'Бейджи на ленте', badge: 'green' },
+      { label: 'Силиконовые браслеты' }, { label: 'Блокноты' }, { label: 'Буклеты', badge: 'green' },
+      { label: 'Папки' }, { label: 'Программки' }, { label: 'Ручки с логотипом' },
+      { label: 'Фотозоны' }, { label: 'Баннеры', badge: 'green' } ] }
+  ]
+
+  const columns = [
+    [
+      { card: true, img: 'gallery-1-1.jpg', ratio: '354 / 600', caption: 'Описание проекта' },
+      { imgs: ['gallery-1-2.jpg'], ratio: '354 / 400' },
+      { imgs: ['gallery-1-3.jpg'], ratio: '354 / 516' }
+    ],
+    [
+      { imgs: ['gallery-2-1.jpg'], ratio: '354 / 516' },
+      { imgs: ['gallery-2-2.jpg'], ratio: '354 / 600' },
+      { imgs: ['gallery-2-3.jpg'], ratio: '354 / 400' }
+    ],
+    [
+      { imgs: ['gallery-3-1.jpg'], ratio: '354 / 400' },
+      { imgs: ['gallery-3-2.jpg'], ratio: '354 / 516', shift: true },
+      { imgs: ['gallery-3-3.jpg'], ratio: '354 / 600' }
+    ]
+  ]
+
+  const faqItems = ['Ошибка в макете', 'Максимальный тираж', 'Монтаж']
+
+  const PRICE = { from: 35, to: 900 }
+  const TERM = 14
+
+  const state = {
+    direction: directions[0],
+    types: [],
+    sort: sorts[0],
+    priceFrom: PRICE.from,
+    priceTo: PRICE.to,
+    term: TERM,
+    priceActive: false,
+    termActive: false,
+    open: null
+  }
+
+  const el = (tag, className, text) => {
+    const node = document.createElement(tag)
+    if (className) node.className = className
+    if (text !== undefined) node.textContent = text
+    return node
+  }
+
+  const pic = (src, alt = '') => {
+    const img = document.createElement('img')
+    img.src = A(src)
+    img.alt = alt
+    img.loading = 'lazy'
+    img.decoding = 'async'
+    img.draggable = false
+    return img
+  }
+
+  // Фотографии — фоном, чтобы не было виджета браузера и сохранения.
+  // Подгружаются по мере приближения к экрану, как раньше делал loading="lazy"
+  const lazyPhotos = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return
+      entry.target.style.backgroundImage = `url("${entry.target.dataset.bg}")`
+      lazyPhotos.unobserve(entry.target)
+    })
+  }, { rootMargin: '400px' })
+
+  function photo(src, className = '', label = '') {
+    const node = el('div', className ? `photo ${className}` : 'photo')
+    node.dataset.bg = A(src)
+
+    if (label) {
+      node.setAttribute('role', 'img')
+      node.setAttribute('aria-label', label)
+    }
+
+    lazyPhotos.observe(node)
+    return node
+  }
+
+  /* ───────── Выпадающие фильтры: Input + drop_purpose ───────── */
+
+  // Поп-ап закрывается анимацией: класс снимается и элемент прячется по её окончании
+  function togglePopup(node, open) {
+    if (open) {
+      node.classList.remove('popup_out')
+      node.hidden = false
+      return
+    }
+
+    if (node.hidden || node.classList.contains('popup_out')) return
+
+    node.classList.add('popup_out')
+    node.addEventListener('animationend', () => {
+      if (!node.classList.contains('popup_out')) return
+      node.classList.remove('popup_out')
+      node.hidden = true
+    }, { once: true })
+  }
+
+  const dropdowns = {}
+
+  const isPicked = config => config.mode === 'multi'
+    ? state.types.length > 0
+    : state[config.key] !== config.options[0]
+
+  function labelFor(config) {
+    if (config.mode !== 'multi') return state[config.key]
+    if (!state.types.length) return 'Любого типа'
+    return state.types.length === 1 ? state.types[0] : `Выбрано: ${state.types.length}`
+  }
+
+  function createDropdown(id, config) {
+    const root = document.getElementById(id)
+
+    const button = el('button', 'select')
+    button.type = 'button'
+    button.setAttribute('aria-expanded', 'false')
+    if (config.strongBorder) button.classList.add('select_strong')
+
+    const body = el('span', 'select__body')
+    if (config.icon) body.append(pic(config.icon))
+
+    const label = el('span')
+    body.append(label)
+
+    const chevron = pic('input-chevron.svg')
+    chevron.className = 'select__chevron'
+
+    const close = pic('input-close.svg')
+    close.className = 'select__close'
+    close.hidden = true
+
+    button.append(body, chevron, close)
+
+    const panel = el('div', config.mode === 'multi' ? 'options options_multi' : 'options')
+    panel.hidden = true
+
+    if (config.mode === 'multi') {
+      const list = el('div', 'chips')
+
+      config.options.forEach((option) => {
+        const chip = el('button', 'chip-option', option)
+        chip.type = 'button'
+        chip.setAttribute('aria-pressed', 'false')
+        chip.addEventListener('click', (event) => {
+          event.stopPropagation()
+          state.types = state.types.includes(option)
+            ? state.types.filter(item => item !== option)
+            : [...state.types, option]
+          update()
+        })
+        list.append(chip)
+      })
+
+      const done = el('button', 'options__done', 'Готово')
+      done.type = 'button'
+      done.addEventListener('click', (event) => {
+        event.stopPropagation()
+        closeAll()
+        update()
+      })
+
+      panel.append(list, done)
+    } else {
+      config.options.forEach((option) => {
+        const row = el('button', 'option')
+        row.type = 'button'
+        row.append(el('span', 'option__radio'), el('span', null, option))
+        row.addEventListener('click', (event) => {
+          event.stopPropagation()
+          state[config.key] = option
+          closeAll()
+          update()
+        })
+        panel.append(row)
+      })
+    }
+
+    button.addEventListener('click', (event) => {
+      event.stopPropagation()
+
+      if (config.clearable && isPicked(config)) {
+        state[config.key] = config.options[0]
+        closeAll()
+        update()
+        return
+      }
+
+      const wasOpen = state.open === id
+      closeAll()
+      state.open = wasOpen ? null : id
+      update()
+    })
+
+    root.append(button, panel)
+    dropdowns[id] = { button, label, chevron, close, panel, config }
+  }
+
+  function syncDropdown(id) {
+    const { button, label, chevron, close, panel, config } = dropdowns[id]
+    const open = state.open === id
+    const picked = isPicked(config)
+    const clearable = Boolean(config.clearable) && picked
+
+    label.textContent = labelFor(config)
+    button.classList.toggle('select_picked', clearable)
+    button.classList.toggle('select_open', open)
+    button.classList.toggle('select_value', picked && !clearable)
+    button.setAttribute('aria-expanded', String(open))
+    chevron.hidden = clearable
+    close.hidden = !clearable
+    togglePopup(panel, open)
+
+    if (config.mode === 'multi') {
+      panel.querySelectorAll('.chip-option').forEach((chip, index) => {
+        const on = state.types.includes(config.options[index])
+        chip.classList.toggle('chip-option_on', on)
+        chip.setAttribute('aria-pressed', String(on))
+      })
+      return
+    }
+
+    panel.querySelectorAll('.option').forEach((row, index) => {
+      row.classList.toggle('option_on', config.options[index] === state[config.key])
+    })
+  }
+
+  function closeAll() {
+    state.open = null
+    document.getElementById('price-box').classList.remove('field__box_open')
+    document.getElementById('term-box').classList.remove('field__box_open')
+    togglePopup(heroPopup, false)
+    document.querySelectorAll('[data-hero-drop]').forEach(b => b.setAttribute('aria-expanded', 'false'))
+  }
+
+  /* ───────── Цена и срок: Price Filter / Production Time Filter ───────── */
+
+  const priceBox = document.getElementById('price-box')
+  const termBox = document.getElementById('term-box')
+  const priceFrom = document.getElementById('price-from')
+  const priceTo = document.getElementById('price-to')
+  const termTo = document.getElementById('term-to')
+
+  function readNumber(input, fallback) {
+    const value = Number.parseInt(input.value.replace(/\D/g, ''), 10)
+    return Number.isFinite(value) ? value : fallback
+  }
+
+  function bindField(box, inputs, apply) {
+    box.addEventListener('click', (event) => {
+      if (event.target.closest('.field__clear')) return
+      event.stopPropagation()
+      state.open = null
+      togglePopup(heroPopup, false)
+      box.classList.add('field__box_open')
+      syncAll()
+    })
+
+    inputs.forEach((input) => {
+      input.addEventListener('input', () => { apply(); update() })
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') { input.blur() }
+      })
+    })
+  }
+
+  bindField(priceBox, [priceFrom, priceTo], () => {
+    state.priceFrom = readNumber(priceFrom, PRICE.from)
+    state.priceTo = readNumber(priceTo, PRICE.to)
+    state.priceActive = state.priceFrom !== PRICE.from || state.priceTo !== PRICE.to
+  })
+
+  bindField(termBox, [termTo], () => {
+    state.term = readNumber(termTo, TERM)
+    state.termActive = state.term !== TERM
+  })
+
+  document.getElementById('price-clear').addEventListener('click', (event) => {
+    event.stopPropagation()
+    state.priceFrom = PRICE.from
+    state.priceTo = PRICE.to
+    state.priceActive = false
+    priceFrom.value = PRICE.from
+    priceTo.value = PRICE.to
+    closeAll()
+    update()
+  })
+
+  document.getElementById('term-clear').addEventListener('click', (event) => {
+    event.stopPropagation()
+    state.term = TERM
+    state.termActive = false
+    termTo.value = TERM
+    closeAll()
+    update()
+  })
+
+  const resetButton = document.getElementById('reset')
+
+  // Кнопка сброса появляется, только когда хоть один фильтр отличается от значения по умолчанию
+  const isFiltered = () =>
+    state.direction !== directions[0]
+    || state.types.length > 0
+    || state.sort !== sorts[0]
+    || state.priceActive
+    || state.termActive
+
+  resetButton.addEventListener('click', () => {
+    state.direction = directions[0]
+    state.types = []
+    state.sort = sorts[0]
+    state.priceFrom = PRICE.from
+    state.priceTo = PRICE.to
+    state.term = TERM
+    state.priceActive = false
+    state.termActive = false
+    priceFrom.value = PRICE.from
+    priceTo.value = PRICE.to
+    termTo.value = TERM
+    closeAll()
+    update()
+  })
+
+  /* ───────── Карточки ───────── */
+
+  function buildBanner() {
+    const wrap = el('div', 'banner')
+    const inner = el('div', 'banner__inner')
+
+    const art = el('div', 'banner__art')
+    art.setAttribute('aria-hidden', 'true')
+    art.append(photo('banner-1.png'), photo('banner-2.png'))
+
+    const text = el('div', 'banner__text')
+    text.append(
+      el('p', 'banner__title', 'У нас можно заказать оформление мероприятия'),
+      el('p', 'banner__sub', 'Описание того, как ведутся проекты под ключ. Приглашение к обсуждению проекта')
+    )
+
+    const button = el('button', 'button', 'Звонок или заявка')
+    button.type = 'button'
+
+    inner.append(art, text, button)
+    wrap.append(inner)
+    return wrap
+  }
+
+  function buildCard(data) {
+    const card = el('article', 'card')
+
+    const media = el('div', 'card__media')
+    media.append(photo(data.img, '', data.title))
+
+    const overlay = el('div', 'card__overlay')
+
+    const fav = el('button', 'card__fav')
+    fav.type = 'button'
+    fav.setAttribute('aria-pressed', 'false')
+    fav.setAttribute('aria-label', `В избранное: ${data.title}`)
+    fav.append(pic('card-favorite.svg'))
+    fav.addEventListener('click', () => {
+      const on = fav.getAttribute('aria-pressed') === 'true'
+      fav.setAttribute('aria-pressed', String(!on))
+      fav.classList.toggle('card__fav_on', !on)
+    })
+    overlay.append(fav)
+
+    const badges = el('div')
+    if (data.badge) {
+      const badge = el('span', 'badge')
+      badge.append(pic(data.mask), el('span', null, data.badge))
+      badges.append(badge)
+    }
+    overlay.append(badges)
+    media.append(overlay)
+
+    const content = el('div', 'card__content')
+    const inner = el('div', 'card__inner')
+
+    const meta = el('div', 'card__meta')
+    const term = el('span', `chip chip_${data.kind}`)
+    term.append(pic(data.kind === 'green' ? 'chip-term-green.svg' : 'chip-term-warning.svg'), el('span', null, data.term))
+    meta.append(term)
+
+    if (data.online) {
+      const online = el('span', 'chip chip_online')
+      online.append(pic('chip-online.svg'), el('span', null, 'Онлайн-заказ'))
+      meta.append(online)
+    }
+
+    const main = el('div', 'card__main')
+    main.append(
+      el('p', 'card__title', data.title),
+      el('p', 'card__note', data.note),
+      el('p', 'card__price', data.price)
+    )
+
+    inner.append(meta, main)
+    content.append(inner)
+    card.append(media, content)
+    return card
+  }
+
+  const cardsEl = document.getElementById('cards')
+
+  function renderCards() {
+    const filtered = cards.filter((item) => {
+      if (item.banner) return true
+      if (state.direction !== directions[0] && item.direction !== state.direction) return false
+      if (state.types.length && !state.types.includes(item.title)) return false
+      if (state.priceActive && (item.value < state.priceFrom || item.value > state.priceTo)) return false
+      if (state.termActive && item.days > state.term) return false
+      return true
+    })
+
+    const products = filtered.filter(item => !item.banner)
+
+    if (sorters[state.sort]) products.sort(sorters[state.sort])
+
+    cardsEl.replaceChildren()
+
+    if (!products.length) {
+      cardsEl.append(el('p', 'cards__empty', 'По этим фильтрам товаров нет'))
+      return
+    }
+
+    const untouched = state.sort === sorts[0]
+      && state.direction === directions[0]
+      && !state.types.length
+      && !state.priceActive
+      && !state.termActive
+
+    if (untouched) {
+      cards.forEach(item => cardsEl.append(item.banner ? buildBanner() : buildCard(item)))
+      return
+    }
+
+    products.forEach(item => cardsEl.append(buildCard(item)))
+  }
+
+  /* ───────── Список-каталог в хиро ───────── */
+
+  function buildBadge(kind) {
+    const badge = el('span', `badge-label badge-label_${kind}`)
+    badge.append(
+      pic(kind === 'red' ? 'badge-mask-red.svg' : 'badge-mask-green.svg'),
+      el('span', null, kind === 'red' ? 'New!' : '%%%')
+    )
+    return badge
+  }
+
+  const heroPopup = el('div', 'catalog-popup')
+  heroPopup.hidden = true
+
+  catalog.forEach((column) => {
+    const col = el('div', 'catalog-col')
+    const head = el('div', 'catalog-col__head')
+
+    const plate = el('div', 'catalog-col__plate')
+    plate.setAttribute('aria-hidden', 'true')
+
+    const title = el('button', 'catalog-col__title', column.title)
+    title.type = 'button'
+    title.addEventListener('click', (event) => {
+      event.stopPropagation()
+      applyFromCatalog(column.filter, null)
+    })
+
+    head.append(plate, title)
+
+    const list = el('div', 'catalog-col__items')
+    column.items.forEach((item) => {
+      const row = el('button', 'catalog-item')
+      row.type = 'button'
+
+      const icon = el('span', 'catalog-item__icon')
+      if (item.icon) icon.append(pic(item.icon))
+
+      row.append(icon, el('span', 'catalog-item__label', item.label))
+      if (item.badge) row.append(buildBadge(item.badge))
+
+      row.addEventListener('click', (event) => {
+        event.stopPropagation()
+        applyFromCatalog(column.filter, item.label)
+      })
+
+      list.append(row)
+    })
+
+    col.append(head, list)
+    heroPopup.append(col)
+  })
+
+  document.querySelector('.hero').append(heroPopup)
+  heroPopup.addEventListener('click', event => event.stopPropagation())
+
+  function applyFromCatalog(direction, itemLabel) {
+    state.direction = direction
+    state.types = itemLabel && typeOptions.includes(itemLabel) ? [itemLabel] : []
+    closeAll()
+    update()
+
+    document.getElementById('catalog').scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start'
+    })
+  }
+
+  document.querySelectorAll('[data-hero-drop]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.stopPropagation()
+      const open = heroPopup.hidden || heroPopup.classList.contains('popup_out')
+      closeAll()
+      togglePopup(heroPopup, open)
+      button.setAttribute('aria-expanded', String(open))
+      syncAll()
+    })
+  })
+
+  /* ───────── Примеры работ ───────── */
+
+  function buildTile(item) {
+    const tile = el('div', `tile${item.bottom ? ' tile_bottom' : ''}${item.shift ? ' tile_shift' : ''}`)
+    tile.tabIndex = 0
+    tile.style.aspectRatio = item.ratio
+
+    const inner = el('div', 'tile__inner')
+
+    const picture = el('div', 'tile__pic')
+    picture.style.aspectRatio = item.ratio
+    ;(item.imgs ?? [item.img]).forEach((name, index) => {
+      picture.append(photo(name, '', index === 0 ? 'Пример работы' : ''))
+    })
+
+    inner.append(picture, el('div', 'tile__text', item.caption ?? 'Описание проекта'))
+    tile.append(inner)
+    return tile
+  }
+
+  const gridEl = document.getElementById('grid')
+  columns.forEach((column) => {
+    const col = el('div', 'grid__col')
+    column.forEach(item => col.append(buildTile(item)))
+    gridEl.append(col)
+  })
+
+  /* ───────── FAQ: Default / hovered / pressed ───────── */
+
+  const faqEl = document.getElementById('faq')
+  for (let c = 0; c < 2; c += 1) {
+    const col = el('div', 'faq__col')
+
+    faqItems.forEach((title) => {
+      const item = el('button', 'faq__item')
+      item.type = 'button'
+      item.setAttribute('aria-expanded', 'false')
+
+      const head = el('div', 'faq__head')
+      head.append(el('span', 'faq__title', title))
+
+      const arrow = pic('faq-arrow.svg')
+      arrow.className = 'faq__arrow'
+      head.append(arrow)
+
+      const answer = el('p', 'faq__answer', 'Ответ на вопрос')
+      answer.hidden = true
+
+      item.append(head, answer)
+
+      item.addEventListener('click', () => {
+        const open = item.classList.toggle('faq__item_open')
+        item.setAttribute('aria-expanded', String(open))
+        answer.hidden = !open
+        arrow.src = A(open ? 'faq-arrow-open.svg' : 'faq-arrow.svg')
+      })
+
+      item.addEventListener('pointerenter', () => {
+        if (!item.classList.contains('faq__item_open')) arrow.src = A('faq-arrow-hover.svg')
+      })
+
+      item.addEventListener('pointerleave', () => {
+        if (!item.classList.contains('faq__item_open')) arrow.src = A('faq-arrow.svg')
+      })
+
+      col.append(item)
+    })
+
+    faqEl.append(col)
+  }
+
+  /* ───────── Хиро: точки ───────── */
+
+  const bulletsEl = document.getElementById('hero-bullets')
+  let activeSlide = 0
+
+  for (let i = 0; i < 7; i += 1) {
+    const button = el('button')
+    button.type = 'button'
+    button.setAttribute('aria-label', `Слайд ${i + 1} из 7`)
+    button.append(pic(i === 0 ? 'bullet-active.svg' : 'bullet.svg'))
+    button.addEventListener('click', () => {
+      activeSlide = i
+      bulletsEl.querySelectorAll('img').forEach((img, index) => {
+        img.src = A(index === activeSlide ? 'bullet-active.svg' : 'bullet.svg')
+      })
+    })
+    bulletsEl.append(button)
+  }
+
+  /* ───────── Профиль ───────── */
+
+  const profileButton = document.getElementById('profile-button')
+  const profilePopup = document.getElementById('profile-popup')
+  const profileIcon = document.getElementById('profile-icon')
+
+  const profile = document.querySelector('.profile')
+
+  const profileOpen = () => !profilePopup.hidden && !profilePopup.classList.contains('popup_out')
+
+  function setProfile(open) {
+    togglePopup(profilePopup, open)
+    profileButton.setAttribute('aria-expanded', String(open))
+    profileIcon.src = A(open ? 'header-profile.svg' : 'header-profile-default.svg')
+  }
+
+  // Поп-ап профиля раскрывается наведением; клик оставлен для тача и клавиатуры
+  profile.addEventListener('pointerenter', (event) => {
+    if (event.pointerType !== 'mouse') return
+    closeAll()
+    setProfile(true)
+    syncAll()
+  })
+
+  profile.addEventListener('pointerleave', (event) => {
+    if (event.pointerType !== 'mouse') return
+    setProfile(false)
+  })
+
+  profileButton.addEventListener('click', (event) => {
+    event.stopPropagation()
+    const open = !profileOpen()
+    closeAll()
+    setProfile(open)
+    syncAll()
+  })
+
+  profilePopup.addEventListener('click', event => event.stopPropagation())
+
+  document.addEventListener('click', () => {
+    setProfile(false)
+    closeAll()
+    syncAll()
+  })
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return
+    setProfile(false)
+    closeAll()
+    syncAll()
+  })
+
+  /* ───────── Сборка ───────── */
+
+  createDropdown('dd-direction', { mode: 'radio', key: 'direction', options: directions, clearable: true })
+  createDropdown('dd-type', { mode: 'multi', key: 'types', options: typeOptions })
+  createDropdown('dd-sort', { mode: 'radio', key: 'sort', options: sorts, icon: 'sort.svg', strongBorder: true })
+
+  function syncAll() {
+    Object.keys(dropdowns).forEach(syncDropdown)
+    priceBox.classList.toggle('field__box_filled', state.priceActive)
+    termBox.classList.toggle('field__box_filled', state.termActive)
+    resetButton.hidden = !isFiltered()
+  }
+
+  function update() {
+    syncAll()
+    renderCards()
+  }
+
+  update()
+</script>
+</body>
+</html>

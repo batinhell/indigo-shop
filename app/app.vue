@@ -11,6 +11,9 @@ const { isLoaded: isProfileLoaded } = storeToRefs(profileStore)
 
 const sessionUser = computed(() => session.value?.data?.user ?? null)
 
+// У главной собственные шапка и подвал внутри макета, поэтому общая обвязка на ней не нужна
+const isLanding = computed(() => route.path === '/')
+
 const isGridEnabled = computed(() => {
   if (!import.meta.dev) {
     return false
@@ -50,14 +53,18 @@ watch(
   <UApp>
     <DevGridOverlay v-if="isGridEnabled" />
 
-    <AppHeader />
+    <NuxtPage v-if="isLanding" />
 
-    <UMain>
-      <NuxtPage />
-    </UMain>
+    <template v-else>
+      <AppHeader />
 
-    <AppFooter />
+      <UMain>
+        <NuxtPage />
+      </UMain>
 
-    <CookieConsentBanner />
+      <AppFooter />
+
+      <CookieConsentBanner />
+    </template>
   </UApp>
 </template>
