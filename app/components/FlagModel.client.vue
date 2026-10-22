@@ -8,6 +8,18 @@ import {
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls } from '@tresjs/cientos'
 import { fabricMaterial } from '~/configurator/materials'
+// PBR-карты тканей — явные импорты (?url), чтобы Vite точно забандлил их в
+// /_nuxt. glob и public/ на этом стенде карты теряли (пустой glob / не попадало
+// в манифест Nitro) — отсюда статический список.
+import crepeSatinNor from '~/assets/textures/fabrics/crepe_satin_nor_gl.jpg?url'
+import crepeSatinRough from '~/assets/textures/fabrics/crepe_satin_rough.jpg?url'
+import biStretchNor from '~/assets/textures/fabrics/bi_stretch_nor_gl.jpg?url'
+import biStretchRough from '~/assets/textures/fabrics/bi_stretch_rough.jpg?url'
+import denimNor from '~/assets/textures/fabrics/denim_fabric_05_nor_gl.jpg?url'
+import denimRough from '~/assets/textures/fabrics/denim_fabric_05_rough.jpg?url'
+import flagnetNor from '~/assets/textures/fabrics/flagnet_nor_gl.jpg?url'
+import flagnetRough from '~/assets/textures/fabrics/flagnet_rough.jpg?url'
+import flagnetOpacity from '~/assets/textures/fabrics/flagnet_opacity.png?url'
 
 // 3D-предпросмотр флага. Полотно колышется постоянным ветром (без физ.симуляции).
 // Ткани — реальные PBR-карты (Poly Haven / ambientCG). Клиент-онли.
@@ -31,15 +43,17 @@ let fringeStrips = []
 let raf = 0
 const startT = performance.now()
 
-// PBR-карты тканей бандлим через Vite (import.meta.glob): так они гарантированно
-// попадают в сборку как /_nuxt/*-ассеты. Копирование public/ на этом стенде
-// текстуры теряло (Nitro не регистрировал их в манифесте) — отсюда уход в assets.
-const fabricAssets = import.meta.glob('../assets/textures/fabrics/*', {
-  eager: true, query: '?url', import: 'default'
-})
-const fabricUrlByName = {}
-for (const [path, url] of Object.entries(fabricAssets)) {
-  fabricUrlByName[path.split('/').pop()] = url
+// Карта «имя файла → забандленный URL» для fabricMap.
+const fabricUrlByName = {
+  'crepe_satin_nor_gl.jpg': crepeSatinNor,
+  'crepe_satin_rough.jpg': crepeSatinRough,
+  'bi_stretch_nor_gl.jpg': biStretchNor,
+  'bi_stretch_rough.jpg': biStretchRough,
+  'denim_fabric_05_nor_gl.jpg': denimNor,
+  'denim_fabric_05_rough.jpg': denimRough,
+  'flagnet_nor_gl.jpg': flagnetNor,
+  'flagnet_rough.jpg': flagnetRough,
+  'flagnet_opacity.png': flagnetOpacity
 }
 
 // Кэш PBR-карт тканей. Один флаг на экране, repeat выставляем на лету.
