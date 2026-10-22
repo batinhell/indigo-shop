@@ -311,10 +311,10 @@ async function onExport(kind) {
   gap: 1rem;
 }
 
-// Плашки параметров/макета (как на референсе)
+// Плашки параметров/макета — белые карточки на светлом контейнере
 .params-section,
 .layout-section {
-  background: #f6f6f8;
+  background: white;
   border-radius: $radius-card;
   padding: 1.5rem;
 }

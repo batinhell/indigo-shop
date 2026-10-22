@@ -322,9 +322,9 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
   padding: 1.5rem;
 
   &__container {
-    // Контейнер заполняет ширину экрана (за вычетом полей), не узкий по центру.
+    // Светлый контейнер на всю ширину; блоки внутри — белые карточки (плашки).
     width: 100%;
-    background: white;
+    background: #f2f2f5;
     border-radius: $radius-main;
     padding: 2rem;
   }
@@ -441,6 +441,9 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     min-height: 0;
     display: flex;
     flex-direction: column;
+    background: white;
+    border-radius: $radius-card;
+    overflow: hidden;
   }
 
   &__model3d {

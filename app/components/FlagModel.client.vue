@@ -240,7 +240,7 @@ watch(
 
 <template>
   <TresCanvas
-    clear-color="#f4f5f6"
+    clear-color="#ffffff"
     render-mode="always"
     :output-color-space="'srgb'"
   >

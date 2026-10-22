@@ -93,7 +93,7 @@ defineEmits(['pay', 'add-to-cart'])
 
 <style lang="scss" scoped>
 .template-card {
-  background: #f6f6f8;
+  background: white;
   border-radius: $radius-card;
   padding: 1.5rem;
   display: flex;
