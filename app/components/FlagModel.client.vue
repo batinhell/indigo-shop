@@ -50,19 +50,20 @@ function fabricMap(slug, map, Wm, Hm, tile) {
 }
 
 function netTexture(Wm, Hm) {
+  // Флажная сетка: тонкие нити, крупные сквозные ячейки (явный просвет).
   const c = document.createElement('canvas')
-  c.width = 16
-  c.height = 16
+  c.width = 12
+  c.height = 12
   const ctx = c.getContext('2d')
   ctx.fillStyle = '#000'
-  ctx.fillRect(0, 0, 16, 16)
+  ctx.fillRect(0, 0, 12, 12)
   ctx.fillStyle = '#fff'
-  ctx.fillRect(0, 0, 16, 5)
-  ctx.fillRect(0, 0, 5, 16)
+  ctx.fillRect(0, 0, 12, 2)
+  ctx.fillRect(0, 0, 2, 12)
   const t = new CanvasTexture(c)
   t.wrapS = RepeatWrapping
   t.wrapT = RepeatWrapping
-  t.repeat.set(Math.round(Wm * 160), Math.round(Hm * 160))
+  t.repeat.set(Math.round(Wm * 200), Math.round(Hm * 200))
   return t
 }
 
@@ -144,12 +145,12 @@ function buildFlag() {
     const nRight = Math.max(2, Math.floor(Hm / step))
     for (let k = 0; k < nTop; k++) {
       const x = -Wm / 2 + (k + 0.5) * (Wm / nTop)
-      fringeData.push({ x, y: Hm / 2 + L / 2, rotZ: 0 })
-      fringeData.push({ x, y: -Hm / 2 - L / 2, rotZ: 0 })
+      fringeData.push({ x, y: Hm / 2 + L / 2, rotZ: 0, phase: Math.random() * Math.PI * 2 })
+      fringeData.push({ x, y: -Hm / 2 - L / 2, rotZ: 0, phase: Math.random() * Math.PI * 2 })
     }
     for (let k = 0; k < nRight; k++) {
       const y = -Hm / 2 + (k + 0.5) * (Hm / nRight)
-      fringeData.push({ x: Wm / 2 + L / 2, y, rotZ: Math.PI / 2 })
+      fringeData.push({ x: Wm / 2 + L / 2, y, rotZ: Math.PI / 2, phase: Math.random() * Math.PI * 2 })
     }
     fringeInst = new InstancedMesh(threadGeo, fmat, fringeData.length)
     group.add(fringeInst)
@@ -189,8 +190,10 @@ function animate() {
     for (let i = 0; i < fringeData.length; i++) {
       const s = fringeData[i]
       const { z, edge } = waveAt(s.x, s.y)
+      // трепет нитей: качаются от ветра (и у кромки чуть-чуть, чтобы не «висели в воздухе»)
+      const flutter = Math.sin(t * 7 + s.phase) * (0.12 + 0.4 * edge)
       d.position.set(s.x, s.y - drape * edge * edge, z)
-      d.rotation.set(0, 0, s.rotZ)
+      d.rotation.set(flutter * 0.6, 0, s.rotZ + flutter)
       d.updateMatrix()
       fringeInst.setMatrixAt(i, d.matrix)
     }
