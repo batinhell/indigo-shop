@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import DielineView from '~/configurator/dieline/DielineView.vue'
 import { FABRICS, MOUNTINGS, getFabricLabel, getFabricGenitive, getSizeLabel } from '~/constants/product'
+import { resolveCartItemImage } from '~/composables/useCart'
 
 // Размер (ключ) ↔ ширина/высота в мм для URL-параметров.
 const SIZE_DIMS = {
@@ -77,12 +78,17 @@ const {
 
 // --- Предпросмотр ----------------------------------------------------------
 
-// «Сбросить вид»: для развёртки — зум 1:1; для модели — пересобрать сцену
-// (OrbitControls возвращается в исходную позицию камеры).
-const modelKey = ref(0)
+// «Модель» — готовый рендер под состояние конфигуратора (как на проде).
+const previewImage = computed(() => resolveCartItemImage({
+  fabric: fabric.value,
+  mounting: mount.value,
+  size: size.value,
+  doubleSided: doubleSided.value,
+  hasFringe: fringe.value
+}))
+
 function onReset() {
   if (mode.value === 'dieline') store.resetView()
-  else modelKey.value++
 }
 
 // Зум колесом с Ctrl/Cmd и пинчем на тачпаде (пинч браузер шлёт как wheel+ctrlKey).
@@ -223,11 +229,17 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
                 :show="show"
                 :zoom="zoom"
               />
-              <LazyFlagModel
+              <div
                 v-else
-                :key="modelKey"
-                class="preview__model3d"
-              />
+                class="preview__model"
+              >
+                <img
+                  v-if="previewImage"
+                  :src="previewImage"
+                  alt="Предпросмотр флага"
+                  class="preview__model-img"
+                >
+              </div>
               <template #fallback>
                 <div class="preview__loading">
                   Загрузка предпросмотра…
@@ -286,6 +298,7 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
             </div>
 
             <button
+              v-if="mode === 'dieline'"
               type="button"
               class="preview__link"
               @click="onReset"
@@ -322,9 +335,9 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
   padding: 1.5rem;
 
   &__container {
-    // Светлый контейнер на всю ширину; блоки внутри — белые карточки (плашки).
+    // Светло-фиолетовый фон на всю ширину; блоки внутри — белые карточки (плашки).
     width: 100%;
-    background: #f2f2f5;
+    background: #faf5ff;
     border-radius: $radius-main;
     padding: 2rem;
   }
@@ -446,12 +459,19 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     overflow: hidden;
   }
 
-  &__model3d {
+  &__model {
     flex: 1;
     min-height: 0;
-    width: 100%;
-    border-radius: $radius-card;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  &__model-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
 
   &__loading {
@@ -470,50 +490,6 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  &__zoom {
-    width: 8rem;
-  }
-
-  &__wind {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-  }
-
-  &__wind-cap {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: $color-base-secondary;
-    white-space: nowrap;
-  }
-
-  &__wind-range {
-    width: 6.5rem;
-    height: 0.25rem;
-    appearance: none;
-    background: $color-input-bg;
-    border-radius: 999px;
-    cursor: pointer;
-
-    &::-webkit-slider-thumb {
-      appearance: none;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background: $color-purple;
-      cursor: pointer;
-    }
-
-    &::-moz-range-thumb {
-      width: 1rem;
-      height: 1rem;
-      border: none;
-      border-radius: 50%;
-      background: $color-purple;
-      cursor: pointer;
-    }
   }
 
   .preview__toolbar > .preview__link:last-child {
