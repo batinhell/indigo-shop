@@ -1588,10 +1588,19 @@
     ? state.types.length > 0
     : state[config.key] !== config.options[0]
 
+  // Выбранные типы перечисляем через запятую; длинный список обрезается многоточием по CSS
   function labelFor(config) {
     if (config.mode !== 'multi') return state[config.key]
-    if (!state.types.length) return 'Любого типа'
-    return state.types.length === 1 ? state.types[0] : `Выбрано: ${state.types.length}`
+    return state.types.length ? state.types.join(', ') : 'Любого типа'
+  }
+
+  const clearDropdown = (config) => {
+    if (config.mode === 'multi') {
+      state.types = []
+      return
+    }
+
+    state[config.key] = config.options[0]
   }
 
   function createDropdown(id, config) {
@@ -1652,7 +1661,7 @@
       event.stopPropagation()
 
       if (config.clearable && isPicked(config)) {
-        state[config.key] = config.options[0]
+        clearDropdown(config)
         closeAll()
         update()
         return
@@ -1675,6 +1684,8 @@
     const clearable = Boolean(config.clearable) && picked
 
     label.textContent = labelFor(config)
+    // Если список обрезан многоточием, полный состав видно по наведению
+    button.title = config.mode === 'multi' && state.types.length > 1 ? state.types.join(', ') : ''
     button.classList.toggle('select_picked', clearable)
     button.classList.toggle('select_open', open)
     button.classList.toggle('select_value', picked && !clearable)
@@ -2192,7 +2203,7 @@
   /* ───────── Сборка ───────── */
 
   createDropdown('dd-direction', { mode: 'radio', key: 'direction', options: directions, clearable: true })
-  createDropdown('dd-type', { mode: 'multi', key: 'types' })
+  createDropdown('dd-type', { mode: 'multi', key: 'types', clearable: true })
   createDropdown('dd-sort', { mode: 'radio', key: 'sort', options: sorts, icon: 'sort.svg', strongBorder: true })
 
   function syncAll() {
