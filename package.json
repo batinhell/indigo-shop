@@ -15,8 +15,6 @@
     "@iconify-json/simple-icons": "^1.2.72",
     "@nuxt/ui": "^4.5.1",
     "@pinia/nuxt": "^0.11.3",
-    "@tresjs/cientos": "^5.9.3",
-    "@tresjs/core": "^5.9.3",
     "better-auth": "^1.6.5",
     "dxf-writer": "^1.18.4",
     "jspdf": "^4.2.1",
@@ -27,8 +25,7 @@
     "pinia": "^3.0.4",
     "qrcode": "^1.5.4",
     "svg2pdf.js": "^2.8.1",
-    "tailwindcss": "^4.2.1",
-    "three": "^0.186.1"
+    "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",

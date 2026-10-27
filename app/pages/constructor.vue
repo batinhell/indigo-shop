@@ -222,7 +222,7 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
                 :show="show"
                 :zoom="zoom"
               />
-              <LazyFlagModel
+              <FlagPhotoPreview
                 v-else
                 :key="modelKey"
                 class="preview__model3d"
