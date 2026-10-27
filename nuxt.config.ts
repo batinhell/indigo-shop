@@ -97,6 +97,23 @@ export default defineNuxtConfig({
       url: '',
       secret: '',
       trustedOrigins: 'https://ra-indigo.com'
+    },
+
+    // Конструктор флага v2 — серверный превью-конвейер (Фаза C).
+    // Пустые пути резолвятся относительно process.cwd() в server/utils/flag-preview.js:
+    //   script    → server/flag-preview/compose_service.py
+    //   layersDir → storage/flag-layers (запечённые слои, вне git, rsync отдельно)
+    //   cacheDir  → storage/flag-cache (готовые MP4, рантайм)
+    // Переопределяются env NUXT_FLAG_PREVIEW_* (например NUXT_FLAG_PREVIEW_PYTHON_BIN).
+    flagPreview: {
+      script: '',
+      layersDir: '',
+      cacheDir: '',
+      pythonBin: '',
+      ffmpegBin: '',
+      workSize: 640,
+      frames: 16,
+      fps: 20
     }
   },
 

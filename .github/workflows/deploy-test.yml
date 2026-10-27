@@ -43,6 +43,15 @@ jobs:
         run: |
           rsync -az --delete -e "ssh -i ~/.ssh/id_deploy" ./.output/ developer@178.20.42.212:/var/www/ra-indigo-test/.output/
 
+      # Python-композер превью флага (конструктор v2). Деплой шлёт только .output, а
+      # git-клон стенда не обновляется — поэтому скрипт едет отдельным rsync каждый раз.
+      # Запечённые слои (storage/flag-layers, 109 МБ) НЕ в git и НЕ здесь — ставятся
+      # на стенд один раз вручную (scripts/ship-flag-layers.sh).
+      - name: Upload flag-preview compositor to stand
+        run: |
+          ssh -i ~/.ssh/id_deploy developer@178.20.42.212 'mkdir -p /var/www/ra-indigo-test/server/flag-preview'
+          rsync -az -e "ssh -i ~/.ssh/id_deploy" ./server/flag-preview/ developer@178.20.42.212:/var/www/ra-indigo-test/server/flag-preview/
+
       - name: Restart app
         run: |
           ssh -i ~/.ssh/id_deploy developer@178.20.42.212 \

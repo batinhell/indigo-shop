@@ -14,6 +14,10 @@ vendor/*
 # Runtime generated files
 storage/app/
 storage/invoices/
+storage/flag-cache
+# Запечённые слои превью флага (конструктор v2) — 109 МБ, едут на стенд отдельным rsync.
+# Без трейлинг-слэша: локально это симлинк на бейк, на стенде — реальная директория.
+storage/flag-layers
 
 # Logs
 logs
