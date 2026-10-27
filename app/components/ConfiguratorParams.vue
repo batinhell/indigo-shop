@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { FABRICS, MOUNTINGS, SIZES, ALLOWED_EXTENSIONS, RASTER_EXTENSIONS, MAX_UPLOAD_SIZE } from '~/constants/product'
+import { FABRICS, MOUNTINGS, SIZES, ALLOWED_EXTENSIONS, MAX_UPLOAD_SIZE } from '~/constants/product'
 
 // Левая колонка конструктора v2 — та же форма, что в ConstructorModal,
 // но подключена к стору useConfigurator (единый источник параметров).
@@ -11,21 +11,17 @@ const fileInput = ref(null)
 const isDragging = ref(false)
 const dragCounter = ref(0)
 
-function hasRasterFile(files) {
-  return files.some(f => RASTER_EXTENSIONS.some(ext => f.name.toLowerCase().endsWith(ext)))
-}
-
 function isAllowedFile(file) {
   if (file.size > MAX_UPLOAD_SIZE) return false
   return ALLOWED_EXTENSIONS.some(ext => file.name.toLowerCase().endsWith(ext))
 }
 
+// Загрузка/удаление макета НЕ трогает «Заказать дизайн»: это услуга дизайнера
+// (+1500 ₽), ей управляет только пользователь переключателем. Свой готовый макет
+// не должен авто-включать платную услугу.
 function addFiles(files) {
   const allowed = files.filter(isAllowedFile)
   uploadedFiles.value = [...uploadedFiles.value, ...allowed]
-  if (hasRasterFile(uploadedFiles.value)) {
-    orderDesign.value = true
-  }
 }
 
 function onFileSelect(e) {
@@ -37,9 +33,6 @@ function onFileSelect(e) {
 
 function removeFile(index) {
   uploadedFiles.value = uploadedFiles.value.filter((_, i) => i !== index)
-  if (!hasRasterFile(uploadedFiles.value)) {
-    orderDesign.value = false
-  }
 }
 
 function onDragEnter(e) {
