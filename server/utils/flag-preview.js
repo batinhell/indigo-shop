@@ -30,7 +30,8 @@ export const MAX_PREVIEW_DESIGN_SIZE = 30 * 1024 * 1024
 const PYTHON_TIMEOUT_MS = 90 * 1000
 
 // Версия конвейера: меняется при правке композера/слоёв → инвалидирует кэш.
-const PIPELINE_VERSION = 'v1'
+// v2 — кадрирование (кроп пустого фона вокруг флага).
+const PIPELINE_VERSION = 'v2'
 
 export function resolveFlagPreviewConfig() {
   const rc = useRuntimeConfig().flagPreview || {}

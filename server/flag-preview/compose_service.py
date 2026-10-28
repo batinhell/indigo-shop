@@ -42,6 +42,13 @@ FABRICS = {
 
 _I16_MODES = ("I", "I;16", "I;16B", "I;16L", "I;16N")
 
+# Кроп кадра (доли l,t,r,b). Запечённый флаг сидит в квадрате низко, сверху/по бокам
+# пустой фон. Ткань по маске — x[0.12..0.81] y[0.26..0.76]; добавляем запас под
+# бахрому (свисает вниз), древко (торчит вверх/вниз у хоиста) и лёгкую тень, кадрируем
+# ближе к флагу. Кроп НЕ требует ре-бейка слоёв. Применяется ДО зеркала, чтобы флаг
+# оставался по центру и для оборота. Чётные размеры — требование yuv420p/H.264.
+DEFAULT_CROP = (0.05, 0.17, 0.88, 0.88)
+
 
 def g16(path):
     """Читает одноканальный слой в float 0..1. Нормировка по PIL-mode (устойчиво к PIL 9.x)."""
@@ -162,16 +169,35 @@ def compose_frame(cache, variant, fab, design, frame):
     return Image.fromarray((np.clip(out, 0, 1) * 255).astype(np.uint8))
 
 
+def _crop_box(w, h, crop):
+    """Пиксельный бокс из долей (l,t,r,b) с округлением до чётных размеров (H.264)."""
+    l, t, r, b = crop
+    x0 = int(round(l * w))
+    y0 = int(round(t * h))
+    x1 = int(round(r * w))
+    y1 = int(round(b * h))
+    if (x1 - x0) % 2:
+        x1 -= 1
+    if (y1 - y0) % 2:
+        y1 -= 1
+    return (x0, y0, x1, y1)
+
+
 def build_mp4(layers_dir, variant, fabric, design_path, out_mp4,
-              frames=16, fps=20, size=None, work_size=None, mirror=False, ffmpeg="ffmpeg"):
+              frames=16, fps=20, size=None, work_size=None, mirror=False, crop=DEFAULT_CROP, ffmpeg="ffmpeg"):
     fab = FABRICS[fabric]
     cache = LayerCache(layers_dir, work_size=work_size)
     design = np.asarray(Image.open(design_path).convert("RGB")).astype(np.float32) / 255.0
 
+    cropbox = None
     tmp = tempfile.mkdtemp(prefix="flagc_")
     try:
         for f in range(frames):
             im = compose_frame(cache, variant, fab, design, f)
+            if crop:
+                if cropbox is None:
+                    cropbox = _crop_box(im.width, im.height, crop)
+                im = im.crop(cropbox)
             if mirror:
                 im = im.transpose(Image.FLIP_LEFT_RIGHT)
             if size:
@@ -210,6 +236,7 @@ def main(argv):
     ap.add_argument("--size", type=int, default=0)
     ap.add_argument("--work-size", type=int, default=0, dest="work_size")
     ap.add_argument("--mirror", action="store_true")
+    ap.add_argument("--crop", default="", help="l,t,r,b доли; '0,0,1,1' — без кропа; пусто — дефолт")
     ap.add_argument("--ffmpeg", default=os.environ.get("FFMPEG_BINARY", "ffmpeg"))
     a = ap.parse_args(argv)
 
@@ -217,9 +244,14 @@ def main(argv):
         print("unknown fabric: %s" % a.fabric, file=sys.stderr)
         return 2
 
+    crop = DEFAULT_CROP
+    if a.crop:
+        parts = [float(x) for x in a.crop.split(",")]
+        crop = tuple(parts) if len(parts) == 4 and parts != [0, 0, 1, 1] else None
+
     build_mp4(a.layers, a.variant, a.fabric, a.design, a.out,
               frames=a.frames, fps=a.fps, size=(a.size or None),
-              work_size=(a.work_size or None), mirror=a.mirror, ffmpeg=a.ffmpeg)
+              work_size=(a.work_size or None), mirror=a.mirror, crop=crop, ffmpeg=a.ffmpeg)
     print("OK %s" % a.out)
     return 0
 
