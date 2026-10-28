@@ -20,12 +20,9 @@ const collapsedCategories = reactive(
   Object.fromEntries(catalogCategoryItems.map(category => [category.id, false]))
 )
 
-const isConstructorOpen = ref(false)
 const isManagerOrderOpen = ref(false)
-const selectedOnlineOrderProduct = ref(null)
 const selectedManagerOrderProduct = ref(null)
 const { isFavorite, toggleItem } = useFavorites()
-const { addItem } = useCart()
 
 function normalizeFavoriteProduct(product) {
   return {
@@ -51,18 +48,14 @@ function toggleCategory(categoryId) {
 
 function openConstructor(product) {
   if (product.orderType === 'online') {
-    selectedOnlineOrderProduct.value = product
-    isConstructorOpen.value = true
+    // Конструктор v2 — отдельная страница. productId тащим через query,
+    // чтобы он попал в позицию корзины (см. applyQuery в constructor.vue).
+    navigateTo({ path: '/constructor', query: { product: String(product.productId) } })
     return
   }
 
   selectedManagerOrderProduct.value = product
   isManagerOrderOpen.value = true
-}
-
-function addConstructorItemToCart(item) {
-  addItem(item)
-  isConstructorOpen.value = false
 }
 
 useSeoMeta({
@@ -145,13 +138,6 @@ useSeoMeta({
         </div>
       </section>
     </div>
-
-    <ConstructorModal
-      v-model="isConstructorOpen"
-      :product-id="selectedOnlineOrderProduct?.productId"
-      @pay="addConstructorItemToCart"
-      @add-to-cart="addConstructorItemToCart"
-    />
 
     <ManagerOrderModal
       v-model="isManagerOrderOpen"

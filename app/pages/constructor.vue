@@ -12,7 +12,7 @@ const DEFAULT_SIZE = '90x135'
 
 const store = useConfiguratorStore()
 const {
-  fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles,
+  productId, fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles,
   mode, show, zoom, geometry
 } = storeToRefs(store)
 
@@ -24,6 +24,12 @@ const { exportSvg } = useTemplateExport()
 // --- URL-query ↔ параметры -------------------------------------------------
 
 function applyQuery(q) {
+  // productId товара каталога (напр. 23) → в стор, чтобы попал в позицию корзины.
+  if (q.product !== undefined && q.product !== '') {
+    const pid = Number.parseInt(q.product, 10)
+    productId.value = Number.isFinite(pid) ? pid : q.product
+  }
+
   const fabricValues = FABRICS.map(f => f.value)
   if (q.fabric && fabricValues.includes(q.fabric)) fabric.value = q.fabric
 
@@ -56,7 +62,9 @@ const queryFromState = computed(() => {
     fringe: fringe.value ? '1' : '0',
     double: doubleSided.value ? '1' : '0',
     design: orderDesign.value ? '1' : '0',
-    qty: String(quantity.value)
+    qty: String(quantity.value),
+    // Сохраняем productId в ссылке (кроме дефолтного 'flag'), чтобы она была шарабельной.
+    ...(productId.value != null && productId.value !== 'flag' ? { product: String(productId.value) } : {})
   }
 })
 
