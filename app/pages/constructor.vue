@@ -12,7 +12,7 @@ const DEFAULT_SIZE = '90x135'
 
 const store = useConfiguratorStore()
 const {
-  productId, fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles,
+  productId, fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles, backFiles,
   mode, show, zoom, geometry
 } = storeToRefs(store)
 
@@ -139,7 +139,9 @@ function buildItem() {
     unitPrice: breakdown.value?.unitPrice ?? 0,
     designPrice: breakdown.value?.designPrice ?? 0,
     description: description.value,
-    uploadedFiles: uploadedFiles.value
+    uploadedFiles: uploadedFiles.value,
+    // Макеты оборота — только для настоящей двусторонки.
+    backFiles: doubleSided.value ? backFiles.value : []
   }
 }
 

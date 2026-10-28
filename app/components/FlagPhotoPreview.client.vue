@@ -6,14 +6,22 @@ import { RASTER_EXTENSIONS } from '~/constants/product'
 // сервер собирает MP4-луп флага по макету (POST /api/flag/preview), здесь крутим
 // его в <video loop>. Ткань/крепление/бахрома/сторона — параметры запроса.
 const store = useConfiguratorStore()
-const { fabric, mount, fringe, showBack, uploadedFiles } = storeToRefs(store)
+const { fabric, mount, fringe, doubleSided, showBack, uploadedFiles, backFiles } = storeToRefs(store)
 
 // Макет для превью — первый РАСТРОВЫЙ файл (png/jpg). Вектор/tiff не варпим.
-// Отдельной загрузки оборота в UI нет, поэтому «Оборот» = зеркало лица (просвет).
-const designFile = computed(() =>
-  uploadedFiles.value.find(f => RASTER_EXTENSIONS.some(ext => f.name.toLowerCase().endsWith(ext))) || null
-)
-const hasDesign = computed(() => !!designFile.value)
+const firstRaster = files => files.find(f => RASTER_EXTENSIONS.some(ext => f.name.toLowerCase().endsWith(ext))) || null
+const designFile = computed(() => firstRaster(uploadedFiles.value)) // лицо
+const backDesignFile = computed(() => firstRaster(backFiles.value)) // оборот (двусторонка)
+
+// Что и как показываем на обороте:
+//   двусторонка + есть back-макет → отдельный макет оборота, mirror=false;
+//   иначе (одностор. или back ещё не загружен) → просвет = зеркало лица.
+const useBackDesign = computed(() => showBack.value && doubleSided.value && !!backDesignFile.value)
+const activeDesignFile = computed(() => (useBackDesign.value ? backDesignFile.value : designFile.value))
+const activeMirror = computed(() => showBack.value && !useBackDesign.value)
+const hasDesign = computed(() => !!activeDesignFile.value)
+// Подсказка: включена двусторонка, открыт оборот, но back-макета ещё нет.
+const needBackUpload = computed(() => showBack.value && doubleSided.value && !backDesignFile.value)
 
 const videoUrl = ref('')
 const loading = ref(false)
@@ -71,13 +79,13 @@ async function refresh() {
   loading.value = true
   errorMsg.value = ''
   try {
-    const design = hasDesign.value ? designFile.value : await getPlaceholder()
+    const design = hasDesign.value ? activeDesignFile.value : await getPlaceholder()
     const fd = new FormData()
-    fd.append('design', design, hasDesign.value ? designFile.value.name : 'placeholder.png')
+    fd.append('design', design, hasDesign.value ? activeDesignFile.value.name : 'placeholder.png')
     fd.append('fabric', fabric.value)
     fd.append('mount', mount.value)
     fd.append('fringe', fringe.value ? '1' : '0')
-    fd.append('mirror', showBack.value ? '1' : '0')
+    fd.append('mirror', activeMirror.value ? '1' : '0')
 
     const res = await $fetch('/api/flag/preview', { method: 'POST', body: fd })
     if (id !== reqId) return // пришёл более свежий запрос — этот результат устарел
@@ -97,7 +105,7 @@ function schedule() {
   timer = setTimeout(refresh, 300)
 }
 
-watch([fabric, mount, fringe, showBack, designFile], schedule, { immediate: true })
+watch([fabric, mount, fringe, doubleSided, showBack, activeDesignFile, activeMirror], schedule, { immediate: true })
 onBeforeUnmount(() => clearTimeout(timer))
 </script>
 
@@ -121,6 +129,14 @@ onBeforeUnmount(() => clearTimeout(timer))
       class="photo-preview__hint"
     >
       Загрузите растровый макет (PNG, JPG) — и увидите его на флаге
+    </div>
+
+    <!-- Двусторонка: оборот показан просветом, пока не загружен отдельный макет -->
+    <div
+      v-else-if="needBackUpload && !loading && !errorMsg"
+      class="photo-preview__hint"
+    >
+      Оборот показан просветом. Загрузите макет оборота для двусторонней печати
     </div>
 
     <!-- Лоадер первой сборки комбинации (из кэша — мгновенно) -->

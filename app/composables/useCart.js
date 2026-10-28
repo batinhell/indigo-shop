@@ -19,11 +19,14 @@ function readStoredCart() {
 function writeStoredCart(items) {
   if (!import.meta.client) return
 
-  const serializableItems = items.map(({ uploadedFiles, ...item }) => ({
+  const serializableItems = items.map(({ uploadedFiles, backFiles, ...item }) => ({
     ...item,
     uploadedFileNames: Array.isArray(uploadedFiles) && uploadedFiles.length
       ? uploadedFiles.map(file => file.name)
-      : item.uploadedFileNames || []
+      : item.uploadedFileNames || [],
+    backFileNames: Array.isArray(backFiles) && backFiles.length
+      ? backFiles.map(file => file.name)
+      : item.backFileNames || []
   }))
   window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(serializableItems))
 }
@@ -82,7 +85,7 @@ export function useCart() {
     writeStoredCart(nextItems)
   }
 
-  function addItem({ productId, fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description, uploadedFiles = [] }) {
+  function addItem({ productId, fabric, fabricLabel, fabricGenitive, mounting, size, sizeLabel, quantity, hasFringe, doubleSided, orderDesign, unitPrice, designPrice, description, uploadedFiles = [], backFiles = [] }) {
     const image = resolveImage(fabric, mounting, size, doubleSided, hasFringe)
     const itemDescription = buildDescription({ fabricLabel, mounting, sizeLabel, hasFringe, doubleSided, orderDesign })
     const customerComment = description?.trim() ?? ''
@@ -100,6 +103,8 @@ export function useCart() {
       designPrice: designPrice || 0,
       uploadedFiles: Array.isArray(uploadedFiles) ? uploadedFiles : [],
       uploadedFileNames: Array.isArray(uploadedFiles) ? uploadedFiles.map(file => file.name) : [],
+      backFiles: Array.isArray(backFiles) ? backFiles : [],
+      backFileNames: Array.isArray(backFiles) ? backFiles.map(file => file.name) : [],
       selected: true,
       config: { fabric, mounting, size, quantity, hasFringe, doubleSided, orderDesign }
     }

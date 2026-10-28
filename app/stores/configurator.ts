@@ -34,7 +34,8 @@ export const useConfiguratorStore = defineStore('configurator', () => {
   const doubleSided = ref(true)
   const orderDesign = ref(false)
   const description = ref('')
-  const uploadedFiles = ref<File[]>([])
+  const uploadedFiles = ref<File[]>([]) // макеты лицевой стороны (и общие файлы)
+  const backFiles = ref<File[]>([]) // макеты оборота — только для настоящей двусторонки
 
   // --- Состояние предпросмотра ---
   const mode = ref<ConfiguratorMode>('model')
@@ -43,7 +44,6 @@ export const useConfiguratorStore = defineStore('configurator', () => {
   const scene = ref<ConfiguratorScene>('studio')
   const wind = ref(0)
   const showBack = ref(false)
-  const artwork = reactive<{ face: File | null, back: File | null }>({ face: null, back: null })
 
   // --- Единый источник геометрии: params → flag.build (всё в мм) ---
   const params = computed<FlagParams>(() => {
@@ -74,13 +74,13 @@ export const useConfiguratorStore = defineStore('configurator', () => {
     orderDesign,
     description,
     uploadedFiles,
+    backFiles,
     mode,
     show,
     zoom,
     scene,
     wind,
     showBack,
-    artwork,
     params,
     geometry,
     resetView

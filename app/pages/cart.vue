@@ -77,7 +77,10 @@ function continueShopping() {
 }
 
 async function uploadOrderFiles(order) {
-  const files = selectedItems.value.flatMap(item => Array.isArray(item.uploadedFiles) ? item.uploadedFiles : [])
+  const files = selectedItems.value.flatMap(item => [
+    ...(Array.isArray(item.uploadedFiles) ? item.uploadedFiles : []),
+    ...(Array.isArray(item.backFiles) ? item.backFiles : [])
+  ])
 
   if (!files.length) return
 

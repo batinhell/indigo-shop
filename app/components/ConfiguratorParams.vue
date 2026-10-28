@@ -5,9 +5,10 @@ import { FABRICS, MOUNTINGS, SIZES, ALLOWED_EXTENSIONS, MAX_UPLOAD_SIZE } from '
 // Левая колонка конструктора v2 — та же форма, что в ConstructorModal,
 // но подключена к стору useConfigurator (единый источник параметров).
 const store = useConfiguratorStore()
-const { fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles } = storeToRefs(store)
+const { fabric, mount, size, quantity, fringe, doubleSided, orderDesign, description, uploadedFiles, backFiles } = storeToRefs(store)
 
 const fileInput = ref(null)
+const backFileInput = ref(null)
 const isDragging = ref(false)
 const dragCounter = ref(0)
 
@@ -19,9 +20,10 @@ function isAllowedFile(file) {
 // Загрузка/удаление макета НЕ трогает «Заказать дизайн»: это услуга дизайнера
 // (+1500 ₽), ей управляет только пользователь переключателем. Свой готовый макет
 // не должен авто-включать платную услугу.
-function addFiles(files) {
+// target — целевой список (лицо `uploadedFiles` или оборот `backFiles`).
+function addFiles(files, target = uploadedFiles) {
   const allowed = files.filter(isAllowedFile)
-  uploadedFiles.value = [...uploadedFiles.value, ...allowed]
+  target.value = [...target.value, ...allowed]
 }
 
 function onFileSelect(e) {
@@ -31,8 +33,15 @@ function onFileSelect(e) {
   }
 }
 
-function removeFile(index) {
-  uploadedFiles.value = uploadedFiles.value.filter((_, i) => i !== index)
+function onBackFileSelect(e) {
+  addFiles(Array.from(e.target.files || []), backFiles)
+  if (backFileInput.value) {
+    backFileInput.value.value = ''
+  }
+}
+
+function removeFile(index, target = uploadedFiles) {
+  target.value = target.value.filter((_, i) => i !== index)
 }
 
 function onDragEnter(e) {
@@ -220,6 +229,12 @@ async function onExport(kind) {
           />
 
           <div class="file-upload">
+            <p
+              v-if="doubleSided"
+              class="file-upload__side-label"
+            >
+              Лицевая сторона
+            </p>
             <div class="file-upload__actions">
               <label class="file-upload__btn">
                 <svg
@@ -290,6 +305,59 @@ async function onExport(kind) {
                 </button>
               </span>
             </div>
+
+            <!-- Оборот: отдельный макет для настоящей двусторонки. Без него «Оборот»
+                 в превью показываем просветом (зеркало лица). -->
+            <template v-if="doubleSided">
+              <p class="file-upload__side-label">
+                Оборот
+              </p>
+              <div class="file-upload__actions">
+                <label class="file-upload__btn">
+                  <UIcon
+                    name="i-lucide-image-plus"
+                    class="file-upload__btn-icon"
+                  />
+                  <span>Выберите файл оборота</span>
+                  <input
+                    ref="backFileInput"
+                    type="file"
+                    multiple
+                    accept=".tiff,.tif,.ai,.cdr,.jpg,.jpeg,.png"
+                    class="file-upload__input"
+                    @change="onBackFileSelect"
+                  >
+                </label>
+              </div>
+              <div
+                v-if="backFiles.length"
+                class="file-upload__files"
+              >
+                <span
+                  v-for="(file, i) in backFiles"
+                  :key="i"
+                  class="file-upload__file"
+                >
+                  <span class="file-upload__file-name">{{ file.name }}</span>
+                  <button
+                    type="button"
+                    class="file-upload__file-remove"
+                    @click="removeFile(i, backFiles)"
+                  >
+                    <UIcon
+                      name="i-lucide-x"
+                      class="file-upload__file-remove-icon"
+                    />
+                  </button>
+                </span>
+              </div>
+              <span
+                v-else
+                class="file-upload__hint"
+              >
+                Без макета оборота покажем просветом (зеркало лица)
+              </span>
+            </template>
           </div>
         </div>
       </div>
@@ -459,6 +527,13 @@ async function onExport(kind) {
   gap: 0.75rem;
   padding: 0.75rem;
   margin-top: auto;
+
+  &__side-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: $color-base;
+    line-height: 1.35;
+  }
 
   &__actions {
     display: flex;
