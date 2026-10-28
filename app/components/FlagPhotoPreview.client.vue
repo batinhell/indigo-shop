@@ -18,7 +18,34 @@ const hasDesign = computed(() => !!designFile.value)
 const videoUrl = ref('')
 const loading = ref(false)
 const errorMsg = ref('')
+const videoEl = ref(null)
 let reqId = 0
+
+// «Скачать картинку» (model-режим): снимаем текущий кадр <video> на canvas → PNG.
+// Видео отдаётся с того же origin (/api/flag/preview/<hash>.mp4), холст не tainted.
+const canDownload = computed(() => !!videoUrl.value && !loading.value)
+
+function download() {
+  const video = videoEl.value
+  if (!video || !video.videoWidth || !video.videoHeight) return
+  const c = document.createElement('canvas')
+  c.width = video.videoWidth
+  c.height = video.videoHeight
+  c.getContext('2d').drawImage(video, 0, 0, c.width, c.height)
+  c.toBlob((blob) => {
+    if (!blob) return
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `flag-${fabric.value}-${mount.value}${fringe.value ? '-fringe' : ''}-${showBack.value ? 'oborot' : 'lico'}.png`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    URL.revokeObjectURL(url)
+  }, 'image/png')
+}
+
+defineExpose({ download, canDownload })
 
 // Светлый плейсхолдер-макет (3:2), пока юзер не загрузил растр: показываем пустой
 // флаг в выбранной ткани/креплении, поверх — подсказка загрузить макет.
@@ -78,8 +105,10 @@ onBeforeUnmount(() => clearTimeout(timer))
   <div class="photo-preview">
     <video
       v-show="videoUrl"
+      ref="videoEl"
       :src="videoUrl"
       class="photo-preview__video"
+      crossorigin="anonymous"
       autoplay
       loop
       muted

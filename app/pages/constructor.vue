@@ -84,6 +84,16 @@ function onReset() {
   else modelKey.value++
 }
 
+// «Скачать»: развёртка → SVG, модель → PNG текущего кадра фотореал-превью.
+const photoPreview = ref(null)
+const canDownload = computed(() =>
+  mode.value === 'dieline' ? true : !!photoPreview.value?.canDownload
+)
+function onDownload() {
+  if (mode.value === 'dieline') exportSvg()
+  else photoPreview.value?.download()
+}
+
 // Зум колесом с Ctrl/Cmd и пинчем на тачпаде (пинч браузер шлёт как wheel+ctrlKey).
 function onStageWheel(e) {
   if (mode.value !== 'dieline' || !(e.ctrlKey || e.metaKey)) return
@@ -203,9 +213,9 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
             <button
               type="button"
               class="preview__download"
-              :disabled="mode !== 'dieline'"
-              :title="mode === 'dieline' ? 'Скачать SVG-развёртку' : 'Скоро'"
-              @click="mode === 'dieline' && exportSvg()"
+              :disabled="!canDownload"
+              :title="mode === 'dieline' ? 'Скачать SVG-развёртку' : (canDownload ? 'Скачать PNG текущего превью' : 'Дождитесь сборки превью')"
+              @click="onDownload"
             >
               {{ mode === 'dieline' ? 'Скачать развёртку' : 'Скачать картинку' }}
             </button>
@@ -224,6 +234,7 @@ useSeoMeta({ title: 'Конструктор флага — Indigo' })
               />
               <FlagPhotoPreview
                 v-else
+                ref="photoPreview"
                 :key="modelKey"
                 class="preview__model3d"
               />
